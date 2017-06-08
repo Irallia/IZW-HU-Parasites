@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "request-easy": "^2.0.1"
+  }
+}
