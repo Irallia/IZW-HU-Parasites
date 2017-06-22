@@ -40,19 +40,26 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 * Based on ```https://github.com/majuss/globi-parasites.git```.
 
+
+# Done
+- give all nodes without ott ids pseudo ids (higher value than all ott ids)
+- rebuild the json to graph style (nodes, edges collections) (json and tsv available)
+
 # ToDo's
 
 **Currently working on:**
 
-- give all nodes without ott ids pseudo ids (higher value than all ott ids)
-- rebuild the json to graph style (nodes, edges collections)
+- add attributes parasitic / freeliving on every leaf node
+    (ask Marius for help)
+- Have a look at phylogeny programms: Raxml, mrbayes, beast.
+- Define possible algorithms for calculating node properties. 
 
 **In the long run:**
 
-- add attributes parasitic / freeliving on every node
-- Implement an algorithm to give the nodes attribute 'parasite' or 'freeliving'.
+- Implement an algorithm to give the inner nodes attribute 'parasite' or 'freeliving'.
 
 **Future work:**
 
 - Find origins for parasitism.
 - Add symbiontic or other attributes to the nodes.
+- Parsimony analysis of coevolving species associations + recontruction the history of host-parasite associations.recontruction the history of host-parasite associations.
