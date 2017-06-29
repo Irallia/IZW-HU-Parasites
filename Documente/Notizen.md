@@ -1,6 +1,7 @@
-# Algorithmen / Methoden
-* Parsimony
-* Likelihood / Bayesian
+# Algorithmen / Methoden für ``ancestral-state reconstruction`` (ASR)
+* maximum parsimony (MP)
+* maximum likelihood (ML) / Bayesian
+* stochastic mapping (SM)
 
 # Programme
 
@@ -61,3 +62,14 @@
         * 2,339,460 leaf nodes
         * 229,801 internal nodes
     * The tree preserves conflict among phylogenies and between phylogenies an the taxonomy.
+* Mapping Mutations on Phylogenies (Rasmus Nielsen - 2002)
+    * The common approaches for mapping mutations based on parsimony have lacked a solid statistical foundation. He presents a Bayesian method for mapping mutations on a phylogeny.
+
+
+* http://www.phytools.org/eqg/Exercise_5.2/
+    * 5 topics
+        * 1. Estimating the ancestral states of continuous characters.
+        * 2. Visualizing continuous character ancestral states for one or multiple traits.
+        * 3. Estimating ancestral character states for discrete characters under a continuous-time Markov chain.
+        * 4. Simulating stochastic character histories for a discrete character (stochastic character mapping).
+        * 5. Simultaneously plotting discrete & continuous character reconstructions.

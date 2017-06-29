@@ -6,6 +6,7 @@ Project to find origins of parasitism in a pylogenetic tree of live.
 connect to the VM (via Cygwin64):
 ```
 ssh ***REMOVED*** -L 127.0.0.1:8529:127.0.0.1:8529 -p 15351 -q
+***REMOVED***
 ```
 ---
 ### Prerequisites
@@ -53,13 +54,17 @@ See also the list of [contributors](https://github.com/your/project/contributors
     (ask Marius for help)
 - Have a look at phylogeny programms: Raxml, mrbayes, beast.
 - Define possible algorithms for calculating node properties. 
+- (Presentation)
+- number of children plot
 
 **In the long run:**
 
 - Implement an algorithm to give the inner nodes attribute 'parasite' or 'freeliving'.
+- Attribute aufteilen, parasitismus von vertebraten/...
 
 **Future work:**
 
 - Find origins for parasitism.
 - Add symbiontic or other attributes to the nodes.
-- Parsimony analysis of coevolving species associations + recontruction the history of host-parasite associations.recontruction the history of host-parasite associations.
+- Parsimony analysis of coevolving species associations + recontruction the history of host-parasite associations. Recontruction the history of host-parasite associations.
+- enrichment tests. Analyse der Zusammensetzung von Species. Tree über funktionen...
