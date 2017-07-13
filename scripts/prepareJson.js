@@ -2,53 +2,76 @@ var fs = require("fs");
 var Newick = require('newick');
 // var data = fs.readFileSync("../opentree9.1_tree/grafted_solution/grafted_solution_ottnames.tre").toString();
 var data = fs.readFileSync("../opentree9.1_tree/labelled_supertree/labelled_supertree_ottnames.tre").toString();
+// var dataPath = "../data/grafted_solution/";
+var dataPath = "../data/labelled_supertree/";
 
 var parsedData = Newick.parse(data);
-console.log("---------------------------------")
-console.log("Full data:");
+
+console.log("-------- 1) Full data         -------- --------");
 console.log(parsedData);
 
-console.log("---------------------------------")
-parsedData = parsedData.branchset[0]
-console.log("use only ", parsedData.name, ":");
-parsedData = parsedData.branchset[1]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-console.log("---------------------------------")
-console.log("only to get a small dataset:")
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[0]
-console.log("-> ", parsedData.name, ":");
-parsedData = parsedData.branchset[1]
-console.log("-> ", parsedData.name, ":");
-console.log("---------------------------------")
-console.log(parsedData);
-console.log("---------------------------------")
-
-console.log("#otts =", JSON.stringify(parsedData).split("ott").length)
-
-function readOttIds(obj, maxId, numberOfChildren) {
-    // The == operator will compare for equality after doing any necessary type conversions. The === operator will not do the conversion, so if two values are not the same type === will simply return false. Both are equally quick.
+function findMaxOttId(obj, maxId) {
     if (obj.name && obj.name != "") {
         var currentId = parseInt(obj.name.split("ott")[1])
         if (currentId > maxId) {
             maxId = currentId;
         }
     }
+    if (obj.branchset) {
+        var i = 0;
+        while (i < obj.branchset.length) {
+            // go deeper:
+            maxId = findMaxOttId(obj.branchset[i], maxId);
+            i++;
+        }
+    } // else is leaf
+    return maxId;
+}
+
+console.log("-------- 2) analyse OTT Ids   -------- --------");
+console.log("#otts =", JSON.stringify(parsedData).split("ott").length);
+maxId = findMaxOttId(parsedData, 0);
+console.log("maxId =", maxId);
+
+/** decrease date from all cellular organisms to eukaryotes or less */
+function decreaseData(data) {
+    data = data.branchset[0];
+    console.log("use only ", data.name, ":");   // Eukaryota_ott304358
+    data = data.branchset[1];
+    console.log("-> ", data.name, ":");         // Opisthokonta_ott332573
+    data = data.branchset[0];
+    console.log("-> ", data.name, ":");         // mrcaott24ott98036
+    data = data.branchset[0];
+    console.log("-> ", data.name, ":");         // Holozoa_ott5246131
+    data = data.branchset[0];
+    console.log("-> ", data.name, ":");         // mrcaott24ott34294
+    data = data.branchset[0];
+    console.log("-> ", data.name, ":");         // Metazoa_ott691846
+    // console.log("-----------------------------------------------");
+    // console.log("only to get a small dataset:")
+    // data = data.branchset[0]
+    // console.log("-> ", data.name, ":");         // mrcaott24ott3989
+    // data = data.branchset[0]
+    // console.log("-> ", data.name, ":");         // mrcaott24ott212873
+    // data = data.branchset[0]
+    // console.log("-> ", data.name, ":");         // mrcaott24ott150
+    // data = data.branchset[0]
+    // console.log("-> ", data.name, ":");         // Bilateria_ott117569
+    // data = data.branchset[0]
+    // console.log("-> ", data.name, ":");         // mrcaott24ott42
+    // data = data.branchset[1]
+    // console.log("-> ", data.name, ":");         // Deuterostomia_ott147604
+    console.log("-----------------------------------------------");
+    console.log(data);
+    return data;
+}
+
+console.log("-------- 3) decrease data     -------- --------");
+parsedData = decreaseData(parsedData);
+console.log("-----------------------------------------------");
+console.log("#nodes in current data = ", JSON.stringify(parsedData).split("ott").length)
+
+function analyseNumberOfChildren(obj, numberOfChildren) {
     if (obj.branchset) {
         numberOfChildren.push(obj.branchset.length);
         // if (obj.branchset.length > 2000) {
@@ -58,47 +81,30 @@ function readOttIds(obj, maxId, numberOfChildren) {
         var i = 0;
         while (i < obj.branchset.length) {
             // go deeper:
-            result = readOttIds(obj.branchset[i], maxId, numberOfChildren);
-            maxId = result[0];
-            numberOfChildren = result[1];
+            numberOfChildren = analyseNumberOfChildren(obj.branchset[i], numberOfChildren);
             i++;
         }
-    } // else is leaf
-    return [maxId, numberOfChildren]
+    } else {
+        numberOfChildren.push(0);   // else is leaf
+    }
+    return numberOfChildren;
 }
 
+console.log("-------- 4) analyse number of Children --------");
 var numberOfChildren = [];
-
-result = readOttIds(parsedData, 0, numberOfChildren);
-maxId = result[0]
-console.log("maxId =", maxId);
-
-numberOfChildren = result[1];
+numberOfChildren = analyseNumberOfChildren(parsedData, numberOfChildren);
 var childrenPlotCsv = numberOfChildren.join("\n");
 
-l_dataPath = "../data/labelled_supertree/"
-g_dataPath = "../data/grafted_solution/"
-
-// fs.writeFile((g_dataPath + "ottnames-childrenPlot.tsv"), nodesTsv.join(''), function (err) {
-fs.writeFile((l_dataPath + "ottnames-childrenPlot.csv"), childrenPlotCsv, function (err) {
+fs.writeFile((dataPath + "ottnames-childrenPlot.csv"), childrenPlotCsv, function (err) {
     if (err) {
         return console.log(err);
     }
 });
-console.log("childrenPlot csv saved");
-console.log("---------------------------------")
 
-var graphFormat = {
-    nodes: [],
-    edges: []
-}
-// nodes.tsv
-var nodesTsv = ["_key\tname\n"];
-// edges.tsv
-var edgesTsv = ["_from\t_to\n"];
+console.log("childrenPlot csv saved");
+console.log("-----------------------------------------------");
 
 function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
-    // The == operator will compare for equality after doing any necessary type conversions. The === operator will not do the conversion, so if two values are not the same type === will simply return false. Both are equally quick.
     if (obj.name == undefined) {
         obj[name] = "ott" + nextId;
         nextId++;
@@ -129,43 +135,49 @@ function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
     return [nextId, graphFormat, nodesTsv, edgesTsv];
 }
 
+console.log("-------- 5) set OTT Ids & build graph files ---");
+
+var graphFormat = {
+    nodes: [],
+    edges: []
+}
+// nodes.tsv
+var nodesTsv = ["_key\tname\n"];
+// edges.tsv
+var edgesTsv = ["_from\t_to\n"];
+
 var data = setOttIds(parsedData, maxId + 1, graphFormat, nodesTsv, edgesTsv);
 var nextId = data[0]
 graphFormat = data[1]
 nodesTsv = data[2]
 edgesTsv = data[3]
 
-console.log("nextId - maxId =", nextId - maxId);
-console.log("#otts Eukaryota =", JSON.stringify(parsedData).split("ott").length)
+console.log("number of new Ids: nextId - maxId =", nextId - maxId);
 
 // var jsonData = JSON.stringify(data2, null, 4); // Indented 4 spaces
 var jsonData = JSON.stringify(parsedData);
 
-// fs.writeFile((g_dataPath + "ottnames-prepared.json"), jsonData, function (err) {
-fs.writeFile((l_dataPath + "ottnames-prepared.json"), jsonData, function (err) {
+fs.writeFile((dataPath + "ottnames-prepared.json"), jsonData, function (err) {
     if (err) {
         return console.log(err);
     }
 });
 
-// var jsonGraphData = JSON.stringify(graphFormat);
-// // fs.writeFile("grafted_solution_ottnames-graph_prepared.json", jsonGraphData, function (err) {
-// fs.writeFile("labelled_supertree_ottnames-graph_prepared.json", jsonGraphData, function (err) {
-//     if (err) {
-//         return console.log(err);
-//     }
-// });
+var jsonGraphData = JSON.stringify(graphFormat);
+fs.writeFile(dataPath + "ottnames-graph_prepared.json", jsonGraphData, function (err) {
+    if (err) {
+        return console.log(err);
+    }
+});
 
-// fs.writeFile("grafted_solution_ottnames-nodes.tsv", nodesTsv.join(''), function (err) {
-// fs.writeFile("labelled_supertree_ottnames-nodes.tsv", nodesTsv, function (err) {
-//     if (err) {
-//         return console.log(err);
-//     }
-// });
+fs.writeFile(dataPath + "ottnames-nodes.tsv", nodesTsv, function (err) {
+    if (err) {
+        return console.log(err);
+    }
+});
 
-// fs.writeFile("grafted_solution_ottnames-edges.tsv", edgesTsv.join(''), function (err) {
-// fs.writeFile("labelled_supertree_ottnames-edges.tsv", edgesTsv, function (err) {
-//     if (err) {
-//         return console.log(err);
-//     }
-// });
+fs.writeFile(dataPath + "ottnames-edges.tsv", edgesTsv, function (err) {
+    if (err) {
+        return console.log(err);
+    }
+});
