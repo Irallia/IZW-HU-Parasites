@@ -37,7 +37,7 @@ console.log("maxId = ", maxId);
 function decreaseData(data) {
     data = data.branchset[0];
     console.log("use only ", data.name, ":");   // Eukaryota_ott304358
-    // data = data.branchset[1];
+    data = data.branchset[1];
     // console.log("-> ", data.name, ":");         // Opisthokonta_ott332573
     // data = data.branchset[0];
     // console.log("-> ", data.name, ":");         // mrcaott24ott98036
@@ -113,14 +113,20 @@ function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
     if (obj.name == undefined) {
         obj[name] = "ott" + nextId;
         nextId++;
-    } else if (obj.name === "") {
-        obj.name = "ott" + nextId;
+    } else if (obj.name.split("ott").length = 1) {
+        obj.name = obj.name + "ott" + nextId;
         nextId++;
     }
     // Fill graphFormat nodes:
-    graphFormat.nodes.push({id: obj.name})
+    graphFormat.nodes.push({id: obj.name});
+
     var id = "ott" + obj.name.split("ott")[1];
     var name = obj.name.split("ott")[0].slice(0, -1);
+    if (obj.name.split("mrcaott").length > 1) {
+        id = "mrcaott" + obj.name.split("mrcaott")[1];
+        name = obj.name.split("mrcaott")[0].slice(0, -1);
+    }
+
     nodesTsv.push(id + "\t" + name + "\n");
     if (obj.branchset) {
         var i = 0;
