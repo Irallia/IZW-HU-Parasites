@@ -29,24 +29,24 @@ function findMaxOttId(obj, maxId) {
 }
 
 console.log("-------- 2) analyse OTT Ids   -------- --------");
-console.log("#otts =", JSON.stringify(parsedData).split("ott").length);
+console.log("#otts = ", JSON.stringify(parsedData).split("ott").length);
 maxId = findMaxOttId(parsedData, 0);
-console.log("maxId =", maxId);
+console.log("maxId = ", maxId);
 
 /** decrease date from all cellular organisms to eukaryotes or less */
 function decreaseData(data) {
     data = data.branchset[0];
     console.log("use only ", data.name, ":");   // Eukaryota_ott304358
-    data = data.branchset[1];
-    console.log("-> ", data.name, ":");         // Opisthokonta_ott332573
-    data = data.branchset[0];
-    console.log("-> ", data.name, ":");         // mrcaott24ott98036
-    data = data.branchset[0];
-    console.log("-> ", data.name, ":");         // Holozoa_ott5246131
-    data = data.branchset[0];
-    console.log("-> ", data.name, ":");         // mrcaott24ott34294
-    data = data.branchset[0];
-    console.log("-> ", data.name, ":");         // Metazoa_ott691846
+    // data = data.branchset[1];
+    // console.log("-> ", data.name, ":");         // Opisthokonta_ott332573
+    // data = data.branchset[0];
+    // console.log("-> ", data.name, ":");         // mrcaott24ott98036
+    // data = data.branchset[0];
+    // console.log("-> ", data.name, ":");         // Holozoa_ott5246131
+    // data = data.branchset[0];
+    // console.log("-> ", data.name, ":");         // mrcaott24ott34294
+    // data = data.branchset[0];
+    // console.log("-> ", data.name, ":");         // Metazoa_ott691846
     // console.log("-----------------------------------------------");
     // console.log("only to get a small dataset:")
     // data = data.branchset[0]
@@ -61,7 +61,7 @@ function decreaseData(data) {
     // console.log("-> ", data.name, ":");         // mrcaott24ott42
     // data = data.branchset[1]
     // console.log("-> ", data.name, ":");         // Deuterostomia_ott147604
-    console.log("-----------------------------------------------");
+    // console.log("-----------------------------------------------");
     console.log(data);
     return data;
 }
@@ -69,9 +69,9 @@ function decreaseData(data) {
 console.log("-------- 3) decrease data     -------- --------");
 parsedData = decreaseData(parsedData);
 console.log("-----------------------------------------------");
-console.log("#nodes in current data = ", JSON.stringify(parsedData).split("ott").length)
+console.log("#nodes in decreased data = ", JSON.stringify(parsedData).split("ott").length)
 
-function analyseNumberOfChildren(obj, numberOfChildren) {
+function analyseNumberOfChildren(obj, numberOfChildren, leaves) {
     if (obj.branchset) {
         numberOfChildren.push(obj.branchset.length);
         // if (obj.branchset.length > 2000) {
@@ -81,18 +81,23 @@ function analyseNumberOfChildren(obj, numberOfChildren) {
         var i = 0;
         while (i < obj.branchset.length) {
             // go deeper:
-            numberOfChildren = analyseNumberOfChildren(obj.branchset[i], numberOfChildren);
+            result = analyseNumberOfChildren(obj.branchset[i], numberOfChildren, leaves);
+            numberOfChildren = result[0];
+            leaves = result[1];
             i++;
         }
     } else {
-        numberOfChildren.push(0);   // else is leaf
+        leaves++;   // else is leaf
     }
-    return numberOfChildren;
+    return [numberOfChildren, leaves];
 }
 
 console.log("-------- 4) analyse number of Children --------");
 var numberOfChildren = [];
-numberOfChildren = analyseNumberOfChildren(parsedData, numberOfChildren);
+result = analyseNumberOfChildren(parsedData, numberOfChildren, 0);
+numberOfChildren = result[0];
+leaves = result[1];
+console.log("#leaves = ", leaves);
 var childrenPlotCsv = numberOfChildren.join("\n");
 
 fs.writeFile((dataPath + "ottnames-childrenPlot.csv"), childrenPlotCsv, function (err) {
@@ -116,7 +121,7 @@ function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
     graphFormat.nodes.push({id: obj.name})
     var id = "ott" + obj.name.split("ott")[1];
     var name = obj.name.split("ott")[0].slice(0, -1);
-    nodesTsv.push(id, "\t", name, "\n");
+    nodesTsv.push(id + "\t" + name + "\n");
     if (obj.branchset) {
         var i = 0;
         while (i < obj.branchset.length) {
@@ -128,7 +133,7 @@ function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
             edgesTsv = data[3];
             // Fill graphFormat edges:
             graphFormat.edges.push({_from: "nodes/" + obj.name, _to: "nodes/" + obj.branchset[i].name});
-            data[3].push("nodes/ott", obj.name.split("ott")[1], "\t", "nodes/ott", obj.branchset[i].name.split("ott")[1] + "\n");
+            edgesTsv.push("nodes/ott" + obj.name.split("ott")[1] + "\t" + "nodes/ott" + obj.branchset[i].name.split("ott")[1] + "\n");
             i++;
         }
     }
