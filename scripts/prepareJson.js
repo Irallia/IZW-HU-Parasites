@@ -168,12 +168,12 @@ fs.writeFile((dataPath + "ottnames-prepared.json"), jsonData, function (err) {
     }
 });
 
-var jsonGraphData = JSON.stringify(graphFormat);
-fs.writeFile(dataPath + "ottnames-graph_prepared.json", jsonGraphData, function (err) {
-    if (err) {
-        return console.log(err);
-    }
-});
+// var jsonGraphData = JSON.stringify(graphFormat);
+// fs.writeFile(dataPath + "ottnames-graph_prepared.json", jsonGraphData, function (err) {
+//     if (err) {
+//         return console.log(err);
+//     }
+// });
 
 fs.writeFile(dataPath + "ottnames-nodes.tsv", nodesTsv, function (err) {
     if (err) {
