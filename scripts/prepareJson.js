@@ -68,8 +68,6 @@ function decreaseData(data) {
 
 console.log("-------- 3) decrease data     -------- --------");
 parsedData = decreaseData(parsedData);
-console.log("-----------------------------------------------");
-console.log("#nodes in decreased data = ", JSON.stringify(parsedData).split("ott").length)
 
 function analyseNumberOfChildren(obj, numberOfChildren, leaves) {
     if (obj.branchset) {
@@ -164,6 +162,11 @@ nodesTsv = data[2]
 edgesTsv = data[3]
 
 console.log("number of new Ids: nextId - maxId =", nextId - maxId);
+console.log("-----------------------------------------------");
+nrOtt = JSON.stringify(parsedData).split("ott").length;
+nrMrcaott = JSON.stringify(parsedData).split("mrcaott").length;
+console.log("#nodes in decreased data = ", nrOtt - nrMrcaott); // plus some without otts!
+console.log("-----------------------------------------------");
 
 // var jsonData = JSON.stringify(data2, null, 4); // Indented 4 spaces
 var jsonData = JSON.stringify(parsedData);
