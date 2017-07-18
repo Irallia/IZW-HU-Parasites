@@ -136,8 +136,8 @@ function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
             nodesTsv = data[2];
             edgesTsv = data[3];
             // Fill graphFormat edges:
-            graphFormat.edges.push({_from: "nodes/" + obj.name, _to: "nodes/" + obj.branchset[i].name});
-            edgesTsv.push("nodes/ott" + obj.name.split("ott")[1] + "\t" + "nodes/ott" + obj.branchset[i].name.split("ott")[1] + "\n");
+            graphFormat.edges.push({_from: "EukaryotaNodes/" + obj.name, _to: "EukaryotaNodes/" + obj.branchset[i].name});
+            edgesTsv.push("EukaryotaNodes/ott" + obj.name.split("ott")[1] + "\t" + "EukaryotaNodes/ott" + obj.branchset[i].name.split("ott")[1] + "\n");
             i++;
         }
     }
@@ -165,7 +165,7 @@ console.log("number of new Ids: nextId - maxId =", nextId - maxId);
 console.log("-----------------------------------------------");
 nrOtt = JSON.stringify(parsedData).split("ott").length;
 nrMrcaott = JSON.stringify(parsedData).split("mrcaott").length;
-console.log("#nodes in decreased data = ", nrOtt - nrMrcaott); // plus some without otts!
+console.log("#nodes in decreased data = ", nrOtt - nrMrcaott);
 console.log("-----------------------------------------------");
 
 // var jsonData = JSON.stringify(data2, null, 4); // Indented 4 spaces
