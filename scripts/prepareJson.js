@@ -61,7 +61,7 @@ function decreaseData(data) {
     // console.log("-> ", data.name, ":");         // mrcaott24ott42
     // data = data.branchset[1]
     // console.log("-> ", data.name, ":");         // Deuterostomia_ott147604
-    // console.log("-----------------------------------------------");
+    console.log("-----------------------------------------------");
     console.log(data);
     return data;
 }
@@ -175,14 +175,21 @@ fs.writeFile((dataPath + "ottnames-prepared.json"), jsonData, function (err) {
 //     }
 // });
 
-fs.writeFile(dataPath + "ottnames-nodes.tsv", nodesTsv, function (err) {
-    if (err) {
-        return console.log(err);
-    }
+var nodesTsvFile = fs.createWriteStream(dataPath + "ottnames-nodes.tsv");
+nodesTsvFile.on('error', function(err) {
+    return console.log(err);
 });
+nodesTsv.forEach(function(v) {
+    nodesTsvFile.write(v);
+});
+nodesTsvFile.end();
 
-fs.writeFile(dataPath + "ottnames-edges.tsv", edgesTsv, function (err) {
-    if (err) {
-        return console.log(err);
-    }
+
+var edgesTsvFile = fs.createWriteStream(dataPath + "ottnames-edges.tsv");
+edgesTsvFile.on('error', function(err) {
+    return console.log(err);
 });
+edgesTsv.forEach(function(v) {
+    edgesTsvFile.write(v);
+});
+edgesTsvFile.end();
