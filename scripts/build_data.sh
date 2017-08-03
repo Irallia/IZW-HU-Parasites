@@ -7,18 +7,19 @@ echo $(date)
 start=$(date +%s)
 npm i arangojs fastango3
 echo "$(tput setaf 1)$(tput setab 7)------- Node packages installed (1/8) --------$(tput sgr 0)" 1>&3
-rm -rf data
-mkdir data
-cd data
-mkdir interactions
-mkdir tree
-cd interactions
-if wget -q https://s3.amazonaws.com/globi/snapshot/target/data/tsv/interactions.tsv.gz -nv; then echo "GLoBI DL succesful"; else echo "GLoBI DL-link broken" 1>&3; exit 1;  fi
-gunzip interactions.tsv.gz
-cd ../tree
-if wget -q http://files.opentreeoflife.org/synthesis/opentree9.1/opentree9.1_tree.tgz -nv; then echo "OTT DL succesful"; else echo "OTL DL-link broken" 1>&3; exit 1;  fi
-tar -xf ott3.0.tgz 
-rm opentree9.1_tree.tgz 
+# rm -rf data
+# mkdir data
+# cd data
+# mkdir interactions
+# mkdir tree
+# cd interactions
+# if wget -q https://s3.amazonaws.com/globi/snapshot/target/data/tsv/interactions.tsv.gz -nv; then echo "GLoBI DL succesful"; else echo "GLoBI DL-link broken" 1>&3; exit 1;  fi
+# gunzip interactions.tsv.gz
+# cd ../tree
+# if wget -q http://files.opentreeoflife.org/synthesis/opentree9.1/opentree9.1_tree.tgz -nv; then echo "OTT DL succesful"; else echo "OTL DL-link broken" 1>&3; exit 1;  fi
+# tar -xf ott3.0.tgz 
+# rm opentree9.1_tree.tgz 
+
 # mv ott/taxonomy.tsv . 
 # rm -rf ott
 # sed -i '27272s/kingdom/subkingdom/' taxonomy.tsv #correction rank of Chloroplastida #sed -i '27272s/phylum/no rank/' taxonomy.tsv #Streptophyta #sed -i '27272s/phylum/no rank/' taxonomy.tsv #Tracheophyta #sed -i '27272s/phylum/no rank/' taxonomy.tsv #Magnoliophyta #sed -i '27272s/kingdom/subkingdom/' taxonomy.tsv #Rhodophyta #sed -i '27272s/kingdom/subkingdom/' taxonomy.tsv #Chlorophyta
@@ -47,10 +48,11 @@ rm opentree9.1_tree.tgz
 #                                                                     db._create("nodes_otl_sub");
 #                                                                     db._createEdgeCollection("edges_otl_sub");
 #                                                                     db._create("nodes_otl_metazoa")'
-arangoimp --file interactions.tsv --type tsv --collection interaction_tsv --create-collection true --server.authentication false
-wait
-echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collections initialized (3/8) --------$(tput sgr 0)" 1>&3
-cd ..
+
+# arangoimp --file interactions.tsv --type tsv --collection interaction_tsv --create-collection true --server.authentication false
+# wait
+# echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collections initialized (3/8) --------$(tput sgr 0)" 1>&3
+# cd ..
 # bash weinstein/build_weinstein-tsv.sh weinstein/weinstein_extract.md data/taxonomy.tsv &
 node marius/tagging/tag_interactionstsv_freelivings.js
 node marius/tagging/tag_interactionstsv_parass.js
