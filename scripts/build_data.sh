@@ -54,10 +54,10 @@ echo "$(tput setaf 1)$(tput setab 7)------- Node packages installed (1/8) ------
 # echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collections initialized (3/8) --------$(tput sgr 0)" 1>&3
 # cd ..
 # bash weinstein/build_weinstein-tsv.sh weinstein/weinstein_extract.md data/taxonomy.tsv &
-node marius/tagging/tag_interactionstsv_freelivings.js
-node marius/tagging/tag_interactionstsv_parass.js
-node marius/tagging/tag_interactionstsv_parast.js
-node marius/tagging/tag_interactionstsv_freelivingt.js
+node scripts/marius/tagging/tag_interactionstsv_freelivings.js
+node scripts/marius/tagging/tag_interactionstsv_parass.js
+node scripts/marius/tagging/tag_interactionstsv_parast.js
+node scripts/marius/tagging/tag_interactionstsv_freelivingt.js
 # node edgesimport_otl.js &
 # node nodesimport_otl.js
 wait
