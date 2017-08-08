@@ -5,8 +5,7 @@ Project to find origins of parasitism in a pylogenetic tree of live.
 
 connect to the VM (via Cygwin64):
 ```
-ssh ***REMOVED*** -L 127.0.0.1:8529:127.0.0.1:8529 -p 15351 -q
-***REMOVED***
+ssh name@h -L 127.0.0.1:8529:127.0.0.1:8529 -p 15351 -q
 ```
 ---
 ### Prerequisites
@@ -33,7 +32,7 @@ arangoimp --file interactions.tsv --type tsv --collection interaction_tsv --crea
 
 ## Authors
 
-* **Lydia Buntrock** - *Initial work*
+* **Lydia Buntrock** - **
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -45,26 +44,24 @@ See also the list of [contributors](https://github.com/your/project/contributors
 # Done
 - give all nodes without ott ids pseudo ids (higher value than all ott ids)
 - rebuild the json to graph style (nodes, edges collections) (json and tsv available)
+- Plot: number of children per node
+- (Presentation)
 
 # ToDo's
 
 **Currently working on:**
 
 - add attributes parasitic / freeliving on every leaf node
-    (ask Marius for help)
-- Have a look at phylogeny programms: Raxml, mrbayes, beast.
 - Define possible algorithms for calculating node properties. 
-- (Presentation)
-- number of children plot
+- Have a look at phylogeny programms: Raxml, mrbayes, beast. (http://evolution.genetics.washington.edu/phylip/software.html#systems)
 
 **In the long run:**
 
-- Implement an algorithm to give the inner nodes attribute 'parasite' or 'freeliving'.
+- Use / attach / implement an algorithm to give the inner nodes attribute 'parasite' or 'freeliving'. → Find origins for parasitism.
 - Attribute aufteilen, parasitismus von vertebraten/...
 
 **Future work:**
 
-- Find origins for parasitism.
 - Add symbiontic or other attributes to the nodes.
 - Parsimony analysis of coevolving species associations + recontruction the history of host-parasite associations. Recontruction the history of host-parasite associations.
 - enrichment tests. Analyse der Zusammensetzung von Species. Tree über funktionen...

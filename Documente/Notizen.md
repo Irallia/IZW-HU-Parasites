@@ -1,3 +1,8 @@
+# Data
+* Open Tree of Life
+    * Open Tree of Life aims to construct a comprehensive, dynamic and digitally-available tree of life by synthesizing published phylogenetic trees along with taxonomic data. The project is a collaborative effort between 11 PIs across 10 institutions. Funding is from NSF AVAToL #1208809.
+    * Cite the Open Tree of Life: Hinchliff, Cody E., et al. "Synthesis of phylogeny and taxonomy into a comprehensive tree of life." Proceedings of the National Academy of Sciences 112.41 (2015): 12764-12769. + https://doi.org/10.1073/pnas.1423041112
+
 # Algorithmen / Methoden für ``ancestral-state reconstruction`` (ASR)
 * maximum parsimony (MP)
 * maximum likelihood (ML) / Bayesian
@@ -5,7 +10,7 @@
 
 # Programme
 
-* ``Raxml``:
+* ``Raxml``: (Randomized Axelerated Maximum Likelihood)
 * ``mrbayes``:
 * ``beast``:
 * ``MacClade``: computer program for phylogenetic analysis ... Its analytical strength is in studies of character evolution. ...
