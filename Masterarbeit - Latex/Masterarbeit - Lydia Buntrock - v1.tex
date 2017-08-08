@@ -1,0 +1,214 @@
+\input{arbeit-vorlage-praeambel.tex} % Importiere die Einstellungen aus der Präambel
+% hier beginnt der eigentliche Inhalt
+
+\author{Lydia Buntrock}
+\title{Masterarbeit}
+\date{April 2014}
+
+\begin{document}
+  % Titelseite
+  \begin{titlepage}
+    \pagestyle{empty}
+  	\begin{center}
+      {\Large Freie Universität Berlin}\\
+    	\begin{Huge}
+      	Fachbereich Mathematik und Informatik\\
+      	\vspace{3mm}
+    	\end{Huge}
+    	\vspace{20mm}
+    	\begin{Large}
+    	    \textbf{Origins of Parasitism}\\
+          (Likelihood, parsimony and other algorithms for ancectral state reconstruction)\\
+    	\end{Large}
+    	\vspace{8mm}
+      Version 1\\
+      8.8.2017\\
+    	\vspace{2cm}
+    	Lydia Buntrock \\
+      E-Mail: info@irallia.de\\
+     	\vspace{5cm}
+    	\textbf{Betreuer:}\\
+      Prof. Dr. rer. nat. Emanuel Heitlinger\\
+      \& \\
+      Dr. Bernhard Y. Renard\\
+  	\end{center}
+  	\clearpage
+  \end{titlepage}
+
+  \tableofcontents
+  \clearpage
+
+  %-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  %-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  %-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  \chapter{Introduction}
+    \begin{lecture}
+      (21.4.17)
+    \end{lecture}
+    Related to computational systems biology\\
+    Molecular biology
+    \begin{itemize}
+      \item Biological macromolecules
+      \item Macromolecular interactions
+      \item Pathways, networks, systems
+    \end{itemize}
+    (Subfields: pathway informatics, systems informatics)
+    \begin{definition}
+      \textbf{Systems biology:} Understand how components of a biological system interact to perform complex biological function.
+    \end{definition}
+    Challenges:
+    \begin{itemize}
+      \item Different levels of complexity
+      \begin{itemize}
+        \item Many components, huge amount of data, non-trivial interactions
+      \end{itemize}
+      \item Intuitive reasoning not sufficient
+      \item Need for mathematical and computational models and tools
+    \end{itemize}
+    $\rightarrow$ Predictive biology\\
+    \textbf{Research cycle}
+    \todo{Research cycle...}\\
+
+    Network topology
+    \begin{itemize}
+      \item Graph-based modeling
+      \item Stoichiometric / constaint-based modeling
+    \end{itemize}
+    Network dynamics
+    \begin{itemize}
+      \item Continuous modeling
+      \item Discrete modeling
+      \item Stochastic modeling
+      \item Hybrid modeling
+    \end{itemize}
+
+    \textbf{Important issues}
+    \begin{itemize}
+      \item Abstraction vs. precision
+      \item Quantitative vs. qualitative
+      \item Determinisitc vy. Non-deterministic
+    \end{itemize}
+
+    \textbf{Outline}
+    \begin{enumerate}
+      \item Continuous models
+      \item Discrete models
+      \item Constraint-based models
+      \item Stochastic and hybrid models
+    \end{enumerate}
+
+  %-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  \chapter{Chemical kinetics}
+    \begin{lecture}
+      (21.4.17)
+    \end{lecture}
+    \section{Modeling simple reactions}
+      $X, Y, \dots $ chemical species \\
+      $x(t), y(t), \dots $ concentrations \\
+      $\dot{x} = \dot{x}(t) = \frac{\mathrm d x}{\mathrm d t} (t)$ \\
+      Modeling assumption: Reaction rate is propotional to the product of the reaction concentrations. \\
+      Decay: $X -k-> \dot , \dot{x}=-kx$ (1) \\
+      Transformation: $X -k-> Y, \dot{x}=-kx, \dot{y}=kx$ (2) \\
+      Dissociation: $Z -k-> X+Y, \dot{z}=-kz, \dot{x}=kz, \dot{y}=kz$ \\
+      Biomolecular reaction: $X+Y -k-> Z, \dot{z}=kxy, \dot{x}=-kxy = \dot{y}$ (z is a biolinear function, because it is linear in x and y) \\
+      Reversible reaction: $X+Y <-k^-, k^+ -> Z, \dot{z}=k^+ xy-k^- z, \dot{x} = k^- z-k^+ xy = \dot{y}$ \\
+      Dimerization: $X+X <-…-> Y [2X <-> Y]$ \\
+      $\dot{x} = -2k^+ x^2 + 2k^- y$ \\
+      $\dot{y} = -k^+ x^2 - k^- y$ \\
+      *k stands for kinetic parameter \\
+
+
+
+
+    \section{Chemical reaction networks}
+
+
+    \begin{lecture}
+      (24.4.17)
+    \end{lecture}
+    \begin{example}
+      $n_S=3$ species: $S_1=H, S_2=0, S_3=H_2O$ \\
+      $n_r=2$ reactions: $R_1: \underbrace{2H}_{\alpha_11} + \underbrace{O}_{\alpha_21} \longrightarrow \underbrace{H_2O}_{\beta_31}$
+      $R_2: \underbrace{H_2O}_{\alpha_32} \underbrace{2H}_{\beta_12} + \underbrace{O}_{\beta_22}$
+      $\Gamma = \bordermatrix{
+        ~ & R_1 & R_2 \cr
+        H & -2 & +2 \cr
+        O & -1 & +1 \cr
+        H_2O & +1 & -1 \cr}
+      = \begin{pmatrix}
+        k_1[H]^2[O] \\ k_2[H_2O]
+      \end{pmatrix}$ \\
+      $S(t) =
+       \begin{pmatrix}
+        S_1(t) \\ S_2(t) \\ S_3(t)
+       \end{pmatrix}
+       =
+      \begin{pmatrix}
+        [H] \\ [O] \\ [H_2O]
+      \end{pmatrix}$ \\
+      $R_1(S) = k_1[H]*[H]*[O] = [H]^2[O]$ \\
+      $R_2(S) = k_2[H_2O]$ \\
+      ...\\
+      $\frac{\mathrm d S}{\mathrm d t} = \Gamma * R(S)$
+      $\frac{\mathrm d [H]}{\mathrm d t} = -2k_1 [H]^2[O]+2k_2[H_2O]$ \\
+      $\frac{\mathrm d [O]}{\mathrm d t} = -k_1 [H]^2[O]+k_2[H_2O]$ \\
+      $\frac{\mathrm d [H_2O]}{\mathrm d t} = k_1 [H]^2[O]-k_2[H_2O]$ \\
+    \end{example}
+
+    bis Folie 2008...
+
+    \begin{example}
+      $\dot{x} = -kx, x(0)=1 (\dot{x}(t) = -kx(t))$ \\
+      $n=1$: \\
+      Assume $k=-2$ \todo{picture} \\
+      $n=2$: \\
+      $\dot{x}_1 = x_1+x_2$
+      $\dot{x}_2 = x_1-x_2$
+      $x(0)= (1 1)$
+    \end{example}
+
+    \begin{example}
+      \todo{example via computation... see programm}
+    \end{example}
+    \begin{lecture}
+      (24.4.17)
+    \end{lecture}
+    \subsection{Phase space}
+      Autonomous equation $\dot{x}=f(x)$, with $x \in D \subseteq \mathbb{R}^n$. \\
+      D is called \textbf{phase space}. \\
+      $x(t) = (x1(t), \dots ,xn(t))$ is called \textbf{phase point}. \\
+      When t varies, x(t) will move through phase space \textbf{trajectory} / \textbf{orbit} \\
+      $f(x)$ can be interpreted as velocity vector. \\
+      If the existence and uniqueness theorem applies, trajectories in phase space never intersect.
+    \subsection{Steady states}
+      \textbf{Nullcline}: $N_i = {x \in D | \dot{x}_i = f_i(x) = 0}$, for $i = 1, \dots , n$. \\
+      A point $a \in D$ with $f(a) = 0$ (i.e., $f_i(a) = \dot{x}_i = 0, \forall i = 1, \dots ,n)$
+      is called a \textbf{critical/singular/equilibrium point} or a \textbf{steady state}. \\
+      It corresponds to the \textbf{equilibrium} or \textbf{stationary solution}
+      $x(t) = a, \forall t$. \\
+      It follows from the existence and uniqueness theorem that a steady state can never
+      be reached from outside in finite time (otherwise two solutions would intersect).
+  \subsection{Attractors and periodic solutions}
+    A critical point $x = a$ of the equation $\dot{x} = f(x)$ is called a
+    \textbf{positive attractor} if there exists a neighborhood
+    $\omega a \subseteq \mathbb{R}^n$ of a such that
+    $x(0) \in \Omega a implies lim_{t \rightarrow \infty} x(t) = a$. \\
+    If this property holds for $t \rightarrow - \infty$, then $x = a$ is called a
+    \textbf{negative attractor}.\\
+    A solution $x(t)$ of $\dot{x} = f(x)$ is called \textbf{periodic} if there exists
+    $T > 0$ such that $x(t + T) = x(t), \forall t \in \mathbb{R}$.
+    \begin{lemma}
+      Periodic solutions correspond to closed trajectories in phase space and vice versa.
+    \end{lemma}
+    A \textbf{limit cycle} is an isolated closed trajectory. \textbf{Isolated}
+    means that neighboring trajectories are not closed; they spiral either toward
+    or away from the limit cycle. \\
+    \todo{picture 8}
+
+
+
+
+
+
+\end{document}
