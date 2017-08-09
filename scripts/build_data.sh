@@ -23,7 +23,9 @@ wait
 echo "$(tput setaf 1)$(tput setab 7)------- Tree and Interaction-data downloaded (2/8) --------$(tput sgr 0)" 1>&3
 #Initializing the collections (and delete old stuff)
 # -------- -------- interactions: add to arangodb and tag entries -------- -------- #
-arangosh --server.authentication false --javascript.execute-string 'db._drop("interaction_tsv")'
+arangosh --server.authentication false --javascript.execute-string 'db._drop("interaction_tsv");
+                                                                    db._drop("nodes_otl");
+                                                                    db._drop("edges_otl")'
 arangoimp --file interactions.tsv --type tsv --collection interaction_tsv --create-collection true --server.authentication false
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collections initialized (3/8) --------$(tput sgr 0)" 1>&3
@@ -39,19 +41,19 @@ mkdir tree
 mkdir tree/labelled_supertree
 node --max_old_space_size=4096 ../scripts/buildTree/prepareJson.js
 echo "$(tput setaf 1)$(tput setab 7)------- tree prepared (3,75/8) --------$(tput sgr 0)" 1>&3
-arangoimp --file tree/labelled_supertree/ottnames-nodes.tsv --type tsv --collection nodes_otl --create-collection true
-arangoimp --file tree/labelled_supertree/ottnames-edges.tsv --type tsv --collection edges_otl --create-collection-type edge --create-collection true
+arangoimp --file tree/labelled_supertree/ottnames-nodes.tsv --type tsv --collection nodes_otl --create-collection true --server.authentication false
+arangoimp --file tree/labelled_supertree/ottnames-edges.tsv --type tsv --collection edges_otl --create-collection-type edge --create-collection true --server.authentication false
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interaction entries tagged; OTL Tree imported (4/8) --------$(tput sgr 0)" 1>&3
-# node build_freeliving_source.js
-# node build_freeliving_target.js
-# node build_parasites_source.js
-# node build_parasites_target.js
-node ../scripts/marius/tagging/tag_tree_freeliving_source.js
-node ../scripts/marius/tagging/tag_tree_freeliving_target.js
-node ../scripts/marius/tagging/tag_tree_parasites_source.js
-node ../scripts/marius/tagging/tag_tree_parasites_target.js
-wait
+# # node build_freeliving_source.js
+# # node build_freeliving_target.js
+# # node build_parasites_source.js
+# # node build_parasites_target.js
+# node ../scripts/marius/tagging/tag_tree_freeliving_source.js
+# node ../scripts/marius/tagging/tag_tree_freeliving_target.js
+# node ../scripts/marius/tagging/tag_tree_parasites_source.js
+# node ../scripts/marius/tagging/tag_tree_parasites_target.js
+# wait
 # arangosh --server.authentication false --javascript.execute-string 'db._query("FOR doc in nodes_otl_sub INSERT doc IN nodes_otl_sub_bak");
 #                                                                     db._query("FOR doc in edges_otl_sub INSERT doc IN edges_otl_sub_bak");' 
 # wait
