@@ -4,6 +4,7 @@ var Newick = require('newick');
 var data = fs.readFileSync("opentree9.1_tree/labelled_supertree/labelled_supertree_ottnames.tre").toString();
 // var dataPath = "../data/grafted_solution/";
 var dataPath = "tree/labelled_supertree/";
+var databaseNameNodes = "nodes_otl/";
 
 var parsedData = Newick.parse(data);
 
@@ -136,8 +137,8 @@ function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
             nodesTsv = data[2];
             edgesTsv = data[3];
             // Fill graphFormat edges:
-            graphFormat.edges.push({_from: "EukaryotaNodes/" + obj.name, _to: "EukaryotaNodes/" + obj.branchset[i].name});
-            edgesTsv.push("EukaryotaNodes/ott" + obj.name.split("ott")[1] + "\t" + "EukaryotaNodes/ott" + obj.branchset[i].name.split("ott")[1] + "\n");
+            graphFormat.edges.push({_from: databaseNameNodes + obj.name, _to: databaseNameNodes + obj.branchset[i].name});
+            edgesTsv.push(databaseNameNodes "ott" + obj.name.split("ott")[1] + "\t" + databaseNameNodes + "ott" + obj.branchset[i].name.split("ott")[1] + "\n");
             i++;
         }
     }
