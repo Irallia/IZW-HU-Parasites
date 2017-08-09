@@ -1,11 +1,4 @@
-data/grafted_solution/ottnames-graph_prepared.json
-data/labelled_supertree/ottnames-graph_prepared.json
-data/grafted_solution/ottnames-childrenPlot.csv
-data/grafted_solution/ottnames-edges.tsv
-data/grafted_solution/ottnames-nodes.tsv
-data/grafted_solution/ottnames-prepared.json
-data/labelled_supertree/ottnames-edges.tsv
-data/labelled_supertree/ottnames-nodes.tsv
+data/
 Masterarbeit - Latex/Figures/tex-tikz-figures - examples/
 Masterarbeit - Latex/Masterarbeit - Lydia Buntrock - v1.out
 Masterarbeit - Latex/Masterarbeit - Lydia Buntrock - v1.aux

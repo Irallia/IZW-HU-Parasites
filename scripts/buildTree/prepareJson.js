@@ -1,9 +1,9 @@
 var fs = require("fs");
 var Newick = require('newick');
 // var data = fs.readFileSync("../opentree9.1_tree/grafted_solution/grafted_solution_ottnames.tre").toString();
-var data = fs.readFileSync("../opentree9.1_tree/labelled_supertree/labelled_supertree_ottnames.tre").toString();
+var data = fs.readFileSync("opentree9.1_tree/labelled_supertree/labelled_supertree_ottnames.tre").toString();
 // var dataPath = "../data/grafted_solution/";
-var dataPath = "../data/labelled_supertree/";
+var dataPath = "tree/labelled_supertree/";
 
 var parsedData = Newick.parse(data);
 
