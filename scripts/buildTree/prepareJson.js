@@ -38,7 +38,7 @@ console.log("maxId = ", maxId);
 function decreaseData(data) {
     data = data.branchset[0];
     console.log("use only ", data.name, ":");   // Eukaryota_ott304358
-    data = data.branchset[1];
+    // data = data.branchset[1];
     // console.log("-> ", data.name, ":");         // Opisthokonta_ott332573
     // data = data.branchset[0];
     // console.log("-> ", data.name, ":");         // mrcaott24ott98036
@@ -108,59 +108,120 @@ fs.writeFile((dataPath + "ottnames-childrenPlot.csv"), childrenPlotCsv, function
 console.log("childrenPlot csv saved");
 console.log("-----------------------------------------------");
 
-function setOttIds(obj, nextId, graphFormat, nodesTsv, edgesTsv) {
-    if (obj.name == undefined) {
-        obj[name] = "ott" + nextId;
-        nextId++;
-    } else if (obj.name.split("ott").length = 1) {
-        obj.name = obj.name + "ott" + nextId;
-        nextId++;
+function setOttIds(obj, nextId, nodesTsv, edgesTsv) {
+    var name = obj.name;
+    var ottArray = [];
+    var ottArray_ = [];
+    var ottArrayBlank = [];
+    if (name != undefined) {
+        if (name.startsWith("'")) {
+            name = name.slice(1);
+        }
+        if (name.endsWith("'")) {
+            name = name.slice(0, -1);
+        }
+        ottArray = name.split("ott");
+        ottArray_ = name.split("_ott");
+        ottArrayBlank = name.split(" ott");
     }
-    // Fill graphFormat nodes:
-    graphFormat.nodes.push({id: obj.name});
 
-    var id = "ott" + obj.name.split("ott")[1];
-    var name = obj.name.split("ott")[0].slice(0, -1);
-    if (obj.name.split("mrcaott").length > 1) {
-        id = "mrcaott" + obj.name.split("mrcaott")[1];
-        name = obj.name.split("mrcaott")[0].slice(0, -1);
+    if (name == undefined) {
+        obj.ott = "ott" + nextId;
+        obj.name = "";
+        // obj[name] = "ott" + nextId;
+        nextId++;
+    } else if (ottArray.length == 1) {
+        obj.ott = "ott" + nextId;
+        nextId++;
+    } else if (ottArray_.length > 1) {
+        if (ottArray_.length == 2) {
+            obj.ott = "ott" + ottArray_[1];
+            obj.name = ottArray_[0];
+        } else if (name.includes("otta") 
+                || name.includes("otte")
+                || name.includes("otthi")
+                || name.includes("otti")
+                || name.includes("ottkei")
+                || name.includes("ottleyi")
+                || name.includes("ottnangensis")
+                || name.includes("otto")
+                || name.includes("ottu")
+                || name.includes("ottwayensis")) {
+            obj.ott = "ott" + ottArray_[2];
+            obj.name = ottArray_[0] + "_ott" + ottArray_[1];
+            // console.log("extra case: " + name);
+        } else {
+            // console.log("some other _ott");
+            console.log(name);
+        }
+    } else if (ottArrayBlank.length > 1) {
+        if (ottArrayBlank.length == 2) {
+            obj.ott = "ott" + ottArrayBlank[1];
+            obj.name = ottArrayBlank[0];
+        } else if (name.includes("otter") || name.includes("otto")) {
+            obj.ott = "ott" + ottArrayBlank[2];
+            obj.name = ottArrayBlank[0] + " ott" + ottArrayBlank[1];
+            // console.log("extra case: " + name);
+        } else {
+            console.log("some other ' 'ott");
+            console.log(name);
+        }
+    } else if (ottArray.length == 2) {
+        if (ottArray[0] == "") {
+            obj.ott = name;
+            obj.name = "";
+        } else if (name.includes("ottus") || name.includes("cott") || name.includes("Sympotthastia")) {
+            obj.ott = "ott" + nextId;
+            nextId++;
+            // console.log("extra case: " + name);
+        } else {
+            console.log("one ott inside:");
+            console.log(name);
+        }
+    } else if (ottArray.length > 2) {
+        if (name.includes("mrcaott")) {
+            obj.ott = name;
+            obj.name = "";
+            if (name.split("mrcaott")[0] > 0) {
+                console.log("there is a name with mrcaott:");
+                console.log(name);
+            }
+        } else {
+            console.log("more than one ott inside:");
+            console.log(name);
+        }
+    } else {
+        console.log("other problems:");
+        console.log(name);
     }
 
-    nodesTsv.push(id + "\t" + name + "\n");
+    nodesTsv.push(obj.ott + "\t" + obj.name + "\n");
     if (obj.branchset) {
         var i = 0;
         while (i < obj.branchset.length) {
             // go deeper:
-            data = setOttIds(obj.branchset[i], nextId, graphFormat, nodesTsv, edgesTsv);
+            data = setOttIds(obj.branchset[i], nextId, nodesTsv, edgesTsv);
             nextId = data[0];
-            graphFormat = data[1];
-            nodesTsv = data[2];
-            edgesTsv = data[3];
-            // Fill graphFormat edges:
-            graphFormat.edges.push({_from: databaseNameNodes + obj.name, _to: databaseNameNodes + obj.branchset[i].name});
-            edgesTsv.push(databaseNameNodes "ott" + obj.name.split("ott")[1] + "\t" + databaseNameNodes + "ott" + obj.branchset[i].name.split("ott")[1] + "\n");
+            nodesTsv = data[1];
+            edgesTsv = data[2];
+            edgesTsv.push(databaseNameNodes + obj.ott + "\t" + databaseNameNodes + obj.branchset[i].ott + "\n");
             i++;
         }
     }
-    return [nextId, graphFormat, nodesTsv, edgesTsv];
+    return [nextId, nodesTsv, edgesTsv];
 }
 
 console.log("-------- 5) set OTT Ids & build graph files ---");
 
-var graphFormat = {
-    nodes: [],
-    edges: []
-}
 // nodes.tsv
 var nodesTsv = ["_key\tname\n"];
 // edges.tsv
 var edgesTsv = ["_from\t_to\n"];
 
-var data = setOttIds(parsedData, maxId + 1, graphFormat, nodesTsv, edgesTsv);
+var data = setOttIds(parsedData, maxId + 1, nodesTsv, edgesTsv);
 var nextId = data[0]
-graphFormat = data[1]
-nodesTsv = data[2]
-edgesTsv = data[3]
+nodesTsv = data[1]
+edgesTsv = data[2]
 
 console.log("number of new Ids: nextId - maxId =", nextId - maxId);
 console.log("-----------------------------------------------");
@@ -178,13 +239,6 @@ fs.writeFile((dataPath + "ottnames-prepared.json"), jsonData, function (err) {
     }
 });
 
-// var jsonGraphData = JSON.stringify(graphFormat);
-// fs.writeFile(dataPath + "ottnames-graph_prepared.json", jsonGraphData, function (err) {
-//     if (err) {
-//         return console.log(err);
-//     }
-// });
-
 var nodesTsvFile = fs.createWriteStream(dataPath + "ottnames-nodes.tsv");
 nodesTsvFile.on('error', function(err) {
     return console.log(err);
@@ -193,7 +247,6 @@ nodesTsv.forEach(function(v) {
     nodesTsvFile.write(v);
 });
 nodesTsvFile.end();
-
 
 var edgesTsvFile = fs.createWriteStream(dataPath + "ottnames-edges.tsv");
 edgesTsvFile.on('error', function(err) {

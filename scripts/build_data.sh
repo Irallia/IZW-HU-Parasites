@@ -33,7 +33,6 @@ node ../scripts/marius/tagging/tag_interactionstsv_freelivings.js
 node ../scripts/marius/tagging/tag_interactionstsv_parass.js
 node ../scripts/marius/tagging/tag_interactionstsv_parast.js
 node ../scripts/marius/tagging/tag_interactionstsv_freelivingt.js
-echo "interactions tagged"
 echo "$(tput setaf 1)$(tput setab 7)------- interactions tagged (3,5/8) --------$(tput sgr 0)" 1>&3
 # -------- -------- tree: prepare and add to arangodb -------- -------- #
 npm install newick
