@@ -126,16 +126,16 @@ function setOttIds(obj, nextId, nodesTsv, edgesTsv) {
     }
 
     if (name == undefined) {
-        obj.ott = "ott" + nextId;
+        obj.ott = nextId;
         obj.name = "";
         // obj[name] = "ott" + nextId;
         nextId++;
     } else if (ottArray.length == 1) {
-        obj.ott = "ott" + nextId;
+        obj.ott = nextId;
         nextId++;
     } else if (ottArray_.length > 1) {
         if (ottArray_.length == 2) {
-            obj.ott = "ott" + ottArray_[1];
+            obj.ott = ottArray_[1];
             obj.name = ottArray_[0];
         } else if (name.includes("otta") 
                 || name.includes("otte")
@@ -147,7 +147,7 @@ function setOttIds(obj, nextId, nodesTsv, edgesTsv) {
                 || name.includes("otto")
                 || name.includes("ottu")
                 || name.includes("ottwayensis")) {
-            obj.ott = "ott" + ottArray_[2];
+            obj.ott = ottArray_[2];
             obj.name = ottArray_[0] + "_ott" + ottArray_[1];
             // console.log("extra case: " + name);
         } else {
@@ -156,10 +156,10 @@ function setOttIds(obj, nextId, nodesTsv, edgesTsv) {
         }
     } else if (ottArrayBlank.length > 1) {
         if (ottArrayBlank.length == 2) {
-            obj.ott = "ott" + ottArrayBlank[1];
+            obj.ott = ottArrayBlank[1];
             obj.name = ottArrayBlank[0];
         } else if (name.includes("otter") || name.includes("otto")) {
-            obj.ott = "ott" + ottArrayBlank[2];
+            obj.ott = ottArrayBlank[2];
             obj.name = ottArrayBlank[0] + " ott" + ottArrayBlank[1];
             // console.log("extra case: " + name);
         } else {
@@ -168,10 +168,10 @@ function setOttIds(obj, nextId, nodesTsv, edgesTsv) {
         }
     } else if (ottArray.length == 2) {
         if (ottArray[0] == "") {
-            obj.ott = name;
+            obj.ott = ottArray[1];
             obj.name = "";
         } else if (name.includes("ottus") || name.includes("cott") || name.includes("Sympotthastia")) {
-            obj.ott = "ott" + nextId;
+            obj.ott = nextId;
             nextId++;
             // console.log("extra case: " + name);
         } else {
