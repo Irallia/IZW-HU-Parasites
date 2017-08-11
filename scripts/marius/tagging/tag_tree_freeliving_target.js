@@ -25,6 +25,6 @@
          freeliving: doc._key == '${ott}' ? 1 : 0,
          globi: doc._key == '${ott}' ? 1 : 0,
          interactionTypeNameFL: doc._key == '${ott}' ? '${dok.interactionTypeName}' : 'null',
-         directionFL: 'target' }`);
+         directionFL: 'target' } IN nodes_otl`);
  }
  return; 

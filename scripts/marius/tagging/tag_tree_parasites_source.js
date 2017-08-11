@@ -25,6 +25,6 @@
          parasite: doc._key == '${ott}' ? 1 : 0,
          globi: doc._key == '${ott}' ? 1 : 0,
          interactionTypeNameP: doc._key == '${ott}' ? '${dok.interactionTypeName}' : 'null',
-         directionP: 'source' }`);
+         directionP: 'source' } IN nodes_otl`);
  }
  return; 

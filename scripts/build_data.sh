@@ -45,14 +45,14 @@ arangoimp --file tree/labelled_supertree/ottnames-edges.tsv --type tsv --collect
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interaction entries tagged; OTL Tree imported (4/8) --------$(tput sgr 0)" 1>&3
 # # node build_freeliving_source.js
-# # node build_freeliving_target.js
-# # node build_parasites_source.js
-# # node build_parasites_target.js
-# node ../scripts/marius/tagging/tag_tree_freeliving_source.js
-# node ../scripts/marius/tagging/tag_tree_freeliving_target.js
-# node ../scripts/marius/tagging/tag_tree_parasites_source.js
-# node ../scripts/marius/tagging/tag_tree_parasites_target.js
-# wait
+# node build_freeliving_target.js
+# node build_parasites_source.js
+# node build_parasites_target.js
+node ../scripts/marius/tagging/tag_tree_freeliving_source.js
+node ../scripts/marius/tagging/tag_tree_freeliving_target.js
+node ../scripts/marius/tagging/tag_tree_parasites_source.js
+node ../scripts/marius/tagging/tag_tree_parasites_target.js
+wait
 # arangosh --server.authentication false --javascript.execute-string 'db._query("FOR doc in nodes_otl_sub INSERT doc IN nodes_otl_sub_bak");
 #                                                                     db._query("FOR doc in edges_otl_sub INSERT doc IN edges_otl_sub_bak");' 
 # wait
