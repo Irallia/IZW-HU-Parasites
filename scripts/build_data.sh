@@ -36,6 +36,7 @@ node ../scripts/marius/tagging/tag_interactionstsv_freelivingt.js
 echo "$(tput setaf 1)$(tput setab 7)------- interactions tagged (3,5/8) --------$(tput sgr 0)" 1>&3
 # -------- -------- tree: prepare and add to arangodb -------- -------- #
 npm install newick
+npm install biojs-io-newick
 mkdir tree
 mkdir tree/labelled_supertree
 node --max_old_space_size=4096 ../scripts/buildTree/prepareJson.js

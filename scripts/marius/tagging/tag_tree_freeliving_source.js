@@ -19,7 +19,7 @@ function testAvailable(cursor) {
 }
 
 function writeNewRankPath(ott, dok) {   // Eukaryota_ott304358
-    db.query(`FOR doc IN (FOR v,e IN OUTBOUND SHORTEST_PATH 'nodes_otl/ott304358' TO 'nodes_otl/${ott}' edges_otl RETURN v)
+    db.query(`FOR doc IN (FOR v,e IN OUTBOUND SHORTEST_PATH 'nodes_otl/304358' TO 'nodes_otl/${ott}' edges_otl RETURN v)
     FILTER doc
     UPDATE doc WITH {
         freeliving: doc._key == '${ott}' ? 1 : 0,

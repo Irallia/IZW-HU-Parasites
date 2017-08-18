@@ -18,7 +18,7 @@ function testAvailable(cursor) {
     });
 }
 
-function writeNewRankPath(ott, dok) {
+function writeNewRankPath(ott, dok) {   // Eukaryota_ott304358
     db.query(`for doc in (FOR v,e IN OUTBOUND SHORTEST_PATH 'nodes_otl/304358' TO 'nodes_otl/${ott}' edges_otl return v)
     FILTER doc
     UPDATE doc WITH {
