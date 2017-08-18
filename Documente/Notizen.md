@@ -3,6 +3,13 @@
     * Open Tree of Life aims to construct a comprehensive, dynamic and digitally-available tree of life by synthesizing published phylogenetic trees along with taxonomic data. The project is a collaborative effort between 11 PIs across 10 institutions. Funding is from NSF AVAToL #1208809.
     * Cite the Open Tree of Life: Hinchliff, Cody E., et al. "Synthesis of phylogeny and taxonomy into a comprehensive tree of life." Proceedings of the National Academy of Sciences 112.41 (2015): 12764-12769. + https://doi.org/10.1073/pnas.1423041112
 
+# How to Collapse and Resolve Multichotomies
+* "Resolve the multichotomies randomly (the default) or in the order they appear in the tree."
+
+    ```
+    https://rdrr.io/cran/ape/man/multi2di.html
+    ```
+
 # Algorithmen / Methoden für ``ancestral-state reconstruction`` (ASR)
 * maximum parsimony (MP)
 * maximum likelihood (ML) / Bayesian
@@ -69,6 +76,12 @@
     * The tree preserves conflict among phylogenies and between phylogenies an the taxonomy.
 * Mapping Mutations on Phylogenies (Rasmus Nielsen - 2002)
     * The common approaches for mapping mutations based on parsimony have lacked a solid statistical foundation. He presents a Bayesian method for mapping mutations on a phylogeny.
+* Testing for independence between evolutionary processes (Abdelkader Behdenna, Joel Pothier, Sophie S Abby, Amaury Lambert, Guillaume Achaz - 2016)
+    * "Evolutionary events co-occurring along phylogenetic trees usually point to complex adaptive phenomena, sometimes implicating epistasis. While a number of methods have been developed to account for co-occurence of events on the same internal or external branch of an evolutionary tree, there is a need to account for the larger diversity of possible relative positions of events in a tree. Here we propose a method to quantify to what extent two or more evolutionary events are associated on a phylogenetic tree."
+* Simple Reconstruction of Binary Near-Perfect Phylogenetic Trees (Srinath Sridhar, Kedar Dhamdhere, Guy E. Blelloch, Eran Halperin, R. Ravi and Russell Schwartz - 2006)
+    * Emanuel:
+    tree reconstruction. Also das erstellen eines Baumes.
+    Ist interessant, da es (vorher, falls das wirklich funktioniert) keine nicht-heuristischen Algorithmen hab die bei Datensätze von relevanter Größe funktionieren.
 
 
 * http://www.phytools.org/eqg/Exercise_5.2/
@@ -78,3 +91,52 @@
         * 3. Estimating ancestral character states for discrete characters under a continuous-time Markov chain.
         * 4. Simulating stochastic character histories for a discrete character (stochastic character mapping).
         * 5. Simultaneously plotting discrete & continuous character reconstructions.
+
+# Vorgeschlagene Paper
+Relevant?!:
+* Effects of Phylogenetic Signal on Ancestral State Reconstruction - GLENN LITSIOS AND NICOLAS SALAMIN
+    Emanuel:
+    We then reconstructed the characters on the phylograms and chronograms using a widely used ML algorithm (Pagel 1994) implemented in geiger (Harmon et al. 2008) 
+    ... aus dem paper. Vorher haben sie Bäume simuliert und kontinuierliche character darauf evolvieren lassen. Diese Charter änder  sich mehr oder weniger stark mit simulirter Zeit oder DNA korreliert.
+    Dann analysieren sie wie gut die Algorithmen noch funktionieren. Da diese die Zeit mit betrachten. Bzw wie gut sie funktionieren wenn man die DNA Distanz statt der Zeit verwendet.
+    Der auf das Zitat oben folgende Abschnitt gibt dann noch drei andere Distanz Maße an, zusätzlich zu der einfachen Distanz auf die wir schon selbst gekommen sind. Und zitiert die Quellen dafür:
+    For each simulated data set, we summed over the differences between the inferred and the true ancestral states at each node to obtain one value per tree. This gave a relative measure of the error in the character state reconstructed, with higher values meaning larger differences between the inferred and the true values. We also measured the tree imbalance using the Colless index (Colless 1995), the size of the clade originating on Branch B, and the phylogenetic signal using both the K (Blomberg et al. 2003) and λ (Pagel 1999) indices.
+    Übrigens: es gibt auch eine Datenbank für Divergenz Zeiten. Die könnten wir falls wir das brauchen auch noch auf unseren baum packen.
+    Danach kommen dann sogar noch Primaten für dich in dem Paper vor. Das perfekte Paper für @irallia :monkey:
+* Diversity and evolution of ectomycorrhizal host associations in the Sclerodermatineae (Boletales, Basidiomycota) - Andrew W. Wilson, Manfred Binder and David S. Hibbett
+    Emanuel:
+    Diversity and evolution of ectomycorrhizal host associations in the Sclerodermatineae
+    "Binary state coding defined host states as either angiosperms or gymnosperms."
+    "Multi-state coding defined host states by host family association. The host families for analyses include: Betulaceae, Cistaceae, Dipterocarpaceae, Ericaceae, Fagaceae, Fabaceae (Mimosoideae and ‘Caesalpinioideae’), Myrtaceae, Nyctaginaceae, Pinaceae, Oleaceae, Polygonaceae, Salicaceae, and Sapindaceae (Notes S2)"
+    "Maximum likelihood ASR analysis was implemented in BayesTraits (Pagel et al., 2004). Using the 112-taxon supermatrix data set,"
+    D.h. sie haben gleichzeitig auch die phylogenetischen anhand einer DNA supermatrix (= mehrere gene) abgeschätzt.
+    Deshalb "Maximum likelihood binary and multi-state analyses were performed on 100 posterior sampled phylogenies produced from Bayesian analyses"
+    Nach den Divergenz Zeiten rekonstruieren die dann sogar noch die ancestral ranges vor den ancestal Hosts.
+    Das zweite Paper hab ich nicht ganz gelesen.   Ist aber definitiv relevant!
+
+
+* A Quick Guide to Organizing Computational Biology Projects: http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424
+    Emanuel for future work:
+    (In a more distant future something like this out of the shit we are sequencing will link @irallia and @victor_h_jarquin work.)
+* Inferring species interactions from co-occurrence data with Markov networks
+    * "Inferring species interactions from co-occurrence data ... One difficulty is that a single pairwise interaction can ripple through an ecological network and produce surprising indirect consequences. For example, the negative correlation between two competing species can be reversed in the presence of a third species that is capable of outcompeting both of them. Here, I apply models from statistical physics, called Markov networks or Markov random fields, that can predict the direct and indirect consequences of any possible species interaction matrix. Interactions in these models can also be estimated from observed co-occurrence rates via maximum likelihood, controlling for indirect effects."
+* Ecological interactions and the Netflix problem
+    * Ein etwas anderer Ansatz:
+    * "Species interactions are a key component of ecosystems but we generally have an incomplete picture of who-eats-who in a given community. ... Here, we explore the K nearest neighbour approach, with a special emphasis on recommendation, along with a supervised machine learning technique. ... By removing a prey from a predator, we find that recommenders can guess the missing prey around 50% of the times on the first try, with up to 881 possibilities. Traits do not improve significantly the results for the K nearest neighbour, although a simple test with a supervised learning approach (random forests) show we can predict interactions with high accuracy using only three traits per species. This result shows that binary interactions can be predicted without regard to the ecological community given only three variables: body mass and two variables for the species’ phylogeny."
+
+
+
+    Emanuel for Parnika:
+    (Here are my first reading suggestions for @parnika. Checking these out will give other PhD students @alice @totta @victor_h_jarquin @enas.alkhlifeh an impression what Parnika will do.
+    @irallia and @parnika (will) do basically the same thing. Proteins or species doesn't matter.)
+* Rapid identification of genes controlling virulence and immunity in malaria parasites
+    * "Here we present a rapid genome-wide approach capable of identifying multiple genetic drivers of medically relevant phenotypes within malaria parasites via a single experiment at single gene or allele resolution." ...  "Here we use a novel approach to study two important properties of the parasite; the rate at which parasites grow within a single host, and the means by which parasites are affected by the host immune system."
+* Functional Profiling of a Plasmodium Genome Reveals an Abundance of Essential Genes
+    * "The genomes of malaria parasites contain many genes of unknown function. To assist drug development through the identification of essential genes and pathways, we have measured competitive growth rates in mice of 2,578 barcoded Plasmodium berghei knockout mutants, representing >50% of the genome, and created a phenotype database."
+* Genes involved in host–parasite interactions can be revealed by their correlated expression
+    * "Correlated gene expression profiles can be used to identify molecular interactions within a species. Here we have extended the concept to different species, showing that genes with correlated expression are more likely to encode proteins, which directly or indirectly participate in host–parasite interaction."
+*   Computational approaches for prediction of pathogen-host protein-protein interactions
+    * "Molecular interactions between pathogens and their hosts are the key parts of the infection mechanisms." ... "The computational methods primarily utilize sequence information, protein structure and known interactions. Classic machine learning techniques are used when there are sufficient known interactions to be used as training data. On the opposite case, transfer and multitask learning methods are preferred. Here, we present an overview of these computational approaches for predicting PHI systems, discussing their weakness and abilities, with future directions."
+
+
+Ecological interactions and the Netflix problem
