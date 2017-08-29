@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Build system for everything this will take about X minutes (8 cores ivy bridge, 64 GB RAM)
+# Build system for everything. This will take about 60 minutes (8 cores ivy bridge, 64 GB RAM)
 # -------- -------- Prepare logfile and runtime computation -------- -------- #
 echo "Logifle written to: build_data.log"
 exec 3>&1 1>>build_data.log 2>&1            #write stdout 1,2 to logfile 3 to console
@@ -17,12 +17,11 @@ cd data                                     #change dir into data
 # -------- -------- get data and unzip -------- -------- #
 if wget -q https://s3.amazonaws.com/globi/snapshot/target/data/tsv/interactions.tsv.gz -nv; then echo "GLoBI DL succesful"; else echo "GLoBI DL-link broken" 1>&3; exit 1;  fi
 gunzip interactions.tsv.gz
-if wget -q http://files.opentreeoflife.org/synthesis/opentree9.1/opentree9.1_tree.tgz -nv; then echo "OTT DL succesful"; else echo "OTL DL-link broken" 1>&3; exit 1;  fi
+if wget -q http://files.opentreeoflife.org/synthesis/opentree9.1/opentree9.1_tree.tgz -nv; then echo "OTT DL succesful"; else echo "OTT DL-link broken" 1>&3; exit 1;  fi    # download OTT and post error msg if link is unreachable
 tar -xf opentree9.1_tree.tgz                #untar OTT
 rm opentree9.1_tree.tgz                     #remove .tar
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Tree and Interaction-data downloaded (2/8) --------$(tput sgr 0)" 1>&3
-#Initializing the collections (and delete old stuff)
 # -------- -------- interactions: add to arangodb and tag entries -------- -------- #
 arangosh --server.authentication false --javascript.execute-string 'db._drop("interaction_tsv");
                                                                     db._drop("nodes_otl");
