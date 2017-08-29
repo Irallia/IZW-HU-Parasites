@@ -3,11 +3,11 @@
 const db = require('arangojs')();
 
 db.query(`for doc in interaction_tsv
-        filter doc.freeliving == 1 && doc.directionF == 'source'
+        filter doc.parasite == 1 && doc.directionF == 'source'
         return doc`, {}, { ttl: 1000 * 3600 }).then(testAvailable); //filter for interaction; ie isparasyte
- 
+
 function testAvailable(cursor) {
-    if (!cursor.hasNext()) { console.log('Finished building freeliving(source)'); return };
+    if (!cursor.hasNext()) { console.log('Finished building parasites(source)'); return };
 
     cursor.next().then(doc => {
         try {
@@ -19,12 +19,12 @@ function testAvailable(cursor) {
 }
 
 function writeNewRankPath(ott, dok) {   // Eukaryota_ott304358
-    db.query(`FOR doc IN (FOR v,e IN OUTBOUND SHORTEST_PATH 'nodes_otl/304358' TO 'nodes_otl/${ott}' edges_otl RETURN v)
-    FILTER doc
-    UPDATE doc WITH {
-        freeliving: doc._key == '${ott}' ? 1 : 0,
-        globi: doc._key == '${ott}' ? 1 : 0,
-        interactionTypeNameFL: doc._key == '${ott}' ? '${dok.interactionTypeName}' : 'null',
-        directionFL: 'source' } IN nodes_otl`);
+    db.query(`
+        UPDATE '${ott}' WITH {
+            parasite: 1,
+            interactionTypeNameP: '${dok.interactionTypeName}',
+            directionFL: 'source'
+        } IN nodes_otl
+    `);
 }
 return;
