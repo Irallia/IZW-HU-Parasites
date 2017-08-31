@@ -31,24 +31,22 @@ arangoimp --file interactions.tsv --type tsv --collection interaction_tsv --crea
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collections initialized (3/8) --------$(tput sgr 0)" 1>&3
 node ../scripts/marius/tag_interactions.js    #tag all queried interaction entries in interacion_tsv
-echo "$(tput setaf 1)$(tput setab 7)------- interactions tagged (3,5/8) --------$(tput sgr 0)" 1>&3
+echo "$(tput setaf 1)$(tput setab 7)------- interactions tagged (4/8) --------$(tput sgr 0)" 1>&3
 # -------- -------- tree: prepare and add to arangodb -------- -------- #
 npm install newick
 npm install biojs-io-newick
 mkdir tree
 mkdir tree/labelled_supertree
 node --max_old_space_size=4096 ../scripts/buildTree/prepareJson.js
-echo "$(tput setaf 1)$(tput setab 7)------- tree prepared (3,75/8) --------$(tput sgr 0)" 1>&3
+echo "$(tput setaf 1)$(tput setab 7)------- tree prepared (5/8) --------$(tput sgr 0)" 1>&3
 arangoimp --file tree/labelled_supertree/ottnames-nodes.tsv --type tsv --collection nodes_otl --create-collection true --server.authentication false
 arangoimp --file tree/labelled_supertree/ottnames-edges.tsv --type tsv --collection edges_otl --create-collection-type edge --create-collection true --server.authentication false
 wait
-echo "$(tput setaf 1)$(tput setab 7)------- Interaction entries tagged; OTL Tree imported (4/8) --------$(tput sgr 0)" 1>&3
+echo "$(tput setaf 1)$(tput setab 7)------- Interaction entries tagged; OTL Tree imported (6/8) --------$(tput sgr 0)" 1>&3
 node ../scripts/tagTree/tag_tree.js
 wait
-# arangosh --server.authentication false --javascript.execute-string 'db._query("FOR doc in nodes_otl_sub INSERT doc IN nodes_otl_sub_bak");
-#                                                                     db._query("FOR doc in edges_otl_sub INSERT doc IN edges_otl_sub_bak");' 
-# wait
-# echo "$(tput setaf 1)$(tput setab 7)------- Done generating counts (7/8) --------$(tput sgr 0)" 1>&3
+echo "$(tput setaf 1)$(tput setab 7)------- Tree tagged (7/8) --------$(tput sgr 0)" 1>&3
+
 # node write_pis.js
 # node taxonomic_majority_censoring.js
 # node find_origins.js
