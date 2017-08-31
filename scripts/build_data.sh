@@ -43,7 +43,9 @@ arangoimp --file tree/labelled_supertree/ottnames-nodes.tsv --type tsv --collect
 arangoimp --file tree/labelled_supertree/ottnames-edges.tsv --type tsv --collection edges_otl --create-collection-type edge --create-collection true --server.authentication false
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interaction entries tagged; OTL Tree imported (6/8) --------$(tput sgr 0)" 1>&3
-node ../scripts/tagTree/tag_tree.js
+echo "start with tagging tree ..."
+node --max_old_space_size=4096 ../scripts/tagTree/tag_tree.js
+echo "tree tagged ..."
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Tree tagged (7/8) --------$(tput sgr 0)" 1>&3
 
