@@ -12,7 +12,7 @@ db.query(`FOR doc IN interaction_tsv
     doc.interactionTypeName == "parasitoidOf" ||
     doc.interactionTypeName == "endoparasitoidOf" ||
     doc.interactionTypeName == "pathogenOf"
-    UPDATE "${doc._key}" WITH {
+    UPDATE doc WITH {
         parasite: 1,
         directionP: "source",
         pname: doc.sourceTaxonName
@@ -23,7 +23,7 @@ db.query(`FOR doc IN interaction_tsv
 db.query(`FOR doc IN interaction_tsv
     FILTER doc.interactionTypeName == "hasParasite" ||
     doc.interactionTypeName == "hasPathogen"
-    UPDATE "${doc._key}" WITH {
+    UPDATE doc WITH {
         parasite: 1,
         directionP: "target",
         pname: doc.targetTaxonName
@@ -40,7 +40,7 @@ db.query(`FOR doc IN interaction_tsv
     doc.interactionTypeName == "pollinatedBy" ||
     doc.interactionTypeName == "hasParasite" ||
     doc.interactionTypeName == "hostOf"
-    UPDATE "${doc._key}" WITH {
+    UPDATE doc WITH {
         freeliving: 1,
         directionF: "source",
         fname: doc.sourceTaxonName
@@ -60,7 +60,7 @@ db.query(`FOR doc IN interaction_tsv
     doc.interactionTypeName == "endoparasiteOf" ||
     doc.interactionTypeName == "pathogenOf" ||
     doc.interactionTypeName == "hasHost"
-    UPDATE "${doc._key}" WITH {
+    UPDATE doc WITH {
         freeliving: 1,
         directionF: "target",
         fname: doc.targetTaxonName

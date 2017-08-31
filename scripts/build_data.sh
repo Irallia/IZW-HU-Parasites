@@ -34,7 +34,7 @@ echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collection
 # node ../scripts/marius/tag_interactionstsv_parass.js
 # node ../scripts/marius/tag_interactionstsv_parast.js
 # node ../scripts/marius/tag_interactionstsv_freelivingt.js
-node ../scripts/marius/tag_interactionsts.js    #tag all queried interaction entries in interacion_tsv
+node ../scripts/marius/tag_interactions.js    #tag all queried interaction entries in interacion_tsv
 echo "$(tput setaf 1)$(tput setab 7)------- interactions tagged (3,5/8) --------$(tput sgr 0)" 1>&3
 # -------- -------- tree: prepare and add to arangodb -------- -------- #
 npm install newick
