@@ -30,10 +30,6 @@ arangosh --server.authentication false --javascript.execute-string 'db._drop("in
 arangoimp --file interactions.tsv --type tsv --collection interaction_tsv --create-collection true --server.authentication false
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interactions imported and collections initialized (3/8) --------$(tput sgr 0)" 1>&3
-# node ../scripts/marius/tag_interactionstsv_freelivings.js
-# node ../scripts/marius/tag_interactionstsv_parass.js
-# node ../scripts/marius/tag_interactionstsv_parast.js
-# node ../scripts/marius/tag_interactionstsv_freelivingt.js
 node ../scripts/marius/tag_interactions.js    #tag all queried interaction entries in interacion_tsv
 echo "$(tput setaf 1)$(tput setab 7)------- interactions tagged (3,5/8) --------$(tput sgr 0)" 1>&3
 # -------- -------- tree: prepare and add to arangodb -------- -------- #
@@ -47,14 +43,7 @@ arangoimp --file tree/labelled_supertree/ottnames-nodes.tsv --type tsv --collect
 arangoimp --file tree/labelled_supertree/ottnames-edges.tsv --type tsv --collection edges_otl --create-collection-type edge --create-collection true --server.authentication false
 wait
 echo "$(tput setaf 1)$(tput setab 7)------- Interaction entries tagged; OTL Tree imported (4/8) --------$(tput sgr 0)" 1>&3
-# # node build_freeliving_source.js
-# node build_freeliving_target.js
-# node build_parasites_source.js
-# node build_parasites_target.js
-node ../scripts/tagTree/tag_tree_freeliving_source.js   #build sub-tree from freeliving (source) tagged interaction_tsv entries
-node ../scripts/tagTree/tag_tree_freeliving_target.js   #build sub-tree from freeliving (target) tagged interaction_tsv entries
-node ../scripts/tagTree/tag_tree_parasites_source.js    #build sub-tree from parasites (source) tagged interaction_tsv entries
-node ../scripts/tagTree/tag_tree_parasites_target.js    #build sub-tree from parasites (target) tagged interaction_tsv entries
+node ../scripts/tagTree/tag_tree.js
 wait
 # arangosh --server.authentication false --javascript.execute-string 'db._query("FOR doc in nodes_otl_sub INSERT doc IN nodes_otl_sub_bak");
 #                                                                     db._query("FOR doc in edges_otl_sub INSERT doc IN edges_otl_sub_bak");' 
