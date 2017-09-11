@@ -12,8 +12,7 @@ db.query(`FOR interaction IN interaction_tsv
                     freeliving: 1,
                     directionF: "source",
                     interactionTypeNameFL: interaction.interactionTypeName
-                } IN nodes_otl
-            return node`
+                } IN nodes_otl`
 );
 
 console.log("tag freeliving target");
@@ -26,8 +25,7 @@ FILTER interaction.freeliving == 1 && interaction.directionF == "target"
                 freeliving: 1,
                 directionF: "target",
                 interactionTypeNameFL: interaction.interactionTypeName
-            } IN nodes_otl
-        return node`
+            } IN nodes_otl`
 );
 
 console.log("tag parasites source");
@@ -40,8 +38,7 @@ FILTER interaction.parasite == 1 && interaction.directionP == "source"
                 parasite: 1,
                 directionP: "source",
                 interactionTypeNameP: interaction.interactionTypeName
-            } IN nodes_otl
-        return node`
+            } IN nodes_otl`
 );
 
 console.log("tag parasites target");
@@ -54,6 +51,5 @@ FILTER interaction.parasite == 1 && interaction.directionP == "target"
                 parasite: 1,
                 directionP: "target",
                 interactionTypeNameP: interaction.interactionTypeName
-            } IN nodes_otl
-        return node`
+            } IN nodes_otl`
 );
