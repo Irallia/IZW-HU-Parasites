@@ -21,16 +21,16 @@
           (Likelihood, parsimony and other algorithms for ancectral state reconstruction)\\
     	\end{Large}
     	\vspace{8mm}
-      Version 1\\
-      8.8.2017\\
+      Version 2\\
+      2.10.2017\\
     	\vspace{2cm}
     	Lydia Buntrock \\
       E-Mail: info@irallia.de\\
      	\vspace{5cm}
-    	\textbf{Betreuer:}\\
-      Prof. Dr. rer. nat. Emanuel Heitlinger\\
-      \& \\
+      \textbf{Betreuer:}\\
       Dr. Bernhard Y. Renard\\
+      \& \\
+      Prof. Dr. rer. nat. Emanuel Heitlinger\\      
   	\end{center}
   	\clearpage
   \end{titlepage}
@@ -39,17 +39,17 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Abstract}
-  The abstract is a concise and accurate summary of the scholarly work described in the document. It 
-  states the problem, the methods of investigation, and the general conclusions, and should not 
-  contain tables, graphs, complex equations, or illustrations. There is a single scholarly abstract 
-  for the entire work, and it must not exceed 350 words in length.
+  \todotext{The abstract} is a concise and accurate summary of the scholarly work described in the 
+  document. It states the problem, the methods of investigation, and the general conclusions, and 
+  should not contain tables, graphs, complex equations, or illustrations. There is a single 
+  scholarly abstract for the entire work, and it must not exceed 350 words in length.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Summary}
-  1 page presenting the research problem, the main results, conclusion and how the thesis advances 
-  the field. \\
+  \todotext{1 page} presenting the research problem, the main results, conclusion and how the thesis 
+  advances the field. \\
   The lay or public summary explains the key goals and contributions of the research/scholarly work 
   in terms that can be understood by the general public. It must not exceed 150 words in length.
 
@@ -196,6 +196,69 @@
     that the exercise does something else for you, revealing a better way for you to construct, or 
     reconstruct, the rest of your manuscript!
 
+  %--------------------------------------------------------------------------------------------------- 
+  \section{Definitions}
+    \begin{definition} parsimony \cite{Cunningham1998}
+    \end{definition}
+    \begin{definition} taxonomy \\
+      Taxonomic tree – Taxonomy is the classification, identification and naming of organisms. It is 
+        usually richly informed by phylogenetics, but remains a methodologically and logically 
+        distinct discipline. The Taxonomic levels are Kingdom, Phylum, Class, Order, Family, Genus, 
+        Species and maybe some superclasses between them. \\
+      coarser classification \\
+      In each level the nodes can have more than 2 children
+    \end{definition}
+    \begin{definition} phylogeny \\
+      Phylogenetic tree – Phylogenetics is the study of evolutionary history and the relationships 
+        among individuals or groups of organisms. The result ot these analysis is a  phylogeny or 
+        phylogenetic tree. The phylogenetic tree is a hypothesis about the history of the evolutionary 
+        relationships of a group of organisms. \\
+      A perfect tree would be binary \\
+      no levels only time
+    \end{definition}
+    \begin{definition} parasite \\
+      Parasitism – Parasitism is an interaction relationship between two organisms living together in 
+        more or less intimate association in a relationship in which association is disadvantageous or 
+        destructive to one of the organisms. \\
+      http://www.ebi.ac.uk/QuickGO/term/GO:0072519 \\
+      ontology definition of the interaction 'is parasite of' from GloBI the database we use here. \\
+      exist very different types of parasites: endoparasites, broodparasitism, ... \\
+      40\% of species are parasites, but the most of them are understudied. \cite{Windsor1998}
+      
+      ontology definition.. explanation... \\
+      Property Hierarchy from ontobee: \\
+      ecologically related to $\supseteq$ biotically interacts with $\supseteq$ participates in a 
+        biotic-biotic interaction with $\supseteq$ symbiotically interacts with $\supseteq$ has host 
+        $\supseteq$ hyperparasite of, pathogen of, parasite of $\supseteq$ parasitoid of, obligate 
+        parasite of, facultative parasite of, stem parasite of, root parasite of, hemiparasite of, 
+        lays eggs in, ectoparasite of, endoparasite of, mesoparasite of, kleptoparasite of
+    \end{definition}
+
+  %--------------------------------------------------------------------------------------------------- 
+  \section{Motivation}
+    study parasites:
+    \begin{itemize}
+      \item für jedes Ökosystem unentbehrlich [Marius]
+      \item Wechselwirkungen in 75\% der Verbindungen in den Nahrungsmittelbahnen [Marius]
+      \item agglomerieren Schadstoffe, binden 30 bis 50\% der Schadstoffmasse innerhalb eines Ökosystem [Marius]
+      \item Dezimierung der Bevölkerung der störenden Arten [Marius]
+    \end{itemize}
+    big data:
+    \begin{itemize}
+      \item data accumulates faster than ever. Biological data is no exception but scientists still struggle to harvest this rapidly growing pile of databases. [Marius]      
+    \end{itemize}
+    origins of parasitism: \\
+    Many studies tried to find the origins of parasitism. For example in Nematodes [14, 29], in Lice 
+      [28], in Plathylminthes [30, 31] and in Metazoa in general [32, 33, 1] scientists searched for 
+      these origins. The most recent analysis is the one from Sara Weinstein and Armand M. Kuris. 
+      They came to the conclusion that parasitism evolved at least 223 times indepedently in the 
+      kingdom of Animalia. They found most of the origins inside the phylum Arthropoda [1]. [Marius] \\
+    Wenn wir die Ursprünge des Parasitums verstehen können, können wir die Evolution von Pathogenen 
+      vorhersagen und welche genetischen Anpassungen für eine Transition vom freien Leben zu einem 
+      parasitären Lebensstil notwendig sind [21]. Es könnte sogar zu einem Punkt führen, an dem wir 
+      die Immunität gegen Antibiotika von Pathogenen vorhersagen konnten. [Marius]
+
+
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
@@ -245,7 +308,7 @@
       process, numeral data from a questionnaire, etc. \\
     The discussion of the findings can be included in these chapters, or the discussion can be put in 
       a separate chapter.  \\
-    The issues from the theory chapter (chapter 2) should be discussed here.
+    The issues from the theory chapter 2 should be discussed here.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -273,20 +336,29 @@
   Comparison with the literature presented in chapter 2: how do your results fill in, advance or 
     contradict previously reported research? \\
   What are the implications of your research for people working in the field that you have studies?)
-  
+
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------
+\bibliography{bibliographie}
+\bibliographystyle{alphadin}
+
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
-\chapter{References / BIBLIOGRAPHY}
-  A complete list of written documents you have referred to in the report. \\
-  There must be only one Bibliography or References section for the whole thesis.
+\chapter*{Eigenständigkeitserklärung}
+  Hiermit versichere ich, dass ich die vorliegende Masterarbeit selbständig verfasst habe. \\
+  Ich versichere, dass ich keine anderen als die angegebenen Quellen benutzt und alle wörtlich oder sinngemäß aus anderen Werken übernommenen Aussagen als solche gekennzeichnet habe, und dass die eingereichte Arbeit weder vollständig noch in wesentlichen Teilen Gegenstand eines anderen Prüfungsverfahren gewesen ist. \\
+  \vspace{2 cm} \\
+  (Datum und Unterschrift)
+  \todo{englisch!}
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{APPENDICES}
-  Appendices must be limited to supporting material genuinely subsidiary to the main argument of the 
-    work. They must only include material that is referred to in the document. \\
+  \todotext{Appendices} must be limited to supporting material genuinely subsidiary to the main 
+    argument of the work. They must only include material that is referred to in the document.\\
   Material suitable for inclusion in appendices includes the following:
   \begin{itemize} 
     \item Additional details of methodology and/or data
