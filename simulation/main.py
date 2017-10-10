@@ -35,6 +35,7 @@ def main():
     return
 
 def do_some_drawings(tree, nodelist):
+    """seperated drawings"""
     tree.name = 'random tree'
     Phylo.draw(tree)
     named_tree = deepcopy(tree)

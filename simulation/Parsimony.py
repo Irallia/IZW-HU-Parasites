@@ -1,6 +1,7 @@
 import Helpers
 
 def parsimony(tree_clade, nodelist):
+    """parsimony implemented from [COO98]"""
 # def parsimony(subtree, tree):
     # down:
     parsimony_down(tree_clade, nodelist)
@@ -22,9 +23,9 @@ def parsimony_down(subtree, nodelist):
     left_child = Helpers.find_element_in_nodelist(subtree.clades[0].name, nodelist)
     right_child = Helpers.find_element_in_nodelist(subtree.clades[1].name, nodelist)
     # if not both children are tagged, first tag them:
-    if len(left_child[3]) == 0:
+    if left_child[3] == []:
         parsimony_down(subtree.clades[0], nodelist)
-    if len(right_child[3]) == 0:
+    if right_child[3] == []:
         parsimony_down(subtree.clades[1], nodelist)
 
     element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
@@ -38,7 +39,7 @@ def parsimony_down(subtree, nodelist):
         shared = True
     if ('P' in l_tag) and ('P' in r_tag):
         if shared:
-            element[3][0] == 'FL&P'
+            element[3][0] = 'FL&P'
         else:
             element[3].append('P')
         shared = True
