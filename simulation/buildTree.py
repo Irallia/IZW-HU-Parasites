@@ -1,9 +1,6 @@
-import random
-import pylab
+"""This module builds a random binary tree and give tags to every node."""
 
-# StringIO no longer exists in 3.x. Use either io.StringIO for text or io.BytesIO for bytes.
-# from cStringIO import StringIO
-from io import StringIO
+from random import gauss
 from Bio import Phylo
 
 # global variables / parameters:
@@ -20,48 +17,41 @@ def get_random_tagged_tree(number_leafnodes, lower, upper):
         #   Create a randomized bifurcating tree given a list of taxa.
         #   https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
         current_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
-        current_tree.name = 'random tree'
-        # Phylo.draw(current_tree)
-        leaf_distr = tag_tree(current_tree.clade, ROOTNODEVALUE, [0, 0])
-        current_tree.name = 'tagged tree'
+        result = tag_tree(current_tree.clade, [], ROOTNODEVALUE, [0, 0])
+        nodelist = result[0]
+        leaf_distr = result[1]
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
         # 40% parasites?
         if lower < percentage_parasites < upper:
             boolean = False
     print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
-    return current_tree
+    return [current_tree, nodelist]
 
-def tag_tree(subtree, random_number, leaf_dist):
+def tag_tree(subtree, nodelist, random_number, leaf_dist):
     """Function tags all nodes of a given (binary) subtree with names FL or P."""
     # Arguments:
     #   subtree
+    #   nodelist      - [id, originaltag, finaltag, calc[taglist]]
     #   random_number - in [0, 1]
-    #   leaf_dist     - [#FL, #P]
-    id = '0'
-    if subtree.name:
-        id = subtree.name
+    #   leaf_dist     - [#FL, #P] - distribution...
+    if not subtree.name:
+        subtree.name = '0'  # rootnode
     if random_number >= 0.5:
-        subtree.name = id + '-FL'
+        # subtree.confidence = 1
+        nodelist.append([subtree.name, 'FL', []])
     else:
-        subtree.name = id + '-P'
+        # subtree.confidence = 0
+        nodelist.append([subtree.name, 'P', []])
     if subtree.is_terminal():
-        if subtree.name.split('-')[1] == 'FL':
+        if nodelist[-1][1] == 'FL':
             leaf_dist[0] = leaf_dist[0] + 1
         else:
             leaf_dist[1] = leaf_dist[1] + 1
     else:
         for clade in subtree.clades:
             # random.gauss(mu, sigma) -> Gaussian distribution, mu: mean, sigma: standard deviation.
-            new_random = min(1, max(0, random.gauss(random_number, VARIANCE)))
-            leaf_dist = tag_tree(clade, new_random, leaf_dist)
-    return leaf_dist
-
-def untag_tree(subtree):
-    """Function untags all internal nodes."""
-    # Arguments:
-    #   subtree
-    if not subtree.is_terminal():
-        subtree.name = subtree.name.split('-')[0]
-        for clade in subtree.clades:
-            untag_tree(clade)
-    return
+            new_random = min(1, max(0, gauss(random_number, VARIANCE)))
+            result = tag_tree(clade, nodelist, new_random, leaf_dist)
+            nodelist = result[0]
+            leaf_dist = result[1]
+    return [nodelist, leaf_dist]
