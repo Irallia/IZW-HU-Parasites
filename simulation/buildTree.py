@@ -38,11 +38,12 @@ def tag_tree(subtree, nodelist, random_number, leaf_dist):
         subtree.name = '0'  # rootnode
     if random_number >= 0.5:
         # subtree.confidence = 1
-        nodelist.append([subtree.name, 'FL', []])
+        nodelist.append([subtree.name, 'FL', '', []])
     else:
         # subtree.confidence = 0
-        nodelist.append([subtree.name, 'P', []])
+        nodelist.append([subtree.name, 'P', '', []])
     if subtree.is_terminal():
+        nodelist[-1][3].append(nodelist[-1][1])
         if nodelist[-1][1] == 'FL':
             leaf_dist[0] = leaf_dist[0] + 1
         else:

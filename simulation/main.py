@@ -1,9 +1,13 @@
+"""main method"""
+
+from copy import deepcopy
+from pprint import pprint
+
+from Bio import Phylo
+
 import buildTree
 import Parsimony
 import Drawings
-
-from Bio import Phylo
-from copy import deepcopy
 
 def main():
     """Main method"""
@@ -18,30 +22,38 @@ def main():
         nodelist = result[1]
         # print(nodelist)
         binary_trees.append(current_tree)
-        
         # ---------------- parsimony ----------------
-        # Parsimony.parsimony(current_tree.clade)
+        Parsimony.parsimony(current_tree.clade, nodelist)
+        # print(nodelist[0])
+        pprint(nodelist)
         # Parsimony.parsimony(current_tree.clade, current_tree)
-        
         # ---------------- drawings ----------------
-        current_tree.name = 'random tree'
-        Phylo.draw(current_tree)
-        named_tree = deepcopy(current_tree)
-        named_tree.name = 'tagged tree'
-        Drawings.tag_names(named_tree.clade, nodelist)
-        Phylo.draw(named_tree)
-        untagged_tree = deepcopy(current_tree)
-        untagged_tree.name = 'untagged tree'
-        Drawings.tag_leaf_names(untagged_tree.clade, nodelist)
-        Phylo.draw(untagged_tree)
-        # current_tree.name = 'parsimonious solution tree'
-        # Phylo.draw(current_tree)
-        # Phylo.draw_graphviz(current_tree)
-        # pylab.show()
+        do_some_drawings(current_tree, nodelist)
+
     # save treelist in a newick file
-    Phylo.write(binary_trees, 'originalTrees.tre', 'newick')
-
-
+    # Phylo.write(binary_trees, 'originalTrees.tre', 'newick')
     return
+
+def do_some_drawings(tree, nodelist):
+    tree.name = 'random tree'
+    Phylo.draw(tree)
+    named_tree = deepcopy(tree)
+    named_tree.name = 'tagged tree'
+    Drawings.tag_names(named_tree.clade, nodelist, 1)
+    Phylo.draw(named_tree)
+    untagged_tree = deepcopy(tree)
+    untagged_tree.name = 'untagged tree'
+    Drawings.tag_leaf_names(untagged_tree.clade, nodelist)
+    Phylo.draw(untagged_tree)
+    # tree.name = 'parsimony down'
+    # Phylo.draw(tree)
+    # tree.name = 'parsimony up'
+    # Phylo.draw(tree)
+    parsimony_tree = deepcopy(tree)
+    parsimony_tree.name = 'parsimonious solution tree'
+    Drawings.tag_names(parsimony_tree.clade, nodelist, 2)
+    Phylo.draw(parsimony_tree)
+    # Phylo.draw_graphviz(parsimony_tree)
+    # pylab.show()
 
 main()
