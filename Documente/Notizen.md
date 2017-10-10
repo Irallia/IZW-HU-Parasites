@@ -1,3 +1,18 @@
+# Timetable
+1.10. Anmeldung, d.h. 31.3. Abgabe
+* Oktober: Woche
+    1. build random binary tree, tag tree
+    2. forget inner nodes, run parsimony
+    3. implement parsimony with numbers
+    4. prune binary tree -> not binary tree
+* November: Woche
+    * 5. run parsimony with numbers and TMC
+    * 6. -8. Evaluation -> compare computed trees with the origin binary tree
+* Dezember: Evaluation of special subtrees of the real synthesis tree from Open Tree of Life 	(using biological knowlege)
+* Jannuar: theoretical analysis of the two parsimony like algorithms -> add changes, adjust 	the parameters
+* Februar: last Evaluation / Compairing the different algorithms
+* März: Proofreading, writing, complete the thesis
+
 # Data
 * Open Tree of Life
     * Open Tree of Life aims to construct a comprehensive, dynamic and digitally-available tree of life by synthesizing published phylogenetic trees along with taxonomic data. The project is a collaborative effort between 11 PIs across 10 institutions. Funding is from NSF AVAToL #1208809.

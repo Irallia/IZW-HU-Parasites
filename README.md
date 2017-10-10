@@ -51,6 +51,9 @@ See also the list of [contributors](https://github.com/your/project/contributors
 # ToDo's
 
 **Currently working on:**
+- write a motivation (in the thesis)
+- TMC to parsimony
+
 
 - add attributes parasitic / freeliving on every leaf node
 - Define possible algorithms for calculating node properties. 
@@ -69,3 +72,15 @@ See also the list of [contributors](https://github.com/your/project/contributors
 - Parsimony analysis of coevolving species associations + recontruction the history of host-parasite associations. Recontruction the history of host-parasite associations.
 - enrichment tests. Analyse der Zusammensetzung von Species. Tree über funktionen...
 - add Branchlenght: time / DNA / other distances -> DB mit Divergenzzeiten
+
+## Update things
+### update arango db:
+download Client Tools for Debian 9.0 from https://www.arangodb.com/download-major/debian/
+
+```
+wget https://download.arangodb.com/arangodb32/Debian_9.0/amd64/arangodb3-3.2.3-1_amd64.deb
+sudo aptitude update
+sudo aptitude upgrade
+reboot
+sudo dpkg -i arangodb3-3.2.3-1_amd64.deb
+```
