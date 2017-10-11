@@ -7,6 +7,7 @@ from Bio import Phylo
 
 import buildTree
 import Parsimony
+import Parsimony_like
 import Drawings
 
 def main():
@@ -23,10 +24,11 @@ def main():
         # print(nodelist)
         binary_trees.append(current_tree)
         # ---------------- parsimony ----------------
-        Parsimony.parsimony(current_tree.clade, nodelist)
-        # print(nodelist[0])
-        pprint(nodelist)
-        # Parsimony.parsimony(current_tree.clade, current_tree)
+        # Parsimony.parsimony(current_tree.clade, nodelist)
+        # pprint(nodelist)
+        # ---------------- parsimony like ----------------
+        Parsimony_like.parsimony_like(current_tree.clade, nodelist)
+        # pprint(nodelist)
         # ---------------- drawings ----------------
         do_some_drawings(current_tree, nodelist)
 

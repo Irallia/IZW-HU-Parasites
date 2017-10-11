@@ -2,7 +2,6 @@ import Helpers
 
 def parsimony(tree_clade, nodelist):
     """parsimony implemented from [COO98]"""
-# def parsimony(subtree, tree):
     # down:
     parsimony_down(tree_clade, nodelist)
     # up:
