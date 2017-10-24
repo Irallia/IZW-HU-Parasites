@@ -1,11 +1,14 @@
 """This module builds a random binary tree and give tags to every node."""
 
-from random import gauss
+import numpy as np
 from Bio import Phylo
 
 # global variables / parameters:
-VARIANCE = 0.2
-ROOTNODEVALUE = 0.7
+A_FL = 8.0
+B_FL = 3.0
+A_P = 3.0
+B_P = 8.0
+ROOTNODEVALUE = 1
 
 def get_random_tagged_tree(number_leafnodes, lower, upper):
     """build a random binary tree fully tagged with FL and P"""
@@ -50,8 +53,12 @@ def tag_tree(subtree, nodelist, random_number, leaf_dist):
             leaf_dist[1] = leaf_dist[1] + 1
     else:
         for clade in subtree.clades:
-            # random.gauss(mu, sigma) -> Gaussian distribution, mu: mean, sigma: standard deviation.
-            new_random = min(1, max(0, gauss(random_number, VARIANCE)))
+            if random_number >= 0.5:
+                # freeliving_distribution:
+                new_random = np.random.beta(a=A_FL, b=B_FL)
+            else:
+                # parasite_distribution:
+                new_random = np.random.beta(a=A_P, b=B_P)
             result = tag_tree(clade, nodelist, new_random, leaf_dist)
             nodelist = result[0]
             leaf_dist = result[1]
