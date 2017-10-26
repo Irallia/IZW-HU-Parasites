@@ -94,24 +94,28 @@ def parsimony_final(subtree, nodelist):
     if not subtree.is_terminal():
         tags = element[3]
         if len(tags) > 1:
-            shared = False
-            # RULE 1: share any states in common -> assign shared states
-            if ('FL' in tags[0]) and ('FL' in tags[1]):
-                element[2] = 'FL'
-                # subtree._set_color('blue')
-                shared = True
-            if ('P' in tags[0]) and ('P' in tags[1]):
-                if shared:
-                    element[2] = 'FL&P'
-                    # subtree._set_color('magenta')
-                else:
-                    element[2] = 'P'
-                    # subtree._set_color('red')
-                shared = True
-            # RULE 2: no shared states -> assign union of states
-            if not shared:
-                element[2] = 'FL&P'
-                # subtree._set_color('magenta')
+            if ('FL&P') in tags[0]:
+                element[2] = tags[1]
+            else:
+                element[2] = tags[0]
+            # shared = False
+            # # RULE 1: share any states in common -> assign shared states
+            # if ('FL' in tags[0]) and ('FL' in tags[1]):
+            #     element[2] = 'FL'
+            #     # subtree._set_color('blue')
+            #     shared = True
+            # if ('P' in tags[0]) and ('P' in tags[1]):
+            #     if shared:
+            #         element[2] = 'FL&P'
+            #         # subtree._set_color('magenta')
+            #     else:
+            #         element[2] = 'P'
+            #         # subtree._set_color('red')
+            #     shared = True
+            # # RULE 2: no shared states -> assign union of states
+            # if not shared:
+            #     element[2] = 'FL&P'
+            #     # subtree._set_color('magenta')
     else:
         element[2] = element[3][0]
     # go on with children
