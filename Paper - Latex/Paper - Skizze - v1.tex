@@ -34,18 +34,23 @@
   This paper is about the further development of parsimony algorithms for non-binary trees, applied 
   to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the application to 
   the ancestral state reconstruction of parasitism. \\
-
-  Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 60s.
-  The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. Next came 
-  a set of parsimony algorithms such as: Fitch-parsimony, Wagner-parsimony ... \todo{Quellen!, Jahreszahlen?}.
-  With more and more data, we got new options for calculating probabilities and using next to ancestral states, given branch lengths. The likelihood based algorithms came more in interest.
-  Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree which exists at this moment, which goes over all observed species.
-  For most species there is no phylogeny, but only a taxonomic classification. So the biggest 'phylogenetic tree' is a synthesis of phylogenetic trees filled with a taxonomic tree.
-  \todo{hier Quelle/Hinweis zur datenbank: Open tree of life...} This tree is not binary and therefore the developed algorithms are not directly applicable.
-  We have looked at the algorithms that are generally suited to our data, to develop them further for the binary case, and finally to compare their usability with our sythesis trees.
-
-  We have only decided on parsimony algorithms since we have no information on branch lengths and no other additional information like different transition probabilities of our states.
-
+  Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 
+  60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
+  Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
+  Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
+  With more and more data, there is now the possibility to use more information to calculate the 
+  probabilities of the ancestral states. In addition to the states of the leaves, algorithms could 
+  also use branch lengths. The likelihood based algorithms came more in interest. \\
+  Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
+  that exists at this moment, which goes over all observed species. For most \todo{most?} species there is no 
+  phylogeny, but only a taxonomic classification. So the biggest 'phylogenetic tree' is a synthesis 
+  of phylogenetic trees filled with a taxonomic tree given by Open Tree of Life \cite{Hinchliff2015}.
+  This tree is not binary and therefore the developed algorithms are not directly applicable. \\
+  In this work, we have looked at the algorithms that are generally suited to our data, to develop 
+  them further for the not binary case, and finally to compare their usability with our sythesis 
+  tree. \\
+  We have decided to consider only parsimony algorithms since we have no information on branch 
+  lengths and no other additional information like different transition probabilities of our states.
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------
