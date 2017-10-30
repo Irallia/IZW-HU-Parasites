@@ -129,7 +129,6 @@ Relevant?!:
     Nach den Divergenz Zeiten rekonstruieren die dann sogar noch die ancestral ranges vor den ancestal Hosts.
     Das zweite Paper hab ich nicht ganz gelesen.   Ist aber definitiv relevant!
 
-
 * A Quick Guide to Organizing Computational Biology Projects: http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424
     Emanuel for future work:
     (In a more distant future something like this out of the shit we are sequencing will link @irallia and @victor_h_jarquin work.)
@@ -139,6 +138,18 @@ Relevant?!:
     * Ein etwas anderer Ansatz:
     * "Species interactions are a key component of ecosystems but we generally have an incomplete picture of who-eats-who in a given community. ... Here, we explore the K nearest neighbour approach, with a special emphasis on recommendation, along with a supervised machine learning technique. ... By removing a prey from a predator, we find that recommenders can guess the missing prey around 50% of the times on the first try, with up to 881 possibilities. Traits do not improve significantly the results for the K nearest neighbour, although a simple test with a supervised learning approach (random forests) show we can predict interactions with high accuracy using only three traits per species. This result shows that binary interactions can be predicted without regard to the ecological community given only three variables: body mass and two variables for the species’ phylogeny."
 
+* Emanuel for MA:
+    * Eher Aufbau als Inhalt: Algorithmus, Anwendung, Detail-Beispiel aus der Anwendung
+    Clusterflock: a flocking algorithm for isolating congruent phylogenomic datasets
+    Apurva Narechania  Richard Baker  Rob DeSalle  Barun Mathema Sergios-Orestis Kolokotronis  Barry Kreiswirth  Paul J. Planet
+    GigaScience, Volume 5, Issue 1, 1 December 2016, Pages 1–12, https://doi.org/10.1186/s13742-016-0152-3
+    Published: 24 October 2016
+    https://academic.oup.com/gigascience/article/5/1/1/2737427/Clusterflock-a-flocking-algorithm-for-isolating?searchresult=1
+    * Clusterflock: ein Algorithmus für Schwarmverhalten zur Isolierung kongruenter phylogenomischer Datensätze
+    * Ergebnisse:
+        * In dem hier vorgestellten Tool Clusterflock haben wir einen Algorithmus für Schwarmverhalten implementiert, der dazu dient, Gruppen (Herden) orthologer Genfamilien (OGFs) zu lokalisieren, die eine evolutionäre Geschichte teilen.
+        * Paarweise Abstände, die die phylogenetische Inkongruenz zwischen OGFs messen, führen zur Bildung von Flocken/Schwärmen. Wir haben diesen Ansatz auf mehreren simulierten Datensätze getestet, indem wir die Anzahl zugrunde liegender Topologien, den Anteil fehlender Daten und Evolutionsraten variierten und zeigen, dass Clusterflock in Datensätzen, die hohe Werte an fehlenden Daten und Ratenheterogenität enthalten, andere bewährte Clustering-Techniken übertrifft. [...]
+    * Schlussfolgerungen: Clusterflock ist ein Open-Source-Tool, mit dem horizontal transferierte Gene, rekombinierte Chromosomenbereiche und der phylogenetische Kern eines Genoms entdeckt werden können. Obwohl wir es hier im evolutionären Kontext verwendet haben, ist es für jedes Clusterproblem verallgemeinerbar. Benutzer können Erweiterungen schreiben, um eine Entfernungsmetrik im Einheitsintervall zu berechnen, und können diese Abstände verwenden, um jegliche Art von Daten zu "schwärmen".
 
 
     Emanuel for Parnika:
