@@ -1,6 +1,7 @@
 data/
 Masterarbeit - Latex/Figures/tex-tikz-figures - examples/
 node_modules/
+
 *.aux
 *.bbl
 *.blg
@@ -8,6 +9,8 @@ node_modules/
 *.log
 *.out
 *.toc
-
 *.fdb_latexmk
 *.pyc
+*.synctex.gz
+
+.vscode/settings.json
