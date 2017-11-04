@@ -3,6 +3,8 @@
 import numpy as np
 from Bio import Phylo
 
+import Helpers
+
 # global variables / parameters:
 A_FL = 8.0
 B_FL = 3.0
@@ -22,35 +24,35 @@ def get_random_tagged_tree(number_leafnodes, lower, upper):
         current_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
         result = tag_tree(current_tree.clade, [], ROOTNODEVALUE, [0, 0])
         nodelist = result[0]
-        leaf_distr = result[1]
-        percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
+        leaf_distrr = result[1]
+        percentage_parasites = leaf_distrr[1] / (leaf_distrr[0] + leaf_distrr[1]) * 100
         # 40% parasites?
         if lower < percentage_parasites < upper:
             boolean = False
     print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
 
-def tag_tree(subtree, nodelist, random_number, leaf_dist):
+def tag_tree(subtree, nodelist, random_number, leaf_distr):
     """Function tags all nodes of a given (binary) subtree with names FL or P."""
     # Arguments:
     #   subtree
-    #   nodelist      - [id, originaltag, finaltag, calc[taglist]]
+    #   nodelist      - [id, depth, originaltag, finaltag, calc[taglist]]
     #   random_number - in [0, 1]
-    #   leaf_dist     - [#FL, #P] - distribution...
+    #   leaf_distr     - [#FL, #P] - distribution...
     if not subtree.name:
         subtree.name = '0'  # rootnode
     if random_number >= 0.5:
-        # subtree.confidence = 1
-        nodelist.append([subtree.name, 'FL', '', []])
+        originaltag = 'FL'
     else:
-        # subtree.confidence = 0
-        nodelist.append([subtree.name, 'P', '', []])
+        originaltag = 'P'
     if subtree.is_terminal():
-        nodelist[-1][3].append(nodelist[-1][1])
+        depth = 1
+        nodelist.append([subtree.name, depth, originaltag, '', []])
+        nodelist[-1][4].append(nodelist[-1][2]) # if leaf node, than set finaltag
         if nodelist[-1][1] == 'FL':
-            leaf_dist[0] = leaf_dist[0] + 1
+            leaf_distr[0] = leaf_distr[0] + 1
         else:
-            leaf_dist[1] = leaf_dist[1] + 1
+            leaf_distr[1] = leaf_distr[1] + 1
     else:
         for clade in subtree.clades:
             if random_number >= 0.5:
@@ -59,7 +61,44 @@ def tag_tree(subtree, nodelist, random_number, leaf_dist):
             else:
                 # parasite_distribution:
                 new_random = np.random.beta(a=A_P, b=B_P)
-            result = tag_tree(clade, nodelist, new_random, leaf_dist)
+            # TODO::!!!
+            result = tag_tree(clade, nodelist, new_random, leaf_distr)
             nodelist = result[0]
-            leaf_dist = result[1]
-    return [nodelist, leaf_dist]
+            leaf_distr = result[1]
+        left_child = Helpers.find_element_in_nodelist(subtree.clades[0].name, nodelist)
+        right_child = Helpers.find_element_in_nodelist(subtree.clades[1].name, nodelist)
+        print(left_child)
+        depth = (left_child[1] + right_child[1])/2 + 1 
+        nodelist.append([subtree.name, depth, originaltag, '', []])
+    return [nodelist, leaf_distr]
+
+def get_non_binary_tree(subtree, nodelist):
+    for clade in subtree.clades:
+        if not clade.is_terminal():
+            # print('-- go deeper --')
+            get_non_binary_tree(clade, nodelist)
+    i = 0
+    while i != len(subtree.clades):
+        if subtree.clades[i].is_terminal():
+            i += 1
+        else:
+            element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
+            limit = get_limit(element[1])
+            print('i=', i)
+            new_random = np.random.uniform(0,1) # choose if we want to delete ourselve
+            print(new_random, ' < ', limit)
+            if new_random < limit: # or new_random < 0.9:
+                print('delete me!')
+                subtree.clades += subtree.clades[i].clades # add children
+                del subtree.clades[i]   # delete internal node
+            else:
+                i += 1
+    return
+
+
+def get_limit(depth):
+    limit = 1/(depth/4)
+    if limit < 0.1:
+        limit = 0.1
+    print('depth=', depth, ' -> limit=', str(round(limit,3)))
+    return limit
