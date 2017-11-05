@@ -1,82 +1,85 @@
 """This module builds a random binary tree and give tags to every node."""
 
-import numpy as np
+# import numpy as np
+from copy import deepcopy
+from numpy import random
+
 from Bio import Phylo
 
 import Helpers
 
 # global variables / parameters:
+#   for freeliving_distribution
 A_FL = 8.0
 B_FL = 3.0
+#   for parasite_distribution
 A_P = 3.0
 B_P = 8.0
-ROOTNODEVALUE = 1
 
-def get_random_tagged_tree(number_leafnodes, lower, upper):
+def get_random_tagged_tree(number_leafnodes, percentage):
     """build a random binary tree fully tagged with FL and P"""
     percentage_parasites = 0
-    current_tree = None
+    # randomized(cls, taxa, branch_length=1.0, branch_stdev=None) 
+    #   Create a randomized bifurcating tree given a list of taxa.
+    #   https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
+    randomized_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
+    randomized_tree.clade.name = 'root'
+    current_tree = deepcopy(randomized_tree)
     boolean = True
     while boolean:
-        # randomized(cls, taxa, branch_length=1.0, branch_stdev=None) 
-        #   Create a randomized bifurcating tree given a list of taxa.
-        #   https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
-        current_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
-        result = tag_tree(current_tree.clade, [], ROOTNODEVALUE, [0, 0])
+        result = tag_tree(current_tree.clade, [], 'FL', [0, 0])
         nodelist = result[0]
-        leaf_distrr = result[1]
-        percentage_parasites = leaf_distrr[1] / (leaf_distrr[0] + leaf_distrr[1]) * 100
-        # 40% parasites?
-        if lower < percentage_parasites < upper:
+        leaf_distr = result[1]
+        # %P = #FL / (#P + #FL) * 100
+        percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
+        # print(percentage_parasites)  # 40% parasites?
+        if (percentage - 5) < percentage_parasites < (percentage + 5):
             boolean = False
+        current_tree = deepcopy(randomized_tree)
     print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
 
-def tag_tree(subtree, nodelist, random_number, leaf_distr):
+def tag_tree(subtree, nodelist, father_tag, leaf_distr):
     """Function tags all nodes of a given (binary) subtree with names FL or P."""
     # Arguments:
     #   subtree
-    #   nodelist      - [id, depth, originaltag, finaltag, calc[taglist]]
-    #   random_number - in [0, 1]
-    #   leaf_distr     - [#FL, #P] - distribution...
-    if not subtree.name:
-        subtree.name = '0'  # rootnode
-    if random_number >= 0.5:
-        originaltag = 'FL'
+    #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
+    #   father_tag  - FL or P
+    #   leaf_distr  - [#FL, #P] - distribution of FL and P in the leave nodes
+    depth = -1
+    if father_tag == 'FL':
+        # freeliving_distribution:
+        new_random = random.beta(a=A_FL, b=B_FL)
     else:
-        originaltag = 'P'
+        # parasite_distribution:
+        new_random = random.beta(a=A_P, b=B_P)
+
+    tag = 'FL'
+    if new_random < 0.5:
+        tag = 'P'
+    #               [id, depth, originaltag, finaltag, calc[taglist]]
+    nodelist.append([subtree.name, depth, tag, '', []])
+    current_list_index = len(nodelist) - 1
+    # if leaf node, then depth = 1, set finaltag, increase leaf distribution
     if subtree.is_terminal():
         depth = 1
-        nodelist.append([subtree.name, depth, originaltag, '', []])
-        nodelist[-1][4].append(nodelist[-1][2]) # if leaf node, than set finaltag
-        if nodelist[-1][1] == 'FL':
+        nodelist[current_list_index][3] = tag
+        if tag == 'FL':
             leaf_distr[0] = leaf_distr[0] + 1
         else:
             leaf_distr[1] = leaf_distr[1] + 1
     else:
+        child_depth = 0
         for clade in subtree.clades:
-            if random_number >= 0.5:
-                # freeliving_distribution:
-                new_random = np.random.beta(a=A_FL, b=B_FL)
-            else:
-                # parasite_distribution:
-                new_random = np.random.beta(a=A_P, b=B_P)
-            # TODO::!!!
-            result = tag_tree(clade, nodelist, new_random, leaf_distr)
+            result = tag_tree(clade, nodelist, tag, leaf_distr)
             nodelist = result[0]
             leaf_distr = result[1]
-        left_child = Helpers.find_element_in_nodelist(subtree.clades[0].name, nodelist)
-        right_child = Helpers.find_element_in_nodelist(subtree.clades[1].name, nodelist)
-        print(left_child)
-        depth = (left_child[1] + right_child[1])/2 + 1 
-        nodelist.append([subtree.name, depth, originaltag, '', []])
-    return [nodelist, leaf_distr]
+            child_depth = child_depth + result[2]
+        depth = child_depth/2 + 1 
+    nodelist[current_list_index][1] = depth
+    return [nodelist, leaf_distr, depth]
 
 def get_non_binary_tree(subtree, nodelist):
-    for clade in subtree.clades:
-        if not clade.is_terminal():
-            # print('-- go deeper --')
-            get_non_binary_tree(clade, nodelist)
     i = 0
     while i != len(subtree.clades):
         if subtree.clades[i].is_terminal():
@@ -84,20 +87,25 @@ def get_non_binary_tree(subtree, nodelist):
         else:
             element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
             limit = get_limit(element[1])
-            print('i=', i)
-            new_random = np.random.uniform(0,1) # choose if we want to delete ourselve
+            print('i=', i, 'len=', len(subtree.clades))
+            # numpy.random.uniform(low=0.0, high=1.0, size=None)
+            new_random = random.uniform() # choose if we want to delete ourselve
             print(new_random, ' < ', limit)
             if new_random < limit: # or new_random < 0.9:
                 print('delete me!')
                 subtree.clades += subtree.clades[i].clades # add children
                 del subtree.clades[i]   # delete internal node
+                # current clades: clade_1 clade_2 ... clade_i-1 clade_i ... clade:_n
+                # add children of clade_i, delete clade_i
+                # new clades:clade_1 clade_2 ... clade_i-1 child_clade_1 ... child_clade_m ... clade:_n
+                # child_clade_1 is new clade i
             else:
+                get_non_binary_tree(subtree.clades[i], nodelist)
                 i += 1
     return
 
-
 def get_limit(depth):
-    limit = 1/(depth/4)
+    limit = 1 - 1/((depth+3)/4)
     if limit < 0.1:
         limit = 0.1
     print('depth=', depth, ' -> limit=', str(round(limit,3)))

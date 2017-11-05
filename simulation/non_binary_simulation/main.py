@@ -1,6 +1,8 @@
 """main method"""
 
 from copy import deepcopy
+from pprint import pprint
+
 from Bio import Phylo
 
 import buildTree
@@ -10,20 +12,20 @@ import Drawings
 
 def main():
     """Main method"""
-
     number_trees = 1    # number of simulated trees
-    number_leafnodes = 20
-    lower_range = 35    # percentage of parasites (range)
-    upper_range = 45
+    number_leafnodes = 100
+    percentage = 40   # percentage of parasites (percentage +-5%)
     binary_trees = []
     for _ in range(0, number_trees):
-        result = buildTree.get_random_tagged_tree(number_leafnodes, lower_range, upper_range)
+        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage)
         current_tree = result[0]
         nodelist = result[1]
         binary_trees.append(current_tree)
-        print(nodelist)
+        # pprint(nodelist)
+        Phylo.draw(current_tree)
         # ---------------- non-binary tree ----------------
-        # buildTree.get_non_binary_tree(current_tree.clade, nodelist)
+        buildTree.get_non_binary_tree(current_tree.clade, nodelist)
+        Phylo.draw(current_tree)
         # # ---------------- parsimony ----------------
         # parsimony_tree = deepcopy(current_tree)
         # parsimony_nodelist = deepcopy(nodelist)
