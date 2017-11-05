@@ -1,88 +1,94 @@
+from copy import deepcopy
+from pprint import pprint
+
 import Helpers
 
 def parsimony(tree_clade, nodelist):
-    """parsimony implemented from [COO98]"""
+    """parsimony implemented from [COO98] - changed for multifurcating trees"""
     # down:
     parsimony_down(tree_clade, nodelist)
     # up:
     parent = Helpers.find_element_in_nodelist(tree_clade.name, nodelist)
-    left_child = Helpers.find_element_in_nodelist(tree_clade.clades[0].name, nodelist)
-    right_child = Helpers.find_element_in_nodelist(tree_clade.clades[1].name, nodelist)
-    parsimony_up(tree_clade.clades[0], nodelist, parent, right_child)
-    parsimony_up(tree_clade.clades[1], nodelist, parent, left_child)
+    children = []
+    for clade in tree_clade.clades:
+        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        children.append(child)
+    for i in range(0, len(tree_clade.clades)):
+        clade = tree_clade.clades[i]
+        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        sublist = deepcopy(children)
+        del sublist[i]
+        parsimony_up(clade, nodelist, parent, sublist)
     # final:
-    parsimony_final(tree_clade, nodelist)
+    # ToDo: final step...
+    # parsimony_final(tree_clade, nodelist)
     return
 
 def parsimony_down(subtree, nodelist):
     """parsimony part: down direction -> from leafs to root"""
     # Arguments:
     #   subtree
-    #   nodelist      - [id, originaltag, finaltag, calc[taglist]]
-    left_child = Helpers.find_element_in_nodelist(subtree.clades[0].name, nodelist)
-    right_child = Helpers.find_element_in_nodelist(subtree.clades[1].name, nodelist)
-    # if not both children are tagged, first tag them:
-    if left_child[3] == []:
-        parsimony_down(subtree.clades[0], nodelist)
-    if right_child[3] == []:
-        parsimony_down(subtree.clades[1], nodelist)
+    #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
+    child_tags = []
+    for clade in subtree.clades:
+        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        # if child is not tagged, first tag it:
+        if child[4] == []:
+            parsimony_down(clade, nodelist)
+        child_tags.append(child[4][0])
 
     element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-
-    l_tag = left_child[3][0]
-    r_tag = right_child[3][0]
-    shared = False
-    # RULE 1: share any states in common -> assign shared states
-    if ('FL' in l_tag) and ('FL' in r_tag):
-        element[3].append('FL')
-        shared = True
-    if ('P' in l_tag) and ('P' in r_tag):
-        if shared:
-            element[3][0] = 'FL&P'
+    # pairwise intersection
+    while len(child_tags) > 1:
+        tag_list_i = child_tags[0]
+        tag_list_j = child_tags[1]
+        # RULE 1: share any states in common -> assign shared states
+        # intersection:
+        tag_set = (set(tag_list_i) & set(tag_list_j))
+        # RULE 2: no shared states -> assign union of states
+        if tag_set == set():
+            # union:
+            tag_set = (set().union(['FL'],['P']))
+            child_tags = [list(tag_set)]
+            # -> stop
         else:
-            element[3].append('P')
-        shared = True
-    # RULE 2: no shared states -> assign union of states
-    if not shared:
-        element[3].append('FL&P')
+            child_tags.remove(tag_list_i) # same as 
+            child_tags.remove(tag_list_j)
+            child_tags.append(list(tag_set))
+    # add new tag
+    element[4].append(list(tag_set))
     return
 
-def parsimony_up(subtree, nodelist, parent, sibling):
+def parsimony_up(subtree, nodelist, parent, siblings):
     """parsimony part: up direction -> from root to leafs"""
     # Arguments:
     #   subtree
-    #   nodelist    - [id, originaltag, finaltag, calc[taglist]]
+    #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     #   parent      - nodelist element
-    #   sibling     - nodelist element
+    #   siblings     - [nodelist element]
     if not subtree.is_terminal():
-        p_tag_1 = parent[3][0]
-        p_tag_2 = 'FL&P'
-        if  len(parent[3]) > 1:
-            p_tag_2 = parent[3][1]
-        s_tag_1 = sibling[3][0]
-        s_tag_2 = 'FL&P'
-        if  len(sibling[3]) > 1:
-            p_tag_2 = sibling[3][1]
+        parent_tag = parent[4]  # parent[4] could look like [['FL', 'P'], ['P']] or [['P']]
+        siblings_tags = []
+        for sibling in siblings:
+            siblings_tags.append(sibling[4])
+
         element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-        shared = False
         # RULE 1: share any states in common -> assign shared states
-        if ('FL' in p_tag_1) and ('FL' in p_tag_2) and ('FL' in s_tag_1) and ('FL' in s_tag_2):
-            element[3].append('FL')
-            shared = True
-        if ('P' in p_tag_1) and ('P' in p_tag_2) and ('P' in s_tag_1) and ('P' in s_tag_2):
-            if shared:
-                element[3][1] = 'FL&P'
-            else:
-                element[3].append('P')
-            shared = True
+        # ToDo: intersection, of all pairwise, or only with parent????
         # RULE 2: no shared states -> assign union of states
-        if not shared:
-            element[3].append('FL&P')
+        # ToDo: union....
+
         # go on with children
-        left_child = Helpers.find_element_in_nodelist(subtree.clades[0].name, nodelist)
-        right_child = Helpers.find_element_in_nodelist(subtree.clades[1].name, nodelist)
-        parsimony_up(subtree.clades[0], nodelist, element, right_child)
-        parsimony_up(subtree.clades[1], nodelist, element, left_child)
+        children = []
+        for clade in subtree.clades:
+            child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+            children.append(child)
+        for i in range(0, len(subtree.clades) - 1):
+            clade = subtree.clades[i]
+            child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+            sublist = deepcopy(children)
+            del sublist[i]
+            parsimony_up(clade, nodelist, element, sublist)
     return
 
 def parsimony_final(subtree, nodelist):

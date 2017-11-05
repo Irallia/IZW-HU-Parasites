@@ -22,14 +22,14 @@ def main():
         nodelist = result[1]
         binary_trees.append(current_tree)
         # pprint(nodelist)
-        Phylo.draw(current_tree)
+        # Phylo.draw(current_tree)
         # ---------------- non-binary tree ----------------
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
-        Phylo.draw(current_tree)
+        # Phylo.draw(current_tree)
         # # ---------------- parsimony ----------------
-        # parsimony_tree = deepcopy(current_tree)
-        # parsimony_nodelist = deepcopy(nodelist)
-        # Parsimony.parsimony(parsimony_tree.clade, parsimony_nodelist)
+        parsimony_tree = deepcopy(current_tree)
+        parsimony_nodelist = deepcopy(nodelist)
+        Parsimony.parsimony(parsimony_tree.clade, parsimony_nodelist)
         # # ---------------- parsimony like ----------------
         # Parsimony_like.parsimony_like(current_tree.clade, nodelist)
         # # ---------------- drawings ----------------

@@ -64,6 +64,7 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr):
     if subtree.is_terminal():
         depth = 1
         nodelist[current_list_index][3] = tag
+        nodelist[current_list_index][4].append([tag])
         if tag == 'FL':
             leaf_distr[0] = leaf_distr[0] + 1
         else:
@@ -87,12 +88,12 @@ def get_non_binary_tree(subtree, nodelist):
         else:
             element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
             limit = get_limit(element[1])
-            print('i=', i, 'len=', len(subtree.clades))
+            # print('i=', i, 'len=', len(subtree.clades))
             # numpy.random.uniform(low=0.0, high=1.0, size=None)
             new_random = random.uniform() # choose if we want to delete ourselve
-            print(new_random, ' < ', limit)
+            # print(new_random, ' < ', limit)
             if new_random < limit: # or new_random < 0.9:
-                print('delete me!')
+                # print('delete me!')
                 subtree.clades += subtree.clades[i].clades # add children
                 del subtree.clades[i]   # delete internal node
                 # current clades: clade_1 clade_2 ... clade_i-1 clade_i ... clade:_n
@@ -108,5 +109,5 @@ def get_limit(depth):
     limit = 1 - 1/((depth+3)/4)
     if limit < 0.1:
         limit = 0.1
-    print('depth=', depth, ' -> limit=', str(round(limit,3)))
+    # print('depth=', depth, ' -> limit=', str(round(limit,3)))
     return limit
