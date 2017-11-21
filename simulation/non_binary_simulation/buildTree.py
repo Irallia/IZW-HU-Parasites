@@ -77,7 +77,7 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr):
             nodelist = result[0]
             leaf_distr = result[1]
             child_depth = child_depth + result[2]
-        depth = child_depth/2 + 1 
+        depth = child_depth/len(subtree.clades) + 1 
     nodelist[current_list_index][1] = depth
     return [nodelist, leaf_distr, depth]
 
