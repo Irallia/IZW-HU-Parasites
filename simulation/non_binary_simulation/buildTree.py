@@ -43,6 +43,7 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr):
     """Function tags all nodes of a given (binary) subtree with names FL or P."""
     # Arguments:
     #   subtree
+    #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     #   father_tag  - FL or P
     #   leaf_distr  - [#FL, #P] - distribution of FL and P in the leave nodes
