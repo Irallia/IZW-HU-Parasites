@@ -10,8 +10,8 @@
 |November
 |5    |30.- 3.|not binary with changing distribution| x | Book: Inferring Phylogenies - Joseph Felsenstein
 |6    | 6.-10.|Metadata collection from big phylogenetic tree | |
-|7    |13.-17.|wagner vs fitch vs others??  |   | rglobi, rotl, castor (R packages)
-|8    |20.-24.|implement these for not binary|   |
+|7    |13.-17.|wagner vs fitch vs others??  | x | rglobi, rotl, castor (R packages) -> Sankoff max parsimony
+|8    |20.-24.|implement these for not binary| x | (fitch parsimony + parsimony like + Sankoff from castor)
 |Dezember
 |9    |27. -1.|count origins, compare trees|   |
 |10   | 4.- 8.|add empty leaf nodes |   |
