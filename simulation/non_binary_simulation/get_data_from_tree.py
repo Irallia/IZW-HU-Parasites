@@ -10,28 +10,11 @@ def main():
     """main method"""
     # tree = Phylo.read('../../data/opentree9.1_tree/grafted_solution/grafted_solution.tre', 'newick')
     tree = Phylo.read('../../data/opentree9.1_tree/labelled_supertree/labelled_supertree.tre', 'newick')
-    # cellular organisms: ott93302
-    get_metadata_of_subtree(tree.clade, "ott93302", "data/cellular_organisms.csv")
+    # get_metadata_of_subtree(tree.clade, "ott93302", "data/Cellular_organisms.csv")
     # get_metadata_of_subtree(tree.clade, "ott304358", "data/Eukaryota.csv")
     # get_metadata_of_subtree(tree.clade, "ott691846", "data/Metazoa.csv")
     # get_metadata_of_subtree(tree.clade, "ott770311", "data/Hominidae.csv")
-    # get_metadata_of_subtree(tree.clade, "ott422673", "data/Apicomplexa.csv")
-    # #internal nodes, #leaf nodes:
-    # mean depth, max depth, min depth:
-
-    # ['ott93302', 4.453689419493294, 94, 3]
-    # Eukaryota:
-    # 2535437 nodes -> [241974, 2293463]
-    # ['ott304358', 3.370789824804477, 93, 2]
-    # Metazoa:
-    # 1670956  nodes -> [179944, 1491012]
-    # ['ott691846', 5.323464690895551, 88, 2]
-    # Hominidae:
-    # 26  nodes -> [12, 14]
-    # ['ott770311', 4.775, 6, 4]
-    # Apicomplexa:
-    # 2102  nodes -> [239, 1863]
-    # ['ott422673', 3.7152309882752474, 15, 2]
+    get_metadata_of_subtree(tree.clade, "ott422673", "data/Apicomplexa.csv")
     return
 
 def get_metadata(subtree, nodelist, metadata):

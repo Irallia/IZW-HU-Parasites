@@ -6,38 +6,58 @@ from pprint import pprint
 from Bio import Phylo
 
 import buildTree
-import Parsimony
-import Parsimony_like
+from parsimony.Fitch_MP import fitch_parsimony
+from parsimony.My_MP import my_parsimony
+from parsimony.Sankoff_MP import sankoff_parsimony
 import Drawings
 
 def main():
     """Main method"""
-    number_trees = 1    # number of simulated trees
+    number_trees = 5    # number of simulated trees
     number_leafnodes = 100
     percentage = 40   # percentage of parasites (percentage +-5%)
-    binary_trees = []
+
+    print("Build", number_trees, "random trees with", number_leafnodes, "leafnodes", percentage, "parasites.")
+    # TODO: unknown nodes!!
+
     for _ in range(0, number_trees):
         result = buildTree.get_random_tagged_tree(number_leafnodes, percentage)
         current_tree = result[0]
         nodelist = result[1]
-        binary_trees.append(current_tree)
-        # pprint(nodelist)
         # Phylo.draw(current_tree)
         # ---------------- non-binary tree ----------------
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
         # Phylo.draw(current_tree)
-        # # ---------------- parsimony ----------------
-        parsimony_tree = deepcopy(current_tree)
-        parsimony_nodelist = deepcopy(nodelist)
-        Parsimony.parsimony(parsimony_tree.clade, parsimony_nodelist)
-        # # ---------------- parsimony like ----------------
-        # Parsimony_like.parsimony_like(current_tree.clade, nodelist)
-        # # ---------------- drawings ----------------
+        # ---------------- maximum parsimony algorithms ----------------
+        list_of_nodelists = run_parsimony_algorithms(current_tree, nodelist)
+        # ---------------- compare results ----------------
+        # ---------------- drawings ----------------
         # do_some_drawings(current_tree, nodelist, parsimony_tree, parsimony_nodelist)
 
     # save treelist in a newick file
     # Phylo.write(binary_trees, 'originalTrees.tre', 'newick')
     return
+
+def run_parsimony_algorithms(current_tree, nodelist):
+    fitch_MP_nodelists = []
+    my_MP_nodelists = []
+    sankoff_MP_nodelists = []
+    # ---------------- Fitch parsimony ----------------
+    fitch_MP_tree = deepcopy(current_tree)
+    fitch_MP_nodelist = deepcopy(nodelist)
+    fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist)
+    fitch_MP_nodelists.append(fitch_MP_nodelist)
+    # ---------------- my parsimony ----------------
+    my_MP_tree = deepcopy(current_tree)
+    my_MP_nodelist = deepcopy(nodelist)
+    # my_parsimony(my_MP_tree.clade, my_MP_nodelist)
+    my_MP_nodelists.append(my_MP_nodelists)
+    # ---------------- Sankoff parsimony ----------------
+    sankoff_MP_tree = deepcopy(current_tree)
+    sankoff_MP_nodelist = deepcopy(nodelist)
+    sankoff_parsimony(sankoff_MP_tree.clade, sankoff_MP_nodelist)
+    sankoff_MP_nodelists.append(sankoff_MP_nodelist)
+    return [fitch_MP_nodelists, my_MP_nodelists, sankoff_MP_nodelists]
 
 def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     """seperated drawings"""
@@ -66,55 +86,3 @@ def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     # pylab.show()
 
 main()
-
-
-# from rpy2 import robjects
-# from rpy2.robjects import Formula, Environment
-# from rpy2.robjects.vectors import IntVector, FloatVector
-# from rpy2.robjects.lib import grid
-# from rpy2.robjects.packages import importr, data
-# from rpy2.rinterface import RRuntimeError
-# import warnings
-
-# # The R 'print' function
-# rprint = robjects.globalenv.get("print")
-# stats = importr('stats')
-# grdevices = importr('grDevices')
-# base = importr('base')
-# datasets = importr('datasets')
-
-
-# import math, datetime
-# import rpy2.robjects.lib.ggplot2 as ggplot2
-# import rpy2.robjects as ro
-# from rpy2.robjects.packages import importr
-# base = importr('base')
-
-# mtcars = data(datasets).fetch('mtcars')['mtcars']
-
-# pp = ggplot2.ggplot(mtcars) + \
-#      ggplot2.aes_string(x='wt', y='mpg', col='factor(cyl)') + \
-#      ggplot2.geom_point() + \
-#      ggplot2.geom_smooth(ggplot2.aes_string(group = 'cyl'),
-#                          method = 'lm')
-# pp.plot()
-
-# def main():
-#     """Main method"""
-#     number_leafnodes = 80
-#     lower_range = 35
-#     upper_range = 45
-#     result = buildTree.get_random_tagged_tree(number_leafnodes, lower_range, upper_range)
-#     tree = result[0]
-#     nodelist = result[1]
-#     tree.name = 'tree'
-#     Phylo.draw(tree)
-#     changed_tree = deepcopy(tree)
-#     set_limits(changed_tree.clade, [], -1)
-#     changed_tree.name = 'tree with limits'
-#     Phylo.draw(changed_tree)
-#     un_binary_tree(changed_tree.clade, 0.5)
-#     changed_tree.name = 'not binary tree'
-#     Phylo.draw(changed_tree)
-#     return
-

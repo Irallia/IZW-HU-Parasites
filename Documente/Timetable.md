@@ -23,11 +23,8 @@
 # ToDos:
 * Work with rotl (R package) - rotl: an R package to interact with the Open Tree of Life data
 * Work with rglobi (R package) - R Interface to Global Biotic Interactions
-* Work with castor (R package) - Efficient tree manipulation functions including pruning, rerooting, calculation of most-recent common ancestors, calculating distances from the tree root and calculating pairwise distance matrices. ... https://CRAN.R-project.org/package=castor 
+* Work with castor (R package) - Efficient tree manipulation functions including pruning, rerooting, calculation of most-recent common ancestors, calculating distances from the tree root and calculating pairwise distance matrices. ... 
 * Origins Zählen
-* verschiedene parsimony algorithmen (Wagner, Fitch, ...) auschecken
-    * implementieren?
-    * für nicht binär implementieren
 * Distanzen zwischen Bäumen
     * Anzahl Origins
     * Anzahl Veränderungen...

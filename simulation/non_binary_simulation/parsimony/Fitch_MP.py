@@ -5,7 +5,7 @@ import Helpers
 
 TAGS = ["FL", "P"]
 
-def parsimony(tree_clade, nodelist):
+def fitch_parsimony(tree_clade, nodelist):
     """parsimony implemented from [COO98] - changed for multifurcating trees"""
     # down:
     parsimony_down(tree_clade, nodelist)
@@ -103,7 +103,6 @@ def parsimony_final(subtree, nodelist):
 
 def get_intersect_or_union(tags_list):
     """returns the intersection of all list elements, if not empty"""
-    print(tags_list)
     # Arguments:
     #   tags_list - a list of tag_lists
     #       tags_list[tag_list]
@@ -117,11 +116,9 @@ def get_intersect_or_union(tags_list):
         # RULE 2: no shared states -> assign union of states
         if tag_set == set():
             # union:
-            print("result: ", TAGS)
             return TAGS
         else:
             tags_list.remove(tag_list_i) # same as 
             tags_list.remove(tag_list_j)
             tags_list.append(list(tag_set))
-    print("result: ", list(tag_set))
     return list(tag_set)
