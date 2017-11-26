@@ -14,3 +14,4 @@ node_modules/
 *.synctex.gz
 
 .vscode/settings.json
+simulation/non_binary_simulation/metadata.csv

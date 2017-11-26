@@ -1,0 +1,31 @@
+Open Tree of Life version 9.1
+
+Statistics
+Date	March 22, 2017	 
+Open Tree Taxonomy version used	ott3.0	 
+Trees in synthesis	819	 
+OTUs from phylogeny	55.226	 
+Tips in synthetic tree	2.637.204
+
+#internal nodes, #leaf nodes:
+mean depth, max depth, min depth:
+
+	Cellular_organisms:
+		2891367 nodes -> [254163, 2637204]
+		['ott93302', 4.453689419493294, 94, 3]
+
+	Eukaryota:
+		2535437 nodes -> [241974, 2293463]
+		['ott304358', 3.370789824804477, 93, 2]
+
+	Metazoa:
+		1670956  nodes -> [179944, 1491012]
+		['ott691846', 5.323464690895551, 88, 2]
+
+	Hominidae:
+		26  nodes -> [12, 14]
+		['ott770311', 4.775, 6, 4]
+
+	Apicomplexa:
+		2102  nodes -> [239, 1863]
+		['ott422673', 3.7152309882752474, 15, 2]
