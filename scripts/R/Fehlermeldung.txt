@@ -1,0 +1,8 @@
+Error in file(file, "rt") : cannot open the connection
+Calls: main ... get_interactions_by_taxa -> read_csv -> <Anonymous> -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+	InternetOpenUrl failed: 'Das Zeitlimit für den Vorgang wurde erreicht.'
+Execution halted
+
+(After ~2h)
