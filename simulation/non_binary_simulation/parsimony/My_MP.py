@@ -1,6 +1,6 @@
 import Helpers
 
-def parsimony_like(tree_clade, nodelist):
+def my_parsimony(tree_clade, nodelist):
     """mean based parsimony"""
     # down:
     parsimony_down(tree_clade, nodelist)
