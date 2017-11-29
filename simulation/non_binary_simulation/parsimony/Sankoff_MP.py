@@ -7,7 +7,8 @@ def sankoff_parsimony(tree_clade, nodelist):
     newick_tree = "(((parasite,freeliving,parasite),(freeliving,freeliving)),freeliving);"
 
     # -------- R code --------
-    path = "D:/GitHub/IZW-HU-Parasites/simulation/non_binary_simulation/parsimony/castor_parsimony.R"
+    
+    path = "D:/GitHub/IZW-HU-Parasites/scripts/R/castor_parsimony.R"
     f = open(path, "r")
     code = ''.join(f.readlines())
     result = rpy2.robjects.r(code)
