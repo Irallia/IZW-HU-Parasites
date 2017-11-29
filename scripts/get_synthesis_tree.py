@@ -9,10 +9,6 @@ path_freelivings = "../data/interaction_data/freeliving.csv"
 
 def main():
     tree = Phylo.read(path_tree, 'newick')
-    print("tree name: ", tree.clade.name)
-    print("first clades: ")
-    for clade in tree.clade.clades:
-        print(clade.name)
 
     parasites = []
     freelivings = []
@@ -42,15 +38,15 @@ def main():
 def fill_tree_with_tags(subtree, parasites, freelivings):
     if subtree.is_terminal():
         if get_tag(subtree.name, parasites):
-            subtree.name = "parasite"
-            print("found parasite")
+            subtree.name = "1"
         else:
             if get_tag(subtree.name, freelivings):
-                subtree.name = "freeliving"
-                print("found freeliving")
+                subtree.name = "2"
             else:
                 subtree.name = "NA"
     else:
+        // ToDo: ? does this make any difference?
+        # subtree.name = ""
         for clade in subtree.clades:
             fill_tree_with_tags(clade, parasites, freelivings)
     return

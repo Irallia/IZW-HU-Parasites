@@ -40,3 +40,6 @@
     * über:
         * #P, #FL, #untagged
 * Parameter für beta-Verteilung -> stability analysis
+
+# Questions:
+    * get_synthesis_tree.py : Interne Knoten ignorieren? Ebenfalls taggen? Namen ganz entfernen? Kann man den Originalbaum dann noch rekonstruieren?
