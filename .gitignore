@@ -1,6 +1,7 @@
 data/
 Masterarbeit - Latex/Figures/tex-tikz-figures - examples/
 node_modules/
+simulation/bufferfiles/simulated_tree.tre
 simulation/non_binary_simulation/metadata.csv
 
 *.aux
@@ -13,3 +14,4 @@ simulation/non_binary_simulation/metadata.csv
 *.fdb_latexmk
 *.pyc
 *.synctex.gz
+

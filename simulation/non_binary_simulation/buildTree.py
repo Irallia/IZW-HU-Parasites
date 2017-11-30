@@ -1,12 +1,11 @@
 """This module builds a random binary tree and give tags to every node."""
 
-# import numpy as np
 from copy import deepcopy
-from numpy import random
 
 from Bio import Phylo
+from numpy import random
 
-import Helpers
+from utilities import Helpers
 
 # global variables / parameters:
 #   for freeliving_distribution

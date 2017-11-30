@@ -5,16 +5,16 @@ from pprint import pprint
 
 from Bio import Phylo
 
-import buildTree
-from parsimony.Fitch_MP import fitch_parsimony
-from parsimony.My_MP import my_parsimony
-from parsimony.Sankoff_MP import sankoff_parsimony
-import Drawings
+from non_binary_simulation import buildTree
+from non_binary_simulation.parsimony.Fitch_MP import fitch_parsimony
+from non_binary_simulation.parsimony.My_MP import my_parsimony
+from non_binary_simulation.parsimony.Sankoff_MP import sankoff_parsimony
+from utilities import Drawings
 
 def main():
     """Main method"""
-    number_trees = 5    # number of simulated trees
-    number_leafnodes = 100
+    number_trees = 1    # number of simulated trees
+    number_leafnodes = 20
     percentage = 40   # percentage of parasites (percentage +-5%)
 
     print("Build", number_trees, "random trees with", number_leafnodes, "leafnodes", percentage, "parasites.")
@@ -50,12 +50,12 @@ def run_parsimony_algorithms(current_tree, nodelist):
     # ---------------- my parsimony ----------------
     my_MP_tree = deepcopy(current_tree)
     my_MP_nodelist = deepcopy(nodelist)
-    # my_parsimony(my_MP_tree.clade, my_MP_nodelist)
+    my_parsimony(my_MP_tree.clade, my_MP_nodelist)
     my_MP_nodelists.append(my_MP_nodelists)
     # ---------------- Sankoff parsimony ----------------
     sankoff_MP_tree = deepcopy(current_tree)
     sankoff_MP_nodelist = deepcopy(nodelist)
-    sankoff_parsimony(sankoff_MP_tree.clade, sankoff_MP_nodelist)
+    sankoff_parsimony(sankoff_MP_tree, sankoff_MP_nodelist)
     sankoff_MP_nodelists.append(sankoff_MP_nodelist)
     return [fitch_MP_nodelists, my_MP_nodelists, sankoff_MP_nodelists]
 

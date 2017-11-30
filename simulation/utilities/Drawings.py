@@ -1,5 +1,5 @@
 """functions just for nice figures"""
-import Helpers
+from utilities import Helpers
 
 def tag_names(subtree, nodelist, tag_id):
     """tag all nodes"""
