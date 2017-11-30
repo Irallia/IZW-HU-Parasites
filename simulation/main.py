@@ -31,6 +31,7 @@ def main():
         # ---------------- maximum parsimony algorithms ----------------
         list_of_nodelists = run_parsimony_algorithms(current_tree, nodelist)
         # ---------------- compare results ----------------
+        print("-------- evaluation --------")
         # ---------------- drawings ----------------
         # do_some_drawings(current_tree, nodelist, parsimony_tree, parsimony_nodelist)
 
@@ -42,17 +43,17 @@ def run_parsimony_algorithms(current_tree, nodelist):
     fitch_MP_nodelists = []
     my_MP_nodelists = []
     sankoff_MP_nodelists = []
-    # ---------------- Fitch parsimony ----------------
+    print("---------------- Fitch parsimony ----------------")
     fitch_MP_tree = deepcopy(current_tree)
     fitch_MP_nodelist = deepcopy(nodelist)
     fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist)
     fitch_MP_nodelists.append(fitch_MP_nodelist)
-    # ---------------- my parsimony ----------------
+    print("---------------- my parsimony ----------------")
     my_MP_tree = deepcopy(current_tree)
     my_MP_nodelist = deepcopy(nodelist)
     my_parsimony(my_MP_tree.clade, my_MP_nodelist)
     my_MP_nodelists.append(my_MP_nodelists)
-    # ---------------- Sankoff parsimony ----------------
+    print("---------------- Sankoff parsimony ----------------")
     sankoff_MP_tree = deepcopy(current_tree)
     sankoff_MP_nodelist = deepcopy(nodelist)
     sankoff_parsimony(sankoff_MP_tree, sankoff_MP_nodelist)

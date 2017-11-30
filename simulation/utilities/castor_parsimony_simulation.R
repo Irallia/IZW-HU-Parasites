@@ -32,7 +32,7 @@ print("run parsimony algorithm...")
 # likelihoods = hsp_max_parsimony(tree, tip_states, Nstates=2, transition_costs="all_equal", edge_exponent=0.0, weight_by_scenarios=TRUE, check_input=TRUE)
 likelihoods = hsp_max_parsimony(tagged_tree, tip_states, Nstates=NULL, transition_costs="all_equal", edge_exponent=0.0, weight_by_scenarios=TRUE, check_input=TRUE)
 print("--------")
-print(likelihoods)
+# print(likelihoods)
 # estimated_tip_states = max.col(likelihoods[1:Ntips,])
 # # print estimated tip states
 # print(estimated_tip_states)

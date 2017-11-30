@@ -1,9 +1,6 @@
 from copy import deepcopy
-from pprint import pprint
 
-import sys
-sys.path.append('../simulation/utilities')
-import Helpers
+from utilities import Helpers
 
 TAGS = ["FL", "P"]
 
@@ -24,8 +21,7 @@ def fitch_parsimony(tree_clade, nodelist):
         del sublist[i]
         parsimony_up(clade, nodelist, parent, sublist)
     # final:
-    # ToDo: final step...
-    # parsimony_final(tree_clade, nodelist)
+    parsimony_final(tree_clade, nodelist)
     return
 
 def parsimony_down(subtree, nodelist):
@@ -94,9 +90,10 @@ def parsimony_final(subtree, nodelist):
         tag_list = get_intersect_or_union(element[4])
         # add final tag
         tag_string = ""
-        for tag in len(tag_list):
+        for tag in tag_list:
             tag_string += tag + "&"
-        element[3].append(tag_string)
+        tag_string = tag_string[:len(tag_string)-1]
+        element[3] = tag_string
     # go on with children
     if not subtree.is_terminal():
         parsimony_final(subtree.clades[0], nodelist)
@@ -109,6 +106,7 @@ def get_intersect_or_union(tags_list):
     #   tags_list - a list of tag_lists
     #       tags_list[tag_list]
     # pairwise intersection
+    tag_set = []
     while len(tags_list) > 1:
         tag_list_i = tags_list[0]
         tag_list_j = tags_list[1]
