@@ -1,5 +1,7 @@
 """Maximum parsimony algorithm from Sankoff implemented in the R package castor"""
 
+import csv
+import numpy
 import rpy2.robjects
 from Bio import Phylo
 
@@ -7,7 +9,6 @@ from utilities import Helpers
 
 def sankoff_parsimony(tree, nodelist):
     """Using rpy2 for forwarding to R code"""
-    newick_tree = "(((parasite,freeliving,parasite),(freeliving,freeliving)),freeliving);"
 
     # ---- cache tree for R script ---
     prepare_tree(tree.clade, nodelist)
@@ -22,7 +23,10 @@ def sankoff_parsimony(tree, nodelist):
     result = rpy2.robjects.r(code)
     # assume that...
     likelihoods = rpy2.robjects.globalenv['likelihoods']
-    print(likelihoods)
+
+    with open('likelihoods.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(likelihoods)
     return
 
 def prepare_tree(subtree, nodelist):

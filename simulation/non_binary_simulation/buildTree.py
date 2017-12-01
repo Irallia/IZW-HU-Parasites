@@ -25,16 +25,18 @@ def get_random_tagged_tree(number_leafnodes, percentage):
     randomized_tree.clade.name = 'root'
     current_tree = deepcopy(randomized_tree)
     boolean = True
+    print("---- tag tree ----")
     while boolean:
         result = tag_tree(current_tree.clade, [], 'FL', [0, 0])
         nodelist = result[0]
         leaf_distr = result[1]
         # %P = #FL / (#P + #FL) * 100
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
-        # print(percentage_parasites)  # 40% parasites?
+        print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
         if (percentage - 5) < percentage_parasites < (percentage + 5):
             boolean = False
         current_tree = deepcopy(randomized_tree)
+    print("----")
     print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
 

@@ -15,3 +15,5 @@ simulation/non_binary_simulation/metadata.csv
 *.pyc
 *.synctex.gz
 
+simulation/output.csv
+simulation/likelihoods.csv
