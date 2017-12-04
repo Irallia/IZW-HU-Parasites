@@ -11,12 +11,12 @@ main <- function() {
     print(Sys.time())
 
     print("-------- Parasites: --------")
-    # parasites source
+    print("parasites source:")
     # Unsupported interaction type(s): ectoParasiteOf, kleptoparasiteOf, ectoParasitoid, endoparasiteOf, parasitoidOf, endoparasitoidOf
     parasite_source <- c("parasiteOf", "pathogenOf")
     ps_data = get_data(parasite_source, c(1:2))
 
-    # parasites target
+    print("parasites target:")
     parasite_target <- c("hasParasite", "hasPathogen")
     pt_data = get_data(parasite_target, c(6:7))
 
@@ -55,27 +55,27 @@ main <- function() {
 }
 
 get_data <- function(interactions, rows) {
-    limit <- 2500000
+    limit <- 500000
     i <- 0
 
     otherkeys = list("limit"=limit, "skip"=i)
     raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
-    reduced_data <- raw_data[rows,]
+    reduced_data <- raw_data[rows]
     data <- reduced_data[!duplicated(reduced_data),]
+    print(paste(i+1,"th request"))
+    print(nrow(data))
 
     while(nrow(raw_data) >= limit) {
-    # while(i < 3) {
         i <- i + 1
-        print(i)    #highest: 199
         otherkeys = list("limit"=limit, "skip"=i)
         raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
         reduced_data <- raw_data[rows]
-        reduced_data <- reduced_data[!duplicated(reduced_data)]
+        reduced_data <- reduced_data[!duplicated(reduced_data),]
         data <- rbind(data, reduced_data)
-        if(nrow(data) > 200000) {
-            print("reduce data")
+        if(nrow(data) > 40000) {
             data <- data[!duplicated(data),]
-            print(nrow(data)) # highest: 4900
+            print(paste(i+1,"th request"))
+            print(nrow(data))
         }
     }
     colnames(data) <- c("taxon_external_id", "taxon_name")
