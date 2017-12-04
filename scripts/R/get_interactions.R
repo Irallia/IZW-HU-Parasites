@@ -29,6 +29,7 @@ main <- function() {
     print(nrow(p_data))
     write.csv(p_data, file = path_parasites)
 
+    print(Sys.time())
     print("-------- Freeliving: --------")
 
     # freeliving source
@@ -54,34 +55,28 @@ main <- function() {
 }
 
 get_data <- function(interactions, rows) {
-    limit <- 25000
+    limit <- 2500000
     i <- 0
 
     otherkeys = list("limit"=limit, "skip"=i)
     raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
-    reduced_data <- raw_data[rows]
+    reduced_data <- raw_data[rows,]
     data <- reduced_data[!duplicated(reduced_data),]
 
     while(nrow(raw_data) >= limit) {
     # while(i < 3) {
         i <- i + 1
         print(i)    #highest: 199
-        print(Sys.time())
         otherkeys = list("limit"=limit, "skip"=i)
         raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
         reduced_data <- raw_data[rows]
-        reduced_data <- reduced_data[!duplicated(reduced_data),]
-        # print(nrow(raw_data))
-        # print(nrow(reduced_data))
+        reduced_data <- reduced_data[!duplicated(reduced_data)]
         data <- rbind(data, reduced_data)
-        print("current columns of data:")
-        print(nrow(data))
-        if(nrow(data) > 20000) {
+        if(nrow(data) > 200000) {
             print("reduce data")
             data <- data[!duplicated(data),]
             print(nrow(data)) # highest: 4900
         }
-        print("--------")
     }
     colnames(data) <- c("taxon_external_id", "taxon_name")
     return(data)
