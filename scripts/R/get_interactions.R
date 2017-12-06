@@ -7,55 +7,59 @@ main <- function() {
     # List interactions identified in GloBI database
     # get_interaction_types()
     # get_interaction_types(opts = list())
-
-    print(Sys.time())
+    start.time <- Sys.time()
+    print(start.time)
 
     print("-------- Parasites: --------")
     print("parasites source:")
-    # Unsupported interaction type(s): ectoParasiteOf, kleptoparasiteOf, ectoParasitoid, endoparasiteOf, parasitoidOf, endoparasitoidOf
     parasite_source <- c("parasiteOf", "pathogenOf")
-    ps_data = get_data(parasite_source, c(1:2))
+    ps_data = get_data(parasite_source, c(1:2), start.time)
+
+    start.time <- Sys.time()
+    print(start.time)
 
     print("parasites target:")
     parasite_target <- c("hasParasite", "hasPathogen")
-    pt_data = get_data(parasite_target, c(6:7))
+    pt_data = get_data(parasite_target, c(6:7), start.time)
 
-    # parasite
+    print(paste("#parasites source=",nrow(ps_data)))
+    print(paste("#parasites target=",nrow(pt_data)))
     p_data <- rbind(ps_data, pt_data)
-    print(nrow(ps_data))
-    print(nrow(pt_data))
-    print(nrow(p_data))
+    print(paste("#total=",nrow(p_data)))
     p_data <- p_data[!duplicated(p_data),]
-    print(nrow(p_data))
+    print(paste("#total without duplicates=",nrow(p_data)))
+
     write.csv(p_data, file = path_parasites)
 
-    print(Sys.time())
     print("-------- Freeliving: --------")
 
-    # freeliving source
-    # Unsupported interaction type(s): visits
+    start.time <- Sys.time()
+    print(start.time)
+
+    print("freeliving source")
     freeliving_source <- c("preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf")
-    fs_data = get_data(freeliving_source, c(1:2))
+    fs_data = get_data(freeliving_source, c(1:2), start.time)
 
-    # freeliving target
-    # Unsupported interaction type(s): ectoParasiteOf, kleptoparasiteOf, ectoParasitoid, endoparasiteOf, parasitoidOf, endoparasitoidOf
+    start.time <- Sys.time()
+    print(start.time)
+
+    print("freeliving target")
     freeliving_target <- c("preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost")
-    ft_data = get_data(freeliving_target, c(6:7))
+    ft_data = get_data(freeliving_target, c(6:7), start.time)
 
-    # freeliving
+    print(paste("#freeliving source=",nrow(fs_data)))
+    print(paste("#freeliving target=",nrow(ft_data)))
     f_data <- rbind(fs_data, ft_data)
-    print(nrow(fs_data))
-    print(nrow(ft_data))
-    print(nrow(f_data))
+    print(paste("#total=",nrow(f_data)))
     f_data <- f_data[!duplicated(f_data),]
-    print(nrow(f_data))
+    print(paste("#total without duplicates=",nrow(f_data)))
     write.csv(f_data, file = path_freelivings)
     print("--------------------------------------")
     return()
 }
 
-get_data <- function(interactions, rows) {
-    limit <- 500000
+get_data <- function(interactions, rows, start.time) {
+    limit <- 50000
     i <- 0
 
     otherkeys = list("limit"=limit, "skip"=i)
@@ -64,6 +68,9 @@ get_data <- function(interactions, rows) {
     data <- reduced_data[!duplicated(reduced_data),]
     print(paste(i+1,"th request"))
     print(nrow(data))
+    end.time <- Sys.time()
+    time.taken <- end.time - start.time
+    print(time.taken)
 
     while(nrow(raw_data) >= limit) {
         i <- i + 1
@@ -72,7 +79,10 @@ get_data <- function(interactions, rows) {
         reduced_data <- raw_data[rows]
         reduced_data <- reduced_data[!duplicated(reduced_data),]
         data <- rbind(data, reduced_data)
-        if(nrow(data) > 40000) {
+        if(nrow(data) > 50000) {
+            end.time <- Sys.time()
+            time.taken <- end.time - start.time
+            print(time.taken)
             data <- data[!duplicated(data),]
             print(paste(i+1,"th request"))
             print(nrow(data))
