@@ -74,7 +74,8 @@ get_data <- function(interactions, rows, start.time) {
 
     while(nrow(raw_data) >= limit) {
         i <- i + 1
-        otherkeys = list("limit"=limit, "skip"=i)
+        skip <- i * limit
+        otherkeys = list("limit"=limit, "skip"=skip)
         raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
         reduced_data <- raw_data[rows]
         reduced_data <- reduced_data[!duplicated(reduced_data),]
