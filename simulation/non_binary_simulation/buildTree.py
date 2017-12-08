@@ -17,6 +17,9 @@ B_P = 8.0
 
 def get_random_tagged_tree(number_leafnodes, percentage):
     """build a random binary tree fully tagged with FL and P"""
+    # Arguments:
+    #   number_leafnodes    - needed for randomized function
+    #   percentage          - [realP, percentage_P, percentage_FL]
     percentage_parasites = 0
     # randomized(cls, taxa, branch_length=1.0, branch_stdev=None) 
     #   Create a randomized bifurcating tree given a list of taxa.
@@ -27,54 +30,64 @@ def get_random_tagged_tree(number_leafnodes, percentage):
     boolean = True
     print("---- tag tree ----")
     while boolean:
-        result = tag_tree(current_tree.clade, [], 'FL', [0, 0])
+        result = tag_tree(current_tree.clade, [], 0, [0, 0], percentage) # father_tag = 0 -> free living
         nodelist = result[0]
         leaf_distr = result[1]
         # %P = #FL / (#P + #FL) * 100
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
         print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
-        if (percentage - 5) < percentage_parasites < (percentage + 5):
+        if (percentage[0] - 5) < percentage_parasites < (percentage[0] + 5):
             boolean = False
         current_tree = deepcopy(randomized_tree)
     print("----")
     print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
 
-def tag_tree(subtree, nodelist, father_tag, leaf_distr):
+def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage):
     """Function tags all nodes of a given (binary) subtree with names FL or P."""
     # Arguments:
     #   subtree
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
-    #   father_tag  - FL or P
+    #   father_tag  - 0 or 1 (FL or P)
     #   leaf_distr  - [#FL, #P] - distribution of FL and P in the leave nodes
+    #   percentage  - [realP, percentage_P, percentage_FL]
     depth = -1
-    if father_tag == 'FL':
+    if father_tag == 0:
         # freeliving_distribution:
         new_random = random.beta(a=A_FL, b=B_FL)
     else:
         # parasite_distribution:
         new_random = random.beta(a=A_P, b=B_P)
 
-    tag = 'FL'
+    tag = 0         # -> FL
     if new_random < 0.5:
-        tag = 'P'
+        tag = 1     # -> P
     #               [id, depth, originaltag, finaltag, calc[taglist]]
     nodelist.append([subtree.name, depth, tag, '', []])
     current_list_index = len(nodelist) - 1
     # if leaf node, then depth = 1, set finaltag, increase leaf distribution
     if subtree.is_terminal():
         depth = 1
-        nodelist[current_list_index][3] = tag
-        nodelist[current_list_index][4].append([tag])
-        if tag == 'FL':
+        nodelist[current_list_index][3] = tag       # set finaltag
+        uniform_random = random.uniform() # choose if we want to delete ourselve
+        # unknown node?
+        if (tag == 1) and (uniform_random <= percentage[1]):
+            nodelist[current_list_index][4].append([tag])   # set start tag for calculation
+        else:
+            if (tag == 0) and (uniform_random <= percentage[2]):
+                nodelist[current_list_index][4].append([tag])   # set start tag for calculation
+            else:
+                nodelist[current_list_index][4].append([0, 1])   # set start tag for calculation
+        # count FL & P:
+        if tag == 0:
             leaf_distr[0] = leaf_distr[0] + 1
         else:
             leaf_distr[1] = leaf_distr[1] + 1
     else:
         child_depth = 0
         for clade in subtree.clades:
-            result = tag_tree(clade, nodelist, tag, leaf_distr)
+            result = tag_tree(clade, nodelist, tag, leaf_distr, percentage)
             nodelist = result[0]
             leaf_distr = result[1]
             child_depth = child_depth + result[2]

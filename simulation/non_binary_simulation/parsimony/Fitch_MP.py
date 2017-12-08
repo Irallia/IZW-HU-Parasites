@@ -2,7 +2,8 @@ from copy import deepcopy
 
 from utilities import Helpers
 
-TAGS = ["FL", "P"]
+# TAGS = ["FL", "P"]
+TAGS = [0, 1]
 
 def fitch_parsimony(tree_clade, nodelist):
     """parsimony implemented from [COO98] - changed for multifurcating trees"""
@@ -53,7 +54,7 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     #   parent      - nodelist element
     #   siblings     - [nodelist element]
     if not subtree.is_terminal():
-        parent_tag = parent[4]  # parent[4] could look like [['FL', 'P'], ['P']] or [['P']]
+        parent_tag = parent[4]  # parent[4] could look like [['0', '1'], ['1']] or [['1']]
         siblings_tags = []
         siblings_tags += parent_tag
         for sibling in siblings:
@@ -91,7 +92,7 @@ def parsimony_final(subtree, nodelist):
         # add final tag
         tag_string = ""
         for tag in tag_list:
-            tag_string += tag + "&"
+            tag_string += str(tag) + "&"
         tag_string = tag_string[:len(tag_string)-1]
         element[3] = tag_string
     # go on with children

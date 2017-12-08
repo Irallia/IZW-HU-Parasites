@@ -36,11 +36,10 @@ def parsimony_down(subtree, nodelist):
             parsimony_down(clade, nodelist)
         # if child is leaf node:
         if clade.is_terminal():
-            if child[4][0][0] == 'FL':
-                child[4][0] = 1
+            if child[4][0] == [0, 1]: # if unknown
+                child[4][0] = 0.5
             else:
-                if child[4][0][0] == 'P':
-                    child[4][0] = 0
+                child[4][0] = child[4][0][0]
         mean = mean + child[4][0]     # else: +0 for 'P'
     element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
     # calculate and add mean
@@ -57,8 +56,7 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     #   parent      - nodelist element
     #   siblings     - [nodelist element]
     if not subtree.is_terminal():
-
-        parent_tag = parent[4]  # parent[4] could look like [['FL', 'P'], ['P']] or [['P']]
+        parent_tag = parent[4]  # parent[4] could look like [0, 1] or [1]
         siblings_tags = []
         siblings_tags += parent_tag
         for sibling in siblings:

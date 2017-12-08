@@ -15,3 +15,8 @@
 |2017-11-08| lintr |A 'Linter' for R Code
 
 # Python
+
+sudo pip install ...
+biopython
+rpy2
+termcolor
