@@ -55,19 +55,19 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     #   parent      - nodelist element
     #   siblings     - [nodelist element]
+    parent_tag = parent[4]  # parent[4] could look like [0, 1] or [1]
+    siblings_tags = []
+    siblings_tags += parent_tag
+    for sibling in siblings:
+        siblings_tags += sibling[4]
+
+    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    # calculate and add mean
+    mean = sum(siblings_tags) / len(siblings_tags)
+    element[4].append(mean)
+
+    # go on with children
     if not subtree.is_terminal():
-        parent_tag = parent[4]  # parent[4] could look like [0, 1] or [1]
-        siblings_tags = []
-        siblings_tags += parent_tag
-        for sibling in siblings:
-            siblings_tags += sibling[4]
-
-        element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-        # calculate and add mean
-        mean = sum(siblings_tags) / len(siblings_tags)
-        element[4].append(mean)
-
-        # go on with children
         children = []
         for clade in subtree.clades:
             child = Helpers.find_element_in_nodelist(clade.name, nodelist)
@@ -87,12 +87,15 @@ def parsimony_final(subtree, nodelist):
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-    # calculate mean
-    mean = sum(element[4]) / len(element[4])
-    element[2] = str(round(mean,2))
+    if subtree.is_terminal() and element[4][0] != 0.5:
+        element[3] = element[4][0]
+    else:
+        # calculate mean
+        mean = sum(element[4]) / len(element[4])
+        element[3] = str(round(mean,2))
 
     # go on with children
     if not subtree.is_terminal():
-        parsimony_final(subtree.clades[0], nodelist)
-        parsimony_final(subtree.clades[1], nodelist)
+        for clade in subtree.clades:
+            parsimony_final(clade, nodelist)
     return

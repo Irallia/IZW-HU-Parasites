@@ -22,6 +22,7 @@ def fitch_parsimony(tree_clade, nodelist):
         del sublist[i]
         parsimony_up(clade, nodelist, parent, sublist)
     # final:
+    print("-------")
     parsimony_final(tree_clade, nodelist)
     return
 
@@ -53,25 +54,26 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     #   parent      - nodelist element
     #   siblings     - [nodelist element]
+    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+
+    parent_tag = parent[4]  # parent[4] could look like [['0', '1'], ['1']] or [['1']]
+    siblings_tags = []
+    siblings_tags += parent_tag
+    for sibling in siblings:
+        siblings_tags += sibling[4]
+    
+    # get intersection or union
+    tag_list = get_intersect_or_union(siblings_tags)
+    # add new tag
+    element[4].append(tag_list)
+
+    # go on with children
     if not subtree.is_terminal():
-        parent_tag = parent[4]  # parent[4] could look like [['0', '1'], ['1']] or [['1']]
-        siblings_tags = []
-        siblings_tags += parent_tag
-        for sibling in siblings:
-            siblings_tags += sibling[4]
-
-        element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-        # get intersection or union
-        tag_list = get_intersect_or_union(siblings_tags)
-        # add new tag
-        element[4].append(tag_list)
-
-        # go on with children
         children = []
         for clade in subtree.clades:
             child = Helpers.find_element_in_nodelist(clade.name, nodelist)
             children.append(child)
-        for i in range(0, len(subtree.clades) - 1):
+        for i in range(0, len(subtree.clades)):
             clade = subtree.clades[i]
             child = Helpers.find_element_in_nodelist(clade.name, nodelist)
             sublist = deepcopy(children)
@@ -85,9 +87,11 @@ def parsimony_final(subtree, nodelist):
     #   subtree
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
-    if not subtree.is_terminal():
-        element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-        # get intersection or union
+    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    # get intersection or union
+    if subtree.is_terminal() and len(element[4][0]) == 1:
+        element[3] = element[4][0][0]
+    else:
         tag_list = get_intersect_or_union(element[4])
         # add final tag
         tag_string = ""
@@ -95,10 +99,10 @@ def parsimony_final(subtree, nodelist):
             tag_string += str(tag) + "&"
         tag_string = tag_string[:len(tag_string)-1]
         element[3] = tag_string
-    # go on with children
     if not subtree.is_terminal():
-        parsimony_final(subtree.clades[0], nodelist)
-        parsimony_final(subtree.clades[1], nodelist)
+        # go on with children
+        for clade in subtree.clades:
+            parsimony_final(clade, nodelist)
     return
 
 def get_intersect_or_union(tags_list):

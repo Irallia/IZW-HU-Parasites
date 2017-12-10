@@ -40,7 +40,6 @@ def main():
     percentage_U = 1 - percentage_P - percentage_FL
     print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
     # print("=> %.2f \% parasites %.2f" % percentage_P, % percentage_FL)
-    # TODO: unknown nodes!!
     percentage = [realP, percentage_P, percentage_FL]
 
     for _ in range(0, number_trees):
@@ -85,7 +84,7 @@ def run_parsimony_algorithms(current_tree, nodelist):
     sankoff_parsimony(sankoff_MP_tree, sankoff_MP_nodelist)
     CURRENT_TIME = print_time(CURRENT_TIME)
     # --------------------------------------------------------
-    result_list = []
+    result_list = [['id','original tag', 'fitch', 'my', 'sankoff']]
     for i in range(0, len(nodelist)):
         if fitch_MP_nodelist[i][3] == '':
             fitch_MP_nodelist[i][3] = '-'

@@ -69,7 +69,6 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage):
     # if leaf node, then depth = 1, set finaltag, increase leaf distribution
     if subtree.is_terminal():
         depth = 1
-        nodelist[current_list_index][3] = tag       # set finaltag
         uniform_random = random.uniform() # choose if we want to delete ourselve
         # unknown node?
         if (tag == 1) and (uniform_random <= percentage[1]):
