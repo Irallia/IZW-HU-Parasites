@@ -25,8 +25,9 @@ def main():
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
     CURRENT_TIME = print_time(START_TIME)
     print(colored("---------------- metadata ----------------", "green"))
-    number_trees = 1    # number of simulated trees
-    number_leafnodes = 20000
+    number_trees = 100    # number of simulated trees
+    diffs = [["Fitch", "My", "Sankoff"]]
+    number_leafnodes = 1800000
     realP = 40   # percentage of parasites (percentage +-5%)
 
     print("Build", number_trees, "random trees with", colored(number_leafnodes, 'blue'), "leafnodes", realP, "% parasites.")    
@@ -54,14 +55,33 @@ def main():
         # Phylo.draw(current_tree)
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- maximum parsimony algorithms ----------------", "green"))
-        run_parsimony_algorithms(current_tree, nodelist)
-        # ---------------- compare results ----------------
-        print(colored("-------- evaluation --------", "green"))
+        differences = run_parsimony_algorithms(current_tree, nodelist)
+        diffs.append(differences)
         # ---------------- drawings ----------------
         # do_some_drawings(current_tree, nodelist, parsimony_tree, parsimony_nodelist)
         time_new = datetime.datetime.now().replace(microsecond=0)
         print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
         print("whole time needed:", time_new - START_TIME)
+
+    print("saved in:")
+    csv_title = "evaluation/" + str(number_leafnodes) + " leafnodes - " + str(len(nodelist)) + " nodes - " + str(round(percentage_U * 100, 2)) + "% unknown.csv" 
+    print(csv_title)
+    with open(csv_title, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(diffs)
+
+    f_dif = 0.0
+    m_dif = 0.0
+    s_dif = 0.0
+    for item in diffs:
+        f_dif += item[0]
+        m_dif += item[1]
+        s_dif += item[2]
+    f_dif = f_dif / number_trees
+    m_dif = m_dif / number_trees
+    s_dif = s_dif / number_trees
+    print("differences Fitch / My / Sankoff")
+    print(f_dif, m_dif, s_dif)
     return
 
 def run_parsimony_algorithms(current_tree, nodelist):
@@ -84,21 +104,50 @@ def run_parsimony_algorithms(current_tree, nodelist):
     sankoff_parsimony(sankoff_MP_tree, sankoff_MP_nodelist)
     CURRENT_TIME = print_time(CURRENT_TIME)
     # --------------------------------------------------------
+    print(colored("-------- evaluation --------", "green"))
+    differences = evaluation(nodelist, fitch_MP_nodelist, my_MP_nodelist, sankoff_MP_nodelist)
+    CURRENT_TIME = print_time(CURRENT_TIME)
+    print(colored("--------------------------------", "green"))
+    return differences
+
+def evaluation(nodelist, fitch_MP_nodelist, my_MP_nodelist, sankoff_MP_nodelist):
     result_list = [['id','original tag', 'fitch', 'my', 'sankoff']]
+    differences = [0, 0, 0]
     for i in range(0, len(nodelist)):
-        if fitch_MP_nodelist[i][3] == '':
+        real_value = nodelist[i][2]
+        # ---------------- Fitch ----------------
+        f_value = fitch_MP_nodelist[i][3]
+        if f_value == '':
             fitch_MP_nodelist[i][3] = '-'
-        if my_MP_nodelist[i][3] == '':
+        else:
+            if f_value == '0&1':
+                f_value = 0.5
+            f_value = float(f_value)
+            differences[0] += abs(f_value - real_value)
+        # ---------------- my max pars ----------------
+        m_value = my_MP_nodelist[i][3]
+        if m_value == '':
             my_MP_nodelist[i][3] = '-'
-        if sankoff_MP_nodelist[i][3] == '':
+        else:
+            m_value = float(m_value)
+            differences[1] += abs(m_value - real_value)
+        # ---------------- Sankoff ----------------
+        s_value = sankoff_MP_nodelist[i][3]
+        if s_value == '':
             sankoff_MP_nodelist[i][3] = '-'
+        else:
+            # s_value = float(s_value)
+            differences[2] += abs(s_value - real_value)
+        # --------------------------------
         result_list.append([nodelist[i][0], nodelist[i][2], fitch_MP_nodelist[i][3], my_MP_nodelist[i][3], sankoff_MP_nodelist[i][3]])
 
     with open('output.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(result_list)
     # pprint(result_list)
-    return
+    differences[1] = round(differences[1], 2)
+    differences[2] = round(differences[2], 2)
+    return differences
 
 def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     """seperated drawings"""
@@ -125,7 +174,6 @@ def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     Phylo.draw(parsimony_like_tree)
     # Phylo.draw_graphviz(parsimony_tree)
     # pylab.show()
-
 
 def print_time(time_old):
     time_new = datetime.datetime.now().replace(microsecond=0)
