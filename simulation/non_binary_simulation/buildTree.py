@@ -26,19 +26,19 @@ def get_random_tagged_tree(number_leafnodes, percentage):
     #   https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
     randomized_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
     randomized_tree.clade.name = 'root'
-    current_tree = deepcopy(randomized_tree)
     boolean = True
     print("---- tag tree ----")
     while boolean:
+        current_tree = deepcopy(randomized_tree)
         result = tag_tree(current_tree.clade, [], 0, [0, 0], percentage) # father_tag = 0 -> free living
-        nodelist = result[0]
-        leaf_distr = result[1]
+        nodelist = result[1]
+        leaf_distr = result[2]
+        # child_depth = child_depth + result[3]
         # %P = #FL / (#P + #FL) * 100
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
         print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
         if (percentage[0] - 5) < percentage_parasites < (percentage[0] + 5):
             boolean = False
-        current_tree = deepcopy(randomized_tree)
     print("----")
     print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
@@ -65,6 +65,7 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage):
         tag = 1     # -> P
     #               [id, depth, originaltag, finaltag, calc[taglist]]
     nodelist.append([subtree.name, depth, tag, '', []])
+    subtree.name = subtree.name + "$" + str(len(nodelist) - 1)
     current_list_index = len(nodelist) - 1
     # if leaf node, then depth = 1, set finaltag, increase leaf distribution
     if subtree.is_terminal():
@@ -87,12 +88,13 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage):
         child_depth = 0
         for clade in subtree.clades:
             result = tag_tree(clade, nodelist, tag, leaf_distr, percentage)
-            nodelist = result[0]
-            leaf_distr = result[1]
-            child_depth = child_depth + result[2]
+            clade = result[0]
+            nodelist = result[1]
+            leaf_distr = result[2]
+            child_depth = child_depth + result[3]
         depth = child_depth/len(subtree.clades) + 1 
     nodelist[current_list_index][1] = depth
-    return [nodelist, leaf_distr, depth]
+    return [subtree, nodelist, leaf_distr, depth]
 
 def get_non_binary_tree(subtree, nodelist):
     i = 0

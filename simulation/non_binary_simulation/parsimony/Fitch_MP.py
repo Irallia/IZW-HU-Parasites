@@ -22,7 +22,6 @@ def fitch_parsimony(tree_clade, nodelist):
         del sublist[i]
         parsimony_up(clade, nodelist, parent, sublist)
     # final:
-    print("-------")
     parsimony_final(tree_clade, nodelist)
     return
 
@@ -88,10 +87,10 @@ def parsimony_final(subtree, nodelist):
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
-    # get intersection or union
     if subtree.is_terminal() and len(element[4][0]) == 1:
         element[3] = element[4][0][0]
     else:
+        # get intersection or union
         tag_list = get_intersect_or_union(element[4])
         # add final tag
         tag_string = ""
@@ -99,8 +98,8 @@ def parsimony_final(subtree, nodelist):
             tag_string += str(tag) + "&"
         tag_string = tag_string[:len(tag_string)-1]
         element[3] = tag_string
-    if not subtree.is_terminal():
-        # go on with children
+    # go on with children
+    if not subtree.is_terminal(): 
         for clade in subtree.clades:
             parsimony_final(clade, nodelist)
     return

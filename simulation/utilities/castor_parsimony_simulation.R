@@ -14,20 +14,20 @@ tagged_tree <- read.tree(path_tagged_tree)
 # ---- get the tagged tips of the tree ----
 state_ids <- tree$tip.label
 states <- tagged_tree$tip.label
-print("tip states:")
-print(states)
+# print("tip states:")
+# print(states)
 # print(state_ids)
 number_of_tips <- length(state_ids)
-print(number_of_tips)
+# print(number_of_tips)
 internal_nodes <- tree$node.label
 # print(internal_nodes)
-print(length(internal_nodes))
+# print(length(internal_nodes))
 
 # ---- map them to numbers (NA for unknown states) ----
 # map_to_state_space(raw_states, fill_gaps=FALSE, sort_order="natural", include_state_values=FALSE)
 mapping <- map_to_state_space(states, include_state_values = TRUE)
 tip_states <- mapping$mapped_states
-print(tip_states)
+# print(tip_states)
 print("State names:")
 print(mapping$state_names)
 x <- replace(tip_states, tip_states==3, NA)
