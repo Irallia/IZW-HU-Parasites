@@ -62,7 +62,7 @@ get_data <- function(interactions, rows, start.time) {
     limit <- 50000
     i <- 0
 
-    otherkeys = list("limit"=limit, "skip"=i)
+    otherkeys = list("limit"=limit, "skip"=i, "taxonIdPrefix"="OTT")
     raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
     reduced_data <- raw_data[rows]
     data <- reduced_data[!duplicated(reduced_data),]
@@ -75,7 +75,7 @@ get_data <- function(interactions, rows, start.time) {
     while(nrow(raw_data) >= limit) {
         i <- i + 1
         skip <- i * limit
-        otherkeys = list("limit"=limit, "skip"=skip)
+        otherkeys = list("limit"=limit, "skip"=skip, "taxonIdPrefix"="OTT")
         raw_data <- get_interactions_by_type(interactiontype = interactions, otherkeys = otherkeys)
         reduced_data <- raw_data[rows]
         reduced_data <- reduced_data[!duplicated(reduced_data),]
