@@ -82,6 +82,7 @@ def main():
     m_dif = round(m_dif / number_trees, 2)
     s_dif = round(s_dif / number_trees, 2)
     print(colored("--------------------------------", "green"))
+    print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
     print("correctly predicted (including already known leaf nodes):")
     print("differences Fitch / My / Sankoff")
     percentage_correctly_predicted = "| " + str(f_dif) +" % | " + str(m_dif) + " % | " + str(s_dif) + " % |"
