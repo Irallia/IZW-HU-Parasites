@@ -18,22 +18,16 @@ states <- tagged_tree$tip.label
 # print(states)
 # print(state_ids)
 number_of_tips <- length(state_ids)
-# print(number_of_tips)
 internal_nodes <- tree$node.label
-# print(internal_nodes)
-# print(length(internal_nodes))
 
 # ---- map them to numbers (NA for unknown states) ----
 # map_to_state_space(raw_states, fill_gaps=FALSE, sort_order="natural", include_state_values=FALSE)
 mapping <- map_to_state_space(states, include_state_values = TRUE)
 tip_states <- mapping$mapped_states
-# print(tip_states)
-print("State names:")
-print(mapping$state_names)
+# print("State names:")
+# print(mapping$state_names)
 x <- replace(tip_states, tip_states==3, NA)
-# print(tip_states)
-
-print("run parsimony algorithm...")
+# print("run parsimony algorithm...")
 
 # ---- run parsimony algorithm ----
 # Reconstruct ancestral discrete states of nodes and predict unknown (hidden) states of tips on a tree using maximum parsimony. Transition costs can vary between transitions, and can optionally be weighted by edge length.

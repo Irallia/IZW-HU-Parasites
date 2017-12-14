@@ -27,7 +27,7 @@ def get_random_tagged_tree(number_leafnodes, percentage):
     randomized_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
     randomized_tree.clade.name = 'root'
     boolean = True
-    print("---- tag tree ----")
+    # print("---- tag tree ----")
     while boolean:
         current_tree = deepcopy(randomized_tree)
         result = tag_tree(current_tree.clade, [], 0, [0, 0], percentage) # father_tag = 0 -> free living
@@ -36,11 +36,11 @@ def get_random_tagged_tree(number_leafnodes, percentage):
         # child_depth = child_depth + result[3]
         # %P = #FL / (#P + #FL) * 100
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
-        print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
+        # print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
         if (percentage[0] - 5) < percentage_parasites < (percentage[0] + 5):
             boolean = False
-    print("----")
-    print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
+    # print("----")
+    # print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
 
 def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage):

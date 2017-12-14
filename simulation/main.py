@@ -14,8 +14,19 @@ from non_binary_simulation.parsimony.My_MP import my_parsimony
 from non_binary_simulation.parsimony.Sankoff_MP import sankoff_parsimony
 from utilities import Drawings
 
+# global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
 CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
+
+# fix numbers:
+leaf_nodes = 2300000        # 2 300 000 Eukaryota
+number_P = 43674
+number_FL = 88967
+
+# values for simulation:
+number_trees = 100          # number of simulated trees
+number_leafnodes = 10000
+realP = 40                  # percentage of parasites (percentage +-5%)
 
 def main():
     """Main method"""
@@ -25,34 +36,24 @@ def main():
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
     CURRENT_TIME = print_time(START_TIME)
     print(colored("---------------- metadata ----------------", "green"))
-    number_trees = 100    # number of simulated trees
     diffs = [["Fitch", "My", "Sankoff"]]
-    number_leafnodes = 1800000
-    realP = 40   # percentage of parasites (percentage +-5%)
-
-    print("Build", number_trees, "random trees with", colored(number_leafnodes, 'blue'), "leafnodes", realP, "% parasites.")    
-    leaf_nodes = 2300000
     print("real OTL tree: 2500000 nodes: 240000 internal,", leaf_nodes, "leaf nodes")
-    number_P = 43674
-    number_FL = 88967
     print("Information about species from GloBI:", number_P, "#P,", number_FL, "#FL")
     percentage_P = 1 / leaf_nodes * number_P
     percentage_FL = 1/ leaf_nodes * number_FL
     percentage_U = 1 - percentage_P - percentage_FL
     print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
-    # print("=> %.2f \% parasites %.2f" % percentage_P, % percentage_FL)
     percentage = [realP, percentage_P, percentage_FL]
-
-    for _ in range(0, number_trees):
+    print("Build", colored(number_trees, 'blue'), "random trees with", colored(number_leafnodes, 'blue'), "leafnodes", colored(realP, 'blue'), "% parasites.")
+    for i in range(1, number_trees + 1):
+        print("Tree", colored(i, 'red'))
         print(colored("---------------- get random tree ----------------", "green"))
         result = buildTree.get_random_tagged_tree(number_leafnodes, percentage)
         current_tree = result[0]
         nodelist = result[1]
-        # Phylo.draw(current_tree)
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- multifurcate tree ----------------", "green"))
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
-        # Phylo.draw(current_tree)
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- maximum parsimony algorithms ----------------", "green"))
         differences = run_parsimony_algorithms(current_tree, nodelist)
@@ -62,7 +63,7 @@ def main():
         time_new = datetime.datetime.now().replace(microsecond=0)
         print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
         print("whole time needed:", time_new - START_TIME)
-
+        print(colored("--------------------------------", "red"))
     print("saved in:")
     csv_title = "evaluation/" + str(number_leafnodes) + " leafnodes - " + str(len(nodelist)) + " nodes - " + str(round(percentage_U * 100, 2)) + "% unknown.csv" 
     print(csv_title)
@@ -73,15 +74,16 @@ def main():
     f_dif = 0.0
     m_dif = 0.0
     s_dif = 0.0
-    for item in diffs:
-        f_dif += item[0]
-        m_dif += item[1]
-        s_dif += item[2]
+    for i in range(1, number_trees):
+        f_dif += float(diffs[i][0])
+        m_dif += float(diffs[i][1])
+        s_dif += float(diffs[i][2])
     f_dif = f_dif / number_trees
     m_dif = m_dif / number_trees
     s_dif = s_dif / number_trees
     print("differences Fitch / My / Sankoff")
-    print(f_dif, m_dif, s_dif)
+    print(colored((f_dif, m_dif, s_dif), 'red'))
+    print(colored("--------------------------------", "green"))
     return
 
 def run_parsimony_algorithms(current_tree, nodelist):

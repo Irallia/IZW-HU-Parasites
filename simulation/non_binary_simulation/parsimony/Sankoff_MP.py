@@ -32,11 +32,6 @@ def sankoff_parsimony(tree, nodelist):
     internal_nodes = rpy2.robjects.globalenv['internal_nodes']
 
     l = int(len(likelihoods)/3)
-    # print(leaf_nodes)
-    # print(likelihoods[0:number_of_tips[0]])
-    # print(internal_nodes)
-    # print(likelihoods[number_of_tips[0]+1:l+1])
-    print("----")
         
     j = 0
     k = 0
