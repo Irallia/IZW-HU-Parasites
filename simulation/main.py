@@ -40,7 +40,7 @@ def main():
     print("real OTL tree: 2500000 nodes: 240000 internal,", leaf_nodes, "leaf nodes")
     print("Information about species from GloBI:", number_P, "#P,", number_FL, "#FL")
     percentage_P = 1 / leaf_nodes * number_P
-    percentage_FL = 1/ leaf_nodes * number_FL
+    percentage_FL = 1 / leaf_nodes * number_FL
     percentage_U = 1 - percentage_P - percentage_FL
     print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
     percentage = [realP, percentage_P, percentage_FL]
@@ -56,8 +56,8 @@ def main():
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- maximum parsimony algorithms ----------------", "green"))
-        differences = run_parsimony_algorithms(current_tree, nodelist)
-        diffs.append(differences)
+        diff_percentage = run_parsimony_algorithms(current_tree, nodelist)
+        diffs.append(diff_percentage)
         # ---------------- drawings ----------------
         # do_some_drawings(current_tree, nodelist, parsimony_tree, parsimony_nodelist)
         time_new = datetime.datetime.now().replace(microsecond=0)
@@ -65,7 +65,7 @@ def main():
         print("whole time needed:", time_new - START_TIME)
         print(colored("--------------------------------", "red"))
     print("saved in:")
-    csv_title = "evaluation/" + str(number_leafnodes) + " leafnodes - " + str(len(nodelist)) + " nodes - " + str(round(percentage_U * 100, 2)) + "% unknown.csv" 
+    csv_title = "evaluation/" + str(number_leafnodes) + " leafnodes - " + str(number_trees) + " trees - " + str(round(percentage_U * 100, 2)) + "% unknown.csv" 
     print(csv_title)
     with open(csv_title, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -74,15 +74,18 @@ def main():
     f_dif = 0.0
     m_dif = 0.0
     s_dif = 0.0
-    for i in range(1, number_trees):
+    for i in range(1, number_trees + 1):
         f_dif += float(diffs[i][0])
         m_dif += float(diffs[i][1])
         s_dif += float(diffs[i][2])
-    f_dif = f_dif / number_trees
-    m_dif = m_dif / number_trees
-    s_dif = s_dif / number_trees
+    f_dif = round(f_dif / number_trees, 2)
+    m_dif = round(m_dif / number_trees, 2)
+    s_dif = round(s_dif / number_trees, 2)
+    print(colored("--------------------------------", "green"))
+    print("correctly predicted (including already known leaf nodes):")
     print("differences Fitch / My / Sankoff")
-    print(colored((f_dif, m_dif, s_dif), 'red'))
+    percentage_correctly_predicted = "| " + str(f_dif) +" % | " + str(m_dif) + " % | " + str(s_dif) + " % |"
+    print(colored(percentage_correctly_predicted, 'red'))
     print(colored("--------------------------------", "green"))
     return
 
@@ -115,6 +118,7 @@ def run_parsimony_algorithms(current_tree, nodelist):
 def evaluation(nodelist, fitch_MP_nodelist, my_MP_nodelist, sankoff_MP_nodelist):
     result_list = [['id','original tag', 'fitch', 'my', 'sankoff']]
     differences = [0, 0, 0]
+    number_nodes = 0
     for i in range(0, len(nodelist)):
         real_value = nodelist[i][2]
         # ---------------- Fitch ----------------
@@ -122,6 +126,7 @@ def evaluation(nodelist, fitch_MP_nodelist, my_MP_nodelist, sankoff_MP_nodelist)
         if f_value == '':
             fitch_MP_nodelist[i][3] = '-'
         else:
+            number_nodes += 1
             if f_value == '0&1':
                 f_value = 0.5
             f_value = float(f_value)
@@ -149,7 +154,12 @@ def evaluation(nodelist, fitch_MP_nodelist, my_MP_nodelist, sankoff_MP_nodelist)
     # pprint(result_list)
     differences[1] = round(differences[1], 2)
     differences[2] = round(differences[2], 2)
-    return differences
+    f_dif_p = 100 - (differences[0] / number_nodes * 100)
+    m_dif_p = 100 - (differences[1] / number_nodes * 100)
+    s_dif_p = 100 - (differences[2] / number_nodes * 100)
+    print(number_nodes)
+    diff_percentage = [f_dif_p, m_dif_p, s_dif_p]
+    return diff_percentage
 
 def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     """seperated drawings"""
