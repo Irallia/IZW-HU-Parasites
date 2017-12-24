@@ -3,9 +3,6 @@
 from copy import deepcopy
 from pprint import pprint
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 from Bio import Phylo
 
 import buildTree
@@ -15,22 +12,6 @@ import Drawings
 
 def main():
     """Main method"""
-
-    parasite_distribution = np.random.beta(a=3.0, b=8.0, size=5000)
-    freeliving_distribution = np.random.beta(a=8.0, b=3.0, size=5000)
-    
-    # the histogram of the data
-    n, bins, patches = plt.hist(parasite_distribution, 100, normed=1, facecolor='r', alpha=0.75)
-    n, bins, patches = plt.hist(freeliving_distribution, 100, normed=1, facecolor='b', alpha=0.75)
-
-    # plt.xlabel('Smarts')
-    # plt.ylabel('Probability')
-    plt.title('Histogram of distributions')
-    plt.text(0.5, 9, r'red: parasites, blue: free-living')
-    plt.axis([0, 1, 0, 10])
-    plt.grid(True)
-    plt.show()
-
 
     number_trees = 5
     number_leafnodes = 20
