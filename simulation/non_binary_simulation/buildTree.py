@@ -69,7 +69,7 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage):
         new_random = random.beta(a=A_P, b=B_P)
 
     tag = 0         # -> FL
-    if new_random < 0.5:
+    if new_random < 0.4:
         tag = 1     # -> P
     #               [id, depth, originaltag, finaltag, calc[taglist]]
     nodelist.append([subtree.name, depth, tag, '', []])
