@@ -1,6 +1,7 @@
 """main method"""
 import csv
 import datetime
+import sys
 from copy import deepcopy
 from pprint import pprint
 from time import gmtime, strftime
@@ -12,7 +13,10 @@ from non_binary_simulation import buildTree
 from non_binary_simulation.parsimony.Fitch_MP import fitch_parsimony
 from non_binary_simulation.parsimony.My_MP import my_parsimony
 from non_binary_simulation.parsimony.Sankoff_MP import sankoff_parsimony
-from utilities import Drawings
+from utilities import Drawings, Helpers
+
+# input arguments
+args = sys.argv
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -24,8 +28,8 @@ number_P = 43674
 number_FL = 88967
 
 # values for simulation:
-number_trees = 100          # number of simulated trees
-number_leafnodes = 10000
+number_trees = int(sys.argv[2])  # number of simulated trees
+number_leafnodes = int(sys.argv[1])
 realP = 40                  # percentage of parasites (percentage +-5%)
 
 def main():
@@ -34,7 +38,7 @@ def main():
     global CURRENT_TIME
     print(colored("------------------------ start simulation ------------------------", "green"))
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-    CURRENT_TIME = print_time(START_TIME)
+    CURRENT_TIME = Helpers.print_time(START_TIME)
     print(colored("---------------- metadata ----------------", "green"))
     diffs = [["Fitch", "My", "Sankoff"]]
     print("real OTL tree: 2500000 nodes: 240000 internal,", leaf_nodes, "leaf nodes")
@@ -51,10 +55,10 @@ def main():
         result = buildTree.get_random_tagged_tree(number_leafnodes, percentage)
         current_tree = result[0]
         nodelist = result[1]
-        CURRENT_TIME = print_time(CURRENT_TIME)
+        CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
         print(colored("---------------- multifurcate tree ----------------", "green"))
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
-        CURRENT_TIME = print_time(CURRENT_TIME)
+        CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
         print(colored("---------------- maximum parsimony algorithms ----------------", "green"))
         diff_percentage = run_parsimony_algorithms(current_tree, nodelist)
         diffs.append(diff_percentage)
@@ -98,21 +102,21 @@ def run_parsimony_algorithms(current_tree, nodelist):
     fitch_MP_tree = deepcopy(current_tree)
     fitch_MP_nodelist = deepcopy(nodelist)
     fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist)
-    CURRENT_TIME = print_time(CURRENT_TIME)
+    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
     print(colored("---------------- my parsimony ----------------", "green"))
     my_MP_tree = deepcopy(current_tree)
     my_MP_nodelist = deepcopy(nodelist)
     my_parsimony(my_MP_tree.clade, my_MP_nodelist)
-    CURRENT_TIME = print_time(CURRENT_TIME)
+    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
     print(colored("---------------- Sankoff parsimony ----------------", "green"))
     sankoff_MP_tree = deepcopy(current_tree)
     sankoff_MP_nodelist = deepcopy(nodelist)
     sankoff_parsimony(sankoff_MP_tree, sankoff_MP_nodelist)
-    CURRENT_TIME = print_time(CURRENT_TIME)
+    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
     # --------------------------------------------------------
     print(colored("-------- evaluation --------", "green"))
     differences = evaluation(nodelist, fitch_MP_nodelist, my_MP_nodelist, sankoff_MP_nodelist)
-    CURRENT_TIME = print_time(CURRENT_TIME)
+    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
     print(colored("--------------------------------", "green"))
     return differences
 
@@ -187,10 +191,5 @@ def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     Phylo.draw(parsimony_like_tree)
     # Phylo.draw_graphviz(parsimony_tree)
     # pylab.show()
-
-def print_time(time_old):
-    time_new = datetime.datetime.now().replace(microsecond=0)
-    print("time needed:", time_new - time_old)
-    return time_new
 
 main()

@@ -1,5 +1,6 @@
 """This module builds a random binary tree and give tags to every node."""
 
+import datetime
 from copy import deepcopy
 
 from Bio import Phylo
@@ -10,9 +11,9 @@ from utilities import Helpers
 # global variables / parameters:
 #   for freeliving_distribution
 A_FL = 8.0
-B_FL = 3.0
+B_FL = 6.25
 #   for parasite_distribution
-A_P = 3.0
+A_P = 3
 B_P = 8.0
 
 def get_random_tagged_tree(number_leafnodes, percentage):
@@ -20,6 +21,10 @@ def get_random_tagged_tree(number_leafnodes, percentage):
     # Arguments:
     #   number_leafnodes    - needed for randomized function
     #   percentage          - [realP, percentage_P, percentage_FL]
+
+    START_TIME = datetime.datetime.now().replace(microsecond=0)
+    CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
+    print("---- randomized tree ----")
     percentage_parasites = 0
     # randomized(cls, taxa, branch_length=1.0, branch_stdev=None) 
     #   Create a randomized bifurcating tree given a list of taxa.
@@ -27,7 +32,8 @@ def get_random_tagged_tree(number_leafnodes, percentage):
     randomized_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
     randomized_tree.clade.name = 'root'
     boolean = True
-    # print("---- tag tree ----")
+    CURRENT_TIME = Helpers.print_time(START_TIME)
+    print("---- tag tree ----")
     while boolean:
         current_tree = deepcopy(randomized_tree)
         result = tag_tree(current_tree.clade, [], 0, [0, 0], percentage) # father_tag = 0 -> free living
@@ -36,10 +42,12 @@ def get_random_tagged_tree(number_leafnodes, percentage):
         # child_depth = child_depth + result[3]
         # %P = #FL / (#P + #FL) * 100
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
-        # print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
+        print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
         if (percentage[0] - 5) < percentage_parasites < (percentage[0] + 5):
             boolean = False
-    # print("----")
+    print("----")
+    CURRENT_TIME = Helpers.print_time(START_TIME)
+    print("----")
     # print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
 
