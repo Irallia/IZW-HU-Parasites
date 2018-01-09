@@ -55,7 +55,7 @@ def main():
         result = buildTree.get_random_tagged_tree(number_leafnodes, percentage)
         current_tree = result[0]
         nodelist = result[1]
-        CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+        # CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
         print(colored("---------------- multifurcate tree ----------------", "green"))
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
         CURRENT_TIME = Helpers.print_time(CURRENT_TIME)

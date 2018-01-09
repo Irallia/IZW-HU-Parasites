@@ -42,11 +42,11 @@ def get_random_tagged_tree(number_leafnodes, percentage):
         # child_depth = child_depth + result[3]
         # %P = #FL / (#P + #FL) * 100
         percentage_parasites = leaf_distr[1] / (leaf_distr[0] + leaf_distr[1]) * 100
-        print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
+        # print("tried", percentage_parasites, "% of parasites")  # 40% parasites?
         if (percentage[0] - 5) < percentage_parasites < (percentage[0] + 5):
             boolean = False
-    print("----")
-    CURRENT_TIME = Helpers.print_time(START_TIME)
+    # print("----")
+    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
     print("----")
     # print(percentage_parasites, '% parasites,', 100 - percentage_parasites, '% free-living')
     return [current_tree, nodelist]
