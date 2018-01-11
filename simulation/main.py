@@ -22,15 +22,18 @@ args = sys.argv
 START_TIME = datetime.datetime.now().replace(microsecond=0)
 CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
 
-# fix numbers:
-leaf_nodes = 2300000        # 2 300 000 Eukaryota
-number_P = 43674
-number_FL = 88967
-
 # values for simulation:
-number_trees = int(sys.argv[2])  # number of simulated trees
 number_leafnodes = int(sys.argv[1])
-realP = 40                  # percentage of parasites (percentage +-5%)
+number_trees = int(sys.argv[2])         # number of simulated trees
+percentage_parasites = float(sys.argv[3]) # between 0 and 1
+percentage_unknown = float(sys.argv[4])   # between 0 and 1
+
+# decide for distribution:
+# if percentage_parasites == 0.4:
+                            # [A_FL, B_FL, A_P, B_P]
+beta_distribution_parameters = [8.0, 6.25, 3.0, 8.0]   # 40 P - 60 FL
+if percentage_parasites == 0.5:
+    beta_distribution_parameters = [7.0, 3.5, 3.5, 7.0]    # 50 P - 50 FL
 
 def main():
     """Main method"""
@@ -40,19 +43,17 @@ def main():
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
     CURRENT_TIME = Helpers.print_time(START_TIME)
     print(colored("---------------- metadata ----------------", "green"))
+    metadata()
+    print(colored("---------------- parameters ----------------", "green"))
+    print("Simulate", colored(number_trees, 'blue'), "random trees with", 
+        colored(number_leafnodes, 'blue'), "leafnodes", 
+        colored(percentage_parasites*100, 'blue'), "% parasites and",
+        colored(percentage_unknown*100, 'blue'), "% unknown leafnodes.")
     diffs = [["Fitch", "My", "Sankoff"]]
-    print("real OTL tree: 2500000 nodes: 240000 internal,", leaf_nodes, "leaf nodes")
-    print("Information about species from GloBI:", number_P, "#P,", number_FL, "#FL")
-    percentage_P = 1 / leaf_nodes * number_P
-    percentage_FL = 1 / leaf_nodes * number_FL
-    percentage_U = 1 - percentage_P - percentage_FL
-    print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
-    percentage = [realP, percentage_P, percentage_FL]
-    print("Build", colored(number_trees, 'blue'), "random trees with", colored(number_leafnodes, 'blue'), "leafnodes", colored(realP, 'blue'), "% parasites.")
     for i in range(1, number_trees + 1):
         print("Tree", colored(i, 'red'))
         print(colored("---------------- get random tree ----------------", "green"))
-        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage)
+        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, beta_distribution_parameters)
         current_tree = result[0]
         nodelist = result[1]
         # CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
@@ -68,12 +69,12 @@ def main():
         print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
         print("whole time needed:", time_new - START_TIME)
         print(colored("--------------------------------", "red"))
-    print("saved in:")
-    csv_title = "evaluation/" + str(number_leafnodes) + " leafnodes - " + str(number_trees) + " trees - " + str(round(percentage_U * 100, 2)) + "% unknown.csv" 
-    print(csv_title)
-    with open(csv_title, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerows(diffs)
+    # print("saved in:")
+    # csv_title = "evaluation/" + str(number_leafnodes) + " leafnodes - " + str(number_trees) + " trees - " + str(round(percentage_U * 100, 2)) + "% unknown.csv" 
+    # print(csv_title)
+    # with open(csv_title, 'w', newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerows(diffs)
 
     f_dif = 0.0
     m_dif = 0.0
@@ -85,8 +86,21 @@ def main():
     f_dif = round(f_dif / number_trees, 2)
     m_dif = round(m_dif / number_trees, 2)
     s_dif = round(s_dif / number_trees, 2)
+
+    row = [percentage_unknown, f_dif, m_dif, s_dif]
+    csv_title = "evaluation/" + str(int(percentage_parasites*100)) + "-unknown_plot.csv" 
+    fp = open(csv_title, 'a')
+    writer = csv.writer(fp)
+    writer.writerow((row)) 
+    fp.close()
+    print("saved in:")
+    print(csv_title)
+
     print(colored("--------------------------------", "green"))
-    print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
+    print(colored(number_trees, 'blue'), " trees simulated with", 
+        colored(number_leafnodes, 'blue'), "leafnodes", 
+        colored(percentage_parasites*100, 'blue'), "% parasites and",
+        colored(percentage_unknown*100, 'blue'), "% unknown leafnodes.")
     print("correctly predicted (including already known leaf nodes):")
     print("differences Fitch / My / Sankoff")
     percentage_correctly_predicted = "| " + str(f_dif) +" % | " + str(m_dif) + " % | " + str(s_dif) + " % |"
@@ -191,5 +205,17 @@ def do_some_drawings(tree, nodelist, parsimony_tree, parsimony_nodelist):
     Phylo.draw(parsimony_like_tree)
     # Phylo.draw_graphviz(parsimony_tree)
     # pylab.show()
+
+def metadata():
+    leaf_nodes = 2300000        # 2 300 000 Eukaryota
+    number_FL = 88967 #FL
+    number_P = 43674 #P
+    print("real OTL tree: 2 500 000 nodes: 240 000 internal,", leaf_nodes, "leaf nodes")
+    print("Information about species from GloBI:", number_P, "#P,", number_FL, "#FL")
+    percentage_P = 1 / leaf_nodes * number_P
+    percentage_FL = 1 / leaf_nodes * number_FL
+    percentage_U = 1 - percentage_P - percentage_FL
+    print("=>", round(percentage_P * 100, 2), "% parasites,", round(percentage_FL * 100, 2), "% freeliving =>", round(percentage_U * 100, 2), "% unknown leaf nodes")
+    return
 
 main()
