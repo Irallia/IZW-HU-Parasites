@@ -30,9 +30,13 @@ def main():
     global START_TIME
     global CURRENT_TIME
     #               [percentage parasites, A_FL, B_FL, A_P, B_P]
-    beta_distribution_parameters = [0.4, 8.0, 6.25, 3.0, 8.0]   # 40 P - 60 FL
-    # beta_distribution_parameters = [0.5, 7.0, 3.5, 3.5, 7.0]    # 50 P - 50 FL
-    realP = beta_distribution_parameters[0]*100                 # percentage of parasites (percentage +-2%)
+
+    # beta_distribution_parameters = [0.1, 7, 24, 0.5, 7]     # 10 P - 90 FL
+    # beta_distribution_parameters = [0.2, 7, 13.25, 1.25, 7] # 20 P - 80 FL
+    # beta_distribution_parameters = [0.3, 7, 8.5, 2, 7]      # 30 P - 70 FL
+    # beta_distribution_parameters = [0.4, 7, 5.5, 2.75, 7]   # 40 P - 60 FL
+    beta_distribution_parameters = [0.5, 7, 3.5, 3.5, 7]    # 50 P - 50 FL
+    realP = beta_distribution_parameters[0]*100             # percentage of parasites (percentage +-2%)
 
     # -------------------------------------plot distribution------------------------------------
     #   for freeliving_distribution
@@ -41,8 +45,8 @@ def main():
     #   for parasite_distribution
     A_P = beta_distribution_parameters[3]
     B_P = beta_distribution_parameters[4]
-    freeliving_distribution = random.beta(a=A_FL, b=B_FL, size=5000)
-    parasite_distribution = random.beta(a=A_P, b=B_P, size=5000)
+    freeliving_distribution = random.beta(a=A_FL, b=B_FL, size=100000)
+    parasite_distribution = random.beta(a=A_P, b=B_P, size=100000)
 
     # the histogram of the data
     n, bins, patches = plt.hist(parasite_distribution, 100, normed=1, facecolor='r', alpha=0.75)
@@ -52,7 +56,7 @@ def main():
     # plt.ylabel('Probability')
     plt.title('Histogram of distributions')
     plt.text(0.5, 9, r'red: parasites, blue: free-living')
-    plt.axis([0, 1, 0, 10])
+    plt.axis([0, 1, 0, 8])
     plt.grid(True)
     plt.show()
     #-------------------------------------------------------------------------------------------

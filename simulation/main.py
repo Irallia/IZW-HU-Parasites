@@ -28,12 +28,20 @@ number_trees = int(sys.argv[2])         # number of simulated trees
 percentage_parasites = float(sys.argv[3]) # between 0 and 1
 percentage_unknown = float(sys.argv[4])   # between 0 and 1
 
-# decide for distribution:
-# if percentage_parasites == 0.4:
                             # [A_FL, B_FL, A_P, B_P]
-beta_distribution_parameters = [8.0, 6.25, 3.0, 8.0]   # 40 P - 60 FL
-if percentage_parasites == 0.5:
-    beta_distribution_parameters = [7.0, 3.5, 3.5, 7.0]    # 50 P - 50 FL
+beta_distribution_parameters = [0.5, 7, 3.5, 3.5, 7]   # 40 P - 60 FL
+
+# decide for distribution:
+if percentage_parasites == 0.1:
+    beta_distribution_parameters = [7, 24, 0.5, 7]     # 10 P - 90 FL
+elif percentage_parasites == 0.2:
+        beta_distribution_parameters = [0.2, 7, 13.25, 1.25, 7] # 20 P - 80 FL
+elif percentage_parasites == 0.3:
+    beta_distribution_parameters = [0.3, 7, 8.5, 2, 7]      # 30 P - 70 FL
+elif percentage_parasites == 0.4:
+    beta_distribution_parameters = [0.4, 7, 5.5, 2.75, 7]   # 40 P - 60 FL
+elif percentage_parasites == 0.5:
+    beta_distribution_parameters = [0.5, 7, 3.5, 3.5, 7]    # 50 P - 50 FL
 
 def main():
     """Main method"""
