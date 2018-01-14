@@ -37,6 +37,7 @@ sudo apt-get install libcurl4-gnutls-dev
 # # in R
 # install.packages ("h2o")
 
+# TODO print statement install R packages in R!!! rglobi, ape, castor
 # ---------------- install R packages ----------------
 
 R CMD install rglobi
@@ -50,6 +51,21 @@ mkdir interaction_data
 # ---------------- get interactions ----------------
 
 cd ../scripts/R
-Rscript get_interactions.R
+Rscript get_interactions.R > interactions_log.txt &
 
+
+# ---------------- simulation ----------------
+cd ../../simulation
+sudo apt-get install python3
+
+sudo pip install biopython
+
+sudo apt-get install python3-dev
+sudo pip install rpy2
+
+mkdir bufferfiles
+
+R CMD install ape
+
+python3 main.py
 

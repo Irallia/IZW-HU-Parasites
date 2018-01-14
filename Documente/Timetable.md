@@ -11,30 +11,24 @@
 |5    |30.- 3.|not binary with changing distribution| x | Book: Inferring Phylogenies - Joseph Felsenstein
 |6    | 6.-10.|Metadata collection from big phylogenetic tree | x | and Subtrees
 |7    |13.-17.|wagner vs fitch vs others??  | x | rglobi, rotl, castor (R packages) -> Sankoff max parsimony
-|8    |20.-24.|implement these for not binary| x | (fitch parsimony + parsimony like + Sankoff from castor)
+|8    |20.-24.|implement these for not binary| x | (fitch parsimony + parsimony like + Sankoff from castor); Get Interaction Data with rglobi (R package)
 |Dezember
 |9    |27.- 1.|count origins, compare trees|   |
-|10   | 4.- 8.|add empty leaf nodes |   |
-|11   |||   |
+|10   | 4.- 8.|add empty leaf nodes | x |
+|11   |11.-15.|gat some data for evaluation| x | Distanzen zwischen Bäumen, Prozentuale Differenzen
+|12   |18.-22.|runtime evaluation, fix algorithms to make them faster | x | 
+|13   |25.-29.| ... Chrismas break ... | x |
 |Jannuar
+|?    | 1.- 7.| ... Chrismas break ... | x |
+|?    | 8.-14.|simulation evaluation of different parasite distributions and a different amount of unknown data | x |
 |Februar
 |März
 
 # ToDos:
 * Work with rotl (R package) - rotl: an R package to interact with the Open Tree of Life data
-* Work with rglobi (R package) - R Interface to Global Biotic Interactions
-* Work with castor (R package) - Efficient tree manipulation functions including pruning, rerooting, calculation of most-recent common ancestors, calculating distances from the tree root and calculating pairwise distance matrices. ... 
 * Origins Zählen
 * Distanzen zwischen Bäumen
     * Anzahl Origins
-    * Anzahl Veränderungen...
-    * Distanz nötig? Origins lokalisieren??? Sinnvoll möglich?
-        * Emanuel
-* Leere Blätter einführen
-    * Umgang mit vergessenen Informationen
-        * wie vergessen
-        * wieviel vergessen
-        * wie damit umgehen
 * Daten Sammeln
     * von ges Baum und Subbäumen
     * über:
