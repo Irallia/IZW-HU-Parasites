@@ -48,6 +48,12 @@ mkdir data
 cd data
 mkdir interaction_data
 
+# ---------------- get tree ----------------
+
+if wget -q http://files.opentreeoflife.org/synthesis/opentree9.1/opentree9.1_tree.tgz -nv; then echo "OTT DL succesful"; else echo "OTT DL-link broken" 1>&3; exit 1;  fi    # download OTT and post error msg if link is unreachable
+tar -xf opentree9.1_tree.tgz                #untar OTT
+rm opentree9.1_tree.tgz                     #remove .tar
+
 # ---------------- get interactions ----------------
 
 cd ../scripts/R

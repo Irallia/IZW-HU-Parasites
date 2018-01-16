@@ -67,7 +67,6 @@ def read_tags(path):
         print('number of tag:', nr_tags)
     return tag_array
 
-
 def fill_tree_with_tags(subtree, parasites, freelivings):
     global nr_leave_nodes
     global nr_used_freelivings
@@ -100,7 +99,15 @@ def fill_tree_with_tags(subtree, parasites, freelivings):
     return
 
 def get_tag(name, species_list):
-    if name in species_list:
+    # Checks for the presence of name in any string in the list
+    name_ott = name + "ott"
+    # if any(name in s for s in species_list):
+    if any((s.endswith(name) or name_ott in s for s in species_list)):
+        if name not in species_list:
+            matching = [s for s in species_list if name in s]
+            print(name, "in", matching)
+        else:
+            print("found tag:", name)
         return True
     else:
         return False
