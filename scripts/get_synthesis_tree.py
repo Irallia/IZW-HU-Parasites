@@ -106,8 +106,6 @@ def get_tag(name, species_list):
         if name not in species_list:
             matching = [s for s in species_list if name in s]
             print(name, "in", matching)
-        else:
-            print("found tag:", name)
         return True
     else:
         return False
