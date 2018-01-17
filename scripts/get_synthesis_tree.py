@@ -82,6 +82,7 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
     nodelist.append([subtree.name, "", depths])
 
     if subtree.is_terminal():
+        depths = [1, 1, 1]
         nr_leave_nodes += 1
         if get_tag(subtree.name, parasites):
             nr_used_parasites += 1
@@ -94,8 +95,8 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
                 nodelist[-1][1] = "NA"
                 unknown += 1
     else:
-        min_depth = 0
-        max_depth = float('inf')
+        min_depth = float('inf')
+        max_depth = 0
         mean_depth = 0
         child_depth = 0
         if get_tag(subtree.name, parasites):
@@ -108,13 +109,13 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
             depths = fill_tree_with_tags(clade, parasites, freelivings, depths)
             if depths[0] < min_depth:
                 min_depth = depths[0]
-            if depths[1] < max_depth:
+            if depths[1] > max_depth:
                 max_depth = depths[1]
             child_depth = child_depth + depths[2]
-        mean_depth = mean_depth/len(subtree.clades) + 1
+        mean_depth = child_depth/len(subtree.clades) + 1
         depths = [min_depth + 1, max_depth + 1, mean_depth]
         nodelist[-1][2] = depths
-        if min_depth > 1:
+        if min_depth > 100:
             print(nodelist[-1][2])
         # -------------------------------------------------
         csv_title = "../data/nodelist.csv" 
