@@ -78,9 +78,9 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
     global internal_parasite
     global internal_freeliving
     global nodelist
-    #               [node name,   tag, depths]
-    nodelist.append([subtree.name, "", depths])
 
+    #               [node name,   tag, depths, nr_children]
+    nodelist.append([subtree.name, "", depths, len(subtree.clades)])
     if subtree.is_terminal():
         depths = [1, 1, 1]
         nr_leave_nodes += 1
@@ -116,7 +116,11 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
         depths = [min_depth + 1, max_depth + 1, mean_depth]
         nodelist[-1][2] = depths
         if min_depth > 100:
+            print("min depth > 100:")
             print(nodelist[-1][2])
+        if len(subtree.clades) > 100:
+            print("multifurcations:")
+            print(len(subtree.clades))
         # -------------------------------------------------
         csv_title = "../data/nodelist.csv" 
         fp = open(csv_title, 'a')
