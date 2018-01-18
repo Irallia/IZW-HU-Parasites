@@ -5,7 +5,7 @@ from time import gmtime, strftime
 from Bio import Phylo
 from termcolor import colored
 
-path_tree = "../data/opentree9.1_tree/grafted_solution/grafted_solution.tre"
+# path_tree = "../data/opentree9.1_tree/grafted_solution/grafted_solution.tre"
 # path_tree = "../data/opentree9.1_tree/labelled_supertree/labelled_supertree_ottnames.tre"
 path_tree = "../data/opentree9.1_tree/labelled_supertree/labelled_supertree.tre"
 
@@ -51,7 +51,7 @@ def main():
     print(colored(nr_used_freelivings, 'blue'), "freeliving tags were used,", colored(nr_used_parasites, 'blue'), "parasite tags were used =>", colored(unknown, 'blue'), "unknown leave nodes")
     print(colored(internal_freeliving, 'blue'), "internal freeliving tags found and", colored(internal_parasite, 'blue'), "internal parasite tags found")
     print("Rootnode, Tag, Depths: Min, Max, Mean:")
-    print(nodelist[current_list_index])
+    print(nodelist[-1])
     CURRENT_TIME = print_time(CURRENT_TIME)
     print("save tree at ../data/tagged_tree.tre")
     Phylo.write(tree, '../data/tagged_tree.tre', 'newick')
@@ -117,10 +117,10 @@ def fill_tree_with_tags(subtree, parasites, freelivings):
         mean_depth = child_depth/len(subtree.clades) + 1
         depths = [min_depth + 1, max_depth + 1, mean_depth]
         nodelist[current_list_index][2] = depths
-        if min_depth > 100:
-            print("min depth > 10:")
+        if min_depth > 8:
+            print("min depth > 8:")
             print(nodelist[current_list_index][2])
-    if len(subtree.clades) > 500:
+    if len(subtree.clades) > 1500:
         print("multifurcations:")
         print(nodelist[current_list_index])
     # TODO: is nodelist[current_list_index] still the right element?
