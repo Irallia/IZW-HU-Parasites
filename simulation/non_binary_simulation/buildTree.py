@@ -82,18 +82,19 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage_parasites, pe
     #               [id, depth, originaltag, finaltag, calc[taglist]]
     nodelist.append([subtree.name, depth, tag, '', []])
     subtree.name = subtree.name + "$" + str(len(nodelist) - 1)
+    current_list_index = len(nodelist) - 1
     # if leaf node, then depth = 1, set finaltag, increase leaf distribution
     if subtree.is_terminal():
         depth = 1
         uniform_random = random.uniform() # choose if we want to delete ourselve
         # unknown node?
         if (tag == 1) and (uniform_random > percentage_unknown):
-            nodelist[-1][4].append([tag])   # set start tag for calculation
+            nodelist[current_list_index][4].append([tag])   # set start tag for calculation
         else:
             if (tag == 0) and (uniform_random > percentage_unknown):
-                nodelist[-1][4].append([tag])   # set start tag for calculation
+                nodelist[current_list_index][4].append([tag])   # set start tag for calculation
             else:
-                nodelist[-1][4].append([0, 1])   # set start tag for calculation
+                nodelist[current_list_index][4].append([0, 1])   # set start tag for calculation
         # count FL & P:
         if tag == 0:
             leaf_distr[0] = leaf_distr[0] + 1

@@ -5,7 +5,7 @@ from time import gmtime, strftime
 from Bio import Phylo
 from termcolor import colored
 
-# path_tree = "../data/opentree9.1_tree/grafted_solution/grafted_solution.tre"
+path_tree = "../data/opentree9.1_tree/grafted_solution/grafted_solution.tre"
 # path_tree = "../data/opentree9.1_tree/labelled_supertree/labelled_supertree_ottnames.tre"
 path_tree = "../data/opentree9.1_tree/labelled_supertree/labelled_supertree.tre"
 
@@ -46,12 +46,12 @@ def main():
     parasites = read_tags(path_parasites)
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- tag tree ----------------", "green"))
-    fill_tree_with_tags(tree.clade, parasites, freelivings, [0, 0, 0])
+    fill_tree_with_tags(tree.clade, parasites, freelivings)
     print(colored(nr_leave_nodes, 'blue'), "leave nodes are in the tree")
     print(colored(nr_used_freelivings, 'blue'), "freeliving tags were used,", colored(nr_used_parasites, 'blue'), "parasite tags were used =>", colored(unknown, 'blue'), "unknown leave nodes")
     print(colored(internal_freeliving, 'blue'), "internal freeliving tags found and", colored(internal_parasite, 'blue'), "internal parasite tags found")
     print("Rootnode, Tag, Depths: Min, Max, Mean:")
-    print(nodelist[-1])
+    print(nodelist[current_list_index])
     CURRENT_TIME = print_time(CURRENT_TIME)
     print("save tree at ../data/tagged_tree.tre")
     Phylo.write(tree, '../data/tagged_tree.tre', 'newick')
@@ -70,7 +70,7 @@ def read_tags(path):
         print('number of tag:', nr_tags)
     return tag_array
 
-def fill_tree_with_tags(subtree, parasites, freelivings, depths):
+def fill_tree_with_tags(subtree, parasites, freelivings):
     global nr_leave_nodes
     global nr_used_freelivings
     global nr_used_parasites
@@ -79,20 +79,22 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
     global internal_freeliving
     global nodelist
 
+    depths = [1, 1, 1]
     #               [node name,   tag, depths, nr_children]
     nodelist.append([subtree.name, "", depths, len(subtree.clades)])
-    if subtree.is_terminal():
-        depths = [1, 1, 1]
+    current_list_index = len(nodelist) - 1
+
+    if subtree.is_terminal():        
         nr_leave_nodes += 1
         if get_tag(subtree.name, parasites):
             nr_used_parasites += 1
-            nodelist[-1][1] = "2"
+            nodelist[current_list_index][1] = "2"
         else:
             if get_tag(subtree.name, freelivings):
-                nodelist[-1][1] = "1"
+                nodelist[current_list_index][1] = "1"
                 nr_used_freelivings += 1
             else:
-                nodelist[-1][1] = "NA"
+                nodelist[current_list_index][1] = "NA"
                 unknown += 1
     else:
         min_depth = float('inf')
@@ -106,7 +108,7 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
         # // ToDo: ? does this make any difference?
         # subtree.name = ""
         for clade in subtree.clades:
-            depths = fill_tree_with_tags(clade, parasites, freelivings, depths)
+            depths = fill_tree_with_tags(clade, parasites, freelivings)
             if depths[0] < min_depth:
                 min_depth = depths[0]
             if depths[1] > max_depth:
@@ -114,20 +116,21 @@ def fill_tree_with_tags(subtree, parasites, freelivings, depths):
             child_depth = child_depth + depths[2]
         mean_depth = child_depth/len(subtree.clades) + 1
         depths = [min_depth + 1, max_depth + 1, mean_depth]
-        nodelist[-1][2] = depths
+        nodelist[current_list_index][2] = depths
         if min_depth > 100:
-            print("min depth > 100:")
-            print(nodelist[-1][2])
-        if len(subtree.clades) > 100:
-            print("multifurcations:")
-            print(len(subtree.clades))
-        # -------------------------------------------------
-        csv_title = "../data/nodelist.csv" 
-        fp = open(csv_title, 'a')
-        writer = csv.writer(fp)
-        writer.writerow((nodelist[-1])) 
-        fp.close()
-        # -------------------------------------------------
+            print("min depth > 10:")
+            print(nodelist[current_list_index][2])
+    if len(subtree.clades) > 500:
+        print("multifurcations:")
+        print(nodelist[current_list_index])
+    # TODO: is nodelist[current_list_index] still the right element?
+    # -------------------------------------------------
+    csv_title = "../data/nodelist.csv" 
+    fp = open(csv_title, 'a')
+    writer = csv.writer(fp)
+    writer.writerow((nodelist[current_list_index])) 
+    fp.close()
+    # -------------------------------------------------
     return depths
 
 def get_tag(name, species_list):
