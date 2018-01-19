@@ -164,11 +164,58 @@
           \includegraphics[width=0.5\textwidth]{Figures/40-60.png}
       \end{figure}
       \todo{Bessere Beschriftung, Plot neu erstellen! U.a. mit threshold}
-
-      unknowns.. forget information.. nodelist
+      We save each tag with the associated node ID in a nodelist, where we can save all information
+        about our nodes, we want. \\
+      The real tree has much less information, we have only information from some current species 
+        (leave nodes) and \todo{and probably negligible internal nodes}. \\
+      To simulate our real tree we save for every node an empty placeholde except for some leave nodes.
+      There we save the tags again. The amount of these unknown information is one parameter, which we
+      got from our real tree. Or which we can change to \todo{...}
+      \TODO{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{multifurcate tree}
+      Another parameter is the nature and strength of the multifunction of the tree, since we do not 
+        have a binary tree in the real case. After several measurements and analyzes, which we explain 
+        in \todo{section/chapter x}, we decided to use a $1 over x$ distribution, where x is the depth 
+        of a node. This means, how deaper we are, how less information we have. \\
+      We traverse through the tree and pick a random number between 0 and 1. If random number is smaller 
+        as our limit ($1 over x$), than we forget the node and hang every child to the father node of 
+        the current node.
+      \todo{then / than}
+      \begin{lstlisting}
+        from numpy import random
+        from utilities import Helpers
+
+        def get_non_binary_tree(subtree, nodelist):
+          i = 0
+          while i != len(subtree.clades):
+            if subtree.clades[i].is_terminal():             # is leave node?
+              i += 1
+            else:
+              element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
+              limit = get_limit(element[1])
+              new_random = random.uniform()                 # choose if we want to delete ourselve
+              if new_random < limit:                        # or new_random < 0.9:
+                subtree.clades += subtree.clades[i].clades  # add children
+                del subtree.clades[i]                       # delete internal node
+              else:                                         # if we don't deleted ourselve go on with children
+                get_non_binary_tree(subtree.clades[i], nodelist)  # otherwise the children are in the current clade array
+                i += 1
+          return
+
+          def get_limit(depth):
+            limit = 1 - 1 / ((depth + 3) / 4)
+            if limit < 0.1:
+              limit = 0.1
+            return limit
+      \end{lstlisting}
+      % # current clades: clade_1 clade_2 ... clade_i-1 clade_i ... clade:_n
+      % # add children of clade_i, delete clade_i
+      % # new clades:clade_1 clade_2 ... clade_i-1 child_clade_1 ... child_clade_m ... clade:_n
+      % # child_clade_1 is new clade i
+      Wir lassen das Limit nicht beliebig klein werden, sondern beschränken es auf 0.1.
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{real data analysis}
