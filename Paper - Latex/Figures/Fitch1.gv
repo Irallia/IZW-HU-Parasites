@@ -1,0 +1,30 @@
+graph "Fitch1" {
+
+#   node [fontsize=10, width=".2", height=".2", margin=0];
+#   graph[fontsize=8];
+
+subgraph cluster01 {
+    label="_ (FL, _ (FL, P, _ (P, FL)))"
+    node [shape=Mrecord style=filled]
+
+    n010 [label=<<B>FL</B>>,	fillcolor="seagreen1"] ;
+    n011 [label="FL",		fillcolor="cyan"] ;
+    n012 [label=<FL/P | FL | <B>FL</B>> fillcolor="seagreen1"];
+    n013 [label="FL", 		fillcolor="cyan"] ;
+    n014 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n015 [label=<FL/P | FL | <B>FL</B>> fillcolor="seagreen1"];
+    n016 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n017 [label="FL", 		fillcolor="cyan"] ;
+
+
+
+    n010 -- n011 ;
+    n010 -- n012 ;
+    n012 -- n013 ;
+    n012 -- n014 ;
+    n012 -- n015 ;
+    n015 -- n016 ;
+    n015 -- n017 ;
+
+}
+}
