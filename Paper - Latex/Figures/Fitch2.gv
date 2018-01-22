@@ -1,0 +1,70 @@
+graph "Fitch1" {
+
+#   node [fontsize=10, width=".2", height=".2", margin=0];
+#   graph[fontsize=8];
+node [shape=Mrecord style=filled]
+
+subgraph cluster01 {
+    label="_ (FL, _ (FL, P, _ (P, FL)))"
+
+    n010 [label=<<B>FL</B>>,	fillcolor="seagreen1"] ;
+    n011 [label="FL",		fillcolor="cyan"] ;
+    n012 [label=<FL/P | FL | <B>FL</B>> fillcolor="seagreen1"];
+    n013 [label="FL", 		fillcolor="cyan"] ;
+    n014 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n015 [label=<FL/P | FL/P<br/>FL | <B>FL/P<br/>FL</B>> fillcolor="seagreen1"];
+    n016 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n017 [label="FL", 		fillcolor="cyan"] ;
+
+    n010 -- n011 ;
+    n010 -- n012 ;
+    n012 -- n013 ;
+    n012 -- n014 ;
+    n012 -- n015 ;
+    n015 -- n016 ;
+    n015 -- n017 ;
+}
+
+subgraph cluster02 {
+    label="_ (FL, _ (FL, P, _ (P, P)))"
+
+    n020 [label=<<B>FL</B>>,	fillcolor="seagreen1"] ;
+    n021 [label="FL",		fillcolor="cyan"] ;
+    n022 [label=<FL/P | FL | <B>FL</B>> fillcolor="seagreen1"];
+    n023 [label="FL", 		fillcolor="cyan"] ;
+    n024 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n025 [label=<P | FL/P<br/>FL | <B>P<br/>FL/P</B>> fillcolor="seagreen1"];
+    n026 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n027 [label="P", 		fillcolor="darkolivegreen1"] ;
+
+    n020 -- n021 ;
+    n020 -- n022 ;
+    n022 -- n023 ;
+    n022 -- n024 ;
+    n022 -- n025 ;
+    n025 -- n026 ;
+    n025 -- n027 ;
+}
+
+subgraph cluster03 {
+    label="_ (FL, _ (P, P, _ (P, FL)))"
+
+    n030 [label=<<B>FL/P</B>>,	fillcolor="seagreen1"] ;
+    n031 [label="FL",		fillcolor="cyan"] ;
+    n032 [label=<P | FL | <B>FL/P</B>> fillcolor="seagreen1"];
+    n033 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n034 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n035 [label=<FL/P | FL/P<br/>P | <B>FL/P<br/>P</B>> fillcolor="seagreen1"];
+    n036 [label="P", 		fillcolor="darkolivegreen1"] ;
+    n037 [label="FL", 		fillcolor="cyan"] ;
+
+    n030 -- n031 ;
+    n030 -- n032 ;
+    n032 -- n033 ;
+    n032 -- n034 ;
+    n032 -- n035 ;
+    n035 -- n036 ;
+    n035 -- n037 ;
+}
+
+}
