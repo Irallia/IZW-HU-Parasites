@@ -1,11 +1,8 @@
 from copy import deepcopy
 
-from utilities import Helpers
+from utilities import Fitch_Versions, Helpers
 
-# TAGS = ["FL", "P"]
-TAGS = [0, 1]
-
-def fitch_parsimony(tree_clade, nodelist):
+def fitch_parsimony(tree_clade, nodelist, version):
     """parsimony implemented from [COO98] - changed for multifurcating trees"""
     # down:
     parsimony_down(tree_clade, nodelist)
@@ -20,7 +17,8 @@ def fitch_parsimony(tree_clade, nodelist):
         child = Helpers.find_element_in_nodelist(clade.name, nodelist)
         sublist = deepcopy(children)
         del sublist[i]
-        parsimony_up(clade, nodelist, parent, sublist)
+        # ToDo: decide which one, next ToDo: a second parsimony down?
+        Fitch_Versions.parsimony_up(clade, nodelist, parent, sublist, version)
     # final:
     parsimony_final(tree_clade, nodelist)
     return
@@ -40,7 +38,7 @@ def parsimony_down(subtree, nodelist):
         child_tags.append(child[4][0])
     element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
     # get intersection or union
-    tag_list = get_intersect_or_union(child_tags)
+    tag_list = Helpers.get_intersect_or_union(child_tags)
     # add new tag
     element[4].append(tag_list)
     return
@@ -62,7 +60,7 @@ def parsimony_up(subtree, nodelist, parent, siblings):
         siblings_tags += sibling[4]
     
     # get intersection or union
-    tag_list = get_intersect_or_union(siblings_tags)
+    tag_list = Helpers.get_intersect_or_union(siblings_tags)
     # add new tag
     element[4].append(tag_list)
 
@@ -91,7 +89,7 @@ def parsimony_final(subtree, nodelist):
         element[3] = element[4][0][0]
     else:
         # get intersection or union
-        tag_list = get_intersect_or_union(element[4])
+        tag_list = Helpers.get_intersect_or_union(element[4])
         # add final tag
         tag_string = ""
         for tag in tag_list:
@@ -103,26 +101,3 @@ def parsimony_final(subtree, nodelist):
         for clade in subtree.clades:
             parsimony_final(clade, nodelist)
     return
-
-def get_intersect_or_union(tags_list):
-    """returns the intersection of all list elements, if not empty"""
-    # Arguments:
-    #   tags_list - a list of tag_lists
-    #       tags_list[tag_list]
-    # pairwise intersection
-    tag_set = []
-    while len(tags_list) > 1:
-        tag_list_i = tags_list[0]
-        tag_list_j = tags_list[1]
-        # RULE 1: share any states in common -> assign shared states
-        # intersection:
-        tag_set = (set(tag_list_i) & set(tag_list_j))
-        # RULE 2: no shared states -> assign union of states
-        if tag_set == set():
-            # union:
-            return TAGS
-        else:
-            tags_list.remove(tag_list_i) # same as 
-            tags_list.remove(tag_list_j)
-            tags_list.append(list(tag_set))
-    return list(tag_set)

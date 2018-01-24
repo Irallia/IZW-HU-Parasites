@@ -228,15 +228,51 @@
             \includegraphics[width=0.5\textwidth]{Figures/Fitch1.png}
         \end{figure}
 
-        How to extend Fitch for multifunction?:
+        Der Baum hat die folgende Struktur: Alle inneren Knoten sind leer. In den Blattknoten befindet 
+        sich entweder das Tag FL oder P, oder deren Vereinigung, wenn es sich um einen unknown node handelt.
+
+        Der Fitch Algorithmus ist aufgeteilt in drei Schritte, in welchen man jeweils durch den Baum traversiert.
+        Schritt 1 beginnt von de Blättern aus, da sich dort zu Beginn die einzige Information befindet. 
+        Für jeden Knoten gilt, wenn seine Kinder schon Information enthalten, dann bilde die Schnittmenge 
+        der Tags und schreibe diese als Information in den aktuellen Knoten. Ist die Schnittmenge leer, 
+        dann schreibe die Vereinigung aller möglichen Tags in den Knoten. Für alle Kinder, die noch keine 
+        Information haben, führe diesen Schritt erst für diese aus.
+        Schritt zwei geht von den Kindern der Wurzel bis zu den Vätern der Blätter. Jeder Knoten bekommt 
+        einen zweiten Tag, der sich aus der Vereinigung des Tags des Vaterknoten und der Geschwisterknoten
+        zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller Tags, also ${FL,P}$ als Tag.
+
+        Hier gibt es einige Möglichkeiten, wie dieser Schritt genau aussieht.
+        1. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Außerdem wird von den 
+        Geschwisterknoten zuerst der Schnitt gebildet, und danach vom Ergebnis nochmal mit dem Vaterknoten zusammen.
+        (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller Tags, also ${FL,P}$. Auch im folgenden...)
+        2. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Er wird zusammen mit den 
+        Geschwistertags genommen und direkt ein Schnitt aller Mengen gebildet.
+        3. Version: Es werden alle vorherigen Tags vom Vater genutzt und von diesen ein Schnitt gebildet.
+        Das selbe gilt für die Geschwistertags. Und dann wird ein dritter Schnitt zwischend en Ergebnissen gebildet.
+        4. Version: Es werden alle Tags genutzt und direkt in einem Schnitt zusammengenommen.
+
+        Der Finale Schritt traversiert nochmal über den Baum und Bildet aus den zwei Tags pro Knoten einen finalen
+        Tag, indem wieder der Schnitt der beiden Tags das Ergebnis ist.
+
+        Ich habe diese Versionen mit 100 Bäumen mit 10000 Blattknoten und der Verteilung 60\% FL zu 40\% P simuliert.
+        Bei 90 \% unbekannten Knoten lag Version 1 zu 89.67 \%, Version 2 zu 89.67 \%, Version 3 zu 
+          90.72 \% und Version 4 zu 90.74 \% richtig.
 
         \begin{figure}
           \caption{bla}
           \centering
-            \includegraphics[width=0.5\textwidth]{Figures/Fitch2.png}
+            \includegraphics[width=0.6\textwidth]{Figures/simulation_fitch_evaluation.png}
+        \end{figure}
+
+        How to extend Fitch for multifunction?:
+        \begin{figure}
+          \caption{bla}
+          \centering
+            \includegraphics[width=1\textwidth]{Figures/Fitch2.png}
         \end{figure}
 
       \subsubsection{Sankoff}
+
       \subsubsection{my Algorithm}
 
   %---------------------------------------------------------------------------------------------------

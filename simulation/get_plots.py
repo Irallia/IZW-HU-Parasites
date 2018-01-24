@@ -32,6 +32,28 @@ def main():
     plot_hist('40-old')
     plot_data('40-old')
 
+    filepath = 'evaluation/40-fitch-unknown_plot.csv'
+    data = np.genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'y_fitch1', 'y_fitch2', 'y_fitch3', 'y_fitch4'])
+
+    plt.tight_layout()
+    plt.show()
+
+    # plt.title(str(percentage_parasites), fontweight='bold')
+    
+    plt.plot(data['unknown'], data['y_fitch1'], color='g', linestyle='dashed', 
+        label='Fitch 1', linewidth=0.5, marker='.', markerfacecolor='black')#, markersize=5)
+    plt.plot(data['unknown'], data['y_fitch2'], color='c', linestyle='dashed', 
+        label='Fitch 2', linewidth=0.5, marker='.', markerfacecolor='black')
+    plt.plot(data['unknown'], data['y_fitch3'], color='m', linestyle='dashed', 
+        label='Fitch 3', linewidth=0.5, marker='.', markerfacecolor='black')
+    plt.plot(data['unknown'], data['y_fitch4'], color='y', linestyle='dashed', 
+        label='Fitch 4', linewidth=0.5, marker='.', markerfacecolor='black')
+    plt.xlabel('percentage unknown', fontsize=9)
+    plt.ylabel('correct predicted', fontsize=9)
+    plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
+    plt.axis([0, 1, 85, 100])
+    plt.grid()
+
     plt.tight_layout()
     plt.show()
 
