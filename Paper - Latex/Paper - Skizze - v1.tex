@@ -3,7 +3,9 @@
 
 \author{Lydia Buntrock}
 \title{master thesis}
-\date{August 2017}
+\date{Januar 2018}
+
+% \hfuzz=\maxdimen \tolerance=10000 \hbadness=10000
 
 \begin{document}
   % Titelseite
@@ -39,7 +41,7 @@
   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
   With more and more data, there is now the possibility to use more information to calculate the 
-  probabilities of the ancestral states. In addition to the states of the leaves, algorithms could 
+  probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
   also use branch lengths. The likelihood based algorithms came more in interest. \\
   Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
   that exists at this moment, which goes over all observed species. For most \todo{most?} species 
@@ -58,19 +60,23 @@
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
   
-  This work consist of two aspects. One is the application of the algorithm to our question
-
-  Diese Arbeit besteht aus zwei Fragestellungen
-  gute Algorithmen zu finden und sie auf unser Anwendungsbeispiel anzuwenden.
-
-  Zur Bewertung der gefundenen / entwickelten algorithmen haben wir eine Simulation ausgeführt.
-
-  Auf der Anderen Seite haben wir unser reales Problem aufgestellt, für die Algorithmen vorbereitet und 
-  diese angewendet.
+  This work consist of two aspects. One is the application of the algorithm to our question the
+    other a simulation of this to proof the credibility of our methods. \\
+  The resulting procedure is as follows:
+  \begin{enumerate}
+    \item Get the real tree and real data for the leaf nodes.
+    \item Get metadata of these for a realisitc the simulation.
+    \item Build and run the simulation.
+    \item Evaluation of parameters for the simulation and the real problem.
+    \item Run the resulted algorithm on the original data.
+    \item Evalute and interprete results. -> Origins etc...
+  \end{enumerate}
   
+  % Zur Bewertung der gefundenen / entwickelten algorithmen haben wir eine Simulation ausgeführt.
 
-  Metadata -> Simulation ->  real Data
-
+  % Auf der Anderen Seite haben wir unser reales Problem aufgestellt, für die Algorithmen vorbereitet und 
+  % diese angewendet.
+  
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
@@ -83,6 +89,31 @@
       \item nr of parasites to free-living
       \item nr of unknown nodes 
     \end{itemize}
+
+    %---------------------------------------------------------------------------------------------------
+    \subsection{countings}
+      Some simple countings...\\
+      nr of parasites, free-living and unknown nodes ... from whole tree, subtrees...
+
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Multifurcation}
+      One property of the tree is its ridge of multifurcation. For this we collected for every node its
+        number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
+        every degree. Then we tried to find a function which best discribes this behavior. In figure 
+        \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
+        \todo{close(st)} to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
+        $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
+      \begin{figure}[h]
+        \caption{Histogram of multifurcations and fitting functions}
+        \centering
+        \label{fig:HistogramsOfMultifurcations}
+        \includegraphics[width=0.7\textwidth]{Figures/HistogramsOfMultifurcations.png}
+      \end{figure}
+      From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
+        well known and others have not been very interesting for the research so far. So we also wanted 
+        to know how the multifurcations behave in some interesting subtrees. \\
+      \todo{subtrees... there is some old stuff...} \\
+      \todo{other subsections here...} \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -117,7 +148,7 @@
         }:
       \begin{lstlisting}
         from Bio import Phylo
-        Phylo.BaseTree.Tree.randomized(number_leafnodes)
+        Phylo.BaseTree.Tree.randomized(number_leaf nodes)
       \end{lstlisting}
       From the BaseTree class:
       \begin{lstlisting}
@@ -144,7 +175,7 @@
         For example when our father node was free-living, then we take from the free-living beta
         distribution. Is the number under the threshold for beeing parasite, we get a change and tag
         the current node as parasite. Otherwise we tag it as free-living. \\
-        With this procedure we traverse through the tree from the root to every leave node. A part of
+        With this procedure we traverse through the tree from the root to every leaf node. A part of
         this code you see here:
       \begin{lstlisting}
         from numpy import random
@@ -167,8 +198,8 @@
       We save each tag with the associated node ID in a nodelist, where we can save all information
         about our nodes, we want. \\
       The real tree has much less information, we have only information from some current species 
-        (leave nodes) and \todo{and probably negligible internal nodes}. \\
-      To simulate our real tree we save for every node an empty placeholde except for some leave nodes.
+        (leaf nodes) and \todo{and probably negligible internal nodes}. \\
+      To simulate our real tree we save for every node an empty placeholde except for some leaf nodes.
       There we save the tags again. The amount of these unknown information is one parameter, which we
       got from our real tree. Or which we can change to \todo{...}
       \TODO{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
@@ -190,7 +221,7 @@
         def get_non_binary_tree(subtree, nodelist):
           i = 0
           while i != len(subtree.clades):
-            if subtree.clades[i].is_terminal():             # is leave node?
+            if subtree.clades[i].is_terminal():             # is leaf node?
               i += 1
             else:
               element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
@@ -239,12 +270,12 @@
         Information haben, führe diesen Schritt erst für diese aus.
         Schritt zwei geht von den Kindern der Wurzel bis zu den Vätern der Blätter. Jeder Knoten bekommt 
         einen zweiten Tag, der sich aus der Vereinigung des Tags des Vaterknoten und der Geschwisterknoten
-        zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller Tags, also ${FL,P}$ als Tag.
+        zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller Tags, also $\{FL,P\}$ als Tag.
 
         Hier gibt es einige Möglichkeiten, wie dieser Schritt genau aussieht.
         1. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Außerdem wird von den 
         Geschwisterknoten zuerst der Schnitt gebildet, und danach vom Ergebnis nochmal mit dem Vaterknoten zusammen.
-        (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller Tags, also ${FL,P}$. Auch im folgenden...)
+        (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller Tags, also $\{FL,P\}$. Auch im folgenden...)
         2. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Er wird zusammen mit den 
         Geschwistertags genommen und direkt ein Schnitt aller Mengen gebildet.
         3. Version: Es werden alle vorherigen Tags vom Vater genutzt und von diesen ein Schnitt gebildet.
@@ -272,7 +303,8 @@
         \end{figure}
 
       \subsubsection{Sankoff}
-
+        Maximum parsimony algorithm from Sankoff implemented in the R package castor.
+      
       \subsubsection{my Algorithm}
 
   %---------------------------------------------------------------------------------------------------
@@ -293,6 +325,17 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Results}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Influence of different parameters}
+
+  \begin{figure}
+    \caption{Influence of unknown data to prediction}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/simulation_evaluation_1.png}
+  \end{figure}
+  
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------

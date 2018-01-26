@@ -1,0 +1,150 @@
+digraph G {
+	cellular_organisms->Archaea
+	cellular_organisms->Bacteria
+	cellular_organisms->Eukaryota
+
+	Eukaryota->Chloroplastida
+	Eukaryota->Opisthokonta
+
+	Chloroplastida->SAR
+	Chloroplastida->Streptophyta
+
+	Opisthokonta->Fungi
+	Opisthokonta->Holozoa
+
+	Holozoa->Metazoa
+	Metazoa->Bilateria
+	Bilateria->Protostomia
+	Protostomia->Ecdysozoa
+	Ecdysozoa->Arthropoda
+	Arthropoda->Pancrustacea
+	Pancrustacea->Malacostraca
+	Malacostraca->Eumalacostraca
+	Eumalacostraca->Isopoda
+	Isopoda->Cymothoidae
+
+	subgraph cluster_0 {
+		Cymothoidae->Cymothoa_exigua;
+		label = "fish parasite";
+	}
+
+	Bilateria->Deuterostomia
+	Deuterostomia->Chordata
+	Chordata->Vertebrata
+	Vertebrata->Euteleostomi
+	Euteleostomi->Tetrapoda
+	Tetrapoda->Amniota
+	Amniota->Sauria
+	Sauria->Dinosauria
+	Dinosauria->Neognathae
+	Neognathae->Passeriformes
+
+	subgraph cluster_1 {
+		Passeriformes->Molothrus_ater;
+		label = "brood parasitism";
+	}
+
+	Pancrustacea->Hexapoda
+	Hexapoda->Insecta
+	Insecta->Neoptera
+	Neoptera->Endopterygota
+	Endopterygota->Ichneumonoidea
+	Ichneumonoidea->Pimplinae
+
+	subgraph cluster_2 {
+		Pimplinae->Acrodactyla_quadrisculpta;
+		label = "parasitoid wasp of spiders";
+	}
+	
+	Neoptera->Paraneoptera
+	Paraneoptera->Pediculus
+
+	subgraph cluster_3 {
+		Pediculus->Pediculus_humanus_capitis;
+		label = "human head lice";
+	}
+	
+	Protostomia->Lophotrochozoa
+	Lophotrochozoa->Trematoda
+	Trematoda->Schistosomatoidea
+
+	subgraph cluster_4 {
+		Schistosomatoidea->Schistosoma_mansoni;
+		label = "endoparasite";
+	}
+
+	Euteleostomi->Actinopteri
+	Actinopteri->Teleostei
+	Teleostei->Neoteleostei
+	Neoteleostei->Percomorphaceae
+	Percomorphaceae->Lophiiformes
+	Lophiiformes->Ceratias
+
+	subgraph cluster_5 {
+		Ceratias->Ceratias_holboelli;
+		label = "sexual parasite _ Anglerfisch";
+	}
+
+	Streptophyta->Embryophyta
+	Embryophyta->Magnoliophyta
+	Magnoliophyta->Mesangiospermae
+	Mesangiospermae->Gunneridae
+	Gunneridae->Solanales
+	Solanales->Cuscuta
+
+	subgraph cluster_6 {
+		Cuscuta->Cuscuta_Teufelszwirn;
+		label = "holoparasite";
+	}
+	
+
+	Pancrustacea->Cirripedia
+	Cirripedia->Rhizocephala
+
+	subgraph cluster_7 {
+		Rhizocephala->Sacculina_carcini;
+		label = "parasite of a crab";
+	}
+
+	Paraneoptera->Heteroptera
+	Heteroptera->Cimicomorpha
+	Cimicomorpha->Cimex
+
+	subgraph cluster_8 {
+		Cimex->Cimex_lectularius;
+		label = "ectoparasite _ bedbug";
+	}
+
+	SAR->Alveolata
+	Alveolata->Apicomplexa
+	Apicomplexa->Conoidasida
+	Conoidasida->Eucoccidiorida
+	Eucoccidiorida->Eimeria
+
+	subgraph cluster_9 {
+		Eimeria->Eimeria__;
+		label = "endoparasite";
+	}
+	
+	Fungi->Dikarya
+	Dikarya->Agaricomycetes
+	Agaricomycetes->Physalacriaceae
+	Physalacriaceae->Armillaria
+
+	subgraph cluster_10 {
+		Armillaria->Armillaria_mellea;
+		label = "fungus _  parasite of trees";
+	}
+
+	Amniota->Mammalia
+	Mammalia->Primates
+	Primates->Hominoidea
+	Hominoidea->Homininae
+	Homininae->Homo
+
+	subgraph cluster_11 {
+		Homo->Homo_sapiens;
+		label = "free-living";
+	}
+
+}
