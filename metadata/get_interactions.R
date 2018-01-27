@@ -5,60 +5,42 @@ SKIP_START = 0
 path_parasites <- paste("../data/interaction_data/parasite -", SKIP_START, ".csv")
 path_freelivings <- paste("../data/interaction_data/freeliving -", SKIP_START, ".csv")
 
-main <- function() {
-    # List interactions identified in GloBI database
-    # get_interaction_types()
-    # get_interaction_types(opts = list())
-    start.time <- Sys.time()
-    print(start.time)
+# List interactions identified in GloBI database
+# get_interaction_types()
+# get_interaction_types(opts = list())
+start.time <- Sys.time()
+print(start.time)
 
-    print("-------- Parasites: --------")
-    print("parasites source:")
-    parasite_source <- c("parasiteOf", "pathogenOf")
-    ps_data = get_data(parasite_source, c(1:2), start.time)
+main <- function(property, path) {
+    print(paste("-------- ", property, ": --------"))
+    print(paste(property, "source:"))
+    if (property == "Parasites") {
+        source <- c("parasiteOf", "pathogenOf")
+        target <- c("hasParasite", "hasPathogen")
+    } else {
+        source <- c("preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf")
+        target <- c("preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost")
+    }
 
-    start.time <- Sys.time()
-    print(start.time)
-
-    print("parasites target:")
-    parasite_target <- c("hasParasite", "hasPathogen")
-    pt_data = get_data(parasite_target, c(6:7), start.time)
-
-    print(paste("#parasites source=", nrow(ps_data)))
-    print(paste("#parasites target=", nrow(pt_data)))
-    p_data <- rbind(ps_data, pt_data)
-    print(paste("#total=", nrow(p_data)))
-    p_data <- p_data[!duplicated(p_data),]
-    print(paste("#total without duplicates=", nrow(p_data)))
-
-    print(path_parasites)
-    write.csv(p_data, file = path_parasites)
-
-    print("-------- Freeliving: --------")
+    s_data = get_data(source, c(1:2), start.time)
 
     start.time <- Sys.time()
     print(start.time)
 
-    print("freeliving source")
-    freeliving_source <- c("preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf")
-    fs_data = get_data(freeliving_source, c(1:2), start.time)
+    print(paste(property, "target:"))
+    
+    t_data = get_data(target, c(6:7), start.time)
 
-    start.time <- Sys.time()
-    print(start.time)
+    print(paste("#", property, "source=", nrow(s_data)))
+    print(paste("#", property, "target=", nrow(s_data)))
+    data <- rbind(s_data, t_data)
+    print(paste("#total=", nrow(data)))
+    data <- data[!duplicated(data),]
+    print(paste("#total without duplicates=", nrow(data)))
 
-    print("freeliving target")
-    freeliving_target <- c("preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost")
-    ft_data = get_data(freeliving_target, c(6:7), start.time)
+    print(path)
+    write.csv(data, file = path)
 
-    print(paste("#freeliving source=", nrow(fs_data)))
-    print(paste("#freeliving target=", nrow(ft_data)))
-    f_data <- rbind(fs_data, ft_data)
-    print(paste("#total=", nrow(f_data)))
-    f_data <- f_data[!duplicated(f_data),]
-    print(paste("#total without duplicates=", nrow(f_data)))
-    print(path_freelivings)
-    write.csv(f_data, file = path_freelivings)
-    print("--------------------------------------")
     return()
 }
 
@@ -94,4 +76,5 @@ get_data <- function(interactions, rows, start.time) {
     return(data)
 }
 
-main()
+# main("Parasites", path_parasites)
+main("Freeliving", path_freelivings)
