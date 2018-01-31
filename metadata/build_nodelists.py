@@ -85,12 +85,13 @@ def main():
 def read_tags(path):
     tag_array = []
     nr_tags = 0
-    with open(path) as csvfile:
-        reader_f = csv.DictReader(csvfile)
-        for row in reader_f:
-            id_array = str.split(row['taxon_external_id'], ':')
-            nr_tags += 1
-            tag_array.append("ott" + id_array[1])
+    with open(path) as csv_file:
+        reader = csv.reader(csv_file, delimiter=',')
+        for row in reader:
+            if row != []:
+                id_array = row[0]
+                nr_tags += 1
+                tag_array.append("ott" + id_array[1])
         print('number of tag:', nr_tags)
     return tag_array
 
