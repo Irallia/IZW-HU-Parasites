@@ -1,0 +1,24 @@
+PS D:\GitHub\IZW-HU-Parasites\scripts\R> Rscript .\get_interactions.R
+[1] "2018-01-14 13:52:21 CET"
+[1] "-------- Parasites: --------"
+[1] "parasites source:"
+[1] "1 th request"
+[1] 3135
+Time difference of 1.710349 mins
+Time difference of 34.2058 mins
+[1] "18 th request"
+[1] 21807
+Error in file(file, "rt") : cannot open the connection
+Calls: main ... get_interactions_by_taxa -> read_csv -> <Anonymous> -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  InternetOpenUrl failed: 'Das Zeitlimit für den Vorgang wurde erreicht.'
+Execution halted
+
+
+lydia@debianlydia:~/IZW-HU-Parasites/scripts/R$ Error in file(file, "rt") : cannot open connection
+Calls: main ... get_interactions_by_taxa -> read_csv -> <Anonymous> -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  URL 'https://api.globalbioticinteractions.org:443/interaction?&interactionType=parasiteOf&interactionType=pathogenOf&field=source_taxon_external_id&field=source_taxon_name&field=source_taxon_path&field=source_specimen_life_stage&field=interaction_type&field=target_taxon_external_id&field=target_taxon_name&field=target_taxon_path&field=target_specimen_life_stage&field=latitude&field=longitude&field=study_citation&field=study_external_id&field=study_source_citation&limit=50000&skip=1450000&taxonIdPrefix=OTT&bbox=&includeObservations=f&type=csv': status was '500 Internal Server Error'
+lydia@debianlydia:~/IZW-HU-Parasites/scripts/R$ tail log5.txt
