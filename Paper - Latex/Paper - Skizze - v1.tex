@@ -79,6 +79,34 @@
   
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
+  \section{Get data}
+    %---------------------------------------------------------------------------------------------------
+    \subsection{GloBI}
+      For tagging our leave nodes, we use the GloBI (Global Biotic Interactions) database. This database 
+        consists of entries of the form: species A interacts with B. \\
+      We appointed some interactions, where we know from the biological perspective that the species 
+      source or target has to be a parasite or a free-living species. These are the following:
+      \begin{lstlisting}
+        freeliving_source = ["parasiteOf", "pathogenOf"]
+        freeliving_target = ["hasParasite", "hasPathogen"]
+        parasite_source = ["preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf"]
+        parasite_target = ["preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost"]
+      \end{lstlisting}
+      We build two lists: parasites and free-livings, and add the source or targets of an interaction
+        to these. \\
+      \todo{klar? Oder Beispiel bringen? (Katze isst Maus -> Katze ist Freilebend)} \\
+      % For every interaction from these lists, we get one or two species for our parasite or 
+      %   free-living lists.
+      \todo{ott id hier erwähnen?} \\
+      \todo{einige spezies nicht mit einbezogen, da sie keine OTT id haben, hier könnte man noch verbessern (future work)}
+      \todo{You can find all interaction types here: https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .}
+    
+    %---------------------------------------------------------------------------------------------------
+    \subsection{OTL}
+      \todo{Open Tree of Life}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
     Properties of real Data - Metadata analysis
 
@@ -91,9 +119,29 @@
     \end{itemize}
 
     %---------------------------------------------------------------------------------------------------
-    \subsection{countings}
+    \subsection{Countings}
       Some simple countings...\\
       nr of parasites, free-living and unknown nodes ... from whole tree, subtrees...
+      \begin{center}
+        \begin{tabular}{ | l | p{3cm} | }
+          \hline
+          Name & Number of \\
+          \hline \hline
+          interactions & 5346414 \\ \hline
+          freeliving species & 48875 (distinct) \\ \hline
+          parasite species &  64125 (distinct) \\ \hline
+          unused possible species & 2126 (source), 2144439 (target) \\
+          % number of freelivings: 509595
+          % number of freelivings: 45881 (distinct)
+          % number of parasites: 3438001
+          % number of parasites: 63532 (distinct)
+          % number of SAME_AS: 16012
+          % number of SAME_AS: 5667 (distinct)
+          \hline  
+        \end{tabular}
+      \end{center}
+
+      
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
