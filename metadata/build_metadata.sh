@@ -14,4 +14,4 @@ gunzip interactions.tsv.gz
 
 # -------- -------- build metadata files -------- -------- #
 cd ../../metadata
-extract_globi_data.py
+extract_globi_data.py > log-extract_globi_data.txt

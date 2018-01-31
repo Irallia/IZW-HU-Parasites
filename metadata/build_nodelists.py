@@ -8,8 +8,8 @@ from termcolor import colored, cprint
 
 from Helpers import print_time
 
-path_parasites = "../data/interaction_data/parasite.csv"
-path_freelivings = "../data/interaction_data/freeliving.csv"
+path_parasites = "../data/interaction_data/parasites.csv"
+path_freelivings = "../data/interaction_data/freelivings.csv"
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)

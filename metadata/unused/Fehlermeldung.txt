@@ -1,3 +1,6 @@
+Discussion to this:
+https://github.com/jhpoelen/eol-globi-data/issues/332
+
 PS D:\GitHub\IZW-HU-Parasites\scripts\R> Rscript .\get_interactions.R
 [1] "2018-01-14 13:52:21 CET"
 [1] "-------- Parasites: --------"
