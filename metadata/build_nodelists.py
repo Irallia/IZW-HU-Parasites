@@ -108,8 +108,8 @@ def fill_tree_with_tags(subtree, subtree_name):
     
     depths = [1, 1, 1]
     #              0    1       2           3           4
-    # nodelist - [id, depths, originaltag, finaltag, nr_children
-    nodelist.append([subtree.name, depths, "", "", len(subtree.clades)])
+    # nodelist - [id, depths, nr_children, originaltag, finaltag]
+    nodelist.append([subtree.name, depths, len(subtree.clades), "", ""])
     current_list_index = len(nodelist) - 1
 
     tag_boolf = get_tag(subtree.name, current_freelivings)
@@ -121,13 +121,13 @@ def fill_tree_with_tags(subtree, subtree_name):
         nr_leave_nodes += 1
         if tag_boolp[0]:
             nr_used_parasites += 1
-            nodelist[current_list_index][1] = "2"
+            nodelist[current_list_index][3] = "2"
         else:
             if tag_boolf[0]:
-                nodelist[current_list_index][1] = "1"
+                nodelist[current_list_index][3] = "1"
                 nr_used_freelivings += 1
             else:
-                nodelist[current_list_index][1] = "NA"
+                nodelist[current_list_index][3] = "NA"
                 unknown += 1
     else:
         min_depth = float('inf')
