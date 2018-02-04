@@ -68,7 +68,7 @@ def main():
         print(colored(nr_used_freelivings, 'blue'), "freeliving tags were used,", colored(nr_used_parasites, 'blue'), "parasite tags were used =>", colored(unknown, 'blue'), "unknown leave nodes")
         print(colored(internal_freeliving, 'blue'), "internal freeliving tags found and", colored(internal_parasite, 'blue'), "internal parasite tags found")
         print("Rootnode, Depths: [Min, Max, Mean], Originaltag, Finaltag, Nr_children")
-        print(nodelist[-1])
+        print(nodelist[0])
         # ---- reset countings ----
         nr_leave_nodes = 0
         nr_used_freelivings = 0
