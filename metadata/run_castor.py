@@ -24,7 +24,7 @@ def main():
     global START_TIME
     global CURRENT_TIME
 
-    for subtree_name in reversed(subtree_names):
+    for subtree_name in subtree_names:
         print('Run castor - Sankoff parsimony - for', subtree_name)
         print(colored("---------------- read tree ----------------", "green"))
         subtree_path = '../data/subtree/' + subtree_name + '.tre'
