@@ -1,5 +1,6 @@
 data/
 Masterarbeit - Latex/Figures/tex-tikz-figures - examples/
+metadata/bufferfiles/*
 node_modules/
 simulation/bufferfiles/simulated_tagged_tree.tre
 simulation/bufferfiles/simulated_tree.tre
