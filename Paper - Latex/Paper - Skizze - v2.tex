@@ -33,9 +33,36 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Introduction}
+  \anmerkungstext{Alle Figures richtig beschriften. Generell: Alle Figure captions sollten selbsterklärend sein. Sprich, ich sollte 
+    nur die Caption (normalerweise auch unter dem Bild) lesen und nicht den Rest das Papers und dann 
+    trotzdem verstehen können, was eigentlich passiert ist und - hilfreich - auch warum das relevant 
+    ist. (Bernhard)} \\ \\
+
+  \anmerkung{allgemein zu diesem Kapitel:} \\
+  \anmerkung{Eine Einleitung hat etwa 2 Seiten. General problem -> more specific problem (Emanuel)}
+  \anmerkungstext{Die Intro ist noch arg knapp =) und ich erkenne die Struktur noch nicht ganz.
+    Mein Vorschlag einer Gliederung (jeweils ca. ein Absatz)1) Motivation: \\
+      * Was ist das große Ziel? Was soll erreicht werden \\
+      * Warum ist das relevant? Was könnte man dann tun? \\
+    2) Hintergrund \\
+      * Was gab es in dieser Richtung bereits als ganze Ansätze oder wenn nicht, warum nicht? Woran 
+        ist es bisher gescheitert  \\
+      * welche Grundlagen sind notwendig: \\
+      ** open tree of life: Was ist das, warum relevant und überlegen als reine Ansätze? \\
+      ** Algorithmen: Was gibt es? Ruhig ausführlicher als hier bereits und vor allem auch nach einer 
+        Darstellung am Ende ableiten, was für uns relevant ist. Also beschreiben, wie Methode a, b, c 
+        funktionieren und dann abwägen, was daher für Dich am relevantesten ist. \\
+    3) Outlook/Structure of this work (Bernhard)} \\
+
   This paper is about the further development of parsimony algorithms for non-binary trees, applied 
   to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the application to 
   the ancestral state reconstruction of parasitism. \\
+  \anmerkung{Der erste Satz muss nochmal überarbeitet werden. Das Ziel / Ergebnis der Arbeit hat sich 
+    inzwischen geändert} \\
+  \anmerkungstext{Wir haben mehr einen Algorithmus getestet und an unserem spezifischen Problem angewendet, 
+    als viel selbst zu entwickeln. Allerdings haben wir den Fitch Algorithmus von binär auf multinär 
+    umgeschrieben.} \\
+  
   Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 
   60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
@@ -49,6 +76,7 @@
   phylogeny, but only a taxonomic classification. So the biggest 'phylogenetic tree' is a synthesis 
   of phylogenetic trees filled with a taxonomic tree given by Open Tree of Life \cite{Hinchliff2015}.
   This tree is not binary and therefore the developed algorithms are not directly applicable. \\
+  \anmerkung{GloBI und OTL in der Einleitung vorstellen. (Emanuel)}
   In this work, we have looked at the algorithms that are generally suited to our data, to develop 
   them further for the not binary case, and finally to compare their usability with our sythesis 
   tree. \\
@@ -59,6 +87,7 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
+  \anmerkung{Graphischen Workflow hinzufügen, mehr Motivation und genauer. (Bernhard)}
   
   This work consist of two aspects. One is the application of the algorithm to our question the
     other a simulation of this to proof the credibility of our methods. \\
@@ -110,13 +139,20 @@
   \section{Metadata analysis}
     Properties of real Data - Metadata analysis
 
-    There are some Parameters to find out or notice:
+    There are some Parameters to find out or notice: \\
+    \anmerkungstext{hier unterscheiden zwischen einfachen Zahlen (countings / one dimensional) und 
+      komplexen variablen (Emanuel)} \\
+    \anmerkungstext{arg}{außerdem zu unterscheiden: Biologische Parameter (transition probabilities), 
+      fixe Daten und zu berechnende (multifurcation,...) (Emanuel)}
     \begin{itemize}
       \item transition probabilities of tags
       \item multifurcation
       \item nr of parasites to free-living
       \item nr of unknown nodes 
     \end{itemize}
+    \anmerkung{multifurcations und unknown leave nodes sind ähnlich beeinflusst (Emanuel)} \\
+    \todo{Hier darauf hinweisen, dass wir für multifurcations und unknown data den einfluss auf die 
+      Algorithmen testen.}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Countings}
@@ -128,15 +164,15 @@
           Name & Number of \\
           \hline \hline
           interactions & 5346414 \\ \hline
-          freeliving species & 48875 (distinct) \\ \hline
-          parasite species &  64125 (distinct) \\ \hline
-          unused possible species & 2126 (source), 2144439 (target) \\
-          % number of freelivings: 509595
-          % number of freelivings: 45881 (distinct)
-          % number of parasites: 3438001
-          % number of parasites: 63532 (distinct)
-          % number of SAME_AS: 16012
-          % number of SAME_AS: 5667 (distinct)
+          freeliving species & 51337 (distinct) \\ \hline
+          parasite species &  47332 (distinct) \\ \hline
+          unused possible species & 57352 (source), 809993 (target) \\
+          % number of freelivings: 489179
+          % number of freelivings: 42657 (distinct)
+          % number of parasites: 3353580
+          % number of parasites: 44260 (distinct)
+          % number of SAME_AS: 86198
+          % number of SAME_AS: 16710 (distinct)
           \hline  
         \end{tabular}
       \end{center}
@@ -145,6 +181,10 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
+      \anmerkung{Description/Definition of Multifurcation -> to the Intro (Bernhard)} \\
+      \anmerkung{Regressionsanalyse (Bernhard)} \\
+      \anmerkung{poisson glm: \#children \~ ~ I phylum -> R fitdist p (Emanuel)} \\
+      \anmerkung{different parameters for different taxa? (Emanuel)} \\
       One property of the tree is its ridge of multifurcation. For this we collected for every node its
         number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
         every degree. Then we tried to find a function which best discribes this behavior. In figure 
@@ -160,12 +200,14 @@
       From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
         well known and others have not been very interesting for the research so far. So we also wanted 
         to know how the multifurcations behave in some interesting subtrees. \\
+      \anmerkung{do we? Is that really universal knowledge or could it be supported by data or a citation? (Bernhard)} \\
       \todo{subtrees... there is some old stuff...} \\
       \todo{other subsections here...} \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}
+    \anmerkung{Motivate the goal of the simulation (Bernhard)}
     \begin{itemize}
       \item build random binary trees, tag these (parameters: parasites vs free-living, 
         beta-distribution)
@@ -190,6 +232,7 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{random binary tree}
+      \anmerkung{Again, motivate first, why this is required and why you choose this solution (Bernhard)} \\
       To get a random binary tree, I used the Phylo package from biopython. They offer a randomized
         function which returns a BaseTree \footnote{
           https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
@@ -199,6 +242,7 @@
         Phylo.BaseTree.Tree.randomized(number_leaf nodes)
       \end{lstlisting}
       From the BaseTree class:
+      \anmerkung{trivial, does not give real info (Emanuel)}
       \begin{lstlisting}
         def randomized(cls, taxa, branch_length=1.0, 
               branch_stdev=None):
@@ -214,16 +258,20 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{tag tree}
+      \anmerkung{instead of 'tag tee' simulating stages and transitions between them (Emanuel)} \\
       At this point we want one fully tagged tree, and one less tagged tree which looks like our real 
         data.\\
       Let's say the first specie (the root node) was free-living (start with a parasite without a host 
         makes no sence). For every transition from a node to his child, we take a random number from
         the father distribution. We decided that from the biological perspective a beta distribution
         reflects our transition probabilities best (see Figure 2.1 \todo{ref einfügen}). \\
-        For example when our father node was free-living, then we take from the free-living beta
+      \anmerkung{why is that the case and why is that from a biological perspective? (Bernhard)} \\
+      \anmerkungstext{I'd rather say that to ensure that the parameter of the binomial distribution is 
+        restricted to the [0,1] interval, we model it... (Bernhard)} \\
+      For example when our father node was free-living, then we take from the free-living beta
         distribution. Is the number under the threshold for beeing parasite, we get a change and tag
         the current node as parasite. Otherwise we tag it as free-living. \\
-        With this procedure we traverse through the tree from the root to every leaf node. A part of
+      With this procedure we traverse through the tree from the root to every leaf node. A part of
         this code you see here:
       \begin{lstlisting}
         from numpy import random
@@ -242,26 +290,27 @@
         \centering
           \includegraphics[width=0.5\textwidth]{Figures/40-60.png}
       \end{figure}
-      \todo{Bessere Beschriftung, Plot neu erstellen! U.a. mit threshold}
-      We save each tag with the associated node ID in a nodelist, where we can save all information
-        about our nodes, we want. \\
+      \todo{Bessere Beschriftung, Plot neu erstellen! U.a. mit threshold} \\
+      We save each tag with the associated node ID in a nodelist. \\
+      \anmerkung{simulationg loss of information (1) states (2) topology/multifurcation (Emanuel)} \\
       The real tree has much less information, we have only information from some current species 
         (leaf nodes) and \todo{and probably negligible internal nodes}. \\
       To simulate our real tree we save for every node an empty placeholde except for some leaf nodes.
       There we save the tags again. The amount of these unknown information is one parameter, which we
       got from our real tree. Or which we can change to \todo{...}
-      \TODO{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
+      \todo{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{multifurcate tree}
+      \anmerkung{simulating loss of information (Emanuel)} \\
       Another parameter is the nature and strength of the multifunction of the tree, since we do not 
         have a binary tree in the real case. After several measurements and analyzes, which we explain 
-        in \todo{section/chapter x}, we decided to use a $1 over x$ distribution, where x is the depth 
+        in \todo{section/chapter x}, \anmerkung{fit, justification (Emanuel)} we decided to use a $\frac{1}{x}$ distribution, where x is the depth 
         of a node. This means, how deaper we are, how less information we have. \\
       We traverse through the tree and pick a random number between 0 and 1. If random number is smaller 
-        as our limit ($1 over x$), than we forget the node and hang every child to the father node of 
-        the current node.
-      \todo{then / than}
+        as our limit ($\frac{1}{x}$), than we forget the node and hang every child to the father node of 
+        the current node. \\
+      \anmerkung{poisson process -> fit that distribution, include depth as a predictor, see if significant (Emanuel)}
       \begin{lstlisting}
         from numpy import random
         from utilities import Helpers
