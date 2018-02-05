@@ -89,6 +89,8 @@ def read_tags(path):
     return tag_array
 
 def delete_archaea_or_bacteria(subtree):
+    global freelivings
+    global parasites
     global archaea_or_bacteria
     ott = subtree.name.split("$")[0] # remove index
     tag_boolf = get_tag(ott, freelivings)
@@ -105,6 +107,8 @@ def delete_archaea_or_bacteria(subtree):
     return
 
 def delete_internal_nodes(subtree):
+    global freelivings
+    global parasites
     global internal_parasite
     global internal_freeliving
     

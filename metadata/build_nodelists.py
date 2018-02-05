@@ -8,8 +8,8 @@ from termcolor import colored, cprint
 
 from Helpers import print_time
 
-path_parasites = "../data/interaction_data/parasites.csv"
-path_freelivings = "../data/interaction_data/freelivings.csv"
+path_freelivings = "../data/interaction_data/reduced_freelivings.csv"
+path_parasites = "../data/interaction_data/reduced_parasites.csv"
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -22,8 +22,6 @@ nr_leave_nodes = 0
 nr_used_freelivings = 0
 nr_used_parasites = 0
 unknown = 0
-internal_parasite = 0
-internal_freeliving = 0
 nodelist = []
 
 def main():
@@ -37,8 +35,6 @@ def main():
     global nr_used_freelivings
     global nr_used_parasites
     global unknown
-    global internal_parasite
-    global internal_freeliving
     global nodelist
 
     subtree_names = ['Eukaryota', 'Metazoa', 'Chloroplastida', 'Fungi', 'Vertebrata', 'Tetrapoda', 
@@ -66,7 +62,6 @@ def main():
         fill_tree_with_tags(tree.clade, item)
         print(colored(nr_leave_nodes, 'blue'), "leave nodes are in the tree")
         print(colored(nr_used_freelivings, 'blue'), "freeliving tags were used,", colored(nr_used_parasites, 'blue'), "parasite tags were used =>", colored(unknown, 'blue'), "unknown leave nodes")
-        print(colored(internal_freeliving, 'blue'), "internal freeliving tags found and", colored(internal_parasite, 'blue'), "internal parasite tags found")
         print("Rootnode, Depths: [Min, Max, Mean], Originaltag, Finaltag, Nr_children")
         print(nodelist[0])
         # ---- reset countings ----
@@ -74,8 +69,6 @@ def main():
         nr_used_freelivings = 0
         nr_used_parasites = 0
         unknown = 0
-        internal_parasite = 0
-        internal_freeliving = 0
         nodelist = []
         CURRENT_TIME = print_time(CURRENT_TIME)
     CURRENT_TIME = print_time(CURRENT_TIME)
@@ -102,22 +95,20 @@ def fill_tree_with_tags(subtree, subtree_name):
     global nr_used_freelivings
     global nr_used_parasites
     global unknown
-    global internal_parasite
-    global internal_freeliving
     global nodelist
     
+    ott = subtree.name.split("$")[0] # remove index
     depths = [1, 1, 1]
     #              0    1       2           3           4
     # nodelist - [id, depths, nr_children, originaltag, finaltag]
-    nodelist.append([subtree.name, depths, len(subtree.clades), "", ""])
+    nodelist.append([ott, depths, len(subtree.clades), "", ""])
     current_list_index = len(nodelist) - 1
 
-    tag_boolf = get_tag(subtree.name, current_freelivings)
-    tag_boolp = get_tag(subtree.name, current_parasites)
-    current_freelivings = tag_boolf[1]
-    current_parasites = tag_boolp[1]
-
-    if subtree.is_terminal():        
+    if subtree.is_terminal():
+        tag_boolf = get_tag(ott, current_freelivings)
+        tag_boolp = get_tag(ott, current_parasites)
+        current_freelivings = tag_boolf[1]
+        current_parasites = tag_boolp[1] 
         nr_leave_nodes += 1
         if tag_boolp[0]:
             nr_used_parasites += 1
@@ -134,12 +125,6 @@ def fill_tree_with_tags(subtree, subtree_name):
         max_depth = 0
         mean_depth = 0
         child_depth = 0
-        if tag_boolp[0]:
-            internal_parasite += 1
-        if tag_boolf[0]:
-            internal_parasite += 1
-        # // ToDo: ? does this make any difference?
-        # subtree.name = ""
         for clade in subtree.clades:
             result = fill_tree_with_tags(clade, subtree_name)
             depths = result[0]
@@ -164,15 +149,16 @@ def fill_tree_with_tags(subtree, subtree_name):
 
 def get_tag(name, species_list):
     # Checks for the presence of name in any string in the list
-    name_ott = name + "ott"
     for item in species_list:
-        if item == name_ott or item.endswith(name) or name_ott in item:
+        # print(item, '==?', name)
+        # ott_item = 'ott' + item
+        mrcaott_item = 'mrca' + item + 'ott'
+        if item == name or name.endswith(item) or name.startswith(mrcaott_item):
+            print(item, '==', name)
             species_list.remove(item)
             return [True, species_list]
-        elif item.endswith(name) or name_ott in item:
-            print(name,"is matching", item)
-            species_list.remove(item)
-            return [True, species_list]
+        if not (name.startswith('mrca') or name.startswith('ott')):
+            print(name)
     return [False, species_list]
 
 main()

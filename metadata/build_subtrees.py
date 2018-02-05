@@ -4,10 +4,11 @@ from Bio import Phylo
 from termcolor import colored
 
 # global variables
-subtree_otts = [['ott304358', 'Eukaryota'], ['ott352914', 'Fungi'], ['ott691846', 'Metazoa'], 
-        ['ott395057', 'Nematoda'], ['ott801601', 'Vertebrata'], ['ott229562', 'Tetrapoda'], 
-        ['ott244265', 'Mammalia'], ['ott913935', 'Primates'], ['ott770311', 'Hominidae'], 
-        ['ott361838', 'Chloroplastida']]
+subtree_otts = [['ott304358', 'Eukaryota'], ['ott361838', 'Chloroplastida'],
+        ['ott691846', 'Metazoa'], ['ott395057', 'Nematoda'], ['ott801601', 'Vertebrata'],
+        ['ott229562', 'Tetrapoda'], ['ott244265', 'Mammalia'], ['ott913935', 'Primates'],
+        ['ott770311', 'Hominidae'], ['ott352914', 'Fungi'], ['ott844192', 'Bacteria'],
+        ['ott996421', 'Archaea']]
 index = 0
 nr_internal_nodes = 0
 nr_leaf_nodes = 0
