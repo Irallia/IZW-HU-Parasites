@@ -25,6 +25,10 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Abstract}
+  \anmerkungstext{Alle Figures richtig beschriften. Generell: Alle Figure captions sollten 
+    selbsterklärend sein. Sprich, ich sollte nur die Caption (normalerweise auch unter dem Bild) 
+    lesen und nicht den Rest das Papers und dann trotzdem verstehen können, was eigentlich passiert 
+    ist und - hilfreich - auch warum das relevant ist. (Bernhard)} \\
 
 \tableofcontents
 \clearpage
@@ -33,27 +37,6 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Introduction}
-  \anmerkungstext{Alle Figures richtig beschriften. Generell: Alle Figure captions sollten selbsterklärend sein. Sprich, ich sollte 
-    nur die Caption (normalerweise auch unter dem Bild) lesen und nicht den Rest das Papers und dann 
-    trotzdem verstehen können, was eigentlich passiert ist und - hilfreich - auch warum das relevant 
-    ist. (Bernhard)} \\ \\
-
-  \anmerkung{allgemein zu diesem Kapitel:} \\
-  \anmerkung{Eine Einleitung hat etwa 2 Seiten. General problem -> more specific problem (Emanuel)}
-  \anmerkungstext{Die Intro ist noch arg knapp =) und ich erkenne die Struktur noch nicht ganz.
-    Mein Vorschlag einer Gliederung (jeweils ca. ein Absatz)1) Motivation: \\
-      * Was ist das große Ziel? Was soll erreicht werden \\
-      * Warum ist das relevant? Was könnte man dann tun? \\
-    2) Hintergrund \\
-      * Was gab es in dieser Richtung bereits als ganze Ansätze oder wenn nicht, warum nicht? Woran 
-        ist es bisher gescheitert  \\
-      * welche Grundlagen sind notwendig: \\
-      ** open tree of life: Was ist das, warum relevant und überlegen als reine Ansätze? \\
-      ** Algorithmen: Was gibt es? Ruhig ausführlicher als hier bereits und vor allem auch nach einer 
-        Darstellung am Ende ableiten, was für uns relevant ist. Also beschreiben, wie Methode a, b, c 
-        funktionieren und dann abwägen, was daher für Dich am relevantesten ist. \\
-    3) Outlook/Structure of this work (Bernhard)} \\
-
   This paper is about the further development of parsimony algorithms for non-binary trees, applied 
   to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the application to 
   the ancestral state reconstruction of parasitism. \\
@@ -62,21 +45,60 @@
   \anmerkungstext{Wir haben mehr einen Algorithmus getestet und an unserem spezifischen Problem angewendet, 
     als viel selbst zu entwickeln. Allerdings haben wir den Fitch Algorithmus von binär auf multinär 
     umgeschrieben.} \\
-  
+
+  \anmerkung{Mein Vorschlag einer Gliederung (jeweils ca. ein Absatz) (Bernhard)}
+  \begin{enumerate}
+    \item Motivation:
+      \begin{itemize}
+        \item Was ist das große Ziel? \\
+          Das Ziel dieser Arbeit ist die Anwendung von maximum parsiomony algorithmen auf nicht 
+          binäre Bäume und auf sehr große Datensätze. Insbesondere auf das Beispiel 'Entstehung des 
+          Parasitismus' im ganzen Eukaryotischen Tree of Life.
+        \item Was soll erreicht werden? \\
+          Wir wollen vorhandene Algorithm (Sankoff/castor) auf diese Aufgabenstellung hin testen 
+          und ihre Vorhersagekraft abschätzen. Außerdem wollen wir den Fitch algorithmus für binäre 
+          Bäume auf unser Problem erweitern und mit dem Sankoff Algorithmus vergleichen.
+        \item Warum ist das relevant? Was könnte man dann tun?\\
+          \todo{!!!}
+      \end{itemize}
+    \item Hintergrund:
+      \begin{itemize}
+        \item Was gab es in dieser Richtung bereits als ganze Ansätze oder wenn nicht, warum nicht?
+          Woran ist es bisher gescheitert? \\
+          Bisher wurden vorallem Algorithmen für das binäre Problem entwickelt, da man wesentlich 
+            kleinere Teilbäume betrachtet hat, von welchen man auch alle Aufspaltungen kennt. Durch 
+            die Entwicklung von OTL, eines gesamten Baum des Lebens, ergibt sich das Problem, dass 
+            dieser bei weitem nicht binär ist. \\ \\
   Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 
-  60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
-  Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
-  Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
-  With more and more data, there is now the possibility to use more information to calculate the 
-  probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
-  also use branch lengths. The likelihood based algorithms came more in interest. \\
-  Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
-  that exists at this moment, which goes over all observed species. For most \todo{most?} species 
-  there is no 
-  phylogeny, but only a taxonomic classification. So the biggest 'phylogenetic tree' is a synthesis 
-  of phylogenetic trees filled with a taxonomic tree given by Open Tree of Life \cite{Hinchliff2015}.
-  This tree is not binary and therefore the developed algorithms are not directly applicable. \\
-  \anmerkung{GloBI und OTL in der Einleitung vorstellen. (Emanuel)}
+    60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
+    Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
+    Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
+    With more and more data, there is now the possibility to use more information to calculate the 
+    probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
+    also use branch lengths. The likelihood based algorithms came more in interest. \\
+    Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
+    that exists at this moment, which goes over all observed species. For most \todo{most?} species 
+    there is no phylogeny, but only a taxonomic classification.
+  
+        \item Welche Grundlagen sind notwendig:
+          \begin{itemize}
+            \item open tree of life: Was ist das, warum relevant und überlegen als reine Ansätze? \\
+              \todo{!!!} \\ \\
+  So the biggest 'phylogenetic tree' is a synthesis 
+    of phylogenetic trees filled with a taxonomic tree given by Open Tree of Life \cite{Hinchliff2015}.
+    This tree is not binary and therefore the developed algorithms are not directly applicable. \\
+            \item Algorithmen: Was gibt es? Ruhig ausführlicher als hier bereits und vor allem auch 
+              nach einer Darstellung am Ende ableiten, was für uns relevant ist. Also beschreiben, 
+              wie Methode a, b, c funktionieren und dann abwägen, was daher für Dich am 
+              relevantesten ist. \\
+              \todo{!!!} \\
+              \anmerkung{GloBI und OTL in der Einleitung vorstellen. (Emanuel)}
+          \end{itemize}
+      \end{itemize}
+    \item Outlook/Structure of this work
+  \end{enumerate}
+
+
   In this work, we have looked at the algorithms that are generally suited to our data, to develop 
   them further for the not binary case, and finally to compare their usability with our sythesis 
   tree. \\
@@ -165,7 +187,7 @@
       Some simple countings...\\
       nr of parasites, free-living and unknown nodes ... from whole tree, subtrees...
       \begin{center}
-        \begin{tabular}{ | l | p{3cm} | }
+        \begin{tabular}{ | l | p{3.9cm} | }
           \hline
           Name & Number of \\
           \hline \hline
@@ -180,7 +202,7 @@
           % number of SAME_AS: 86198
           % number of SAME_AS: 16710 (distinct)
           Eukaryota & 241974 internal nodes, 2293463 leaf nodes \\
-          Chloroplastida has 43486 internal nodes and 412434 leaf_nodes
+          % Chloroplastida has 43486 internal nodes and 412434 leaf_nodes
           % Metazoa has 179944 internal nodes and 1491012 leaf_nodes
           % Nematoda has 3437 internal nodes and 30127 leaf_nodes
           % Vertebrata has 30466 internal nodes and 88415 leaf_nodes
