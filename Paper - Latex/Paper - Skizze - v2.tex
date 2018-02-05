@@ -88,6 +88,12 @@
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
   \anmerkung{Graphischen Workflow hinzufügen, mehr Motivation und genauer. (Bernhard)}
+  \begin{figure}[h!]
+    \caption{Workflow}
+    \centering
+    \label{fig:Workflow}
+    \includegraphics[width=1\textwidth]{Figures/Workflow.png}
+  \end{figure}
   
   This work consist of two aspects. One is the application of the algorithm to our question the
     other a simulation of this to proof the credibility of our methods. \\
@@ -166,18 +172,27 @@
           interactions & 5346414 \\ \hline
           freeliving species & 51337 (distinct) \\ \hline
           parasite species &  47332 (distinct) \\ \hline
-          unused possible species & 57352 (source), 809993 (target) \\
+          unused possible species & 57352 (source), 809993 (target) \\ \hline
           % number of freelivings: 489179
           % number of freelivings: 42657 (distinct)
           % number of parasites: 3353580
           % number of parasites: 44260 (distinct)
           % number of SAME_AS: 86198
           % number of SAME_AS: 16710 (distinct)
+          Eukaryota & 241974 internal nodes, 2293463 leaf nodes \\
+          Chloroplastida has 43486 internal nodes and 412434 leaf_nodes
+          % Metazoa has 179944 internal nodes and 1491012 leaf_nodes
+          % Nematoda has 3437 internal nodes and 30127 leaf_nodes
+          % Vertebrata has 30466 internal nodes and 88415 leaf_nodes
+          % Tetrapoda has 21870 internal nodes and 47540 leaf_nodes
+          % Mammalia has 4727 internal nodes and 8615 leaf_nodes
+          % Primates has 492 internal nodes and 686 leaf_nodes
+          % Hominidae has 12 internal nodes and 14 leaf_nodes
+          % Fungi has 9534 internal nodes and 314571 leaf_nodes
           \hline  
         \end{tabular}
       \end{center}
-
-      
+      $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ -> only 4.3\% of leaf nodes are filled with information
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
