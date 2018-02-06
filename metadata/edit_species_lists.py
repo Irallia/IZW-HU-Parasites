@@ -84,7 +84,7 @@ def read_tags(path):
             if row != []:
                 id_array = row[0]
                 nr_tags += 1
-                tag_array.append("ott" + id_array[1])
+                tag_array.append("ott" + id_array)
         print('number of tag:', nr_tags)
     return tag_array
 
@@ -131,10 +131,8 @@ def delete_internal_nodes(subtree):
 def get_tag(name, species_list):
     # Checks for the presence of name in any string in the list
     for item in species_list:
-        # print(item, '==?', name)
-        # ott_item = 'ott' + item
-        mrcaott_item = 'mrca' + item + 'ott'
-        if item == name or name.endswith(item) or name.startswith(mrcaott_item):
+        # mrcaott_item = 'mrca' + item + 'ott'
+        if item == name or name.endswith(item): # or name.startswith(mrcaott_item):
             print(item, '==', name)
             species_list.remove(item)
             return [True, species_list]
