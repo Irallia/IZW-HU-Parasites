@@ -126,7 +126,7 @@
     \item Build and run the simulation.
     \item Evaluation of parameters for the simulation and the real problem.
     \item Run the resulted algorithm on the original data.
-    \item Evalute and interprete results. -> Origins etc...
+    \item Evalute and interprete results. $\rightarrow$ Origins etc...
   \end{enumerate}
   
   % Zur Bewertung der gefundenen / entwickelten algorithmen haben wir eine Simulation ausgeführt.
@@ -151,7 +151,7 @@
       \end{lstlisting}
       We build two lists: parasites and free-livings, and add the source or targets of an interaction
         to these. \\
-      \todo{klar? Oder Beispiel bringen? (Katze isst Maus -> Katze ist Freilebend)} \\
+      \todo{klar? Oder Beispiel bringen? (Katze isst Maus $\rightarrow$ Katze ist Freilebend)} \\
       % For every interaction from these lists, we get one or two species for our parasite or 
       %   free-living lists.
       \todo{ott id hier erwähnen?} \\
@@ -165,42 +165,34 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
-    Properties of real Data - Metadata analysis
+    Properties of real Data - Metadata analysis \\
 
-    There are some Parameters to find out or notice: \\
-    \anmerkungstext{hier unterscheiden zwischen einfachen Zahlen (countings / one dimensional) und 
-      komplexen variablen (Emanuel)} \\
-    \anmerkungstext{arg}{außerdem zu unterscheiden: Biologische Parameter (transition probabilities), 
-      fixe Daten und zu berechnende (multifurcation,...) (Emanuel)}
-    \begin{itemize}
-      \item transition probabilities of tags
-      \item multifurcation
-      \item nr of parasites to free-living
-      \item nr of unknown nodes 
-    \end{itemize}
-    \anmerkung{multifurcations und unknown leave nodes sind ähnlich beeinflusst (Emanuel)} \\
+    Um eine möglichst realistische Simulation zu erzeugen haben wir auf der einen Seite einige Daten 
+      gesammelt (Kaptiel Countings), und außerdem beeinflussende Parameter untersucht.
+
+    Wir haben zwei große Arten von Parametern:
+    \begin{enumerate}
+      \item Biological parameters (A result of the evolutionary process.):
+        \begin{itemize}
+          \item transition probabilities
+        \end{itemize}
+      \item Distribution of the loss of information:
+        \begin{itemize}
+          \item Loss of topology ($\rightarrow$ mutlifurcations).
+          \item Unknown information about the states of some leaf nodes.
+        \end{itemize}
+    \end{enumerate}
+
     \todo{Hier darauf hinweisen, dass wir für multifurcations und unknown data den einfluss auf die 
       Algorithmen testen.}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Countings}
-      Some simple countings...\\
-      nr of parasites, free-living and unknown nodes ... from whole tree, subtrees...
       \begin{center}
         \begin{tabular}{ | l | p{3.9cm} | }
           \hline
           Name & Number of \\
           \hline \hline
-          interactions & 5346414 \\ \hline
-          freeliving species & 51337 (distinct) \\ \hline
-          parasite species &  47332 (distinct) \\ \hline
-          unused possible species & 57352 (source), 809993 (target) \\ \hline
-          % number of freelivings: 489179
-          % number of freelivings: 42657 (distinct)
-          % number of parasites: 3353580
-          % number of parasites: 44260 (distinct)
-          % number of SAME_AS: 86198
-          % number of SAME_AS: 16710 (distinct)
           Eukaryota & 241974 internal nodes, 2293463 leaf nodes \\
           % Chloroplastida has 43486 internal nodes and 412434 leaf_nodes
           % Metazoa has 179944 internal nodes and 1491012 leaf_nodes
@@ -211,16 +203,48 @@
           % Primates has 492 internal nodes and 686 leaf_nodes
           % Hominidae has 12 internal nodes and 14 leaf_nodes
           % Fungi has 9534 internal nodes and 314571 leaf_nodes
+          interactions & 5346414 \\ \hline
+          freeliving species & 51337 (distinct) \\ \hline
+          parasite species &  47332 (distinct) \\ \hline
+          $\rightarrow$ unknown nodes & ??? \\ \hline
+          unused possible species & 57352 (source), 809993 (target) \\ \hline
+          % number of freelivings: 489179
+          % number of freelivings: 42657 (distinct)
+          % number of parasites: 3353580
+          % number of parasites: 44260 (distinct)
+          % number of SAME_AS: 86198
+          % number of SAME_AS: 16710 (distinct)
           \hline  
         \end{tabular}
       \end{center}
-      $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ -> only 4.3\% of leaf nodes are filled with information
+      \todo{tree, subtrees? figure dazu?}
+      $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ $\rightarrow$ only 4.3\% of leaf nodes are filled with information
+
+      #interactions zu #Parasiten und #Freilebend -> Wieviel gibt GloBI her? (dazu noch #unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
+      #Parasiten und #Freilebend und #Blattknoten -> Wieviele unbekannte Knoten haben wir?
+      #Interne Knoten und #Blattknoten -> Wie stark ist die Multifurkation?
+
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Transition probabilities}
+      \anmerkungtext{Wir hätten aber maximal 2 beta-Verteilungen mit jeweils 2 Parametern und je einem 
+        eigenen Schwellenwert bei dem in die andere Verteilung gewechselt wird. Also 6 Parameter. Ich 
+        finde den Parameterraum den du bisher betrachtest zum einen nicht systematisch erfasst, zum 
+        anderen wahrscheinlich auch zu klein. Du kannst "Parameter sparen" indem zu z.B die beiden 
+        Verteilungen und cut-offs symmetrisch (gespiegelt an 0.5) machst. Solltest aber meines Erachtens 
+        die Schwellenwerte freier variieren. Das können wir bis zu unserem nächsten Treffen zurückstellen 
+        und dann gemeinsam diskutieren. (Emanuel)} \\
+      Das mit dem symmetrisch spiegeln geht halt nur bei maximal 40-60 Verteilungen richtig gut, danach 
+        haben brauchen eventuell eine lange Austestphase, bis ein Baum dieser Verteilung entspricht.
+      Wenn wir allerdings dafür zwei verschiedene Schwellenwerte einführen könnte das dieses Problem 
+        eventuell ausgleichen. Das müsste ich austesten. 
+
+      \todo{Kapitel tag tree hier einbinden}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
-      \anmerkung{Description/Definition of Multifurcation -> to the Intro (Bernhard)} \\
+      \anmerkung{Description/Definition of Multifurcation $\rightarrow$ to the Intro (Bernhard)} \\
       \anmerkung{Regressionsanalyse (Bernhard)} \\
-      \anmerkung{poisson glm: \#children \~ ~ I phylum -> R fitdist p (Emanuel)} \\
+      \anmerkung{poisson glm: \#children \~ ~ I phylum $\rightarrow$ R fitdist p (Emanuel)} \\
       \anmerkung{different parameters for different taxa? (Emanuel)} \\
       One property of the tree is its ridge of multifurcation. For this we collected for every node its
         number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
@@ -318,9 +342,9 @@
         else:
           # parasite_distribution:
           new_random = random.beta(a=A_P, b=B_P)
-        tag = 0         # -> FL
+        tag = 0         # $\rightarrow$ FL
         if new_random < percentage_parasites:
-          tag = 1       # -> P
+          tag = 1       # $\rightarrow$ P
       \end{lstlisting}
       \begin{figure}
         \caption{60\% Free-living - 40\% Parasites}
@@ -347,7 +371,7 @@
       We traverse through the tree and pick a random number between 0 and 1. If random number is smaller 
         as our limit ($\frac{1}{x}$), than we forget the node and hang every child to the father node of 
         the current node. \\
-      \anmerkung{poisson process -> fit that distribution, include depth as a predictor, see if significant (Emanuel)}
+      \anmerkung{poisson process $\rightarrow$ fit that distribution, include depth as a predictor, see if significant (Emanuel)}
       \begin{lstlisting}
         from numpy import random
         from utilities import Helpers
@@ -487,7 +511,7 @@
   Parameter der Simulation:
   \begin{itemize}
     \item Wie ist die Verteilung der vergessenen internen Knoten? Zum Wurzelknoten hin mehr vergessen?
-    \item Wie sehen die übergangswahrscheinlichkeiten aus von P->FL und andersherum?
+    \item Wie sehen die übergangswahrscheinlichkeiten aus von P$\rightarrow$FL und andersherum?
     \item Verteilung Parasiten zu Freilebend zu keine Information
   \end{itemize}
 
