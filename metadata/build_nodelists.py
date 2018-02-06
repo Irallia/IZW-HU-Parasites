@@ -8,8 +8,10 @@ from termcolor import colored, cprint
 
 from Helpers import print_time
 
-path_freelivings = "../data/interaction_data/reduced_freelivings.csv"
-path_parasites = "../data/interaction_data/reduced_parasites.csv"
+# path_freelivings = "../data/interaction_data/reduced_freelivings.csv"
+# path_parasites = "../data/interaction_data/reduced_parasites.csv"
+path_freelivings = "../data/interaction_data/freelivings.csv"
+path_parasites = "../data/interaction_data/parasites.csv"
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -84,13 +86,11 @@ def read_tags(path):
             if row != []:
                 id_array = row[0]
                 nr_tags += 1
-                tag_array.append("ott" + id_array[1])
+                tag_array.append("ott" + id_array)
         print('number of tag:', nr_tags)
     return tag_array
 
 def fill_tree_with_tags(subtree, subtree_name):
-    global current_freelivings
-    global current_parasites
     global nr_leave_nodes
     global nr_used_freelivings
     global nr_used_parasites
@@ -105,18 +105,16 @@ def fill_tree_with_tags(subtree, subtree_name):
     current_list_index = len(nodelist) - 1
 
     if subtree.is_terminal():
-        tag_boolf = get_tag(ott, current_freelivings)
-        tag_boolp = get_tag(ott, current_parasites)
-        current_freelivings = tag_boolf[1]
-        current_parasites = tag_boolp[1] 
         nr_leave_nodes += 1
-        if tag_boolp[0]:
+        tag_boolp = get_tag(ott, 'P')
+        if tag_boolp:
             nr_used_parasites += 1
             nodelist[current_list_index][3] = "2"
         else:
-            if tag_boolf[0]:
-                nodelist[current_list_index][3] = "1"
+            tag_boolf = get_tag(ott, 'FL')
+            if tag_boolf:
                 nr_used_freelivings += 1
+                nodelist[current_list_index][3] = "1"
             else:
                 nodelist[current_list_index][3] = "NA"
                 unknown += 1
@@ -126,10 +124,7 @@ def fill_tree_with_tags(subtree, subtree_name):
         mean_depth = 0
         child_depth = 0
         for clade in subtree.clades:
-            result = fill_tree_with_tags(clade, subtree_name)
-            depths = result[0]
-            current_freelivings = result[1]
-            current_parasites = result[2]
+            depths = fill_tree_with_tags(clade, subtree_name)
             if depths[0] < min_depth:
                 min_depth = depths[0]
             if depths[1] > max_depth:
@@ -145,20 +140,21 @@ def fill_tree_with_tags(subtree, subtree_name):
     writer.writerow((nodelist[current_list_index])) 
     nodelist_file.close()
     # -------------------------------------------------
-    return [depths, current_freelivings, current_parasites]
+    return depths
 
-def get_tag(name, species_list):
+def get_tag(name, tag):
+    global current_freelivings
+    global current_parasites
+    if tag == 'FL':
+        species_list = current_freelivings
+    else:
+        species_list = current_parasites
     # Checks for the presence of name in any string in the list
     for item in species_list:
-        # print(item, '==?', name)
-        # ott_item = 'ott' + item
-        mrcaott_item = 'mrca' + item + 'ott'
-        if item == name or name.endswith(item) or name.startswith(mrcaott_item):
-            print(item, '==', name)
+        # mrcaott_item = 'mrca' + item + 'ott'
+        if item == name or name.endswith(item): # or name.startswith(mrcaott_item):
             species_list.remove(item)
-            return [True, species_list]
-        if not (name.startswith('mrca') or name.startswith('ott')):
-            print(name)
-    return [False, species_list]
+            return True
+    return False
 
 main()
