@@ -133,7 +133,6 @@ def get_tag(name, species_list):
     for item in species_list:
         # mrcaott_item = 'mrca' + item + 'ott'
         if item == name or name.endswith(item): # or name.startswith(mrcaott_item):
-            print(item, '==', name)
             species_list.remove(item)
             return [True, species_list]
         if not (name.startswith('mrca') or name.startswith('ott')):

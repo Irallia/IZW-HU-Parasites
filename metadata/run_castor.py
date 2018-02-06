@@ -15,14 +15,17 @@ from Helpers import find_element_in_nodelist, print_time
 START_TIME = datetime.datetime.now().replace(microsecond=0)
 CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
 r_path = "../simulation/utilities/castor_parsimony_simulation.R"
+nodelist = []
 
-subtree_names = ['Eukaryota', 'Metazoa', 'Chloroplastida', 'Fungi']
+subtree_names = ['Eukaryota', 'Metazoa', 'Chloroplastida', 'Fungi', 'Vertebrata', 'Tetrapoda', 
+        'Nematoda', 'Mammalia', 'Primates', 'Hominidae']
 
 print(colored("------------------------ Sankoff Maximum Parsimony ------------------------", "green"))
 
 def main():
     global START_TIME
     global CURRENT_TIME
+    global nodelist
 
     for subtree_name in subtree_names:
         print('Run castor - Sankoff parsimony - for', subtree_name)
@@ -32,7 +35,6 @@ def main():
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- read nodelist ----------------", "green"))
         nodelist_path = '../data/nodelist/' + subtree_name + '.csv' 
-        nodelist = []
         #              0    1       2           3           4
         # nodelist - [id, depths, nr_children, originaltag, finaltag]
         with open(nodelist_path, 'r') as csv_file:
@@ -47,24 +49,31 @@ def main():
                     nodelist.append([ott, depths, nr_children, originaltag, finaltag])
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- Sankoff parsimony ----------------", "green"))
-        sankoff_parsimony(tree, nodelist)
+        sankoff_parsimony(tree)
+        CURRENT_TIME = print_time(CURRENT_TIME)
+        print(colored("---------------- Save nodelist ----------------", "green"))
+        nodelist_path = '../data/nodelist/' + subtree_name + '-castor.csv' 
+        with open(nodelist_path, 'w') as nodelist_file:
+            writer = csv.writer(nodelist_file, quoting=csv.QUOTE_ALL)
+            writer.writerow(nodelist)
         CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("--------------------------------", "green"))
     print(colored("--------------------------------", "green"))
     return
 
-def sankoff_parsimony(tree, nodelist):
+def sankoff_parsimony(tree):
     """Using rpy2 for forwarding to R code"""
     # Arguments:
     #   subtree
     #              0    1       2           3           4
     #   nodelist - [id, depths, nr_children, originaltag, finaltag]
+    global nodelist
 
     # ---- cache tree for R script ---
 
     Phylo.write(tree, 'bufferfiles/simulated_tree.tre', 'newick')
 
-    prepare_tree(tree.clade, nodelist)
+    prepare_tree(tree.clade)
     Phylo.write(tree, 'bufferfiles/simulated_tagged_tree.tre', 'newick')
     
     # -------- R code --------
@@ -99,7 +108,7 @@ def sankoff_parsimony(tree, nodelist):
             k += 1
     return
 
-def prepare_tree(subtree, nodelist):
+def prepare_tree(subtree):
     """tag all leafs"""
     # Arguments:
     #   subtree
@@ -112,7 +121,7 @@ def prepare_tree(subtree, nodelist):
         else:
             subtree.name = str(element[3])
     for clade in subtree.clades:
-        prepare_tree(clade, nodelist)
+        prepare_tree(clade)
     return
 
 main()
