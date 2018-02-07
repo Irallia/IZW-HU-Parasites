@@ -34,7 +34,6 @@ def main():
         for row in reader:
             index += 1
             interaction = row[10]
-
             # eliminate useless interactions
             # -------------------------------- source? --------------------------------
             if any(interaction in source for source in (freeliving_source, parasite_source)):
@@ -54,11 +53,11 @@ def main():
                             parasites.append([ott[1], name])
             # -------------------------------- target? --------------------------------
             if any(interaction in target for target in (freeliving_target, parasite_target)):
-                ott = row[0].split(':')
-                name = row[1]
                 if row[11] == '' or not 'OTT' in  row[11]:
                     get_same_as_ott(row, 'target')
                 else:
+                    ott = row[11].split(':')
+                    name = row[12]
                     # no ott available, but maybe another one:
                     if len(ott) < 2:
                         get_same_as_ott(row, 'target')
