@@ -1,0 +1,22 @@
+------------------------ edit species lists ------------------------
+2018-02-06 11:16:56
+time needed: 0:00:00
+---------------- read parasites and freelivings ----------------
+Freelivings:
+number of tag: 51337
+Parasites:
+number of tag: 47332
+time needed: 0:00:00
+---------------- delete Archaea and Bacteria ----------------
+Bacteria :
+time needed: 6:19:39
+Archaea :
+time needed: 0:05:41
+---------------- delete internal Eukaryota ----------------
+time needed: 4:27:30
+--------------------------------
+
+0 archaea or bacteria found and deleted
+28 internal freeliving tags found and 28 internal parasite tags found and deleted
+Freelivings: 51309
+Parasites: 47304
