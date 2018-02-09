@@ -109,31 +109,47 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
-  \anmerkung{Graphischen Workflow hinzufügen, mehr Motivation und genauer. (Bernhard)}
+  We would like to apply a maximum parsimony algorithm to the entire tree of life to obtain an 
+    ancestral state reconstruction of free-living vs. parasite. On one side we need a simulation to
+    find out, which is the best algorithm with which parameters. And on the other side we run the 
+    selected Algorithm and evaluate the results.\\
   \begin{figure}[h!]
     \caption{Workflow}
     \centering
     \label{fig:Workflow}
-    \includegraphics[width=1\textwidth]{Figures/Workflow.png}
+    \includegraphics[width=0.4\textwidth]{Figures/Workflow-overview.png}
   \end{figure}
-  
-  This work consist of two aspects. One is the application of the algorithm to our question the
-    other a simulation of this to proof the credibility of our methods. \\
-  The resulting procedure is as follows:
+  For this we have to look at the following different aspects:
   \begin{enumerate}
-    \item Get the real tree and real data for the leaf nodes.
+    \item Get the real tree and real data for the leaf nodes. $\rightarrow$ OTL, GloBI
     \item Get metadata of these for a realisitc the simulation.
     \item Build and run the simulation.
     \item Evaluation of parameters for the simulation and the real problem.
     \item Run the resulted algorithm on the original data.
     \item Evalute and interprete results. $\rightarrow$ Origins etc...
   \end{enumerate}
+
+
+
+  
+  
+  This work consist of two aspects. One is the application of the algorithm to our question the
+    other a simulation of this to proof the credibility of our methods. \\
+  The resulting procedure is as follows:
+
   
   % Zur Bewertung der gefundenen / entwickelten algorithmen haben wir eine Simulation ausgeführt.
 
   % Auf der Anderen Seite haben wir unser reales Problem aufgestellt, für die Algorithmen vorbereitet und 
   % diese angewendet.
   
+  \begin{figure}[h!]
+    \caption{Workflow}
+    \centering
+    \label{fig:Workflow}
+    \includegraphics[width=1\textwidth]{Figures/Workflow.png}
+  \end{figure}
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Get data}
