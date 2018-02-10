@@ -6,20 +6,22 @@ from time import gmtime, strftime
 
 no_ott_source = 0
 no_ott_target = 0
-SAME_AS = []
+SAME_AS_s = []
+SAME_AS_t = []
 
 def main():
     global no_ott_source
     global no_ott_target
-    global SAME_AS
+    global SAME_AS_s
+    global SAME_AS_t
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
     print('-------------------')
 
     filepath = "../data/GloBI_Dump/interactions.tsv"
-    freeliving_source = ["parasiteOf", "pathogenOf"]
-    freeliving_target = ["hasParasite", "hasPathogen"]
-    parasite_source = ["preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf"]
-    parasite_target = ["preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost"]
+    parasite_source = ["parasiteOf", "pathogenOf"]
+    parasite_target = ["hasParasite", "hasPathogen"]
+    freeliving_source = ["preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf"]
+    freeliving_target = ["preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost"]
     #           [["ott_id","taxon_name"]]
     freelivings = []
     parasites = []
@@ -48,9 +50,13 @@ def main():
                     # normal case:
                     else:
                         if interaction in freeliving_source:
-                            freelivings.append([ott[1], name])
+                            freelivings.append([ott[1], name, interaction])
+                            if ott[1] == '77083':
+                                print(row[0], row[1], row[10], row[11], row[12], '-> source parasite')
                         elif interaction in parasite_source:
-                            parasites.append([ott[1], name])
+                            if ott[1] == '77083':
+                                print(row[0], row[1], row[10], row[11], row[12], '-> source parasite')
+                            parasites.append([ott[1], name, interaction])
             # -------------------------------- target? --------------------------------
             if any(interaction in target for target in (freeliving_target, parasite_target)):
                 if row[11] == '' or not 'OTT' in  row[11]:
@@ -64,9 +70,13 @@ def main():
                     # normal case:
                     else:
                         if interaction in freeliving_target:
-                            freelivings.append([ott[1], name])
+                            freelivings.append([ott[1], name, interaction])
+                            if ott[1] == '77083':
+                                print(row[0], row[1], row[10], row[11], row[12], '-> freeliving target')
                         elif interaction in parasite_target:
-                            parasites.append([ott[1], name])
+                            if ott[1] == '77083':
+                                print(row[0], row[1], row[10], row[11], row[12], '-> parasite target')
+                            parasites.append([ott[1], name, interaction])
 
     print('-------------------')
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
@@ -75,36 +85,23 @@ def main():
     print('no ott source:', no_ott_source)
     print('no ott target:', no_ott_target)
 
-    print('number of freelivings:', len(freelivings))
-    freelivings.sort()
-    freelivings = list(freelivings for freelivings,_ in itertools.groupby(freelivings))
-    print('number of freelivings:', len(freelivings), '(distinct)')
-    
-    print('number of parasites:', len(parasites))
-    parasites.sort()
-    parasites = list(parasites for parasites,_ in itertools.groupby(parasites))
-    print('number of parasites:', len(parasites), '(distinct)')
+    freelivings = disambiguate_list(freelivings, 'freelivings')
+    parasites = disambiguate_list(parasites, 'parasites')
+    SAME_AS_s = disambiguate_list(SAME_AS_s, 'SAME_AS_s')
+    print('SAME_AS_t is empty:', len(SAME_AS_t))
 
-    print('number of SAME_AS:', len(SAME_AS))
-    SAME_AS.sort()
-    SAME_AS = list(SAME_AS for SAME_AS,_ in itertools.groupby(SAME_AS))
-    print('number of SAME_AS:', len(SAME_AS), '(distinct)')
-
-    for item in SAME_AS:
+    for item in SAME_AS_s:
         ott = item[1].split(':')[1]
         name = item[2]
-        if item[0] in freeliving_source:
-            freelivings.append([ott, name])
-        elif item[0] in parasite_source:
-            parasites.append([ott, name])
+        if ott == '77083':
+            print(item)
+        # if item[0] in freeliving_source:
+            # freelivings.append([ott, name, item[0]])
+        # elif item[0] in parasite_source:
+            # parasites.append([ott, name, item[0]])
 
-    freelivings.sort()
-    freelivings = list(freelivings for freelivings,_ in itertools.groupby(freelivings))
-    print('number of freelivings + SAME_AS:', len(freelivings), '(distinct)')
-    
-    parasites.sort()
-    parasites = list(parasites for parasites,_ in itertools.groupby(parasites))
-    print('number of parasites + SAME_AS:', len(parasites), '(distinct)')
+    freelivings = disambiguate_list(freelivings, 'freelivings + SAME_AS_s')
+    parasites = disambiguate_list(parasites, 'parasites + SAME_AS_s')
 
     # -------------------------------------------------
     with open(freelivings_path, "w") as f:
@@ -120,14 +117,15 @@ def main():
     return
 
 def get_same_as_ott(row, st):
-    global SAME_AS
+    global SAME_AS_s
+    global SAME_AS_t
     if st =='source':
         global no_ott_source
         if 'SAME_AS' in row[:10]:
             ott_index = row.index('SAME_AS') + 1
             if not is_int(row[ott_index].split(':')[1]):
                 return
-            SAME_AS.append([row[10], row[ott_index], row[ott_index + 1]])
+            SAME_AS_s.append([row[10], row[ott_index], row[ott_index + 1]])
         else:
             no_ott_source += 1
     if st =='target':
@@ -136,7 +134,7 @@ def get_same_as_ott(row, st):
             ott_index = row.index('SAME_AS') + 1
             if not is_int(row[ott_index].split(':')[1]):
                 return
-            SAME_AS.append([row[10], row[ott_index], row[ott_index + 1]])
+            SAME_AS_t.append([row[10], row[ott_index], row[ott_index + 1]])
         else:
             no_ott_target += 1
     return
@@ -147,5 +145,12 @@ def is_int(value):
         return True
     except ValueError:
         return False
+
+def disambiguate_list(current_list, name):
+    print('number of', name, ':', len(current_list))
+    current_list.sort()
+    current_list = list(current_list for current_list,_ in itertools.groupby(current_list))
+    print('number of', name, ':', len(current_list), '(distinct)')
+    return current_list
 
 main()
