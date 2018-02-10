@@ -21,6 +21,10 @@ cd GLoBI_Dump
 if wget -q https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/interactions/0.1/interactions-0.1-ott.zip -nv; then echo "GLoBI DL succesful"; else echo "GLoBI DL-link broken" 1>&3; exit 1;  fi
 unzip interactions-0.1-ott.zip
 gunzip interactions.tsv.gz
+if wget -q http://files.opentreeoflife.org/ott/ott3.0/ott3.0.tgz -nv; then echo "OTT DL succesful"; else echo "OTT DL-link broken" 1>&3; exit 1;  fi    # download OTT and post error msg if link is unreachable
+tar -xf ott3.0.tgz
+rm ott3.0.tgz
+mv ott opentree3.1_taxonomic_tree
 echo "$(tput setaf 1)$(tput setab 7)------- Tree and Interaction-data downloaded (2/7) --------$(tput sgr 0)" 1>&3
 # -------- -------- build metadata files -------- -------- #
 cd ../../metadata

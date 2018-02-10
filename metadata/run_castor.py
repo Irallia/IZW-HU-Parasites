@@ -17,9 +17,6 @@ CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
 r_path = "../simulation/utilities/castor_parsimony_simulation.R"
 nodelist = []
 
-subtree_names = ['Eukaryota', 'Metazoa', 'Chloroplastida', 'Fungi', 'Vertebrata', 'Tetrapoda', 
-        'Nematoda', 'Mammalia', 'Primates', 'Hominidae']
-
 print(colored("------------------------ Sankoff Maximum Parsimony ------------------------", "green"))
 
 def main():
@@ -27,37 +24,38 @@ def main():
     global CURRENT_TIME
     global nodelist
 
-    for subtree_name in subtree_names:
-        print('Run castor - Sankoff parsimony - for', subtree_name)
-        print(colored("---------------- read tree ----------------", "green"))
-        subtree_path = '../data/subtree/' + subtree_name + '.tre'
-        tree = Phylo.read(subtree_path, 'newick')
-        CURRENT_TIME = print_time(CURRENT_TIME)
-        print(colored("---------------- read nodelist ----------------", "green"))
-        nodelist_path = '../data/nodelist/' + subtree_name + '.csv' 
-        #              0    1       2           3           4
-        # nodelist - [id, depths, nr_children, originaltag, finaltag]
-        with open(nodelist_path, 'r') as csv_file:
-            reader = csv.reader(csv_file, delimiter=',')
-            for row in reader:
-                if row != []:
-                    ott = row[0]
-                    depths = ast.literal_eval(row[1])
-                    nr_children = int(row[2])
-                    originaltag = row[3]
-                    finaltag = row[4]
-                    nodelist.append([ott, depths, nr_children, originaltag, finaltag])
-        CURRENT_TIME = print_time(CURRENT_TIME)
-        print(colored("---------------- Sankoff parsimony ----------------", "green"))
-        sankoff_parsimony(tree)
-        CURRENT_TIME = print_time(CURRENT_TIME)
-        print(colored("---------------- Save nodelist ----------------", "green"))
-        nodelist_path = '../data/nodelist/' + subtree_name + '-castor.csv' 
-        with open(nodelist_path, 'w') as nodelist_file:
-            writer = csv.writer(nodelist_file, quoting=csv.QUOTE_ALL)
-            writer.writerow(nodelist)
-        CURRENT_TIME = print_time(CURRENT_TIME)
-        print(colored("--------------------------------", "green"))
+    print('Run castor - Sankoff parsimony - for Eukaryota')
+    print(colored("---------------- read tree ----------------", "green"))
+    subtree_path = '../data/subtree/Eukaryota.tre'
+    tree = Phylo.read(subtree_path, 'newick')
+    CURRENT_TIME = print_time(CURRENT_TIME)
+    print(colored("---------------- read nodelist ----------------", "green"))
+    nodelist_path = '../data/nodelist/Eukaryota.csv' 
+    #              0    1       2           3           4
+    # nodelist - [id, depths, nr_children, originaltag, finaltag]
+    with open(nodelist_path, 'r') as csv_file:
+        reader = csv.reader(csv_file, delimiter=',')
+        for row in reader:
+            if row != []:
+                ott = row[0]
+                depths = ast.literal_eval(row[1])
+                nr_children = int(row[2])
+                originaltag = row[3]
+                finaltag = row[4]
+                nodelist.append([ott, depths, nr_children, originaltag, finaltag])
+    CURRENT_TIME = print_time(CURRENT_TIME)
+    print(colored("---------------- Sankoff parsimony ----------------", "green"))
+    sankoff_parsimony(tree)
+    CURRENT_TIME = print_time(CURRENT_TIME)
+    print(colored("---------------- Save nodelist ----------------", "green"))
+    nodelist_path = '../data/nodelist/Eukaryota-castor.csv' 
+    header = ['ott_id', 'depths', 'nr_children', 'originaltag', 'finaltag']
+    with open(nodelist_path, 'w') as nodelist_file:
+        writer = csv.writer(nodelist_file, delimiter=',')
+        writer.writerow(header)
+        for row in nodelist:
+            writer.writerow(row)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("--------------------------------", "green"))
     return
 

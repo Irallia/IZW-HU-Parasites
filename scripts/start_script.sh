@@ -65,7 +65,7 @@ cd ../../simulation
 sudo apt-get install python3
 
 sudo pip install biopython
-
+sudo pip install pandas
 sudo apt-get install python3-dev
 sudo pip install rpy2
 
