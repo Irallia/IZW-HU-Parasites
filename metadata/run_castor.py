@@ -95,14 +95,14 @@ def sankoff_parsimony(tree):
     for i in range(2*l, 3*l):
         if j < number_of_tips[0]:
             element = find_element_in_nodelist(leaf_nodes[j], nodelist)
-            if element[3] == '':    # if unknown
+            if element[4] == '':    # if unknown
                 # set finaltag:
-                element[3] = likelihoods[i]
+                element[4] = likelihoods[i]
             j += 1
         else:
             element = find_element_in_nodelist(internal_nodes[k], nodelist)
             # set finaltag:
-            element[3] = likelihoods[i]
+            element[4] = likelihoods[i]
             k += 1
     return
 
