@@ -109,39 +109,40 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
-  We would like to apply a maximum parsimony algorithm to the entire tree of life to obtain an 
-    ancestral state reconstruction of free-living vs. parasite. On one side we need a simulation to
-    find out, which is the best algorithm with which parameters. And on the other side we run the 
-    selected Algorithm and evaluate the results.\\
+  As initiated, we would like to apply a maximum parsimony algorithm to the entire tree of life to 
+    obtain an ancestral state reconstruction of free-living versus parasite states. \\
+  So far, these reconstructions have been made mainly on binary trees with better data availability. 
+    Therefore, we decided to use a simulation to decide how to evaluate the existing algorithms and 
+    possibly adapt them to our given problem. \\
+  Accordingly, in addition to the necessary data sets (GloBI, OTL), the chosen algorithm and the 
+    evaluation of its results, this chapter also deals with the previously performed simulation and 
+    the evaluation of the various algorithms and their parameters. \\
+  Figure \ref{fig:workflow} briefly outlines these relationships.
   \begin{figure}[h!]
-    \caption{Workflow}
     \centering
-    \label{fig:Workflow}
     \includegraphics[width=0.4\textwidth]{Figures/Workflow-overview.png}
-  \end{figure}
-  For this we have to look at the following different aspects:
-  \begin{enumerate}
-    \item Get the real tree and real data for the leaf nodes. $\rightarrow$ OTL, GloBI
-    \item Get metadata of these for a realisitc the simulation.
-    \item Build and run the simulation.
-    \item Evaluation of parameters for the simulation and the real problem.
-    \item Run the resulted algorithm on the original data.
-    \item Evalute and interprete results. $\rightarrow$ Origins etc...
-  \end{enumerate}
+    \caption{Workflow \\
+      The coming sections are thus subdivided into the following topics: \\
+      \todo{or:} The resulting procedure is as follows: \\
+      (1) Get the real tree and real data for the leaf nodes $\rightarrow$ OTL, GloBI databases.
+      (2) Get metadata of these for a realisitc the simulation.
+      (3) Build and run the simulation.
+      (4) Evaluation of parameters for the simulation and the real problem.
+      (5) Run the resulted algorithm on the original data.
+      (6) Evalute and interprete results. $\rightarrow$ Origins etc...
+    }
+    \label{fig:workflow}
+  \end{figure} \\
+  \todo{Metadata analysis nötig für run maximum parsimony?} \\
 
-
-
-  
-  
-  This work consist of two aspects. One is the application of the algorithm to our question the
-    other a simulation of this to proof the credibility of our methods. \\
-  The resulting procedure is as follows:
-
-  
-  % Zur Bewertung der gefundenen / entwickelten algorithmen haben wir eine Simulation ausgeführt.
-
-  % Auf der Anderen Seite haben wir unser reales Problem aufgestellt, für die Algorithmen vorbereitet und 
-  % diese angewendet.
+  % \begin{enumerate}
+  %   \item Get the real tree and real data for the leaf nodes. $\rightarrow$ OTL, GloBI databases
+  %   \item Get metadata of these for a realisitc the simulation.
+  %   \item Build and run the simulation.
+  %   \item Evaluation of parameters for the simulation and the real problem.
+  %   \item Run the resulted algorithm on the original data.
+  %   \item Evalute and interprete results. $\rightarrow$ Origins etc...
+  % \end{enumerate}
   
   \begin{figure}[h!]
     \caption{Workflow}
@@ -153,30 +154,41 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Get data}
+  For our research we need two types of data: a tree and information about the states. \\
+  For the tree we decided to use Open Tree of Life (OTL), because it's the biggest available synthesis 
+    tree. \\
+  \todo{hier referenzen zu nem paper das das bestätigt o.ä.} \\
+  For the state information, we decided to use the Global biotic interaction database (GloBI). Also in 
+    this case, this is one of the largest databases and both OTL and GloBI support the OTT 
+    identification. OTT (open tree taxonomy) is a taxonomy that assigns to each species a unique id, 
+    both ancestor and now living species (internal and leaf nodes).
+
+    %---------------------------------------------------------------------------------------------------
+    \subsection{OTL}
+      \todo{Open Tree of Life}
+
     %---------------------------------------------------------------------------------------------------
     \subsection{GloBI}
       For tagging our leave nodes, we use the GloBI (Global Biotic Interactions) database. This database 
-        consists of entries of the form: species A interacts with B. \\
+        consists of entries of the form: species A (source) interacts with B (target). \\
       We appointed some interactions, where we know from the biological perspective that the species 
       source or target has to be a parasite or a free-living species. These are the following:
-      \begin{lstlisting}
-        freeliving_source = ["parasiteOf", "pathogenOf"]
-        freeliving_target = ["hasParasite", "hasPathogen"]
-        parasite_source = ["preysOn", "eats", "flowersVisitedBy", "hasPathogen", "pollinatedBy", "hasParasite", "hostOf"]
-        parasite_target = ["preyedUponBy", "parasiteOf", "visitsFlowersOf", "pathogenOf", "hasHost"]
-      \end{lstlisting}
+      \begin{itemize}
+        \item free-living source: preysOn, eats, flowersVisitedBy, hasPathogen, pollinatedBy, 
+          hasParasite, hostOf
+        \item free-living target: preyedUponBy, parasiteOf, visitsFlowersOf, pathogenOf, hasHost
+        \item parasite source: parasiteOf, pathogenOf
+        \item parasite target: hasParasite, hasPathogen
+      \end{itemize}
+      \todo{Interactions nochmal prüfen! Darauf basieren unsere Ergebnisse!} \\
       We build two lists: parasites and free-livings, and add the source or targets of an interaction
         to these. \\
       \todo{klar? Oder Beispiel bringen? (Katze isst Maus $\rightarrow$ Katze ist Freilebend)} \\
       % For every interaction from these lists, we get one or two species for our parasite or 
       %   free-living lists.
-      \todo{ott id hier erwähnen?} \\
       \todo{einige spezies nicht mit einbezogen, da sie keine OTT id haben, hier könnte man noch verbessern (future work)}
-      \todo{You can find all interaction types here: https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .}
-    
-    %---------------------------------------------------------------------------------------------------
-    \subsection{OTL}
-      \todo{Open Tree of Life}
+      \todo{You can find all interaction types here:
+        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
