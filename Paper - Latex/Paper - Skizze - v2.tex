@@ -217,11 +217,12 @@
     %---------------------------------------------------------------------------------------------------
     \subsection{Countings}
       \begin{center}
-        \begin{tabular}{ | l | p{3.9cm} | }
+        \begin{tabular}{ | l | l | }
           \hline
           Name & Number of \\
           \hline \hline
-          Eukaryota & 241974 internal nodes, 2293463 leaf nodes \\
+          Eukaryota & 241 974 internal nodes, \\
+          & 2 293 463 leaf nodes \\ \hline
           % Chloroplastida has 43486 internal nodes and 412434 leaf_nodes
           % Metazoa has 179944 internal nodes and 1491012 leaf_nodes
           % Nematoda has 3437 internal nodes and 30127 leaf_nodes
@@ -231,33 +232,85 @@
           % Primates has 492 internal nodes and 686 leaf_nodes
           % Hominidae has 12 internal nodes and 14 leaf_nodes
           % Fungi has 9534 internal nodes and 314571 leaf_nodes
-          interactions & 5346414 \\ \hline
-          freeliving species & 51337 (distinct) \\ \hline
-          parasite species &  47332 (distinct) \\ \hline
+          interactions & 5 346 414 \\ \hline
+          freeliving species & 51 337 (distinct) \\ \hline
+          parasite species &  47 332 (distinct) \\ \hline
           $\rightarrow$ unknown nodes & ??? \\ \hline
-          unused possible species & 57352 (source), 809993 (target) \\ \hline
+          unused possible species & 57 352 (source), \\
+          & 809 993 (target) \\
           % number of freelivings: 489179
           % number of freelivings: 42657 (distinct)
           % number of parasites: 3353580
           % number of parasites: 44260 (distinct)
           % number of SAME_AS: 86198
           % number of SAME_AS: 16710 (distinct)
-          \hline  
+          \hline
+          Nr of Children $== 1$ & 55 700 \\
+          & 51 744 (height $=2$) \\
+          & 3 956 (height $>2$) \\ \hline
         \end{tabular}
       \end{center}
       \todo{tree, subtrees? figure dazu?}
-      $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ $\rightarrow$ only 4.3\% of leaf nodes are filled with information
+      $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ $\rightarrow$ only 4.3\% of leaf nodes are 
+        filled with information
 
-      #interactions zu #Parasiten und #Freilebend -> Wieviel gibt GloBI her? (dazu noch #unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
-      #Parasiten und #Freilebend und #Blattknoten -> Wieviele unbekannte Knoten haben wir?
-      #Interne Knoten und #Blattknoten -> Wie stark ist die Multifurkation?
+      \#interactions zu \#Parasiten und \#Freilebend $\rightarrow$ Wieviel gibt GloBI her? (dazu noch 
+        \#unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
+      \#Parasiten und \#Freilebend und \#Blattknoten $\rightarrow$ Wieviele unbekannte Knoten haben wir?
+      \#Interne Knoten und \#Blattknoten $\rightarrow$ Wie stark ist die Multifurkation?
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Data artifacts}
+        Zu der Frage, warum gibt es $nrChildren==1$. Es gibt tatsächlich 55700 Knoten mit nur einem Kind. 
+          Davon ist der großteil direkt vor einem Blatt (51744), aber 3956 ($height >2$) sind irgendwo im 
+          Baum. Ein paar Beispiele: \\
+        Nephroselmidophyceae: (class) \\
+        https://tree.opentreeoflife.org/opentree/argus/ottol@1038762 \\
+        Phrynocrinidae: (family) \\
+        https://tree.opentreeoflife.org/opentree/argus/ottol@3647979 \\
+        Elaeocarpus sylvestris: \\
+        https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969 \\
+        Was bedeutet das für unsere Analyse? Ignorieren wir die \~~4000 internen und Zählen sie zu den 
+          Blättern, oder zählen wir alle zu den Internen oder puzzlen wir sie einzeln raus. D.h. nur die 
+          mit der Zusatzeigenschaft ($height == 2$) sind auch Blätter. \\
+        Es könnte aber auch Fälle geben wie: ...-O-O-O-O-O, dann könnte man auch einen Knoten mit höherer 
+          Höhe als Blatt zählen. Das müsste dann gelten $min height = max height$. \\ 
+        \begin{lstlisting}
+          leaf.taxa <-  all.taxa[all.taxa$nr_children==0, ]
+          extendedLeaf.taxa <- all.taxa[all.taxa$nr_children<2 & min.height==max.height, ]
+          inner.taxa <- all.taxa[all.taxa$nr_children>1 | (all.taxa$nr_children==1 & min.height!=max.height), ]
+        \end{lstlisting}
+        \todo{macht extendedLeaf wirklich einen Sinn?}
+
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Distribution of data in the taxa}
+        Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
+          zugeteilt. \\
+        Please see the appendix on page \pageref{sec:taxaTable1} for a complete table \ref{sec:taxaTable1} 
+          of these data. \\
+        \todo{gibt es einen Zusammenhang zwischen Anzahl} \\
+        \todo{max max height zu anzahl nodes in phylum plotten? oder mean max height oder ... 
+          (mean, min height...)} \\
+        \todo{depth...}
+
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Distribution of Taxa}
+        - In our tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
+        - The most of them are hardly represented. The major taxonomic groups are: ... \\
+        - Here you can see some characteristics of the Multifurcation of the tree. \\
+        In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
+          be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
+          taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
+          multipliers for some are much bigger and for others much smaller. \\
+        Please see the appendix on page \pageref{sec:taxaTable2} for a complete table \ref{sec:taxaTable2} 
+          of these data. \\
+        \todo{Was hierzu ist richtig und wichtig?}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Transition probabilities}
-      \anmerkungtext{Wir hätten aber maximal 2 beta-Verteilungen mit jeweils 2 Parametern und je einem 
+      \anmerkungstext{Wir hätten aber maximal 2 beta-Verteilungen mit jeweils 2 Parametern und je einem 
         eigenen Schwellenwert bei dem in die andere Verteilung gewechselt wird. Also 6 Parameter. Ich 
         finde den Parameterraum den du bisher betrachtest zum einen nicht systematisch erfasst, zum 
-        anderen wahrscheinlich auch zu klein. Du kannst "Parameter sparen" indem zu z.B die beiden 
+        anderen wahrscheinlich auch zu klein. Du kannst -Parameter sparen- indem zu z.B die beiden 
         Verteilungen und cut-offs symmetrisch (gespiegelt an 0.5) machst. Solltest aber meines Erachtens 
         die Schwellenwerte freier variieren. Das können wir bis zu unserem nächsten Treffen zurückstellen 
         und dann gemeinsam diskutieren. (Emanuel)} \\
@@ -270,6 +323,24 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
+
+      \begin{figure}
+        \begin{subfigure}{.5\textwidth}
+          \centering
+          \includegraphics[width=.8\linewidth]{Figures/multifurc.pdf}
+          \caption{all nodes}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+          \centering
+          \includegraphics[width=.8\linewidth]{Figures/nr_children.pdf}
+          \caption{inner nodes (shiftet to 0)}
+        \end{subfigure}
+        \caption{plots of children of nodes}
+        \label{fig:childrenOfNodes}
+        \end{figure}
+
+      Hier Beschreibung von \ref{fig:childrenOfNodes}... \\
+
       \anmerkung{Description/Definition of Multifurcation $\rightarrow$ to the Intro (Bernhard)} \\
       \anmerkung{Regressionsanalyse (Bernhard)} \\
       \anmerkung{poisson glm: \#children \~ ~ I phylum $\rightarrow$ R fitdist p (Emanuel)} \\
@@ -519,7 +590,7 @@
   \begin{figure}
     \caption{Influence of unknown data to prediction}
     \centering
-    \includegraphics[width=1\textwidth]{Figures/simulation_evaluation_1.png}
+    \includegraphics[width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
   \end{figure}
   
 
@@ -552,5 +623,92 @@
 \bibliography{bibliographie}
 \bibliographystyle{alphadin}
 
+%---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
+\chapter{Appendices}
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Distribution of data in the taxa}\label{sec:taxaTable1}
+    \begin{center}
+      \begin{tabular}{ |l|r|l|r|r| }
+        \hline
+        Kingdom (3) & Number of Nodes & Phylum (25) & Number of Nodes & max max height \\
+        \hline \hline
+        Metazoa & 1 465 207 & Arthropoda & 1 170 539 & 54 \\
+        & & Chordata & 106 650 & 74 \\
+        & & Mollusca & 80 022 & 22 \\
+        & & Platyhelminthes & 27 141 & 9 \\
+        & & Nematoda & 24 564 & 23 \\
+        & & Cnidaria & 14 878 & 36 \\
+        & & Porifera & 11 737 & 26 \\
+        & & Echinodermata & 10 654 & 14 \\
+        & & Bryozoa & 8 631 & 11 \\
+        & & Rotifera & 3 093 & 7 \\
+        & & Nemertea & 1 793 & 7 \\
+        & & Tardigrada & 1 654 & 7 \\
+        & & Acanthocephala & 1 596 & 6 \\
+        & & Brachiopoda & 1 055 & 9 \\
+        & & Nematomorpha & 633 & 7 \\
+        & & Chaetognatha & 360 & 7 \\
+        & & Hemichordata & 196 & 5 \\ 
+        & & Cycliophora & 11 & 5 \\ 
+        % 1465207-(1170539+106650+80022+27141+24564+14878+11737+10654+8631+3093+1793+1654+1596+1055+633+360+196+11) = 0          \hline
+        Fungi & 254 871 & Ascomycota & 157 045 & 19 \\ 
+        & & Basidiomycota & 92 931 & 18 \\
+        & & Microsporidia & 1 949 & 6 \\ 
+        & & Glomeromycota & 1 490 & 6 \\
+        & & Chytridiomycota & 1 456 & 6 \\
+        % 254871-157045-92931-1949-1490-1456 = 0
+        \hline
+        Chloroplastida & 121 239 & Streptophyta & 120 731 & 49 \\
+        & & Chlorophyta & 508 & 6 \\
+        % 121239-120731-508 = 0
+        \hline  
+      \end{tabular}
+    \end{center}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Taxa table}\label{sec:taxaTable2}
+    \begin{center}
+      % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
+      \begin{tabular}{ |l|r||r|r| }
+        \hline
+        Taxa & Number of Nodes & Internal Nodes & Leaf Nodes \\
+        \hline \hline
+        \setrow{\bfseries}kingdom & ? & - & - \\ \hline
+        \setrow{\bfseries}phylum & ? & - & - \\
+        superclass & 1 & 1 & 0 \\ \hline
+        \setrow{\bfseries}class & 139 & 111 & 28 \\
+        subclass & 82 & 72 & 10 \\
+        infraclass & 8 & 7 & 1 \\
+        superorder & 33 & 31 & 2 \\ \hline
+        \setrow{\bfseries}order & 614 & 483 & 131 \\
+        suborder & 231 & 178 & 53 \\
+        infraorder & 89 & 73 & 16 \\
+        parvorder & 14 & 12 & 2 \\
+        superfamily & 628 & 489 & 139 \\ \hline
+        \setrow{\bfseries}family & 5740 & 4202 & 1538 \\
+        subfamily & 2617 & 1915 & 702 \\
+        supertribe & 1 & 0 & 1 \\
+        tribe & 1262 & 868 & 394 \\
+        subtribe & 267 & 221 & 46 \\ \hline
+        \setrow{\bfseries}genus & 127006 & 81494 & 45512 \\
+        subgenus & 1176 & 801 & 375 \\ \hline
+        section & 3 & 2 & 1 \\
+        subsection & 1 & 1 & 0 \\
+        species group + species subgroup & 181 + 93 & 129 + 74 & 52 + 19 \\
+        \setrow{\bfseries}species & 1649679 & 4424 & 1645255 (1639247) \\
+        subspecies & 16486 & 16 & 16470 (16449) \\
+        variety + varietas & 226 + 1529 & 0 + 4 & 226 (224) + 1525 (1515) \\
+        forma & 182 & 0 & 182 (182) \\
+        \hline \hline
+        no rank & 519 & 403 & 116 (7) \\
+        no rank - terminal & 32510 & 0 & 32510 (32510) \\
+        \hline  
+      \end{tabular}
+    \end{center}
+    extended leaf nodes (real leaf nodes)
 
 \end{document}
