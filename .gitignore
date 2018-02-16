@@ -1,13 +1,22 @@
-data/
+data/GloBI_Dump/*
+data/interaction_data/*
+data/nodelist/*
+data/opentree3.1_taxonomic_tree/*
+data/opentree9.1_tree/*
+data/subtree/*
+
 Masterarbeit - Latex/Figures/tex-tikz-figures - examples/
 metadata/bufferfiles/*
 node_modules/
+
 simulation/bufferfiles/simulated_tagged_tree.tre
 simulation/bufferfiles/simulated_tree.tre
 simulation/evaluation/
 simulation/non_binary_simulation/metadata.csv
 simulation/output.csv
 simulation/likelihoods.csv
+
+results/
 
 *.aux
 *.bbl
@@ -19,3 +28,5 @@ simulation/likelihoods.csv
 *.fdb_latexmk
 *.pyc
 *.synctex.gz
+
+!.gitkeep

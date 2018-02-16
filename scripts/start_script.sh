@@ -42,11 +42,7 @@ sudo apt-get install libcurl4-gnutls-dev
 
 R CMD install rglobi
 
-# ---------------- add missing folders ----------------
-
-mkdir data
 cd data
-mkdir interaction_data
 
 # ---------------- get tree ----------------
 
@@ -68,8 +64,6 @@ sudo pip install biopython
 sudo pip install pandas
 sudo apt-get install python3-dev
 sudo pip install rpy2
-
-mkdir bufferfiles
 
 R CMD install ape
 

@@ -37,6 +37,8 @@ echo "$(tput setaf 1)$(tput setab 7)------- Nodelists builded(5/7) --------$(tpu
 mkdir bufferfiles
 python3 run_castor.py > log-run_castor.txt
 echo "$(tput setaf 1)$(tput setab 7)------- Maximum Parsimony: Sankoff (Castor) ready(6/7) --------$(tput sgr 0)" 1>&3
+mkdir ../results
+python3 extend_nodelist.py > log-extend_nodelist.txt
 # ToDo: Result analysis...
 echo "$(tput setaf 1)$(tput setab 7)------- Results....(7/7) --------$(tput sgr 0)" 1>&3
 
