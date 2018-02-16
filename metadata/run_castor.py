@@ -31,18 +31,19 @@ def main():
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- read nodelist ----------------", "green"))
     nodelist_path = '../data/nodelist/Eukaryota.csv' 
-    #              0    1       2           3           4
-    # nodelist - [id, depths, nr_children, originaltag, finaltag]
+    #              0    1       2           3           4           5
+    # nodelist - [id, depth, heights, nr_children, originaltag, finaltag]
     with open(nodelist_path, 'r') as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         for row in reader:
             if row != []:
                 ott = row[0]
-                depths = ast.literal_eval(row[1])
-                nr_children = int(row[2])
-                originaltag = row[3]
-                finaltag = row[4]
-                nodelist.append([ott, depths, nr_children, originaltag, finaltag])
+                depth = int(row[1])
+                heights = ast.literal_eval(row[2])
+                nr_children = int(row[3])
+                originaltag = row[4]
+                finaltag = row[5]
+                nodelist.append([ott, depth, heights, nr_children, originaltag, finaltag])
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- Sankoff parsimony ----------------", "green"))
     sankoff_parsimony(tree)
@@ -63,8 +64,8 @@ def sankoff_parsimony(tree):
     """Using rpy2 for forwarding to R code"""
     # Arguments:
     #   subtree
-    #              0    1       2           3           4
-    #   nodelist - [id, depths, nr_children, originaltag, finaltag]
+    #              0    1       2           3           4           5
+    #   nodelist - [id, depth, heights, nr_children, originaltag, finaltag]
     global nodelist
 
     # ---- cache tree for R script ---
@@ -95,14 +96,14 @@ def sankoff_parsimony(tree):
     for i in range(2*l, 3*l):
         if j < number_of_tips[0]:
             element = find_element_in_nodelist(leaf_nodes[j], nodelist)
-            if element[4] == '':    # if unknown
+            if element[5] == '':    # if unknown
                 # set finaltag:
-                element[4] = likelihoods[i]
+                element[5] = likelihoods[i]
             j += 1
         else:
             element = find_element_in_nodelist(internal_nodes[k], nodelist)
             # set finaltag:
-            element[4] = likelihoods[i]
+            element[5] = likelihoods[i]
             k += 1
     return
 
@@ -110,14 +111,14 @@ def prepare_tree(subtree):
     """tag all leafs"""
     # Arguments:
     #   subtree
-    #              0    1       2           3           4
-    #   nodelist - [id, depths, nr_children, originaltag, finaltag]
+    #              0    1       2           3           4           5
+    #   nodelist - [id, depth, heights, nr_children, originaltag, finaltag]
     if subtree.is_terminal():
         element = find_element_in_nodelist(subtree.name, nodelist)
-        if element[3] == 'NA':
+        if element[4] == 'NA':
             subtree.name = ''
         else:
-            subtree.name = str(element[3])
+            subtree.name = str(element[4])
     for clade in subtree.clades:
         prepare_tree(clade)
     return
