@@ -20,6 +20,10 @@
 \usepackage[english]{babel} % Deutsche Silbentrennung verwenden
 \usepackage{lmodern}
 \renewcommand*\familydefault{\sfdefault}  %Zusatz für serifenlose Schrift.
+% \usepackage{MyriadPro}
+% \renewcommand*\familydefault{\sfdefault}
+% \usepackage{MinionPro}
+% \renewcommand{\sfdefault}{Myriad-LF}
 
 %Zeilenabstand
 \usepackage{setspace} % Zeilenabstand
@@ -34,8 +38,6 @@
 \setkomafont{descriptionlabel}{\bfseries\rmfamily} % für description Umgebungen
 \setkomafont{captionlabel}{\small\bfseries}
 \setkomafont{caption}{\small}
-
-
 
 % Einfachere Verwendung von korrekten Anführungszeichen
 \usepackage[german=guillemets]{csquotes}
@@ -70,6 +72,9 @@
 \usepackage{tabularx} % Für Tabellen mit vorgegeben Größen
 \usepackage{longtable} % Tabellen über mehrere Seiten
 \usepackage{array}
+\usepackage{colortbl}
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
 
 %Bibliographie
 \usepackage[square, comma, numbers, sort&compress, round]{natbib}
@@ -101,12 +106,11 @@
 }
 
 %Umbenennung der vordefinierten definition- und example-Umgebung
-\theoremstyle{definition}
-\newtheorem{lecture}{Lecture}
-\newtheorem{definition}{Definition}
-\newtheorem{example}{Example}
-\newtheorem{lemma}{Lemma}
-
+% \theoremstyle{definition}
+% \newtheorem{lecture}{Lecture}
+% \newtheorem{definition}{Definition}
+% \newtheorem{example}{Example}
+% \newtheorem{lemma}{Lemma}
 % \newtheorem{theorem}{Satz}
 % \newtheorem{constructing instructions}{Konstruktionsvorschrift}
 % \newtheorem{properties}{Eigenschaften}

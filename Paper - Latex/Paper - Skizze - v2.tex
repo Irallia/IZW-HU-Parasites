@@ -269,12 +269,12 @@
         https://tree.opentreeoflife.org/opentree/argus/ottol@3647979 \\
         Elaeocarpus sylvestris: \\
         https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969 \\
-        Was bedeutet das für unsere Analyse? Ignorieren wir die \~~4000 internen und Zählen sie zu den 
+        Was bedeutet das für unsere Analyse? Ignorieren wir die $\sim$ 4000 internen und Zählen sie zu den 
           Blättern, oder zählen wir alle zu den Internen oder puzzlen wir sie einzeln raus. D.h. nur die 
           mit der Zusatzeigenschaft ($height == 2$) sind auch Blätter. \\
         Es könnte aber auch Fälle geben wie: ...-O-O-O-O-O, dann könnte man auch einen Knoten mit höherer 
           Höhe als Blatt zählen. Das müsste dann gelten $min height = max height$. \\ 
-        \begin{lstlisting}
+        \begin{lstlisting}[gobble=8]
           leaf.taxa <-  all.taxa[all.taxa$nr_children==0, ]
           extendedLeaf.taxa <- all.taxa[all.taxa$nr_children<2 & min.height==max.height, ]
           inner.taxa <- all.taxa[all.taxa$nr_children>1 | (all.taxa$nr_children==1 & min.height!=max.height), ]
@@ -300,10 +300,17 @@
         In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
           be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
           taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
-          multipliers for some are much bigger and for others much smaller. \\
+          multipliers for some are much bigger and for others much smaller, which you can see in in figure 
+          \ref{fig:taxaTable2}. \\
         Please see the appendix on page \pageref{sec:taxaTable2} for a complete table \ref{sec:taxaTable2} 
           of these data. \\
         \todo{Was hierzu ist richtig und wichtig?}
+        \begin{figure}
+          \centering
+          \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
+          \caption{Distribution of Nodes in Rank-Cathegories}
+          \label{fig:taxaTable2}
+        \end{figure}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Transition probabilities}
@@ -323,33 +330,131 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
+      Ein von den Daten beeinflusster Parameter ist die Multifurkation des Baumes, d.h. wie weit sind 
+        wir von einem binären Baum entfehrnt, was hängt mit der stärke der Multifurkation zusammen und 
+        welche Auswirkung hat sie auf unsere Fragestellung. \\
+      In Figure \ref{fig:childrenOfNodes} haben wir die Multifurkation über den gesamten Baum abgebildet,
+        dazu haben wir für jeden Knoten die Anzahl seiner Kinder gezählt und dies als Histogram 
+        geplottet. \\
+      Subfigure \ref{fig:childrenOfNodes_innerNodes} beschränkt sich hierbei nur auf die inner nodes 
+        während Subfigure \ref{fig:childrenOfNodes_allNodes} alle Knoten abbildet. \\
+      \todo{Welchen der beiden Plots wollen wir nehmen, einer genügt eigentlich.}
 
       \begin{figure}
         \begin{subfigure}{.5\textwidth}
           \centering
           \includegraphics[width=.8\linewidth]{Figures/multifurc.pdf}
           \caption{all nodes}
+          \label{fig:childrenOfNodes_allNodes}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
           \centering
           \includegraphics[width=.8\linewidth]{Figures/nr_children.pdf}
           \caption{inner nodes (shiftet to 0)}
+          \label{fig:childrenOfNodes_innerNodes}
         \end{subfigure}
         \caption{plots of children of nodes}
         \label{fig:childrenOfNodes}
-        \end{figure}
+      \end{figure}
 
-      Hier Beschreibung von \ref{fig:childrenOfNodes}... \\
+      Wir haben verschiedene Eigenschaften der Multifurkation untersucht:
+      \begin{itemize}
+        \item stärke der Multifurcation in verschiedenen Subbäumen
+        \item zusammenhang zur tiefe im Baum
+        \item zusammenhang zu höhe im baum
+        \item einfluss auf die vorhersage des Castor und Fitch Algorithmus (Simulation) \todo{...}
+      \end{itemize}
 
-      \anmerkung{Description/Definition of Multifurcation $\rightarrow$ to the Intro (Bernhard)} \\
-      \anmerkung{Regressionsanalyse (Bernhard)} \\
-      \anmerkung{poisson glm: \#children \~ ~ I phylum $\rightarrow$ R fitdist p (Emanuel)} \\
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Poisson regression}
+      
+        \begin{lstlisting}[gobble=8]
+          glm(formula = multifurc ~ 1, family = "poisson", data = inner.taxa)
+        \end{lstlisting}
+        The intercept is $2.821 > 0$ $\Rightarrow$ there is a multifunction.
+        (Intercept: Stärke der Multifurcation) \\
+        Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
+        Chloroplastida than in Metazoa:
+        $$4.0999 (Fungi Intercept) > -0.9132 (Chloroplastida Intercept) > -1.4320 (Metazoa Intercept)$$
+        % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
+        Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
+          des Baums mit dem folgenden Deviance Table:
+
+        \begin{center}
+          \begin{tabular}{ |l|r|l| }
+            \hline
+            Model & Residuals Dev & Deviance Pr(>Chi) \\
+            \hline \hline
+            multifurc $\sim$ kingdom & 7774454 & \\
+            multifurc $\sim$ phylum & 7435700 & 338754 \\
+            multifurc $\sim$ class & 7337241 & 98459 \\
+            \rowcolor{green} multifurc $\sim$ order & 7076068 & 261172 \\
+
+            % [1] "------------------------kingdom - phylum - class - order--------------------------"
+            % Analysis of Deviance Table
+            
+            % Model 1: multifurc ~ kingdom
+            % Model 2: multifurc ~ phylum
+            % Model 3: multifurc ~ class
+            % Model 4: multifurc ~ order
+            %   Resid. Df Resid. Dev  Df Deviance  Pr(>Chi)
+            % 1    167222    7774454
+            % 2    167173    7435700  49   338754 < 2.2e-16 ***
+            % 3    167039    7337241 134    98459 < 2.2e-16 ***
+            % 4    166352    7076068 687   261172 < 2.2e-16 ***
+            % ---
+            % Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            % 1] "-------------------phylum - depth / min/max/mean.height-----------------------"
+            % Analysis of Deviance Table
+
+            % Model 1: multifurc ~ phylum
+            % Model 2: multifurc ~ phylum + depth
+            % Model 3: multifurc ~ phylum + min.height
+            % Model 4: multifurc ~ phylum + max.height
+            % Model 5: multifurc ~ phylum + mean.height
+            %   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)
+            % 1    167173    7435700
+            % 2    167172    7431609  1     4090 < 2.2e-16 ***
+            % 3    167172    7233486  0   198124
+            % 4    167172    7375889  0  -142403
+            % 5    167172    7128318  0   247570
+            % ---
+            % Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            % [1] "--------------------------------------------------"
+
+            \hline \hline
+            multifurc $\sim$ order & 4762407 & \\
+            multifurc $\sim$ order + max.height & 4721600 & $40807 < 2.2e-16$ \\
+            \rowcolor{green} multifurc $\sim$ order * max.height & 4674368 & $47233 < 2.2e-16$ \\
+            \hline
+            multifurc $\sim$ order & 4762407 & \\
+            multifurc $\sim$ order + min.height & 4712672 & $49735 < 2.2e-16$ \\
+            multifurc $\sim$ order * min.height & 4694783 & $17889 < 2.2e-16$ \\
+            \hline
+            multifurc $\sim$ order & 4762407 & \\
+            multifurc $\sim$ order + mean.height & 4717014 & $45393 < 2.2e-16$ \\
+            multifurc $\sim$ order * mean.height & 4694424 & $22590 < 2.2e-16$ \\
+            \hline \hline
+            multifurc $\sim$ phylum & 4664706 & \\
+            multifurc $\sim$ phylum + max.height & 4601257 & 63449 < 2.2e-16 \\
+            \rowcolor{green} multifurc $\sim$ phylum * max.height & 4546220 & 55036 < 2.2e-16 \\
+            \hline \hline
+            multifurc $\sim$ class & 4581569 & \\
+            multifurc $\sim$ class + max.height & 4510567 & 71003 \\
+            \rowcolor{green} multifurc $\sim$ class * max.height & 4434635 & 75932 \\
+            
+          \end{tabular}
+        \end{center}
+        * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün)\\
+        * Deviance - Abweichung
+
       \anmerkung{different parameters for different taxa? (Emanuel)} \\
       One property of the tree is its ridge of multifurcation. For this we collected for every node its
         number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
         every degree. Then we tried to find a function which best discribes this behavior. In figure 
         \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
-        \todo{close(st)} to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
+        closest to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
         $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
       \begin{figure}[h]
         \caption{Histogram of multifurcations and fitting functions}
@@ -397,13 +502,13 @@
         function which returns a BaseTree \footnote{
           https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
         }:
-      \begin{lstlisting}
+      \begin{lstlisting}[gobble=6]
         from Bio import Phylo
         Phylo.BaseTree.Tree.randomized(number_leaf nodes)
       \end{lstlisting}
       From the BaseTree class:
       \anmerkung{trivial, does not give real info (Emanuel)}
-      \begin{lstlisting}
+      \begin{lstlisting}[gobble=6]
         def randomized(cls, taxa, branch_length=1.0, 
               branch_stdev=None):
         """Create a randomized bifurcating tree given a list
@@ -433,7 +538,7 @@
         the current node as parasite. Otherwise we tag it as free-living. \\
       With this procedure we traverse through the tree from the root to every leaf node. A part of
         this code you see here:
-      \begin{lstlisting}
+      \begin{lstlisting}[gobble=6]
         from numpy import random
         if father_tag == 0:
           # freeliving_distribution:
@@ -471,7 +576,7 @@
         as our limit ($\frac{1}{x}$), than we forget the node and hang every child to the father node of 
         the current node. \\
       \anmerkung{poisson process $\rightarrow$ fit that distribution, include depth as a predictor, see if significant (Emanuel)}
-      \begin{lstlisting}
+      \begin{lstlisting}[gobble=6]
         from numpy import random
         from utilities import Helpers
 
@@ -673,39 +778,48 @@
   \section{Taxa table}\label{sec:taxaTable2}
     \begin{center}
       % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
-      \begin{tabular}{ |l|r||r|r| }
+      \begin{tabular}{ |l|r||r|r|r| }
         \hline
-        Taxa & Number of Nodes & Internal Nodes & Leaf Nodes \\
+        Taxa & Number of Nodes & Internal Nodes & Leaf Nodes & Terminal Leaf Nodes \\
         \hline \hline
-        \setrow{\bfseries}kingdom & ? & - & - \\ \hline
-        \setrow{\bfseries}phylum & ? & - & - \\
-        superclass & 1 & 1 & 0 \\ \hline
-        \setrow{\bfseries}class & 139 & 111 & 28 \\
-        subclass & 82 & 72 & 10 \\
-        infraclass & 8 & 7 & 1 \\
-        superorder & 33 & 31 & 2 \\ \hline
-        \setrow{\bfseries}order & 614 & 483 & 131 \\
-        suborder & 231 & 178 & 53 \\
-        infraorder & 89 & 73 & 16 \\
-        parvorder & 14 & 12 & 2 \\
-        superfamily & 628 & 489 & 139 \\ \hline
-        \setrow{\bfseries}family & 5740 & 4202 & 1538 \\
-        subfamily & 2617 & 1915 & 702 \\
-        supertribe & 1 & 0 & 1 \\
-        tribe & 1262 & 868 & 394 \\
-        subtribe & 267 & 221 & 46 \\ \hline
-        \setrow{\bfseries}genus & 127006 & 81494 & 45512 \\
-        subgenus & 1176 & 801 & 375 \\ \hline
-        section & 3 & 2 & 1 \\
-        subsection & 1 & 1 & 0 \\
-        species group + species subgroup & 181 + 93 & 129 + 74 & 52 + 19 \\
-        \setrow{\bfseries}species & 1649679 & 4424 & 1645255 (1639247) \\
-        subspecies & 16486 & 16 & 16470 (16449) \\
-        variety + varietas & 226 + 1529 & 0 + 4 & 226 (224) + 1525 (1515) \\
-        forma & 182 & 0 & 182 (182) \\
+        \setrow{\bfseries}domain & 1 & 1 & &  \\ \hline
+        \setrow{\bfseries}kingdom & 3 & 3 & &  \\
+        subkingdom & 2 & 2 & & \\
+        infrakingdom & 5 & 5 & & \\
+        superphylum & 2 & 2 & & \\ \hline
+        \setrow{\bfseries}phylum & 57 & 54 & 3 & \\
+        subphylum & 22 & 20 & 2 & \\
+        infraphylum & 2 & 2 & & \\
+        superclass & 8 & 8 & & \\ \hline
+        \setrow{\bfseries}class & 209 & 175 & 34 & \\
+        subclass & 120 & 106 & 14 & \\
+        infraclass & 14 & 11 & 3 & \\
+        superorder & 40 & 37 & 3 & \\ \hline
+        \setrow{\bfseries}order & 1014 & 772 & 242 & \\
+        suborder & 285 & 222 & 63 & \\
+        infraorder & 95 & 78 & 17 & \\
+        parvorder & 14 & 12 & 2 & \\
+        superfamily & 829 & 626 & 203 & \\ \hline
+        \setrow{\bfseries}family & 8449 & 6143 & 2306 & \\
+        subfamily & 3090 & 2250 & 840 & \\
+        supertribe & 1 & 0 & 1 & \\
+        tribe & 1764 & 1285 & 479 & \\
+        subtribe & 435 & 359 & 77 & \\ \hline
+        \setrow{\bfseries}genus & 164656 & 105452 & 59204 & \\
+        subgenus & 1266 & 869 & 397 & \\
+        section & 3 & 2 & 1 & \\
+        subsection & 1 & 1 & 0 & \\
+        species group & 365 & 288 & 77 & \\
+        species subgroup & 123 & 100 & 23 & \\ \hline
+        \setrow{\bfseries}species & 2247251 & 7423 & 2239828 & 2228993 \\
+        subspecies & 22437 & 75 & 22362 & 22239 \\
+        variety & 1755 & 7 & 1748 & 1726 \\
+        varietas & 5970 & 19 & 5951 & 5909 \\
+        forma & 1181 & & 1181 & 1181 \\
         \hline \hline
-        no rank & 519 & 403 & 116 (7) \\
-        no rank - terminal & 32510 & 0 & 32510 (32510) \\
+        no rank & 954 & 719 & 235 & 7 \\
+        no rank - terminal & 37452 & & 37452 & 37452 \\
+        (no entry) & 40099 & 40099 & & \\
         \hline  
       \end{tabular}
     \end{center}
