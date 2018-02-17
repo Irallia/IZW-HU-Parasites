@@ -7,7 +7,7 @@ nodelist = pd.read_csv('../data/nodelist/Eukaryota-castor.csv', encoding='utf-8'
 merged = pd.merge(nodelist, ott_taxa, how='left', on='ott_id')
 
 print(len(nodelist),'merge', len(ott_taxa), '->', len(merged))
-print('castor results added')
+print('ranks to castor results added')
 
 kingdom_mapping = pd.read_csv('../data/nodelist/Eukaryota-kingdom_mapping.csv', encoding='utf-8')
 merged = pd.merge(merged, kingdom_mapping, how='left', on='ott_id')
@@ -29,7 +29,7 @@ print('class taxa added')
 
 order_mapping = pd.read_csv('../data/nodelist/Eukaryota-order_mapping.csv', encoding='utf-8')
 merged = pd.merge(merged, order_mapping, how='left', on='ott_id')
-merged.to_csv('../results/Eukaryota-taxa-new-new.csv', index=False, encoding='utf-8')
+merged.to_csv('../results/Eukaryota-taxa.csv', index=False, encoding='utf-8')
 
 print('merge', len(order_mapping))
 print('order taxa added')

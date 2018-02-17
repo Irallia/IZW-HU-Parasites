@@ -50,7 +50,7 @@ def main():
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- Save nodelist ----------------", "green"))
     nodelist_path = '../data/nodelist/Eukaryota-castor.csv' 
-    header = ['ott_id', 'depths', 'nr_children', 'originaltag', 'finaltag']
+    header = ['ott_id', 'depth', 'heights', 'nr_children', 'originaltag', 'finaltag']
     with open(nodelist_path, 'w') as nodelist_file:
         writer = csv.writer(nodelist_file, delimiter=',')
         writer.writerow(header)
