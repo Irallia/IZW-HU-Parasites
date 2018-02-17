@@ -405,45 +405,21 @@
             % ---
             % Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-            % 1] "-------------------phylum - depth / min/max/mean.height-----------------------"
-            % Analysis of Deviance Table
-
-            % Model 1: multifurc ~ phylum
-            % Model 2: multifurc ~ phylum + depth
-            % Model 3: multifurc ~ phylum + min.height
-            % Model 4: multifurc ~ phylum + max.height
-            % Model 5: multifurc ~ phylum + mean.height
-            %   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)
-            % 1    167173    7435700
-            % 2    167172    7431609  1     4090 < 2.2e-16 ***
-            % 3    167172    7233486  0   198124
-            % 4    167172    7375889  0  -142403
-            % 5    167172    7128318  0   247570
-            % ---
-            % Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-            % [1] "--------------------------------------------------"
-
             \hline \hline
-            multifurc $\sim$ order & 4762407 & \\
-            multifurc $\sim$ order + max.height & 4721600 & $40807 < 2.2e-16$ \\
-            \rowcolor{green} multifurc $\sim$ order * max.height & 4674368 & $47233 < 2.2e-16$ \\
+            multifurc $\sim$ phylum + depth & 7431609 & \\
+            multifurc $\sim$ phylum + max.height & 7375889 & 55721 \\
+            multifurc $\sim$ phylum + min.height & 7233486 & 142403 \\
+            \rowcolor{green} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
+            \hline \hline
+            multifurc ~ phylum * depth & 7335396 & -24155 \\
+            multifurc ~ phylum * max.height & 7311241 & \\
+            multifurc ~ phylum * min.height & 7177002 & 158394 \\
+            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
+            \hline \hline
+            multifurc ~ phylum & 7435700 & \\
+            multifurc ~ phylum + mean.height & 7128318 & 307381 \\
+            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
             \hline
-            multifurc $\sim$ order & 4762407 & \\
-            multifurc $\sim$ order + min.height & 4712672 & $49735 < 2.2e-16$ \\
-            multifurc $\sim$ order * min.height & 4694783 & $17889 < 2.2e-16$ \\
-            \hline
-            multifurc $\sim$ order & 4762407 & \\
-            multifurc $\sim$ order + mean.height & 4717014 & $45393 < 2.2e-16$ \\
-            multifurc $\sim$ order * mean.height & 4694424 & $22590 < 2.2e-16$ \\
-            \hline \hline
-            multifurc $\sim$ phylum & 4664706 & \\
-            multifurc $\sim$ phylum + max.height & 4601257 & 63449 < 2.2e-16 \\
-            \rowcolor{green} multifurc $\sim$ phylum * max.height & 4546220 & 55036 < 2.2e-16 \\
-            \hline \hline
-            multifurc $\sim$ class & 4581569 & \\
-            multifurc $\sim$ class + max.height & 4510567 & 71003 \\
-            \rowcolor{green} multifurc $\sim$ class * max.height & 4434635 & 75932 \\
-            
           \end{tabular}
         \end{center}
         * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün)\\
