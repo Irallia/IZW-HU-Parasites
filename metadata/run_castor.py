@@ -79,7 +79,7 @@ def sankoff_parsimony(tree):
     
     f = open(r_path, "r")
     code = ''.join(f.readlines())
-    result = rpy2.robjects.r(code)
+    rpy2.robjects.r(code)
     # assume that...
     likelihoods = rpy2.robjects.globalenv['likelihoods'][0]
     # The rows in this matrix will be in the order in which tips and
