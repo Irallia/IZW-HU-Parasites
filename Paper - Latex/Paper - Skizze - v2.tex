@@ -5,7 +5,7 @@
 \title{master thesis}
 \date{Januar 2018}
 
-% \hfuzz=\maxdimen \tolerance=10000 \hbadness=10000
+\hfuzz=\maxdimen \tolerance=10000 \hbadness=10000
 
 \begin{document}
   % Titelseite
@@ -23,6 +23,7 @@
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Abstract}
   \anmerkungstext{Alle Figures richtig beschriften. Generell: Alle Figure captions sollten 
@@ -33,6 +34,7 @@
 \tableofcontents
 \clearpage
 
+%---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
@@ -107,6 +109,7 @@
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
   As initiated, we would like to apply a maximum parsimony algorithm to the entire tree of life to 
@@ -153,20 +156,54 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Get data}
-  For our research we need two types of data: a tree and information about the states. \\
-  For the tree we decided to use Open Tree of Life (OTL), because it's the biggest available synthesis 
-    tree. \\
-  \todo{hier referenzen zu nem paper das das bestätigt o.ä.} \\
-  For the state information, we decided to use the Global biotic interaction database (GloBI). Also in 
-    this case, this is one of the largest databases and both OTL and GloBI support the OTT 
-    identification. OTT (open tree taxonomy) is a taxonomy that assigns to each species a unique id, 
-    both ancestor and now living species (internal and leaf nodes).
+  %---------------------------------------------------------------------------------------------------
+  \section{Get data - Properties of real Data}
+    For our research we need two types of data: a tree and information about the states. \\
+    For the tree we decided to use Open Tree of Life (OTL), because it's the biggest available synthesis 
+      tree. \\
+    \todo{hier referenzen zu nem paper das das bestätigt o.ä.} \\
+    For the state information, we decided to use the Global biotic interaction database (GloBI). Also in 
+      this case, this is one of the largest databases and both OTL and GloBI support the OTT 
+      identification. OTT (open tree taxonomy) is a taxonomy that assigns to each species a unique id, 
+      both ancestor and now living species (internal and leaf nodes).
 
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{OTL}
       \todo{Open Tree of Life}
 
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Distribution of Taxa}
+        - In our tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
+        - The most of them are hardly represented. The major taxonomic groups are: ... \\
+        - Here you can see some characteristics of the Multifurcation of the tree. \\
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
+          \caption{Distribution of Nodes in Rank-Cathegories}
+          \label{fig:taxaTable2}
+        \end{figure}
+        In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
+          be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
+          taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
+          multipliers for some are much bigger and for others much smaller, which you can see in in figure 
+          \ref{fig:taxaTable2}. \\
+        Please see the appendix on page \pageref{sec:taxaTable2} for a complete table \ref{sec:taxaTable2} 
+          of these data. \\
+        \todo{Was hierzu ist richtig und wichtig?}
+
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Distribution of data in the taxa}
+        Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
+          zugeteilt. \\
+        Please see the appendix on page \pageref{sec:taxaTable1} for a complete table \ref{sec:taxaTable1} 
+          of these data. \\
+        \todo{gibt es einen Zusammenhang zwischen Anzahl} \\
+        \todo{max max height zu anzahl nodes in phylum plotten? oder mean max height oder ... 
+          (mean, min height...)} \\
+        \todo{depth...}
+
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{GloBI}
       For tagging our leave nodes, we use the GloBI (Global Biotic Interactions) database. This database 
@@ -186,34 +223,18 @@
       \todo{klar? Oder Beispiel bringen? (Katze isst Maus $\rightarrow$ Katze ist Freilebend)} \\
       % For every interaction from these lists, we get one or two species for our parasite or 
       %   free-living lists.
-      \todo{einige spezies nicht mit einbezogen, da sie keine OTT id haben, hier könnte man noch verbessern (future work)}
+      \todo{einige spezies nicht mit einbezogen, da sie keine OTT id haben, hier könnte man noch 
+        verbessern (future work)}
       \todo{You can find all interaction types here:
-        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .}
+        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .} \\ \\
+      
+      With this we got $\sim 51000$ (distinct) freeliving species and $\sim 47000$ (distinct) parasite 
+        species (see section countings) \todo{ref einfügen}. But we found also  $\sim 57000$ (not 
+        distinct) source species and $\sim 810000$ (not distinct) target species without OTT ids. 
+        Since we currently use only OTT ids, we could not use this information. \\
+      \todo{mehr dazu in section: unknown nodes...}
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Metadata analysis}
-    Properties of real Data - Metadata analysis \\
-
-    Um eine möglichst realistische Simulation zu erzeugen haben wir auf der einen Seite einige Daten 
-      gesammelt (Kaptiel Countings), und außerdem beeinflussende Parameter untersucht.
-
-    Wir haben zwei große Arten von Parametern:
-    \begin{enumerate}
-      \item Biological parameters (A result of the evolutionary process.):
-        \begin{itemize}
-          \item transition probabilities
-        \end{itemize}
-      \item Distribution of the loss of information:
-        \begin{itemize}
-          \item Loss of topology ($\rightarrow$ mutlifurcations).
-          \item Unknown information about the states of some leaf nodes.
-        \end{itemize}
-    \end{enumerate}
-
-    \todo{Hier darauf hinweisen, dass wir für multifurcations und unknown data den einfluss auf die 
-      Algorithmen testen.}
-
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Countings}
       \begin{center}
@@ -250,7 +271,7 @@
           & 3 956 (height $>2$) \\ \hline
         \end{tabular}
       \end{center}
-      \todo{tree, subtrees? figure dazu?}
+      \todo{tree, subtrees? figure dazu?} \\
       $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ $\rightarrow$ only 4.3\% of leaf nodes are 
         filled with information
 
@@ -258,6 +279,7 @@
         \#unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
       \#Parasiten und \#Freilebend und \#Blattknoten $\rightarrow$ Wieviele unbekannte Knoten haben wir?
       \#Interne Knoten und \#Blattknoten $\rightarrow$ Wie stark ist die Multifurkation?
+
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Data artifacts}
         Zu der Frage, warum gibt es $nrChildren==1$. Es gibt tatsächlich 55700 Knoten mit nur einem Kind. 
@@ -281,53 +303,45 @@
         \end{lstlisting}
         \todo{macht extendedLeaf wirklich einen Sinn?}
 
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Distribution of data in the taxa}
-        Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
-          zugeteilt. \\
-        Please see the appendix on page \pageref{sec:taxaTable1} for a complete table \ref{sec:taxaTable1} 
-          of these data. \\
-        \todo{gibt es einen Zusammenhang zwischen Anzahl} \\
-        \todo{max max height zu anzahl nodes in phylum plotten? oder mean max height oder ... 
-          (mean, min height...)} \\
-        \todo{depth...}
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Distribution of Taxa}
-        - In our tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
-        - The most of them are hardly represented. The major taxonomic groups are: ... \\
-        - Here you can see some characteristics of the Multifurcation of the tree. \\
-        In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
-          be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
-          taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
-          multipliers for some are much bigger and for others much smaller, which you can see in in figure 
-          \ref{fig:taxaTable2}. \\
-        Please see the appendix on page \pageref{sec:taxaTable2} for a complete table \ref{sec:taxaTable2} 
-          of these data. \\
-        \todo{Was hierzu ist richtig und wichtig?}
-        \begin{figure}
-          \centering
-          \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
-          \caption{Distribution of Nodes in Rank-Cathegories}
-          \label{fig:taxaTable2}
-        \end{figure}
-
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Metadata analysis}
+    Um eine möglichst realistische Simulation zu erzeugen haben wir auf der einen Seite einige Daten 
+      gesammelt (vorheriges Kaptiel), und außerdem beeinflussende Parameter untersucht. \\
+    Wir haben zwei große Arten von Parametern:
+    \begin{enumerate}
+      \item Biological parameters (A result of the evolutionary process.):
+        \begin{itemize}
+          \item transition probabilities
+        \end{itemize}
+      \item Distribution of the loss of information:
+        \begin{itemize}
+          \item Loss of topology ($\rightarrow$ mutlifurcations).
+          \item Unknown information about the states of some leaf nodes.
+        \end{itemize}
+    \end{enumerate}
+    We tested the influence of these parameters on our result using our simulation. \\
+    \todo{ref zu section simulation} 
+   
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Transition probabilities}
       \anmerkungstext{Wir hätten aber maximal 2 beta-Verteilungen mit jeweils 2 Parametern und je einem 
-        eigenen Schwellenwert bei dem in die andere Verteilung gewechselt wird. Also 6 Parameter. Ich 
-        finde den Parameterraum den du bisher betrachtest zum einen nicht systematisch erfasst, zum 
-        anderen wahrscheinlich auch zu klein. Du kannst -Parameter sparen- indem zu z.B die beiden 
-        Verteilungen und cut-offs symmetrisch (gespiegelt an 0.5) machst. Solltest aber meines Erachtens 
-        die Schwellenwerte freier variieren. Das können wir bis zu unserem nächsten Treffen zurückstellen 
-        und dann gemeinsam diskutieren. (Emanuel)} \\
+      eigenen Schwellenwert bei dem in die andere Verteilung gewechselt wird. Also 6 Parameter. Ich 
+      finde den Parameterraum den du bisher betrachtest zum einen nicht systematisch erfasst, zum 
+      anderen wahrscheinlich auch zu klein. Du kannst -Parameter sparen- indem zu z.B die beiden 
+      Verteilungen und cut-offs symmetrisch (gespiegelt an 0.5) machst. Solltest aber meines Erachtens 
+      die Schwellenwerte freier variieren. Das können wir bis zu unserem nächsten Treffen zurückstellen 
+      und dann gemeinsam diskutieren. (Emanuel)} \\
       Das mit dem symmetrisch spiegeln geht halt nur bei maximal 40-60 Verteilungen richtig gut, danach 
-        haben brauchen eventuell eine lange Austestphase, bis ein Baum dieser Verteilung entspricht.
+      haben brauchen eventuell eine lange Austestphase, bis ein Baum dieser Verteilung entspricht.
       Wenn wir allerdings dafür zwei verschiedene Schwellenwerte einführen könnte das dieses Problem 
-        eventuell ausgleichen. Das müsste ich austesten. 
+      eventuell ausgleichen. Das müsste ich austesten. 
 
       \todo{Kapitel tag tree hier einbinden}
 
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
       Ein von den Daten beeinflusster Parameter ist die Multifurkation des Baumes, d.h. wie weit sind 
@@ -338,9 +352,9 @@
         geplottet. \\
       Subfigure \ref{fig:childrenOfNodes_innerNodes} beschränkt sich hierbei nur auf die inner nodes 
         während Subfigure \ref{fig:childrenOfNodes_allNodes} alle Knoten abbildet. \\
-      \todo{Welchen der beiden Plots wollen wir nehmen, einer genügt eigentlich.}
+      \todo{Welchen der beiden Plots wollen wir nehmen, einer genügt eigentlich:}
 
-      \begin{figure}
+      \begin{figure}[h!]
         \begin{subfigure}{.5\textwidth}
           \centering
           \includegraphics[width=.8\linewidth]{Figures/multifurc.pdf}
@@ -361,7 +375,7 @@
       \begin{itemize}
         \item stärke der Multifurcation in verschiedenen Subbäumen
         \item zusammenhang zur tiefe im Baum
-        \item zusammenhang zu höhe im baum
+        \item zusammenhang zu höhe im baum (max, min, mean)
         \item einfluss auf die vorhersage des Castor und Fitch Algorithmus (Simulation) \todo{...}
       \end{itemize}
 
@@ -379,72 +393,96 @@
         % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
         Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
           des Baums mit dem folgenden Deviance Table:
-
+          
         \begin{center}
-          \begin{tabular}{ |l|r|l| }
+          \begin{longtable}{ |l|r|r| }
             \hline
-            Model & Residuals Dev & Deviance Pr(>Chi) \\
+            Model & Residuals Dev & Deviance Pr \\
             \hline \hline
             multifurc $\sim$ kingdom & 7774454 & \\
             multifurc $\sim$ phylum & 7435700 & 338754 \\
             multifurc $\sim$ class & 7337241 & 98459 \\
             \rowcolor{green} multifurc $\sim$ order & 7076068 & 261172 \\
-
-            % [1] "------------------------kingdom - phylum - class - order--------------------------"
-            % Analysis of Deviance Table
-            
-            % Model 1: multifurc ~ kingdom
-            % Model 2: multifurc ~ phylum
-            % Model 3: multifurc ~ class
-            % Model 4: multifurc ~ order
-            %   Resid. Df Resid. Dev  Df Deviance  Pr(>Chi)
-            % 1    167222    7774454
-            % 2    167173    7435700  49   338754 < 2.2e-16 ***
-            % 3    167039    7337241 134    98459 < 2.2e-16 ***
-            % 4    166352    7076068 687   261172 < 2.2e-16 ***
-            % ---
-            % Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-            \hline \hline
+            \hline \hline \hline
             multifurc $\sim$ phylum + depth & 7431609 & \\
             multifurc $\sim$ phylum + max.height & 7375889 & 55721 \\
             multifurc $\sim$ phylum + min.height & 7233486 & 142403 \\
             \rowcolor{green} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
             \hline \hline
-            multifurc ~ phylum * depth & 7335396 & -24155 \\
-            multifurc ~ phylum * max.height & 7311241 & \\
-            multifurc ~ phylum * min.height & 7177002 & 158394 \\
+            multifurc ~ phylum * depth & 7335396 & \\
+            multifurc ~ phylum * max.height & 7311241 & 24155 \\
+            multifurc ~ phylum * min.height & 7177002 & 134238 \\
             \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
             \hline \hline
             multifurc ~ phylum & 7435700 & \\
             multifurc ~ phylum + mean.height & 7128318 & 307381 \\
             \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
+            \hline \hline \hline
+            multifurc $\sim$ class + depth & 7334754 & \\
+            multifurc $\sim$ class + max.height & 7275856 & 58898 \\
+            multifurc $\sim$ class + min.height & 7144686 & 131170 \\
+            \rowcolor{green} multifurc $\sim$ class + mean.height & 7055313 & 89374 \\
+            \hline \hline
+            multifurc ~ class * depth & 7250759 & \\
+            multifurc ~ class * max.height & 7187504 & 63256 \\
+            multifurc ~ class * min.height & 7094933 & 92570 \\
+            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 129139 \\
+            \hline \hline
+            multifurc ~ class & 7337241 & \\
+            multifurc ~ class + mean.height & 7055313 & 281928 \\
+            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 89518 \\
+            \hline \hline \hline
+            multifurc $\sim$ order + depth & 7027578 & \\
+            multifurc $\sim$ order + max.height & 7005424 & 22154 \\
+            multifurc $\sim$ order + min.height & 6890703 & 114721 \\
+            \rowcolor{green} multifurc $\sim$ order + mean.height & 6815271 & 75432 \\
             \hline
-          \end{tabular}
+          \end{longtable}
         \end{center}
-        * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün)\\
-        * Deviance - Abweichung
+        * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
+        * Deviance - Abweichung \\
+        
+        \begin{lstlisting}[gobble=8]
+          class * depth / min/max/mean.height: Warning message: glm.fit: fitted rates numerically 0 occurred
+          order * depth / min/max/mean.height: Error: cannot allocate vector of size 2.2 Gb
+        \end{lstlisting}
 
-      \anmerkung{different parameters for different taxa? (Emanuel)} \\
-      One property of the tree is its ridge of multifurcation. For this we collected for every node its
-        number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
-        every degree. Then we tried to find a function which best discribes this behavior. In figure 
-        \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
-        closest to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
-        $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
-      \begin{figure}[h]
-        \caption{Histogram of multifurcations and fitting functions}
-        \centering
-        \label{fig:HistogramsOfMultifurcations}
-        \includegraphics[width=0.7\textwidth]{Figures/HistogramsOfMultifurcations.png}
-      \end{figure}
-      From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
-        well known and others have not been very interesting for the research so far. So we also wanted 
-        to know how the multifurcations behave in some interesting subtrees. \\
-      \anmerkung{do we? Is that really universal knowledge or could it be supported by data or a citation? (Bernhard)} \\
-      \todo{subtrees... there is some old stuff...} \\
-      \todo{other subsections here...} \\
+        \todotext{Nur ein Ausschnitt hier und dann... You can find the whole Deviance Table in the 
+          Appendix...} \\
+        Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
+          genauer umso kleinere Subtrees wir betrachten. ...
+        \begin{lstlisting}[gobble=8]
+          Model 1: multifurc ~ kingdom
+          Model 2: multifurc ~ phylum
+          Model 3: multifurc ~ class
+          Model 4: multifurc ~ order
+            Resid. Df Resid. Dev  Df Deviance  Pr(>Chi)
+          1    167222    7774454
+          2    167173    7435700  49   338754 < 2.2e-16 ***
+          3    167039    7337241 134    98459 < 2.2e-16 ***
+          4    166352    7076068 687   261172 < 2.2e-16 ***
+        \end{lstlisting}
+        \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
 
+        \todo{old Stuff:} \\
+        One property of the tree is its ridge of multifurcation. For this we collected for every node its
+          number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
+          every degree. Then we tried to find a function which best discribes this behavior. In figure 
+          \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
+          closest to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
+          $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
+        \begin{figure}[h]
+          \caption{Histogram of multifurcations and fitting functions}
+          \centering
+          \label{fig:HistogramsOfMultifurcations}
+          \includegraphics[width=0.7\textwidth]{Figures/HistogramsOfMultifurcations.png}
+        \end{figure}
+        From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
+          well known and others have not been very interesting for the research so far. So we also wanted 
+          to know how the multifurcations behave in some interesting subtrees. \\
+        \anmerkung{do we? Is that really universal knowledge or could it be supported by data or a citation? (Bernhard)} \\
+
+  %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}
@@ -472,6 +510,7 @@
     \end{enumerate}
 
     %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
     \subsection{random binary tree}
       \anmerkung{Again, motivate first, why this is required and why you choose this solution (Bernhard)} \\
       To get a random binary tree, I used the Phylo package from biopython. They offer a randomized
@@ -497,6 +536,7 @@
       \end{lstlisting}
       \todo{Zitat von BaseTree und buildTree.py}
 
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{tag tree}
       \anmerkung{instead of 'tag tee' simulating stages and transitions between them (Emanuel)} \\
@@ -542,6 +582,7 @@
       \todo{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
 
     %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
     \subsection{multifurcate tree}
       \anmerkung{simulating loss of information (Emanuel)} \\
       Another parameter is the nature and strength of the multifunction of the tree, since we do not 
@@ -585,6 +626,7 @@
       % # child_clade_1 is new clade i
       Wir lassen das Limit nicht beliebig klein werden, sondern beschränken es auf 0.1.
 
+    %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{maximum parsimony algorithms}
       \subsubsection{Fitch maximum parsimony}
@@ -640,11 +682,14 @@
             \includegraphics[width=1\textwidth]{Figures/Fitch2.png}
         \end{figure}
 
+      %---------------------------------------------------------------------------------------------------
       \subsubsection{Sankoff}
         Maximum parsimony algorithm from Sankoff implemented in the R package castor.
-      
+
+      %---------------------------------------------------------------------------------------------------  
       \subsubsection{my Algorithm}
 
+  %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{real data analysis}
@@ -657,13 +702,16 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
   \section{Implementation}
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
 \chapter{Results}
 
+  %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Influence of different parameters}
@@ -674,7 +722,7 @@
     \includegraphics[width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
   \end{figure}
   
-
+%---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
