@@ -16,7 +16,7 @@ from Helpers import print_time
 args = sys.argv
 
 # values for simulation:
-index = int(sys.argv[1])
+index = sys.argv[1]
 border = int(sys.argv[2])
 
 path_freelivings = "../data/interaction_data/freelivings.csv"
@@ -135,7 +135,7 @@ def fill_tree_with_tags(subtree, index):
         for clade in subtree.clades:
             fill_tree_with_tags(clade, index)
     # -------------------------------------------------
-    csv_title = '../data/nodelist/evaluation/Eukaryota'+ index + '-' + border +'.csv' 
+    csv_title = '../data/nodelist/evaluation/Eukaryota'+ index + '-' + str(border) +'.csv' 
     nodelist_file = open(csv_title, 'a')
     writer = csv.writer(nodelist_file)
     writer.writerow((nodelist[current_list_index])) 

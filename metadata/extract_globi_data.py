@@ -51,11 +51,7 @@ def main():
                     else:
                         if interaction in freeliving_source:
                             freelivings.append([ott[1], name, interaction])
-                            if ott[1] == '77083':
-                                print(row[0], row[1], row[10], row[11], row[12], '-> source parasite')
                         elif interaction in parasite_source:
-                            if ott[1] == '77083':
-                                print(row[0], row[1], row[10], row[11], row[12], '-> source parasite')
                             parasites.append([ott[1], name, interaction])
             # -------------------------------- target? --------------------------------
             if any(interaction in target for target in (freeliving_target, parasite_target)):
@@ -71,11 +67,7 @@ def main():
                     else:
                         if interaction in freeliving_target:
                             freelivings.append([ott[1], name, interaction])
-                            if ott[1] == '77083':
-                                print(row[0], row[1], row[10], row[11], row[12], '-> freeliving target')
                         elif interaction in parasite_target:
-                            if ott[1] == '77083':
-                                print(row[0], row[1], row[10], row[11], row[12], '-> parasite target')
                             parasites.append([ott[1], name, interaction])
 
     print('-------------------')
