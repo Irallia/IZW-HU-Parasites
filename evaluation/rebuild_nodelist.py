@@ -135,7 +135,7 @@ def fill_tree_with_tags(subtree, index):
         for clade in subtree.clades:
             fill_tree_with_tags(clade, index)
     # -------------------------------------------------
-    csv_title = '../data/nodelist/evaluation/Eukaryota'+ index + '-' + str(border) +'.csv' 
+    csv_title = '../data/evaluation/Eukaryota'+ index + '-' + str(border) +'.csv' 
     nodelist_file = open(csv_title, 'a')
     writer = csv.writer(nodelist_file)
     writer.writerow((nodelist[current_list_index])) 
