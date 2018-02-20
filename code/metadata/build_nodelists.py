@@ -1,12 +1,11 @@
 import csv
 import datetime
-from copy import deepcopy
+from code.utilities.Helpers import print_time
+from code.utilities.nodelist_util import read_tags, tag_node
 from time import gmtime, strftime
 
 from Bio import Phylo
 from termcolor import colored, cprint
-
-from Helpers import print_time
 
 # path_freelivings = "../data/interaction_data/reduced_freelivings.csv"
 # path_parasites = "../data/interaction_data/reduced_parasites.csv"
@@ -18,8 +17,6 @@ START_TIME = datetime.datetime.now().replace(microsecond=0)
 CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
 freelivings = []
 parasites = []
-current_freelivings = []
-current_parasites = []
 nr_leave_nodes = 0
 nr_used_freelivings = 0
 nr_used_parasites = 0
@@ -32,8 +29,6 @@ def main():
     global CURRENT_TIME
     global freelivings
     global parasites
-    global current_freelivings
-    global current_parasites
     global nr_leave_nodes
     global nr_used_freelivings
     global nr_used_parasites
@@ -56,8 +51,6 @@ def main():
     print("Build nodelist for: Eukaryota")
     tree = Phylo.read(subtree_path, 'newick')
     print(colored("---------------- tag tree ----------------", "green"))
-    current_freelivings = deepcopy(freelivings)
-    current_parasites = deepcopy(parasites)
     fill_tree_with_tags(tree.clade, 0)
     print(colored(nr_leave_nodes, 'blue'), "leave nodes are in the tree")
     print(colored(nr_used_freelivings, 'blue'), "freeliving tags were used,", colored(nr_used_parasites, 'blue'), "parasite tags were used =>", colored(unknown, 'blue'), "unknown leave nodes")
@@ -74,19 +67,6 @@ def main():
     print(colored("--------------------------------", "green"))
     return
 
-def read_tags(path):
-    tag_array = []
-    nr_tags = 0
-    with open(path) as csv_file:
-        reader = csv.reader(csv_file, delimiter=',')
-        for row in reader:
-            if row != []:
-                id_array = row[0]
-                nr_tags += 1
-                tag_array.append("ott" + id_array)
-        print('number of tag:', nr_tags)
-    return tag_array
-
 def fill_tree_with_tags(subtree, depth):
     global nr_leave_nodes
     global nr_used_freelivings
@@ -97,27 +77,15 @@ def fill_tree_with_tags(subtree, depth):
     
     ott = subtree.name.split("$")[0] # remove index
     heights = [1, 1, 1]
-    #              0    1       2           3           4           5
-    # nodelist - [id, depth, heights, nr_children, originaltag, finaltag]
-    nodelist.append([ott, depth, heights, len(subtree.clades), "", ""])
+    
+    #                   0    1              2       3       4           5
+    # nodelist      - [id, originaltag, finaltag, depth, heights, nr_children]
+    nodelist.append([ott, "", "", depth, heights, len(subtree.clades)])
     current_list_index = len(nodelist) - 1
 
     if subtree.is_terminal():
-        nr_leave_nodes += 1
-        tag_boolp = get_tag(ott, 'P')
-        if tag_boolp:
-            nr_used_parasites += 1
-            nodelist[current_list_index][4] = "2"
-            if (get_tag(ott, 'FL')):
-                doubleTagged += 1
-        else:
-            tag_boolf = get_tag(ott, 'FL')
-            if tag_boolf:
-                nr_used_freelivings += 1
-                nodelist[current_list_index][4] = "1"
-            else:
-                nodelist[current_list_index][4] = "NA"
-                unknown += 1
+        stats = [nr_leave_nodes, nr_used_parasites, nr_used_freelivings, unknown, doubleTagged]
+        tag_node(nodelist, current_list_index, ott, [freelivings, parasites], stats)
     else:
         min_heigth = float('inf')
         max_heigth = 0
@@ -132,7 +100,7 @@ def fill_tree_with_tags(subtree, depth):
             child_heigth = child_heigth + heights[2]
         mean_heigth = child_heigth/len(subtree.clades) + 1
         heights = [min_heigth + 1, max_heigth + 1, mean_heigth]
-        nodelist[current_list_index][2] = heights
+        nodelist[current_list_index][4] = heights
     # -------------------------------------------------
     csv_title = '../data/nodelist/Eukaryota.csv' 
     nodelist_file = open(csv_title, 'a')
@@ -141,20 +109,5 @@ def fill_tree_with_tags(subtree, depth):
     nodelist_file.close()
     # -------------------------------------------------
     return heights
-
-def get_tag(name, tag):
-    global current_freelivings
-    global current_parasites
-    if tag == 'FL':
-        species_list = current_freelivings
-    else:
-        species_list = current_parasites
-    # Checks for the presence of name in any string in the list
-    for item in species_list:
-        # mrcaott_item = 'mrca' + item + 'ott'
-        if item == name or name.endswith(item): # or name.startswith(mrcaott_item):
-            species_list.remove(item)
-            return True
-    return False
 
 main()

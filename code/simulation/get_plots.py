@@ -32,30 +32,24 @@ def main():
     plot_hist('40-old')
     plot_data('40-old')
 
+    plt.tight_layout()
+    plt.show()
+
+    PLOT_NUMBER = 1
+    f, axs = plt.subplots(ROWS, COLS, figsize=(7, 10))
+    plt.suptitle('Fitch Versions and Unknown Data', fontsize=12, y=1)
+
+    filepath = 'evaluation/30-fitch-unknown_plot.csv'
+    plot_fitch_versions(filepath)
     filepath = 'evaluation/40-fitch-unknown_plot.csv'
-    data = np.genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'y_fitch1', 'y_fitch2', 'y_fitch3', 'y_fitch4'])
+    plot_fitch_versions(filepath)
+    filepath = 'evaluation/50-fitch-unknown_plot.csv'
+    plot_fitch_versions(filepath)
 
     plt.tight_layout()
     plt.show()
 
-    # plt.title(str(percentage_parasites), fontweight='bold')
-    
-    plt.plot(data['unknown'], data['y_fitch1'], color='g', linestyle='dashed', 
-        label='Fitch 1', linewidth=0.5, marker='.', markerfacecolor='black')#, markersize=5)
-    plt.plot(data['unknown'], data['y_fitch2'], color='c', linestyle='dashed', 
-        label='Fitch 2', linewidth=0.5, marker='.', markerfacecolor='black')
-    plt.plot(data['unknown'], data['y_fitch3'], color='m', linestyle='dashed', 
-        label='Fitch 3', linewidth=0.5, marker='.', markerfacecolor='black')
-    plt.plot(data['unknown'], data['y_fitch4'], color='y', linestyle='dashed', 
-        label='Fitch 4', linewidth=0.5, marker='.', markerfacecolor='black')
-    plt.xlabel('percentage unknown', fontsize=9)
-    plt.ylabel('correct predicted', fontsize=9)
-    plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
-    plt.axis([0, 1, 85, 100])
-    plt.grid()
-
-    plt.tight_layout()
-    plt.show()
+    plot_depths()
 
     return
 
@@ -143,6 +137,34 @@ def plot_data(percentage_parasites):
     # plt.yscale('symlog')
     # plt.yscale('logit')
     plt.grid()
+    return
+
+def plot_fitch_versions(filepath):
+    global PLOT_NUMBER
+    data = np.genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'y_fitch1', 'y_fitch2', 'y_fitch3', 'y_fitch4'])
+
+    plt.subplot(ROWS, COLS, PLOT_NUMBER)
+    PLOT_NUMBER += 2
+
+    # plt.title(str(percentage_parasites), fontweight='bold')
+    plt.plot(data['unknown'], data['y_fitch1'], color='g', linestyle='dashed', 
+        label='Fitch 1', linewidth=0.5, marker='.', markerfacecolor='black')#, markersize=5)
+    plt.plot(data['unknown'], data['y_fitch2'], color='c', linestyle='dashed', 
+        label='Fitch 2', linewidth=0.5, marker='.', markerfacecolor='black')
+    plt.plot(data['unknown'], data['y_fitch3'], color='m', linestyle='dashed', 
+        label='Fitch 3', linewidth=0.5, marker='.', markerfacecolor='black')
+    plt.plot(data['unknown'], data['y_fitch4'], color='y', linestyle='dashed', 
+        label='Fitch 4', linewidth=0.5, marker='.', markerfacecolor='black')
+    plt.xlabel('percentage unknown', fontsize=9)
+    plt.ylabel('correct predicted', fontsize=9)
+    plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
+    plt.axis([0, 1, 85, 100])
+    plt.grid()
+
+    return
+
+def plot_depths():
+    
     return
 
 main()

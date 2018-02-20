@@ -1,12 +1,11 @@
 """This module builds a random binary tree and give tags to every node."""
 
 import datetime
+from code.utilities.Helpers import find_element_in_nodelist, print_time
 from copy import deepcopy
+from random import betavariate, uniform
 
 from Bio import Phylo
-from numpy import random
-
-from utilities import Helpers
 
 # global variable:
 permitted_deviation = 0.02 # 2%
@@ -29,7 +28,7 @@ def get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_un
     randomized_tree = Phylo.BaseTree.Tree.randomized(number_leafnodes)
     randomized_tree.clade.name = 'root'
     boolean = True
-    CURRENT_TIME = Helpers.print_time(START_TIME)
+    CURRENT_TIME = print_time(START_TIME)
     print("---- tag tree ----")
     while boolean:
         current_tree = deepcopy(randomized_tree)
@@ -43,7 +42,7 @@ def get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_un
         if (percentage_parasites - permitted_deviation) < current_percentage_parasites < (percentage_parasites + permitted_deviation):
             boolean = False
     print("----")
-    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     print("----")
     # print(current_percentage_parasites, '% parasites,', 100 - current_percentage_parasites, '% free-living')
     return [current_tree, nodelist]
@@ -68,25 +67,24 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage_parasites, pe
     A_P = beta_distribution_parameters[2]
     B_P = beta_distribution_parameters[3]
 
-    depth = -1
+    depths = [1, 1, 1]
     if father_tag == 0:
         # freeliving_distribution:
-        new_random = random.beta(a=A_FL, b=B_FL)
+        new_random = betavariate(A_FL, B_FL)
     else:
         # parasite_distribution:
-        new_random = random.beta(a=A_P, b=B_P)
+        new_random = betavariate(A_P, B_P)
 
     tag = 0         # -> FL
     if new_random < percentage_parasites:
         tag = 1     # -> P
-    #               [id, depth, originaltag, finaltag, calc[taglist]]
-    nodelist.append([subtree.name, depth, tag, '', []])
+    #               [id, depths, originaltag, finaltag, calc[taglist]]
+    nodelist.append([subtree.name, depths, tag, '', []])
+    # For the quicker finding of the element in the nodelist of the accociated node.
     subtree.name = subtree.name + "$" + str(len(nodelist) - 1)
     current_list_index = len(nodelist) - 1
-    # if leaf node, then depth = 1, set finaltag, increase leaf distribution
     if subtree.is_terminal():
-        depth = 1
-        uniform_random = random.uniform() # choose if we want to delete ourselve
+        uniform_random = uniform(0, 1) # choose if we want to delete ourselve
         # unknown node?
         if (tag == 1) and (uniform_random > percentage_unknown):
             nodelist[current_list_index][4].append([tag])   # set start tag for calculation
@@ -101,40 +99,48 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage_parasites, pe
         else:
             leaf_distr[1] = leaf_distr[1] + 1
     else:
+        min_depth = float('inf')
+        max_depth = 0
+        mean_depth = 0
         child_depth = 0
         for clade in subtree.clades:
             result = tag_tree(clade, nodelist, tag, leaf_distr, percentage_parasites, percentage_unknown, beta_distribution_parameters)
             clade = result[0]
             nodelist = result[1]
             leaf_distr = result[2]
-            child_depth = child_depth + result[3]
-        depth = child_depth/len(subtree.clades) + 1 
-    nodelist[-1][1] = depth
-    return [subtree, nodelist, leaf_distr, depth]
+            if result[3][0] < min_depth:
+                min_depth = result[3][0]
+            if result[3][1] > max_depth:
+                max_depth = result[3][1]
+            child_depth = child_depth + result[3][2]
+        mean_depth = child_depth/len(subtree.clades) + 1
+        depths = [min_depth + 1, max_depth + 1, mean_depth] 
+    nodelist[current_list_index][1] = depths
+    return [subtree, nodelist, leaf_distr, depths]
 
 def get_non_binary_tree(subtree, nodelist):
     i = 0
     while i != len(subtree.clades):
-        if subtree.clades[i].is_terminal():
+        if subtree.clades[i].is_terminal():                 # is leave node?
             i += 1
         else:
-            element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
-            limit = get_limit(element[1])
+            element = find_element_in_nodelist(subtree.clades[i].name, nodelist)
+            limit = get_limit(element[1][2])
             # print('i=', i, 'len=', len(subtree.clades))
-            # numpy.random.uniform(low=0.0, high=1.0, size=None)
-            new_random = random.uniform() # choose if we want to delete ourselve
+            new_random = uniform(0, 1)                      # choose if we want to delete ourselve
             # print(new_random, ' < ', limit)
-            if new_random < limit: # or new_random < 0.9:
+            if new_random < limit:                          # or new_random < 0.9:
                 # print('delete me!')
-                subtree.clades += subtree.clades[i].clades # add children
-                del subtree.clades[i]   # delete internal node
+                subtree.clades += subtree.clades[i].clades  # add children
+                del subtree.clades[i]                       # delete internal node
                 # current clades: clade_1 clade_2 ... clade_i-1 clade_i ... clade:_n
                 # add children of clade_i, delete clade_i
                 # new clades:clade_1 clade_2 ... clade_i-1 child_clade_1 ... child_clade_m ... clade:_n
                 # child_clade_1 is new clade i
-            else:
-                get_non_binary_tree(subtree.clades[i], nodelist)
+            else:                                           # if we don't deleted ourselve go on with children
+                get_non_binary_tree(subtree.clades[i], nodelist)    # otherwise the children are in the current clade array
                 i += 1
+            
     return
 
 def get_limit(depth):

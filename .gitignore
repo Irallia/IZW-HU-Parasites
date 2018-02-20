@@ -1,3 +1,12 @@
+code/evaluation/bufferfiles/*
+code/metadata/bufferfiles/*
+
+code/simulation/bufferfiles/*
+code/simulation/evaluation/
+code/simulation/non_binary_simulation/metadata.csv
+code/simulation/output.csv
+code/simulation/likelihoods.csv
+
 data/GloBI_Dump/*
 data/interaction_data/*
 data/nodelist/*
@@ -5,17 +14,9 @@ data/opentree3.1_taxonomic_tree/*
 data/opentree9.1_tree/*
 data/subtree/*
 
-evaluation/bufferfiles/*
 Masterarbeit - Latex/Figures/tex-tikz-figures - examples/
-metadata/bufferfiles/*
 node_modules/
 scripts/R/Rplots.pdf
-
-simulation/bufferfiles/*
-simulation/evaluation/
-simulation/non_binary_simulation/metadata.csv
-simulation/output.csv
-simulation/likelihoods.csv
 
 results/
 

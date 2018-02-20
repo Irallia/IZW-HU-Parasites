@@ -1,20 +1,21 @@
 from copy import deepcopy
 
-from utilities import Fitch_Versions, Helpers
+from code.utilities.Helpers import find_element_in_nodelist, get_intersect_or_union
+from code.utilities import Fitch_Versions
 
 def fitch_parsimony(tree_clade, nodelist, version):
     """parsimony implemented from [COO98] - changed for multifurcating trees"""
     # down:
     parsimony_down(tree_clade, nodelist)
     # up:
-    parent = Helpers.find_element_in_nodelist(tree_clade.name, nodelist)
+    parent = find_element_in_nodelist(tree_clade.name, nodelist)
     children = []
     for clade in tree_clade.clades:
-        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        child = find_element_in_nodelist(clade.name, nodelist)
         children.append(child)
     for i in range(0, len(tree_clade.clades)):
         clade = tree_clade.clades[i]
-        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        child = find_element_in_nodelist(clade.name, nodelist)
         sublist = deepcopy(children)
         del sublist[i]
         # ToDo: decide which one, next ToDo: a second parsimony down?
@@ -31,14 +32,14 @@ def parsimony_down(subtree, nodelist):
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     child_tags = []
     for clade in subtree.clades:
-        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        child = find_element_in_nodelist(clade.name, nodelist)
         # if child is not tagged, first tag it:
         if child[4] == []:
             parsimony_down(clade, nodelist)
         child_tags.append(child[4][0])
-    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    element = find_element_in_nodelist(subtree.name, nodelist)
     # get intersection or union
-    tag_list = Helpers.get_intersect_or_union(child_tags)
+    tag_list = get_intersect_or_union(child_tags)
     # add new tag
     element[4].append(tag_list)
     return
@@ -51,7 +52,7 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     #   parent      - nodelist element
     #   siblings     - [nodelist element]
-    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    element = find_element_in_nodelist(subtree.name, nodelist)
 
     parent_tag = parent[4]  # parent[4] could look like [['0', '1'], ['1']] or [['1']]
     siblings_tags = []
@@ -60,7 +61,7 @@ def parsimony_up(subtree, nodelist, parent, siblings):
         siblings_tags += sibling[4]
     
     # get intersection or union
-    tag_list = Helpers.get_intersect_or_union(siblings_tags)
+    tag_list = get_intersect_or_union(siblings_tags)
     # add new tag
     element[4].append(tag_list)
 
@@ -68,11 +69,11 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     if not subtree.is_terminal():
         children = []
         for clade in subtree.clades:
-            child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+            child = find_element_in_nodelist(clade.name, nodelist)
             children.append(child)
         for i in range(0, len(subtree.clades)):
             clade = subtree.clades[i]
-            child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+            child = find_element_in_nodelist(clade.name, nodelist)
             sublist = deepcopy(children)
             del sublist[i]
             parsimony_up(clade, nodelist, element, sublist)
@@ -84,12 +85,12 @@ def parsimony_final(subtree, nodelist):
     #   subtree
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
-    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    element = find_element_in_nodelist(subtree.name, nodelist)
     if subtree.is_terminal() and len(element[4][0]) == 1:
         element[3] = element[4][0][0]
     else:
         # get intersection or union
-        tag_list = Helpers.get_intersect_or_union(element[4])
+        tag_list = get_intersect_or_union(element[4])
         # add final tag
         tag_string = ""
         for tag in tag_list:

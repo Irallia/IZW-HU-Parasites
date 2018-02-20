@@ -2,18 +2,17 @@
 import csv
 import datetime
 import sys
+from code.simulation.non_binary_simulation import buildTree
+from code.simulation.non_binary_simulation.parsimony.Fitch_MP import \
+    fitch_parsimony
+
+from code.utilities.Helpers import print_time
 from copy import deepcopy
 from pprint import pprint
 from time import gmtime, strftime
 
 from Bio import Phylo
 from termcolor import colored
-
-from non_binary_simulation import buildTree
-from non_binary_simulation.parsimony.Fitch_MP import fitch_parsimony
-from non_binary_simulation.parsimony.My_MP import my_parsimony
-from non_binary_simulation.parsimony.Sankoff_MP import sankoff_parsimony
-from utilities import Drawings, Helpers
 
 # input arguments
 args = sys.argv
@@ -28,30 +27,13 @@ number_trees = int(sys.argv[2])         # number of simulated trees
 percentage_parasites = float(sys.argv[3]) # between 0 and 1
 percentage_unknown = float(sys.argv[4])   # between 0 and 1
 
-                            # [A_FL, B_FL, A_P, B_P]
-beta_distribution_parameters = [7, 3.5, 3.5, 7]   # 40 P - 60 FL
-
-# decide for distribution:
-if percentage_parasites == 0.1:
-    beta_distribution_parameters = [7, 24, 0.5, 7]     # 10 P - 90 FL
-elif percentage_parasites == 0.2:
-        beta_distribution_parameters = [7, 13.25, 1.25, 7] # 20 P - 80 FL
-elif percentage_parasites == 0.3:
-    beta_distribution_parameters = [7, 8.5, 2, 7]      # 30 P - 70 FL
-elif percentage_parasites == 0.4:
-    beta_distribution_parameters = [7, 5.5, 2.75, 7]   # 40 P - 60 FL
-elif percentage_parasites == 0.5:
-    beta_distribution_parameters = [7, 3.5, 3.5, 7]    # 50 P - 50 FL
-
-print(beta_distribution_parameters)
-
 def main():
     """Main method"""
     global START_TIME
     global CURRENT_TIME
     print(colored("------------------------ start simulation ------------------------", "green"))
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
-    CURRENT_TIME = Helpers.print_time(START_TIME)
+    CURRENT_TIME = print_time(START_TIME)
     print(colored("---------------- metadata ----------------", "green"))
     metadata()
     print(colored("---------------- parameters ----------------", "green"))
@@ -59,6 +41,8 @@ def main():
         colored(number_leafnodes, 'blue'), "leafnodes", 
         colored(percentage_parasites*100, 'blue'), "% parasites and",
         colored(percentage_unknown*100, 'blue'), "% unknown leafnodes.")
+    beta_distribution_parameters = decide_for_beta_distribution_parameters(percentage_parasites)
+    print(beta_distribution_parameters)
     diffs = [["Fitch1", "Fitch2", "Fitch3", "Fitch4"]]
     for i in range(1, number_trees + 1):
         print("Tree", colored(i, 'red'))
@@ -66,10 +50,10 @@ def main():
         result = buildTree.get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, beta_distribution_parameters)
         current_tree = result[0]
         nodelist = result[1]
-        # CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+        # CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- multifurcate tree ----------------", "green"))
         buildTree.get_non_binary_tree(current_tree.clade, nodelist)
-        CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+        CURRENT_TIME = print_time(CURRENT_TIME)
         print(colored("---------------- maximum parsimony algorithms ----------------", "green"))
         diff_percentage = run_parsimony_algorithms(current_tree, nodelist)
         diffs.append(diff_percentage)
@@ -121,28 +105,45 @@ def run_parsimony_algorithms(current_tree, nodelist):
     fitch_MP_tree1 = deepcopy(current_tree)
     fitch_MP_nodelist1 = deepcopy(nodelist)
     fitch_parsimony(fitch_MP_tree1.clade, fitch_MP_nodelist1, 1)
-    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- Fitch2 parsimony ----------------", "green"))
     fitch_MP_tree2 = deepcopy(current_tree)
     fitch_MP_nodelist2 = deepcopy(nodelist)
     fitch_parsimony(fitch_MP_tree2.clade, fitch_MP_nodelist2, 2)
-    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- Fitch3 parsimony ----------------", "green"))
     fitch_MP_tree3 = deepcopy(current_tree)
     fitch_MP_nodelist3 = deepcopy(nodelist)
     fitch_parsimony(fitch_MP_tree3.clade, fitch_MP_nodelist3, 3)
-    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- Fitch4 parsimony ----------------", "green"))
     fitch_MP_tree4 = deepcopy(current_tree)
     fitch_MP_nodelist4 = deepcopy(nodelist)
     fitch_parsimony(fitch_MP_tree4.clade, fitch_MP_nodelist4, 4)
-    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     # --------------------------------------------------------
     print(colored("-------- evaluation --------", "green"))
     differences = evaluation(nodelist, fitch_MP_nodelist1, fitch_MP_nodelist2, fitch_MP_nodelist3, fitch_MP_nodelist4)
-    CURRENT_TIME = Helpers.print_time(CURRENT_TIME)
+    CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("--------------------------------", "green"))
     return differences
+
+def decide_for_beta_distribution_parameters(percentage_parasites):
+                                # [A_FL, B_FL, A_P, B_P]
+    beta_distribution_parameters = [7, 3.5, 3.5, 7]   # 40 P - 60 FL
+
+    # decide for distribution:
+    if percentage_parasites == 0.1:
+        beta_distribution_parameters = [7, 24, 0.5, 7]     # 10 P - 90 FL
+    elif percentage_parasites == 0.2:
+            beta_distribution_parameters = [7, 13.25, 1.25, 7] # 20 P - 80 FL
+    elif percentage_parasites == 0.3:
+        beta_distribution_parameters = [7, 8.5, 2, 7]      # 30 P - 70 FL
+    elif percentage_parasites == 0.4:
+        beta_distribution_parameters = [7, 5.5, 2.75, 7]   # 40 P - 60 FL
+    elif percentage_parasites == 0.5:
+        beta_distribution_parameters = [7, 3.5, 3.5, 7]    # 50 P - 50 FL
+    return beta_distribution_parameters
 
 def evaluation(nodelist, fitch_MP_nodelist1, fitch_MP_nodelist2, fitch_MP_nodelist3, fitch_MP_nodelist4):
     result_list = [['id','original tag', 'fitch1', 'fitch2', 'fitch3', 'fitch4']]

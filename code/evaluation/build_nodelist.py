@@ -1,23 +1,13 @@
-# delete 100 random lines ...
-
 import csv
 import datetime
-import sys
+from code.utilities.Helpers import print_time
+from code.utilities.nodelist_util import read_tags, tag_node
 from copy import deepcopy
-from random import shuffle
+from random import shuffle, uniform
 from time import gmtime, strftime
 
 from Bio import Phylo
 from termcolor import colored, cprint
-
-from Helpers import print_time
-
-# input arguments
-args = sys.argv
-
-# values for simulation:
-index = sys.argv[1]
-border = int(sys.argv[2])
 
 path_freelivings = "../data/interaction_data/freelivings.csv"
 path_parasites = "../data/interaction_data/parasites.csv"
@@ -34,7 +24,10 @@ unknown = 0
 doubleTagged = 0
 nodelist = []
 
-def main():
+index = -1
+border = -1
+
+def build_nodelist(ind, bord):
     global START_TIME
     global CURRENT_TIME
     global freelivings
@@ -48,6 +41,9 @@ def main():
 
     global index
     global border
+
+    index = ind
+    border = bord
 
     print(colored("------------------------ build nodelists ------------------------", "green"))
     print(strftime("%Y-%m-%d %H:%M:%S", gmtime()))
@@ -66,13 +62,19 @@ def main():
     print(colored("---------------- tag tree ----------------", "green"))
     shuffle(freelivings)
     shuffle(parasites)
+    # delete 100 random lines ..
     i = 0
     while i < border:
-        freelivings.pop()
-        parasites.pop()
+        rand = uniform(0, 1)
+        if rand < 0.5:
+            freelivings.pop()
+        elif rand > 0.5:
+            parasites.pop()
+        else:
+            i -=1
         i += 1
 
-    fill_tree_with_tags(tree.clade, index)
+    fill_tree_with_tags(tree.clade)
     print(colored(nr_leave_nodes, 'blue'), "leave nodes are in the tree")
     print(colored(nr_used_freelivings, 'blue'), "freeliving tags were used,", colored(nr_used_parasites, 'blue'), "parasite tags were used =>", colored(unknown, 'blue'), "unknown leave nodes")
     print("Rootnode, Originaltag, Finaltag, Nr_children")
@@ -88,20 +90,7 @@ def main():
     print(colored("--------------------------------", "green"))
     return
 
-def read_tags(path):
-    tag_array = []
-    nr_tags = 0
-    with open(path) as csv_file:
-        reader = csv.reader(csv_file, delimiter=',')
-        for row in reader:
-            if row != []:
-                id_array = row[0]
-                nr_tags += 1
-                tag_array.append("ott" + id_array)
-        print('number of tag:', nr_tags)
-    return tag_array
-
-def fill_tree_with_tags(subtree, index):
+def fill_tree_with_tags(subtree):
     global nr_leave_nodes
     global nr_used_freelivings
     global nr_used_parasites
@@ -116,24 +105,11 @@ def fill_tree_with_tags(subtree, index):
     current_list_index = len(nodelist) - 1
 
     if subtree.is_terminal():
-        nr_leave_nodes += 1
-        tag_boolp = get_tag(ott, 'P')
-        if tag_boolp:
-            nr_used_parasites += 1
-            nodelist[current_list_index][1] = "2"
-            if (get_tag(ott, 'FL')):
-                doubleTagged += 1
-        else:
-            tag_boolf = get_tag(ott, 'FL')
-            if tag_boolf:
-                nr_used_freelivings += 1
-                nodelist[current_list_index][1] = "1"
-            else:
-                nodelist[current_list_index][1] = "NA"
-                unknown += 1
+        stats = [nr_leave_nodes, nr_used_parasites, nr_used_freelivings, unknown, doubleTagged]
+        tag_node(nodelist, current_list_index, ott, [freelivings, parasites], stats)
     else:
         for clade in subtree.clades:
-            fill_tree_with_tags(clade, index)
+            fill_tree_with_tags(clade)
     # -------------------------------------------------
     csv_title = '../data/evaluation/Eukaryota'+ index + '-' + str(border) +'.csv' 
     nodelist_file = open(csv_title, 'a')
@@ -142,20 +118,3 @@ def fill_tree_with_tags(subtree, index):
     nodelist_file.close()
     # -------------------------------------------------
     return
-
-def get_tag(name, tag):
-    global freelivings
-    global parasites
-    if tag == 'FL':
-        species_list = freelivings
-    else:
-        species_list = parasites
-    # Checks for the presence of name in any string in the list
-    for item in species_list:
-        # mrcaott_item = 'mrca' + item + 'ott'
-        if item == name or name.endswith(item): # or name.startswith(mrcaott_item):
-            species_list.remove(item)
-            return True
-    return False
-
-main()
