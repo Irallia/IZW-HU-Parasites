@@ -9,7 +9,10 @@ TAGS = [0, 1]
 
 def find_element_in_nodelist(id_name, nodelist):
     """finds id in nodelist and returns the element"""
-    return nodelist[int(id_name.split("$")[1])]
+    element = nodelist[int(id_name.split("$")[1])]
+    if element[0] != id_name.split("$")[1]:
+        print(id_name, "!=", element)
+    return element
 
 def print_time(time_old):
     time_new = datetime.datetime.now().replace(microsecond=0)

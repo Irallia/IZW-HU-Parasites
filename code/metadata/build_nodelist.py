@@ -7,10 +7,10 @@ from time import gmtime, strftime
 from Bio import Phylo
 from termcolor import colored, cprint
 
-# path_freelivings = "../data/interaction_data/reduced_freelivings.csv"
-# path_parasites = "../data/interaction_data/reduced_parasites.csv"
-path_freelivings = "../data/interaction_data/freelivings.csv"
-path_parasites = "../data/interaction_data/parasites.csv"
+# path_freelivings = "./data/interaction_data/reduced_freelivings.csv"
+# path_parasites = "./data/interaction_data/reduced_parasites.csv"
+path_freelivings = "./data/interaction_data/freelivings.csv"
+path_parasites = "./data/interaction_data/parasites.csv"
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -47,7 +47,7 @@ def main():
     parasites = read_tags(path_parasites)
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- read tree ----------------", "green"))
-    subtree_path = '../data/subtree/Eukaryota.tre'
+    subtree_path = './data/subtree/Eukaryota.tre'
     print("Build nodelist for: Eukaryota")
     tree = Phylo.read(subtree_path, 'newick')
     print(colored("---------------- tag tree ----------------", "green"))
@@ -102,7 +102,7 @@ def fill_tree_with_tags(subtree, depth):
         heights = [min_heigth + 1, max_heigth + 1, mean_heigth]
         nodelist[current_list_index][4] = heights
     # -------------------------------------------------
-    csv_title = '../data/nodelist/Eukaryota.csv' 
+    csv_title = './data/nodelist/Eukaryota.csv' 
     nodelist_file = open(csv_title, 'a')
     writer = csv.writer(nodelist_file)
     writer.writerow((nodelist[current_list_index])) 

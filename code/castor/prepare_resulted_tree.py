@@ -1,12 +1,11 @@
 import ast
 import csv
 import datetime
+from code.utilities.Helpers import find_element_in_nodelist, print_time
 from time import gmtime, strftime
 
 from Bio import Phylo
 from termcolor import colored
-
-from Helpers import find_element_in_nodelist, print_time
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -19,35 +18,33 @@ def main():
     global nodelist
     
     print(colored("---------------- read tree ----------------", "green"))
-    subtree_path = '../data/subtree/Eukaryota.tre'
+    subtree_path = './data/subtree/Eukaryota.tre'
     tree = Phylo.read(subtree_path, 'newick')
     CURRENT_TIME = print_time(CURRENT_TIME)
 
     print(colored("---------------- read nodelist ----------------", "green"))
-    nodelist_path = '../results/Eukaryota-taxa.csv' 
-    #               0       1   2       3           4       5           6           7
-    # nodelist - [ott_id, name, rank, uniqname, depths, nr_children, originaltag, finaltag]
+    nodelist_path = './data/nodelist/Eukaryota-castor.csv' 
+    #                0    1              2       3       4           5
+    # nodelist    - [id, originaltag, finaltag, depth, heights, nr_children]
     with open(nodelist_path, 'r') as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
+        next(reader, None)      # skip the header
         for row in reader:
             if row != []:
                 ott_id = row[0]
-                originaltag = row[6]
-                finaltag = row[7]
-                print(ott_id, originaltag, finaltag)
+                originaltag = row[1]
+                finaltag = row[2]
                 nodelist.append([ott_id, originaltag, finaltag])
     CURRENT_TIME = print_time(CURRENT_TIME)
 
     print(colored("---------------- prepare tree ----------------", "green"))
     prepare_tree(tree.clade)
     print(colored("---------------- Save tree ----------------", "green"))
-    Phylo.write(tree, 'results/Eukaryota_tree.tre', 'newick')
+    Phylo.write(tree, './results/Eukaryota_tree-castor.tre', 'newick')
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("--------------------------------", "green"))
-    
     return
     
-
 def prepare_tree(subtree):
     """tag all leafs"""
     # Arguments:
@@ -55,9 +52,6 @@ def prepare_tree(subtree):
     #                   0       1           2           
     #   nodelist - [ott_id, originaltag, finaltag]
     element = find_element_in_nodelist(subtree.name, nodelist)
-    if element[0].split("$")[1] != subtree.name:
-        print(subtree.name)
-        print(element)
     if subtree.is_terminal():
         if element[1] != '':
             subtree.name = subtree.name + '$' + element[1]

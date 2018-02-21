@@ -22,11 +22,11 @@ def main():
 
     print('Run castor - Sankoff parsimony - for Eukaryota')
     print(colored("---------------- read tree ----------------", "green"))
-    subtree_path = '../data/subtree/Eukaryota.tre'
+    subtree_path = './data/subtree/Eukaryota.tre'
     tree = Phylo.read(subtree_path, 'newick')
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- read nodelist ----------------", "green"))
-    nodelist_path = '../data/nodelist/Eukaryota.csv' 
+    nodelist_path = './data/nodelist/Eukaryota.csv' 
     #                0    1              2       3       4           5
     # nodelist    - [id, originaltag, finaltag, depth, heights, nr_children]
     nodelist = []
@@ -46,7 +46,7 @@ def main():
     sankoff_parsimony(tree, nodelist)
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- Save nodelist ----------------", "green"))
-    nodelist_path = '../data/nodelist/Eukaryota-castor.csv' 
+    nodelist_path = './data/nodelist/Eukaryota-castor.csv' 
     header = ['ott_id', 'originaltag', 'finaltag', 'depth', 'heights', 'nr_children']
     with open(nodelist_path, 'w') as nodelist_file:
         writer = csv.writer(nodelist_file, delimiter=',')
