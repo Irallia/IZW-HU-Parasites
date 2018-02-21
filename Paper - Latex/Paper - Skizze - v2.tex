@@ -107,6 +107,18 @@
   We have decided to consider only parsimony algorithms since we have no information on branch 
   lengths and no other additional information like different transition probabilities of our states.
 
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %--------------------------------------------------------------------------------------------------- 
+  \section{Definitions}
+    \begin{itemize}
+      \item Parasit - Freilebend
+      \item Multifurkation - binär
+      \item height (min, max, mean), depth of a tree/node (Distanz zur Wurzel vs distanz zum Blatt)
+      \item maximum parsimony
+      \item OTL, OTT, GloBI
+    \end{itemize}
+
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -344,16 +356,14 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
-      Ein von den Daten beeinflusster Parameter ist die Multifurkation des Baumes, d.h. wie weit sind 
-        wir von einem binären Baum entfehrnt, was hängt mit der stärke der Multifurkation zusammen und 
-        welche Auswirkung hat sie auf unsere Fragestellung. \\
-      In Figure \ref{fig:childrenOfNodes} haben wir die Multifurkation über den gesamten Baum abgebildet,
-        dazu haben wir für jeden Knoten die Anzahl seiner Kinder gezählt und dies als Histogram 
-        geplottet. \\
-      Subfigure \ref{fig:childrenOfNodes_innerNodes} beschränkt sich hierbei nur auf die inner nodes 
-        während Subfigure \ref{fig:childrenOfNodes_allNodes} alle Knoten abbildet. \\
+      One property of the tree is its ridge of multifurcation. A complete kinship tree would be binary, 
+        but since we only work with a synthesis tree of individual trees, this tree is multifurcated. 
+        For a first overview we collected for every node its number of children (degree $-1$), and 
+        plottet this in an histogram. In Figure \ref{fig:childrenOfNodes} you can see how much nodes we 
+        have for every degree. \\
+      \todotext{Subfigure \ref{fig:childrenOfNodes_innerNodes} beschränkt sich hierbei nur auf die inner 
+        nodes während Subfigure \ref{fig:childrenOfNodes_allNodes} alle Knoten abbildet.} \\
       \todo{Welchen der beiden Plots wollen wir nehmen, einer genügt eigentlich:}
-
       \begin{figure}[h!]
         \begin{subfigure}{.5\textwidth}
           \centering
@@ -370,8 +380,8 @@
         \caption{plots of children of nodes}
         \label{fig:childrenOfNodes}
       \end{figure}
-
-      Wir haben verschiedene Eigenschaften der Multifurkation untersucht:
+      As you can see, we are very far from a binary tree. Therefore, the impact of multifurcations on 
+        our research question has been investigated:
       \begin{itemize}
         \item stärke der Multifurcation in verschiedenen Subbäumen
         \item zusammenhang zur tiefe im Baum
@@ -379,108 +389,24 @@
         \item einfluss auf die vorhersage des Castor und Fitch Algorithmus (Simulation) \todo{...}
       \end{itemize}
 
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Poisson regression}
-      
-        \begin{lstlisting}[gobble=8]
-          glm(formula = multifurc ~ 1, family = "poisson", data = inner.taxa)
-        \end{lstlisting}
-        The intercept is $2.821 > 0$ $\Rightarrow$ there is a multifunction.
-        (Intercept: Stärke der Multifurcation) \\
-        Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
-        Chloroplastida than in Metazoa:
-        $$4.0999 (Fungi Intercept) > -0.9132 (Chloroplastida Intercept) > -1.4320 (Metazoa Intercept)$$
-        % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
-        Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
-          des Baums mit dem folgenden Deviance Table:
-          
-        \begin{center}
-          \begin{longtable}{ |l|r|r| }
-            \hline
-            Model & Residuals Dev & Deviance Pr \\
-            \hline \hline
-            multifurc $\sim$ kingdom & 7774454 & \\
-            multifurc $\sim$ phylum & 7435700 & 338754 \\
-            multifurc $\sim$ class & 7337241 & 98459 \\
-            \rowcolor{green} multifurc $\sim$ order & 7076068 & 261172 \\
-            \hline \hline \hline
-            multifurc $\sim$ phylum + depth & 7431609 & \\
-            multifurc $\sim$ phylum + max.height & 7375889 & 55721 \\
-            multifurc $\sim$ phylum + min.height & 7233486 & 142403 \\
-            \rowcolor{green} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
-            \hline \hline
-            multifurc ~ phylum * depth & 7335396 & \\
-            multifurc ~ phylum * max.height & 7311241 & 24155 \\
-            multifurc ~ phylum * min.height & 7177002 & 134238 \\
-            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
-            \hline \hline
-            multifurc ~ phylum & 7435700 & \\
-            multifurc ~ phylum + mean.height & 7128318 & 307381 \\
-            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
-            \hline \hline \hline
-            multifurc $\sim$ class + depth & 7334754 & \\
-            multifurc $\sim$ class + max.height & 7275856 & 58898 \\
-            multifurc $\sim$ class + min.height & 7144686 & 131170 \\
-            \rowcolor{green} multifurc $\sim$ class + mean.height & 7055313 & 89374 \\
-            \hline \hline
-            multifurc ~ class * depth & 7250759 & \\
-            multifurc ~ class * max.height & 7187504 & 63256 \\
-            multifurc ~ class * min.height & 7094933 & 92570 \\
-            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 129139 \\
-            \hline \hline
-            multifurc ~ class & 7337241 & \\
-            multifurc ~ class + mean.height & 7055313 & 281928 \\
-            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 89518 \\
-            \hline \hline \hline
-            multifurc $\sim$ order + depth & 7027578 & \\
-            multifurc $\sim$ order + max.height & 7005424 & 22154 \\
-            multifurc $\sim$ order + min.height & 6890703 & 114721 \\
-            \rowcolor{green} multifurc $\sim$ order + mean.height & 6815271 & 75432 \\
-            \hline
-          \end{longtable}
-        \end{center}
-        * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
-        * Deviance - Abweichung \\
-        
-        \begin{lstlisting}[gobble=8]
-          class * depth / min/max/mean.height: Warning message: glm.fit: fitted rates numerically 0 occurred
-          order * depth / min/max/mean.height: Error: cannot allocate vector of size 2.2 Gb
-        \end{lstlisting}
+      "Nested models were compared using likelihood ratio tests, models using different predictors were 
+      compared according to their deviance and AIC."
 
-        \todotext{Nur ein Ausschnitt hier und dann... You can find the whole Deviance Table in the 
-          Appendix...} \\
-        Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
-          genauer umso kleinere Subtrees wir betrachten. ...
-        \begin{lstlisting}[gobble=8]
-          Model 1: multifurc ~ kingdom
-          Model 2: multifurc ~ phylum
-          Model 3: multifurc ~ class
-          Model 4: multifurc ~ order
-            Resid. Df Resid. Dev  Df Deviance  Pr(>Chi)
-          1    167222    7774454
-          2    167173    7435700  49   338754 < 2.2e-16 ***
-          3    167039    7337241 134    98459 < 2.2e-16 ***
-          4    166352    7076068 687   261172 < 2.2e-16 ***
-        \end{lstlisting}
-        \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
-
-        \todo{old Stuff:} \\
-        One property of the tree is its ridge of multifurcation. For this we collected for every node its
-          number of children (degree $-1$), and plottet this in an histogram, how much nodes we have for 
-          every degree. Then we tried to find a function which best discribes this behavior. In figure 
-          \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
-          closest to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
-          $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
-        \begin{figure}[h]
-          \caption{Histogram of multifurcations and fitting functions}
-          \centering
-          \label{fig:HistogramsOfMultifurcations}
-          \includegraphics[width=0.7\textwidth]{Figures/HistogramsOfMultifurcations.png}
-        \end{figure}
-        From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
-          well known and others have not been very interesting for the research so far. So we also wanted 
-          to know how the multifurcations behave in some interesting subtrees. \\
-        \anmerkung{do we? Is that really universal knowledge or could it be supported by data or a citation? (Bernhard)} \\
+        % \todo{old Stuff:} \\
+        %   Then we tried to find a function which best discribes this behavior. In figure 
+        %   \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
+        %   closest to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
+        %   $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
+        % \begin{figure}[h]
+        %   \caption{Histogram of multifurcations and fitting functions}
+        %   \centering
+        %   \label{fig:HistogramsOfMultifurcations}
+        %   \includegraphics[width=0.7\textwidth]{Figures/HistogramsOfMultifurcations.png}
+        % \end{figure}
+        % From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
+        %   well known and others have not been very interesting for the research so far. So we also wanted 
+        %   to know how the multifurcations behave in some interesting subtrees. \\
+        % \anmerkung{do we? Is that really universal knowledge or could it be supported by data or a citation? (Bernhard)} \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -539,7 +465,7 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{tag tree}
-      \anmerkung{instead of 'tag tee' simulating stages and transitions between them (Emanuel)} \\
+      \anmerkung{instead of 'tag tee' simulating states and transitions between them (Emanuel)} \\
       At this point we want one fully tagged tree, and one less tagged tree which looks like our real 
         data.\\
       Let's say the first specie (the root node) was free-living (start with a parasite without a host 
@@ -710,6 +636,128 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Results}
+  Ein großer Punkt in diesem Kapitel ist das Ergebnis der Untersuchung der Datenlage. Wie ist der 
+    Stand? Welchen Einfluss hat das auf unser eigentliches Ergebnis? Was kann man dagegen tun? \\
+  Ansonsten geht es in diesem Kapitel hauptsächlich um die tatsächliche Rekonstruktion der states.
+    Dass heißt zum einen der der inneren Knoten und dadurch der Untersuchung von Origins und Losses
+    und zum anderen der Vorhersage von unbekannten states von Leaf nodes.
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Tree}
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Taxa}
+      Die Untersuchung der Taxa der Eukaryoten hat das folgende ergeben:
+      Es gibt 3 Kingdoms: Chloroplastida, Metazoa, Fungi. \\
+      \todo{Hier fehlt nichts. Ref einfügen.} \\
+      Phyla (53): \\
+      Acanthocephala, Amoebozoa, Apicomplexa, Arthropoda, Ascomycota, Bacillariophyta, Basidiomycota, 
+        Brachiopoda, Bryozoa, Chaetognatha, Chlorophyta, Chordata, Chromerida, Chytridiomycota, 
+        Ciliophora, Cnidaria, Colponemidia, Ctenophora, Cycliophora, Echinodermata, Entoprocta, 
+        Entorrhizomycota, Euglenida, Foraminifera, Gastrotricha, Glomeromycota, Gnathostomulida, 
+        Haplosporida, Haptophyta, Hemichordata, Kinorhyncha, Loricifera, Microsporidia, Mollusca, 
+        Myzostomida, Nematoda, Nematomorpha, Nemertea, Onychophora, Orthonectida, Phaeophyceae, 
+        Picozoa, Placozoa, Platyhelminthes, Porifera, Priapulida, Rhodophyta, Rhombozoa, Rotifera, 
+        Streptophyta, Tardigrada, Xanthophyceae \\
+      Wobei von Streptophyta -> Anthocerotophyta, Marchantiophyta, Bryophyta, Tracheophyta als
+        Phylum im Phylum gefunden und nicht einbezogen wurden und Magnoliophyta als Phylum in 
+        Tracheophyta ebenfalls nicht. \\
+      Es fällt auf, dass einige wichtige Phyla fehlen: \todo{Emanuel fragen}. \\
+      Außerdem haben wir 195 Klassen und 924 Ordnungen feststellen können.
+
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \section{Multifurcation}
+      
+       %---------------------------------------------------------------------------------------------------
+       %---------------------------------------------------------------------------------------------------
+       \subsection{Poisson regression}
+      
+        \begin{lstlisting}[gobble=8]
+          glm(formula = multifurc ~ 1, family = "poisson", data = inner.taxa)
+        \end{lstlisting}
+        The intercept is $2.821 > 0$ $\Rightarrow$ there is a multifunction.
+        (Intercept: Stärke der Multifurcation) \\
+        Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
+        Chloroplastida than in Metazoa:
+        $$4.0999 (Fungi Intercept) > -0.9132 (Chloroplastida Intercept) > -1.4320 (Metazoa Intercept)$$
+        % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
+        Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
+          des Baums mit dem folgenden Deviance Table:
+          
+        \begin{center}
+          \begin{longtable}{ |l|r|r| }
+            \hline
+            Model & Residuals Dev & Deviance Pr \\
+            \hline \hline
+            multifurc $\sim$ kingdom & 7774454 & \\
+            multifurc $\sim$ phylum & 7435700 & 338754 \\
+            multifurc $\sim$ class & 7337241 & 98459 \\
+            \rowcolor{green} multifurc $\sim$ order & 7076068 & 261172 \\
+            \hline \hline \hline
+            multifurc $\sim$ phylum + depth & 7431609 & \\
+            multifurc $\sim$ phylum + max.height & 7375889 & 55721 \\
+            multifurc $\sim$ phylum + min.height & 7233486 & 142403 \\
+            \rowcolor{green} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
+            \hline \hline
+            multifurc ~ phylum * depth & 7335396 & \\
+            multifurc ~ phylum * max.height & 7311241 & 24155 \\
+            multifurc ~ phylum * min.height & 7177002 & 134238 \\
+            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
+            \hline \hline
+            multifurc ~ phylum & 7435700 & \\
+            multifurc ~ phylum + mean.height & 7128318 & 307381 \\
+            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
+            \hline \hline \hline
+            multifurc $\sim$ class + depth & 7334754 & \\
+            multifurc $\sim$ class + max.height & 7275856 & 58898 \\
+            multifurc $\sim$ class + min.height & 7144686 & 131170 \\
+            \rowcolor{green} multifurc $\sim$ class + mean.height & 7055313 & 89374 \\
+            \hline \hline
+            multifurc ~ class * depth & 7250759 & \\
+            multifurc ~ class * max.height & 7187504 & 63256 \\
+            multifurc ~ class * min.height & 7094933 & 92570 \\
+            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 129139 \\
+            \hline \hline
+            multifurc ~ class & 7337241 & \\
+            multifurc ~ class + mean.height & 7055313 & 281928 \\
+            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 89518 \\
+            \hline \hline \hline
+            multifurc $\sim$ order + depth & 7027578 & \\
+            multifurc $\sim$ order + max.height & 7005424 & 22154 \\
+            multifurc $\sim$ order + min.height & 6890703 & 114721 \\
+            \rowcolor{green} multifurc $\sim$ order + mean.height & 6815271 & 75432 \\
+            \hline
+          \end{longtable}
+        \end{center}
+        * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
+        * Deviance - Abweichung \\
+        
+        \begin{lstlisting}[gobble=8]
+          class * depth / min/max/mean.height: Warning message: glm.fit: fitted rates numerically 0 occurred
+          order * depth / min/max/mean.height: Error: cannot allocate vector of size 2.2 Gb
+        \end{lstlisting}
+
+        \todotext{Nur ein Ausschnitt hier und dann... You can find the whole Deviance Table in the 
+          Appendix...} \\
+        Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
+          genauer umso kleinere Subtrees wir betrachten. ...
+        \begin{lstlisting}[gobble=8]
+          Model 1: multifurc ~ kingdom
+          Model 2: multifurc ~ phylum
+          Model 3: multifurc ~ class
+          Model 4: multifurc ~ order
+            Resid. Df Resid. Dev  Df Deviance  Pr(>Chi)
+          1    167222    7774454
+          2    167173    7435700  49   338754 < 2.2e-16 ***
+          3    167039    7337241 134    98459 < 2.2e-16 ***
+          4    166352    7076068 687   261172 < 2.2e-16 ***
+        \end{lstlisting}
+        \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
+
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
