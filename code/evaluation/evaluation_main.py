@@ -1,6 +1,6 @@
 import sys
-from code.evaluation.build_nodelist import build_nodelist
-from code.evaluation.run_castor import run_castor
+from .build_nodelist import build_nodelist
+from .run_castor import run_castor
 
 # input arguments
 args = sys.argv
