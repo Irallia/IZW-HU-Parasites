@@ -1,7 +1,5 @@
-code/evaluation/bufferfiles/*
-code/metadata/bufferfiles/*
+code/bufferfiles/*
 
-code/simulation/bufferfiles/*
 code/simulation/evaluation/
 code/simulation/non_binary_simulation/metadata.csv
 code/simulation/output.csv

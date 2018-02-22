@@ -3,12 +3,12 @@ library(Rcpp)
 library(castor)
 
 # -------- Tree: --------
-path_tree <- "bufferfiles/simulated_tree.tre"
+path_tree <- "code/bufferfiles/simulated_tree.tre"
 # read.tree(file = "", text = NULL, tree.names = NULL, skip = 0, comment.char = "", keep.multi = FALSE, ...)
 tree <- read.tree(path_tree)
 
 # -------- Tagged tree: --------
-path_tagged_tree <- "bufferfiles/simulated_tagged_tree.tre"
+path_tagged_tree <- "code/bufferfiles/simulated_tagged_tree.tre"
 tagged_tree <- read.tree(path_tagged_tree)
 
 # ---- get the tagged tips of the tree ----

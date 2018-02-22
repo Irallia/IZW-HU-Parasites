@@ -3,7 +3,7 @@ from code.utilities.Helpers import find_element_in_nodelist
 import rpy2.robjects
 from Bio import Phylo
 
-r_path = "./castor_parsimony_simulation.R"
+r_path = "./code/utilities/castor_parsimony_simulation.R"
 nodelist = []
 
 
@@ -18,10 +18,10 @@ def sankoff_parsimony(tree, current_nodelist):
 
     # ---- cache tree for R script ---
 
-    Phylo.write(tree, 'bufferfiles/simulated_tree.tre', 'newick')
+    Phylo.write(tree, './code/bufferfiles/simulated_tree.tre', 'newick')
 
     prepare_tree(tree.clade)
-    Phylo.write(tree, 'bufferfiles/simulated_tagged_tree.tre', 'newick')
+    Phylo.write(tree, './code/bufferfiles/simulated_tagged_tree.tre', 'newick')
     
     # -------- R code --------
     
@@ -59,8 +59,8 @@ def prepare_tree(subtree):
     """tag all leafs"""
     # Arguments:
     #   subtree
-    #              0    1       2           3           4           5
-    #   nodelist - [id, depth, heights, nr_children, originaltag, finaltag]
+    #                   0    1              2       3       4           5
+    # nodelist      - [id, originaltag, finaltag, depth, heights, nr_children]
     global nodelist
 
     if subtree.is_terminal():

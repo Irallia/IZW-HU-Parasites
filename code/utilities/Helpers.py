@@ -9,10 +9,22 @@ TAGS = [0, 1]
 
 def find_element_in_nodelist(id_name, nodelist):
     """finds id in nodelist and returns the element"""
-    element = nodelist[int(id_name.split("$")[1])]
-    if element[0] != id_name.split("$")[1]:
-        print(id_name, "!=", element)
-    return element
+    index = int(id_name.split("$")[1])
+    element = nodelist[index]
+    if element[0] != id_name.split("$")[0]:
+        mini_nodelist = nodelist[(index - 100):(index + 100)]
+        # print(id_name, "!=", element)
+        for item in mini_nodelist:
+            if item[0] == id_name.split("$")[0]:
+                print(item[0], '==', id_name.split("$")[0])
+                return item
+        for item in nodelist:
+            if item[0] == id_name.split("$")[0]:
+                # print(item[0], '==', id_name.split("$")[0])
+                return item
+    else:
+        print("found without searching")
+        return element
 
 def print_time(time_old):
     time_new = datetime.datetime.now().replace(microsecond=0)
