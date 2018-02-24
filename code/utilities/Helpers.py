@@ -16,14 +16,14 @@ def find_element_in_nodelist(id_name, nodelist):
         # print(id_name, "!=", element)
         for item in mini_nodelist:
             if item[0] == id_name.split("$")[0]:
-                print(item[0], '==', id_name.split("$")[0])
+                # print(item[0], '==', id_name.split("$")[0])
                 return item
         for item in nodelist:
             if item[0] == id_name.split("$")[0]:
                 # print(item[0], '==', id_name.split("$")[0])
                 return item
     else:
-        print("found without searching")
+        # print("found without searching")
         return element
 
 def print_time(time_old):

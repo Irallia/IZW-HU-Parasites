@@ -85,7 +85,12 @@ def fill_tree_with_tags(subtree, depth):
 
     if subtree.is_terminal():
         stats = [nr_leave_nodes, nr_used_parasites, nr_used_freelivings, unknown, doubleTagged]
-        tag_node(nodelist, current_list_index, ott, [freelivings, parasites], stats)
+        stats = tag_node(nodelist, current_list_index, ott, [freelivings, parasites], stats)
+        nr_leave_nodes = stats[0]
+        nr_used_parasites = stats[1]
+        nr_used_freelivings = stats[2]
+        unknown = stats[3]
+        doubleTagged = stats[4]
     else:
         min_heigth = float('inf')
         max_heigth = 0

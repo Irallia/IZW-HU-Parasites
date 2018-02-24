@@ -51,7 +51,8 @@ def tag_node(nodelist, current_list_index, ott, species_lists, stats):
         else:
             nodelist[current_list_index][1] = "NA"
             unknown += 1
-    return
+    stats = [nr_leave_nodes, nr_used_parasites, nr_used_freelivings, unknown, doubleTagged]
+    return stats
 
 def get_tag(name, tag):
     global current_freelivings
