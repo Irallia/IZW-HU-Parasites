@@ -503,7 +503,7 @@
       The real tree has much less information, we have only information from some current species 
         (leaf nodes) and \todo{and probably negligible internal nodes}. \\
       To simulate our real tree we save for every node an empty placeholde except for some leaf nodes.
-      There we save the tags again. The amount of these unknown information is one parameter, which we
+      There we save the states again. The amount of these unknown information is one parameter, which we
       got from our real tree. Or which we can change to \todo{...}
       \todo{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
 
@@ -571,25 +571,25 @@
         Der Fitch Algorithmus ist aufgeteilt in drei Schritte, in welchen man jeweils durch den Baum traversiert.
         Schritt 1 beginnt von de Blättern aus, da sich dort zu Beginn die einzige Information befindet. 
         Für jeden Knoten gilt, wenn seine Kinder schon Information enthalten, dann bilde die Schnittmenge 
-        der Tags und schreibe diese als Information in den aktuellen Knoten. Ist die Schnittmenge leer, 
-        dann schreibe die Vereinigung aller möglichen Tags in den Knoten. Für alle Kinder, die noch keine 
+        der states und schreibe diese als Information in den aktuellen Knoten. Ist die Schnittmenge leer, 
+        dann schreibe die Vereinigung aller möglichen states in den Knoten. Für alle Kinder, die noch keine 
         Information haben, führe diesen Schritt erst für diese aus.
         Schritt zwei geht von den Kindern der Wurzel bis zu den Vätern der Blätter. Jeder Knoten bekommt 
-        einen zweiten Tag, der sich aus der Vereinigung des Tags des Vaterknoten und der Geschwisterknoten
-        zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller Tags, also $\{FL,P\}$ als Tag.
+        einen zweiten Tag, der sich aus der Vereinigung des states des Vaterknoten und der Geschwisterknoten
+        zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller states, also $\{FL,P\}$ als Tag.
 
         Hier gibt es einige Möglichkeiten, wie dieser Schritt genau aussieht.
         1. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Außerdem wird von den 
         Geschwisterknoten zuerst der Schnitt gebildet, und danach vom Ergebnis nochmal mit dem Vaterknoten zusammen.
-        (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller Tags, also $\{FL,P\}$. Auch im folgenden...)
+        (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller states, also $\{FL,P\}$. Auch im folgenden...)
         2. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Er wird zusammen mit den 
-        Geschwistertags genommen und direkt ein Schnitt aller Mengen gebildet.
-        3. Version: Es werden alle vorherigen Tags vom Vater genutzt und von diesen ein Schnitt gebildet.
-        Das selbe gilt für die Geschwistertags. Und dann wird ein dritter Schnitt zwischend en Ergebnissen gebildet.
-        4. Version: Es werden alle Tags genutzt und direkt in einem Schnitt zusammengenommen.
+        Geschwisterstates genommen und direkt ein Schnitt aller Mengen gebildet.
+        3. Version: Es werden alle vorherigen states vom Vater genutzt und von diesen ein Schnitt gebildet.
+        Das selbe gilt für die Geschwisterstates. Und dann wird ein dritter Schnitt zwischend en Ergebnissen gebildet.
+        4. Version: Es werden alle states genutzt und direkt in einem Schnitt zusammengenommen.
 
-        Der Finale Schritt traversiert nochmal über den Baum und Bildet aus den zwei Tags pro Knoten einen finalen
-        Tag, indem wieder der Schnitt der beiden Tags das Ergebnis ist.
+        Der Finale Schritt traversiert nochmal über den Baum und Bildet aus den zwei states pro Knoten einen finalen
+        Tag, indem wieder der Schnitt der beiden states das Ergebnis ist.
 
         Ich habe diese Versionen mit 100 Bäumen mit 10000 Blattknoten und der Verteilung 60\% FL zu 40\% P simuliert.
         Bei 90 \% unbekannten Knoten lag Version 1 zu 89.67 \%, Version 2 zu 89.67 \%, Version 3 zu 
@@ -640,12 +640,14 @@
     Stand? Welchen Einfluss hat das auf unser eigentliches Ergebnis? Was kann man dagegen tun? \\
   Ansonsten geht es in diesem Kapitel hauptsächlich um die tatsächliche Rekonstruktion der states.
     Dass heißt zum einen der der inneren Knoten und dadurch der Untersuchung von Origins und Losses
-    und zum anderen der Vorhersage von unbekannten states von Leaf nodes.
+    und zum anderen der Vorhersage von unbekannten states von Leaf nodes. \\
+  Und natürlich dem Ergebnis der Simulation.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Tree}
+  \section{Metadata analysis}
+
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Taxa}
@@ -664,7 +666,6 @@
       Wobei von Streptophyta -> Anthocerotophyta, Marchantiophyta, Bryophyta, Tracheophyta als
         Phylum im Phylum gefunden und nicht einbezogen wurden und Magnoliophyta als Phylum in 
         Tracheophyta ebenfalls nicht. \\
-      Es fällt auf, dass einige wichtige Phyla fehlen: \todo{Emanuel fragen}. \\
       Außerdem haben wir 195 Klassen und 924 Ordnungen feststellen können.
 
     %---------------------------------------------------------------------------------------------------
@@ -758,17 +759,171 @@
         \end{lstlisting}
         \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
 
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Results of castor}
+
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Biological view}
+    
+
+      \todo{Castor replaces originaltags with finaltags. There are 82 originaltags != finaltag.} \\ \\
+
+      We picked a few phyla to evaluate the results from the biological point of view. \\
+      Table \ref{table:phylum leaf nodes states} shows some known phyla: Chordata, Nematoda, 
+        Platyhelminthes and Apicomplexa \\
+      As we know \todo{ref einfügen} the Chordata are full of free-living species and there are only a 
+        few parasites. The algorithm reflects this. We started with 99.83\% free-living species and 
+        predicted 99.94\% species as parasites \todo{(inklusive all known nodes)}. Only 0.06\% were 
+        predicted as parasites. These few parasites are mostly breeding parasites (brood parasitism) and 
+        some individual errors from the GloBI database. \\
+      Same observation but with less free-livings is the Apicomplexa Phylum. Here we have only a few 
+        free-livings \todo{ref einfügen}. And as we see, we had good start data and predicted 00.95\% as 
+        parasites. \\
+      For the Platyhelminthes the literature says that there are mostly all Platyhelminthes parasites
+        \todo{ref einfügen}. But at the end we predicted 4.18\% as free-living. The class Seriata is the 
+        reason for the most of free-livings in this phylum. These are partly free-living flatworms, so 
+        the prediction looks right. \\
+        \todotext{ Wiki: \\
+        *The Seriata are an order of turbellarian flatworms.[1][2] \\
+        They are found in both freshwater and marine environments, and also include a number of species 
+        found in damp terrestrial conditions. Most are free-living, but the group includes the genus 
+        Bdelloura, which lives comensally on the gills of horseshoe crabs. Seriatans are distinguished 
+        from other related groups by the presence of a folded pharynx and of a number of diverticula 
+        arising from the intestine. The intestine itself may be either simple or branched.[3]}
+      
+      With the Nematoda it looks very different.  In the Nematoda its much worse. Here speaks the 
+        literature of \todo{x percent} free-living, but we found only 2.63\% of them. The problem at 
+        this point, however, is obvious: The parasites have been much more studied and thus we start 
+        with only 0.63\% free-living species. Against such a shifted data situation, the algorithm is 
+        powerless.
+
+    
+      \begin{table}
+        \begin{center}
+          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
+            \hline
+            & & \multicolumn{2}{c}{original states} & \multicolumn{6}{c}{final states} \\
+            Phylum & \# nodes & (FL) & (P) 
+              & 0 (FL) & 0.4 & 0.5 & 0.667 & 0.75 & 1 (P) \\
+            \hline \hline
+            Chordata & 91785 & 10451 & 18 
+              & 91734 & 0 & 0 & 0 & 0 & 51 \\
+            & & 99.83\% & 0.49\%
+              & 99.94\% & & & & & 0.06\% \\ \hline
+            Nematoda & 30127 & 21 & 3289 
+              & 791 & 0 & 1017 & 0 & 0 & 28319 \\
+            & & 0.63\% & 99.37\%
+              & 2.63\% & & 3.38\% & & & 94\% \\ \hline
+            Platyhelminthes & 22683 & 7 & 7086 
+              & 949 & 0 & 151 & 0 & 0 & 21583 \\
+            & & 0.1\% & 99.9\%
+              & 4.18\% & & 0.67\% & & & 95.15\% \\ \hline
+            Apicomplexa & 1863 & 1 & 255 
+              & 1 & 0 & 0 & 0 & 0 & 1862 \\
+            & & 0.39\% & 99.61\%
+              & 0.05\% & & & & & 99.95\% \\
+            \hline \hline
+            Anthropoda & 1198981 & 18912 & 11141 
+              & 1099509 & 1313 & 22478 & 4176 & 1665 & 70223 \\
+            & & 62.93\% & 37.07\%
+              & 91.7\% & 0.11\% & 1.87\% & 0.35\% & 0.14\% & 5.86\% \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{Phylum (leaf nodes)}
+        \label{table:phylum leaf nodes states} 
+      \end{table}
+
+      \anmerkungstext{Das sind schonmal vier große Kontraste, wenn dann noch Zeit bleibt, die 
+        schwirigen... Arthropoden, Fungi, Pflanzen... (Emanuel)} \\
+
+      \begin{table}
+        \begin{center}
+          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
+            \hline
+            & & \multicolumn{2}{c}{original states} & \multicolumn{8}{c}{final states} \\
+            Kingdom & \# nodes & (FL) & (P) 
+              & 0 (FL) & 0.25 & 0.333 & 0.4 & 0.667 & 0.75 & 1 (P) \\
+            \hline \hline
+            none & 84456 & 45 & 529 
+              & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
+            Fungi & 324105 & 577 & 2983
+              & 39088 & 0 & 0 & 0 & 5858 & 0 & 0 & 274803 \\
+            Chloroplastida & 460457 & 3519 & 77
+              & 454211 & 0 & 0 & 0 & 4688 & 0 & 0 & 1558 \\
+            Metazoa & 1670956 & 30758 & 22373
+              & 1485749 & 0 & 0 & 1313 & 29002 & 5102 & 1957 & 147833 \\
+            \hline  
+          \end{tabular}
+        \end{center}
+        \caption{Kingdom (inkl internal nodes)}
+      \end{table}
+      
+      \begin{table}
+        \begin{center}
+          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
+            \hline
+            & & \multicolumn{2}{c}{original states} & \multicolumn{6}{c}{final states} \\
+            Phylum & \# nodes & (FL) & (P) 
+              & 0 (FL) & 0.4 & 0.5 & 0.667 & 0.75 & 1 (P) \\
+            \hline \hline
+            Chordata & 122546 & 10451 & 18 
+              & 122473 & 0 & 0 & 0 & 0 & 73 \\
+            Nematoda & 33564 & 21 & 3289 
+              & 846 & 0 & 1133 & 0 & 0 & 31585 \\
+            Platyhelminthes & 27142 & 7 & 7086 
+              & 1010 & 0 & 175 & 0 & 0 & 25957 \\
+            Apicomplexa & 2102 & 1 & 255 
+              & 1 & 0 & 0 & 0 & 0 & 2101 \\
+            \hline
+            Anthropoda & 1319460 & 18912 & 11141 
+              & 1207204 & 1313 & 25499 & 4852 & 1957 & 78635 \\
+            \hline
+          \end{tabular}
+        \end{center}
+        \caption{Phylum (inkl internal nodes)}
+      \end{table}
+
+      \begin{table}
+        \begin{center}
+          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
+            \hline
+            & & \multicolumn{2}{c}{original states} & \multicolumn{8}{c}{final states} \\
+            Kingdom & \# nodes & (FL) & (P) 
+              & 0 (FL) & 0.25 & 0.333 & 0.4 & 0.5 & 0.667 & 0.75 & 1 (P) \\
+            \hline \hline
+            none & 75446 & 45 & 529 
+              & 13426 & 220 & 24082 & 0 & 7792 & 5302 & 0 & 24493 \\
+            Fungi & 31457 & 577 & 2983
+              & 38520 & 0 & 0 & 0 & 5723 & 0 & 0 & 266463 \\
+            Chloroplastida & 416478 & 3519 & 77
+              & 410795 & 0 & 0 & 0 & 4182 & 0 & 0 & 1501 \\
+            Metazoa & 1491012 & 30758 & 22373
+              & 1328135 & 0 & 0 & 930 & 25535 & 4423 & 1665 & 130324 \\
+            \hline  
+          \end{tabular}
+        \end{center}
+        \caption{Kingdom (leaf nodes)}
+      \end{table}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Influence of different parameters}
+  \section{Results of simulation}
 
-  \begin{figure}
-    \caption{Influence of unknown data to prediction}
-    \centering
-    \includegraphics[width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
-  \end{figure}
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Influence of different parameters}
+
+    \begin{figure}
+      \caption{Influence of unknown data to prediction}
+      \centering
+      \includegraphics[width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
+    \end{figure}
   
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------

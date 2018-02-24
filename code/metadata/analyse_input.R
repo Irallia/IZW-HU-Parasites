@@ -48,7 +48,6 @@ table(all.taxa$rank)[order(table(all.taxa$rank))]
 # table(all.taxa[all.taxa$nr_children==1 & all.taxa$max.height==2, "finaltag"])
 print('--------------------------------------------------')
 
-
 ## pdf(path, width=8, height=6)
 # ggplot(all.taxa, aes(nr_children)) +
 #     geom_histogram() +
@@ -101,10 +100,10 @@ phylum.furc.mod <- glm(multifurc~phylum, data=inner.taxa,
 class.furc.mod <- glm(multifurc~class, data=inner.taxa,
                         family="poisson")
 
-order.furc.mod <- glm(multifurc~order, data=inner.taxa,
-                        family="poisson")
+# order.furc.mod <- glm(multifurc~order, data=inner.taxa,
+#                         family="poisson")
 
-anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, order.furc.mod, test="LRT")
+# anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, order.furc.mod, test="LRT")
 # anova(kingdom.furc.mod, phylum.furc.mod, test="LRT")
 
 
@@ -138,56 +137,67 @@ anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, order.furc.mod, test="L
 # phylumTmeanHeight.furc.mod <- glm(multifurc~phylum*mean.height, data=inner.taxa,
 #                    family="poisson")
 
-# anova(phylumTmaxHeightt.furc.mod, phylumTdepth.furc.mod, phylumTminHeight.furc.mod, phylumTmeanHeight.furc.mod, test="LRT")
+# anova(phylumTdepth.furc.mod, phylumTmaxHeightt.furc.mod, phylumTminHeight.furc.mod, phylumTmeanHeight.furc.mod, test="LRT")
 
 # print('-------------------phylum mean.height-----------------------')
 
 # anova(phylum.furc.mod, phylumPmeanHeight.furc.mod, phylumTmeanHeight.furc.mod, test="LRT")
 
-print('-------------------order + depth / min/max/mean.height-----------------------')
+print('-------------------class + depth / min/max/mean.height-----------------------')
 
-orderPdepth.furc.mod <- glm(multifurc~order+depth, data=inner.taxa,
+classPdepth.furc.mod <- glm(multifurc~class+depth, data=inner.taxa,
                    family="poisson")
 
-orderPminHeight.furc.mod <- glm(multifurc~order+min.height, data=inner.taxa,
+classPminHeight.furc.mod <- glm(multifurc~class+min.height, data=inner.taxa,
                    family="poisson")
 
-orderPmaxHeightt.furc.mod <- glm(multifurc~order+max.height, data=inner.taxa,
+classPmaxHeightt.furc.mod <- glm(multifurc~class+max.height, data=inner.taxa,
                    family="poisson")
 
-orderPmeanHeight.furc.mod <- glm(multifurc~order+mean.height, data=inner.taxa,
+classPmeanHeight.furc.mod <- glm(multifurc~class+mean.height, data=inner.taxa,
                    family="poisson")
 
-anova(orderPdepth.furc.mod, orderPmaxHeightt.furc.mod, orderPminHeight.furc.mod, orderPmeanHeight.furc.mod, test="LRT")
+anova(classPdepth.furc.mod, classPmaxHeightt.furc.mod, classPminHeight.furc.mod, classPmeanHeight.furc.mod, test="LRT")
 
-print('-------------------order * depth / min/max/mean.height-----------------------')
+print('-------------------class * depth / min/max/mean.height-----------------------')
 
-orderTdepth.furc.mod <- glm(multifurc~order*depth, data=inner.taxa,
+classTdepth.furc.mod <- glm(multifurc~class*depth, data=inner.taxa,
                    family="poisson")
 
-orderTminHeight.furc.mod <- glm(multifurc~order*min.height, data=inner.taxa,
+classTminHeight.furc.mod <- glm(multifurc~class*min.height, data=inner.taxa,
                    family="poisson")
 
-orderTmaxHeightt.furc.mod <- glm(multifurc~order*max.height, data=inner.taxa,
+classTmaxHeightt.furc.mod <- glm(multifurc~class*max.height, data=inner.taxa,
                    family="poisson")
 
-orderTmeanHeight.furc.mod <- glm(multifurc~order*mean.height, data=inner.taxa,
+classTmeanHeight.furc.mod <- glm(multifurc~class*mean.height, data=inner.taxa,
                    family="poisson")
 
-anova(orderTmaxHeightt.furc.mod, orderTdepth.furc.mod, orderTminHeight.furc.mod, orderTmeanHeight.furc.mod, test="LRT")
+anova(classTdepth.furc.mod, classTmaxHeightt.furc.mod, classTminHeight.furc.mod, classTmeanHeight.furc.mod, test="LRT")
 
-print('-------------------order mean.height-----------------------')
+print('-------------------class mean.height-----------------------')
 
-anova(order.furc.mod, orderPmeanHeight.furc.mod, orderTmeanHeight.furc.mod, test="LRT")
+anova(class.furc.mod, classPmeanHeight.furc.mod, classTmeanHeight.furc.mod, test="LRT")
 
 print('--------------------------------------------------')
+
+# print('-------------------effect phylum-----------------------')
+
+# effect("phylum", phylum.furc.mod)
+
+# effect("phylum:mean.height", phylumPmeanHeight)
 
 
 # print('-------------------effect class-----------------------')
 
-# effect("class", class.mod)
+# classTmeanHeight.furc.mod <- glm(multifurc~class*mean.height, data=inner.taxa,
+#                    family="poisson")
 
-# effect("class:max.height", classPh)
+# effect("class", class.furc.mod)
+
+# effect("class:mean.height", classPmeanHeight)
+
+print('--------------------------------------------------')
 
 
 # ggplot(inner.taxa, aes(rank, mean.height)) +
