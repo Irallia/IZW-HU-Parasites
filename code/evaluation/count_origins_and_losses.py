@@ -82,9 +82,11 @@ def count_origins_and_losses(subtree, father_state, found):
 def get_state(state):
     if state.startswith('('):
         # finaltag:     0 = FL, 1 = P
-        return float(state[1:-1])
+        # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
+        # rounded to:    0  0      0    0    1      1     1
+        return round(float(state[1:-1]))
     else:
         # originaltag:  1 = FL, 2 = P
-        return float(state) -1
+        return round(float(state) -1)
 
 main()
