@@ -53,10 +53,10 @@ def prepare_tree(subtree):
     #   nodelist - [ott_id, originaltag, finaltag]
     element = find_element_in_nodelist(subtree.name, nodelist)
     if subtree.is_terminal():
-        if element[1] != '':
-            subtree.name = subtree.name + '$' + element[1]
-        else:
+        if element[1] == '' or element[1] == 'NA':
             subtree.name = subtree.name + '$(' + element[2] + ')'
+        else:
+            subtree.name = subtree.name + '$' + element[1]
     else:
         subtree.name = subtree.name + '$(' + element[2] + ')'
         for clade in subtree.clades:

@@ -40,42 +40,51 @@ def find_subtree(subtree):
         # subtree.name = ott $ index $ originaltag or $(finaltag)
         node = subtree.name.split('$')
         if node[0] == subtree_ott:
+            # Phylo.draw(subtree)
             print('Rootnode of this subtree has state: ', node[2])
-            count_origins_and_losses(subtree, get_state(node[2]))
+            print(colored("---------------- count origins and losses ----------------", "green"))
+            count_origins_and_losses(subtree, get_state(node[2]), False)
             print(subtree_ott, 'has', nr_internal_nodes, 'internal nodes and', nr_leaf_nodes, 'leaf_nodes')
             print(subtree_ott, 'has', origins, 'origins (FL -> P) and', losses, 'losses (P -> FL)')
         for clade in subtree.clades:
             find_subtree(clade)
     return
 
-def count_origins_and_losses(subtree, father_state):
+def count_origins_and_losses(subtree, father_state, found):
     global nr_internal_nodes
     global nr_leaf_nodes
     global origins
     global losses
 
+    new_found = False
+
     node = subtree.name.split('$')
     node_state = get_state(node[2])
-    if node_state != father_state:
-        if father_state == 0:
-            origins += 1        # FL -> P
-        else:
-            losses += 1         # P -> FL
+    if not  found:
+        if node_state != father_state:
+            print(node_state, father_state)
+            if father_state == 0:
+                origins += 1        # FL -> P
+                new_found = True
+            else:
+                losses += 1         # P -> FL
+                new_found = True
 
     if subtree.is_terminal():
         nr_leaf_nodes += 1
     else:
         nr_internal_nodes += 1
+        found = False
         for clade in subtree.clades:
-            clade = count_origins_and_losses(clade, node_state)
-    return subtree
+            found = count_origins_and_losses(clade, node_state, found)
+    return new_found
 
 def get_state(state):
     if state.startswith('('):
-        # finaltag
-        return int(state[1:-1])
+        # finaltag:     0 = FL, 1 = P
+        return float(state[1:-1])
     else:
-        # originaltag
-        return int(state) -1
+        # originaltag:  1 = FL, 2 = P
+        return float(state) -1
 
 main()
