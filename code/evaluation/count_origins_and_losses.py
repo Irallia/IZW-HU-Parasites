@@ -62,10 +62,12 @@ def count_origins_and_losses(subtree, father_state, found):
     node_state = get_state(node[2])
     if not  found:
         if node_state != father_state:
-            print(node_state, father_state)
             if father_state == 0:
                 origins += 1        # FL -> P
                 new_found = True
+            # elif father_state == 1:
+            #     losses += 1         # P -> FL
+            #     new_found = True
             else:
                 losses += 1         # P -> FL
                 new_found = True
@@ -85,8 +87,10 @@ def get_state(state):
         # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
         # rounded to:    0  0      0    0    1      1     1
         return round(float(state[1:-1]))
+        # return float(state[1:-1])
     else:
         # originaltag:  1 = FL, 2 = P
         return round(float(state) -1)
+        # return float(state) -1
 
 main()
