@@ -6,6 +6,8 @@
 \date{Januar 2018}
 
 \hfuzz=\maxdimen \tolerance=10000 \hbadness=10000
+% \usepackage[showframe=true]{geometry}
+
 
 \begin{document}
   % Titelseite
@@ -803,11 +805,11 @@
     
       \begin{table}
         \begin{center}
-          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
+          \hspace*{-1cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c}{original states} & \multicolumn{6}{c}{final states} \\
-            Phylum & \# nodes & (FL) & (P) 
-              & 0 (FL) & 0.4 & 0.5 & 0.667 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{original states} & \multicolumn{6}{c|}{final states} \\
+            Phylum & \# nodes & FL & P
+              & 0 (FL) & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
             \hline \hline
             Chordata & 91785 & 10451 & 18 
               & 91734 & 0 & 0 & 0 & 0 & 51 \\
@@ -842,11 +844,11 @@
 
       \begin{table}
         \begin{center}
-          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
+          \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c}{original states} & \multicolumn{8}{c}{final states} \\
-            Kingdom & \# nodes & (FL) & (P) 
-              & 0 (FL) & 0.25 & 0.333 & 0.4 & 0.667 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{original states} & \multicolumn{8}{c|}{final states} \\
+            Kingdom & \# nodes & FL & P
+              & 0 (FL) & 0.25 & 0.33 & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
             \hline \hline
             none & 84456 & 45 & 529 
               & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
@@ -861,14 +863,14 @@
         \end{center}
         \caption{Kingdom (inkl internal nodes)}
       \end{table}
-      
+
       \begin{table}
         \begin{center}
           \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c}{original states} & \multicolumn{6}{c}{final states} \\
-            Phylum & \# nodes & (FL) & (P) 
-              & 0 (FL) & 0.4 & 0.5 & 0.667 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{original states} & \multicolumn{6}{c|}{final states} \\
+            Phylum & \# nodes & FL & P
+              & 0 (FL) & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
             \hline \hline
             Chordata & 122546 & 10451 & 18 
               & 122473 & 0 & 0 & 0 & 0 & 73 \\
@@ -889,11 +891,11 @@
 
       \begin{table}
         \begin{center}
-          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
+          \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c}{original states} & \multicolumn{8}{c}{final states} \\
-            Kingdom & \# nodes & (FL) & (P) 
-              & 0 (FL) & 0.25 & 0.333 & 0.4 & 0.5 & 0.667 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{original states} & \multicolumn{8}{c|}{final states} \\
+            Kingdom & \# nodes & FL & P
+              & 0 (FL) & 0.25 & 0.33 & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
             \hline \hline
             none & 75446 & 45 & 529 
               & 13426 & 220 & 24082 & 0 & 7792 & 5302 & 0 & 24493 \\
