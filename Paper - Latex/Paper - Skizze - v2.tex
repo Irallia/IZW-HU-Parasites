@@ -775,7 +775,7 @@
 
       We picked a few phyla to evaluate the results from the biological point of view. \\
       Table \ref{table:phylum leaf nodes states} shows some known phyla: Chordata, Nematoda, 
-        Platyhelminthes and Apicomplexa \\
+        Platyhelminthes and Apicomplexa. \\
       As we know \todo{ref einfügen} the Chordata are full of free-living species and there are only a 
         few parasites. The algorithm reflects this. We started with 99.83\% free-living species and 
         predicted 99.94\% species as parasites \todo{(inklusive all known nodes)}. Only 0.06\% were 
@@ -800,9 +800,8 @@
         literature of \todo{x percent} free-living, but we found only 2.63\% of them. The problem at 
         this point, however, is obvious: The parasites have been much more studied and thus we start 
         with only 0.63\% free-living species. Against such a shifted data situation, the algorithm is 
-        powerless.
+        powerless. And yet the percentage has increased.
 
-    
       \begin{table}
         \begin{center}
           \hspace*{-1cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
@@ -828,7 +827,7 @@
             & & 0.39\% & 99.61\%
               & 0.05\% & & & & & 99.95\% \\
             \hline \hline
-            Anthropoda & 1198981 & 18912 & 11141 
+            Arthropoda & 1198981 & 18912 & 11141 
               & 1099509 & 1313 & 22478 & 4176 & 1665 & 70223 \\
             & & 62.93\% & 37.07\%
               & 91.7\% & 0.11\% & 1.87\% & 0.35\% & 0.14\% & 5.86\% \\
@@ -881,7 +880,7 @@
             Apicomplexa & 2102 & 1 & 255 
               & 1 & 0 & 0 & 0 & 0 & 2101 \\
             \hline
-            Anthropoda & 1319460 & 18912 & 11141 
+            Arthropoda & 1319460 & 18912 & 11141 
               & 1207204 & 1313 & 25499 & 4852 & 1957 & 78635 \\
             \hline
           \end{tabular}
@@ -911,6 +910,86 @@
         \caption{Kingdom (leaf nodes)}
       \end{table}
 
+\newpage
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Origins and Losses}
+
+      Sara B. Weinstein and Armand M. Kuris have been searching for origins of parasitism in Animalia 
+        \cite{Weinstein2016}. They identified 223 parasitic origins: 223 in Metazoa $\supset$ 143 in 
+        Arthropoda $\supset$ 87 in Insecta. \\
+      This has led us to count the origins and losses of parasitism in our investigation as well. \\
+      We count only one origin / loss in a parent node with different children's nodes. \\
+      Here we have encountered a problem: The Castor algorithm gives us probabilities for states. That 
+        means there are also nodes with state like 0.3 or 0.5. So how do you count? Our solution was, 
+        to round these values. We have to say that we round 0.5 to 0.
+
+      \begin{table} [h]
+        \begin{center}
+          \begin{tabular}{ |l|r|r||r|r|r| }
+            \hline
+            Domain / Kingdom & \# internal & \# leaf & Rootnode & \multicolumn{2}{c|}{without and with rounding} \\ 
+            / Phylum / Class & \multicolumn{2}{c||}{nodes} & state & \# origins & \# losses \\
+            & & & state & (FL -> P) & (P -> FL) \\
+            \hline \hline
+            Eukaryota & 241974 & 2293463 & 1.0 & 415 & 495 \\
+            & & & P & 462 & 369 \\
+            \hline \hline
+            Metazoa & 179944 & 1491012 & 0.5 & 294 & 206 \\
+            & & & & 321 & 129 \\ \hline
+            Fungi & 9534 & 314571 & 0.5 & 80 & 263 \\
+            & & & & 97 & 222 \\ \hline
+            Chloroplastida & 43486 & 412434 & 0.0 & 40 & 7 \\
+            & & & FL & 42 & 2 \\
+            \hline \hline            
+            Arthropoda & 120479 & 1198981 & 0.0 & 260 & 170 \\
+            & & & FL & 281 & 108 \\ \hline
+            Apicomplexa & 239 & 1863 & 1.0 & 0 & 1 \\
+            & & & P & 0 & 1 \\ \hline
+            Nematoda & 3437 & 30127 & 1.0 & 0 & 17 \\
+            & & & P & 2 & 11 \\ \hline
+            Chordata & 30761 & 91785 & 0.0 & 12 & 1 \\
+            & & & FL & 12 & 1 \\ \hline
+            Platyhelminthes & 4459 & 22683 & 1.0 & 0 & 5 \\
+            & & & P & 0 & 5 \\ \hline
+            \hline \hline            
+            Insecta & 91256 & 989572 & 0.0 & 234 & 107 \\
+            & & & FL & 245 & 77 \\ 
+            \hline  
+          \end{tabular}
+        \end{center}
+        \caption{Origins and losses}
+        \label{table:origins and losses} 
+      \end{table}
+
+      In Table \ref{table:origins and losses} we can see, that we found some more origins than Weinstein 
+        and on top of that some losses. \\ \\
+      
+      Lets have a look at the same phyla as in the section before: Chordata, Nematoda, 
+        Platyhelminthes and Apicomplexa. \\
+      Chordata are full of free-living species and so we see only a few origins of parasitism. The root
+      and mostly all species are predicted as free-living. \\
+      In Apicomplexa and the Platyhelminthes are looking fine too. Our algorithm gives us only one loss 
+        of parasitism in Apicomplexa and five in the Platyhelminthes. They are both from the root over 
+        mostly all species predicted as parasites. \\
+      Nematoda is again full of problems. The rootnode is predicted as a parasite and so we have more 
+        losses of parasitism for the less information of free-living species in this phylum. The rest 
+        is parasitic \\
+
+      \begin{lstlisting}[gobble=6]
+        # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
+        # rounded to:    0  0      0    0    1      1     1
+        if node_state != father_state:
+          if father_state == 0:
+              origins += 1        # FL -> P
+              new_found = True
+          else:
+              losses += 1         # P -> FL
+              new_found = True
+      \end{lstlisting}
+
+      \todo{without rounding change else: to elif $father_state == 1$}
+      
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
