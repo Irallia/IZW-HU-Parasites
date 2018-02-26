@@ -16,6 +16,14 @@
   	
     	\vspace{20mm}
     	\begin{Large}
+    	    \textbf{An analysis of the Castor package to predict parasitism in Eukaryota}\\
+      \end{Large}
+
+      \vspace{20mm}
+      or
+
+      \vspace{20mm}
+    	\begin{Large}
     	    \textbf{Origins and losses of parasitism}\\
           an analysis of the phylogenetic tree of life with a parsimony-like algorithm\\
     	\end{Large}
@@ -44,7 +52,7 @@
   This paper is about the further development of parsimony algorithms for non-binary trees, applied 
   to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the application to 
   the ancestral state reconstruction of parasitism. \\
-  \anmerkung{Der erste Satz muss nochmal überarbeitet werden. Das Ziel / Ergebnis der Arbeit hat sich 
+  \anmerkungstext{Der erste Satz muss nochmal überarbeitet werden. Das Ziel / Ergebnis der Arbeit hat sich 
     inzwischen geändert} \\
   \anmerkungstext{Wir haben mehr einen Algorithmus getestet und an unserem spezifischen Problem angewendet, 
     als viel selbst zu entwickeln. Allerdings haben wir den Fitch Algorithmus von binär auf multinär 
@@ -63,6 +71,7 @@
           und ihre Vorhersagekraft abschätzen. Außerdem wollen wir den Fitch algorithmus für binäre 
           Bäume auf unser Problem erweitern und mit dem Sankoff Algorithmus vergleichen.
         \item Warum ist das relevant? Was könnte man dann tun?\\
+          predict states of species... \\
           \todo{!!!}
       \end{itemize}
     \item Hintergrund:
@@ -184,7 +193,24 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{OTL}
-      \todo{Open Tree of Life}
+      For our project we looked for a large database for phylogenetic trees and also for a taxonomic 
+        tree. Since we run our algorithm on the phylogenetic tree, and for the evaluation and other 
+        properties the taxonomy provides us with much more information. \\
+      OTL gives us both. A synthesis of phylogenetic trees (currently 819 trees) and a taxonomic tree. 
+        OTL also includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}. \\
+      \todo{Das steht auf der Website nicht in dem Paper...} \\
+      For phylogenetic data, there are at least five big data collections, namely: ITIS (Integrated 
+      Taxonomic Information System), NCBI (National Center for Biotechnology Information [18]), WORMS 
+      (World Register of Marine Species [14]), GBIF (Global Biodiversity Information Facility [17]), 
+      OTT (OpenTreeOfLife-Taxonomy [4]).
+      \todotext{Marius:} "Every dataset has it's own characteristics and downsides. ITIS is only a small 
+        set of 100\% confirmed and named species. GBIF is not composed with the help of phylogeny, the 
+        same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small dataset of mostly 
+        marine species. \\
+      We choosed the taxonomy from OpenTreeOfLife because it's including most of the known taxonomies 
+        and got synthesised by preffering taxonomies that match with available phylogenetic data. At the 
+        same time the team from OTL preferred a maximum number of species [4]. This is resulting in 
+        somekind of hybrid between taxonomy and phylogeny." \\
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Distribution of Taxa}
@@ -220,6 +246,11 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{GloBI}
+    \todotext{Marius:} "There aren't many big active interaction databases out there, most of them are 
+      offline or outdated. For example: Interaction Web Database [35], Webs on the Web [36], Animal 
+      Diversity Web [37] and ecoweb [38]. GloBI is including most of the known ones and is still growing 
+      actively [3]. So the question which interaction database could be used was answered rather quickly." \\ \\
+
       For tagging our leave nodes, we use the GloBI (Global Biotic Interactions) database. This database 
         consists of entries of the form: species A (source) interacts with B (target). \\
       We appointed some interactions, where we know from the biological perspective that the species 
@@ -335,8 +366,8 @@
           \item Unknown information about the states of some leaf nodes.
         \end{itemize}
     \end{enumerate}
-    We tested the influence of these parameters on our result using our simulation. \\
-    \todo{ref zu section simulation} 
+    We tested the influence of these parameters on our result using our simulation (Section 
+      \ref{sec:simulation}).
    
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -413,7 +444,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Simulation}
+  \section{Simulation}\label{sec:simulation}
     \anmerkung{Motivate the goal of the simulation (Bernhard)}
     \begin{itemize}
       \item build random binary trees, tag these (parameters: parasites vs free-living, 
@@ -928,9 +959,9 @@
         \begin{center}
           \begin{tabular}{ |l|r|r||r|r|r| }
             \hline
-            Domain / Kingdom & \# internal & \# leaf & Rootnode & \multicolumn{2}{c|}{without and with rounding} \\ 
-            / Phylum / Class & \multicolumn{2}{c||}{nodes} & state & \# origins & \# losses \\
-            & & & state & (FL -> P) & (P -> FL) \\
+            Domain  & \# internal & \# leaf & Rootnode & \multicolumn{2}{c|}{without and with rounding} \\ 
+            / Kingdom  & \multicolumn{2}{c||}{nodes} & state & \# origins & \# losses \\
+            / Phylum / Class & & & & (FL -> P) & (P -> FL) \\
             \hline \hline
             Eukaryota & 241974 & 2293463 & 1.0 & 415 & 363 \\
             & & & P & 462 & 369 \\
@@ -951,7 +982,7 @@
             Chordata & 30761 & 91785 & 0.0 & 12 & 1 \\
             & & & FL & 12 & 1 \\ \hline
             Platyhelminthes & 4459 & 22683 & 1.0 & 0 & 5 \\
-            & & & P & 0 & 5 \\ \hline
+            & & & P & 0 & 5 \\
             \hline \hline            
             Insecta & 91256 & 989572 & 0.0 & 234 & 77 \\
             & & & FL & 245 & 77 \\ 
@@ -963,7 +994,7 @@
       \end{table}
 
       In Table \ref{table:origins and losses} we can see, that we found some more origins than Weinstein 
-        and on top of that some losses. \\ \\
+        and on top of that some losses. \\
       
       Lets have a look at the same phyla as in the section before: Chordata, Nematoda, 
         Platyhelminthes and Apicomplexa. \\
