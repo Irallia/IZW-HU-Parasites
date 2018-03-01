@@ -5,6 +5,7 @@ code/simulation/non_binary_simulation/metadata.csv
 code/simulation/output.csv
 code/simulation/likelihoods.csv
 
+data/evaluation/*
 data/GloBI_Dump/*
 data/interaction_data/*
 data/nodelist/*

@@ -1,8 +1,10 @@
 # -------- -------- Prepare logfile and runtime computation -------- -------- #
 echo "Logifle written to: build_metadata.log"
-exec 3>&1 1>>build_data.log 2>&1            #write stdout 1,2 to logfile 3 to console
+exec 3>&1 1>>build_metadata.log 2>&1            #write stdout 1,2 to logfile 3 to console
 echo $(date)
 start=$(date +%s)                           #get starting date
+
+mkdir logs
 
 # -------- -------- build metadata files -------- -------- #
 python3 -m code.metadata.extract_globi_data > logs/log-extract_globi_data.txt

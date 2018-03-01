@@ -20,7 +20,8 @@
 
 # Python
 
-sudo pip install ...
-biopython
-rpy2
-termcolor
+sudo apt-get install -y python3-pip
+sudo pip3 install ...
+* biopython
+* rpy2
+* termcolor
