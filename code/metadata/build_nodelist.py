@@ -5,7 +5,7 @@ from code.utilities.nodelist_util import read_tags, tag_node
 from time import gmtime, strftime
 
 from Bio import Phylo
-from termcolor import colored, cprint
+from termcolor import colored
 
 # path_freelivings = "./data/interaction_data/reduced_freelivings.csv"
 # path_parasites = "./data/interaction_data/reduced_parasites.csv"

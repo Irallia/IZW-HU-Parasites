@@ -3,9 +3,17 @@ Project to find origins of parasitism in a pylogenetic tree of live.
 
 ## Getting Started
 
-connect to the VM (via Cygwin64):
+Clone Project:
 ```
-ssh name@h -L 127.0.0.1:8529:127.0.0.1:8529 -p 15351 -q
+git clone https://github.com/Irallia/IZW-HU-Parasites.git
+```
+Get Tree and Interaction data:
+```
+sh code/build_data.sh
+```
+Build metadata files (for Eukaryota):
+```
+sh code/build_metadata-run_castor.sh
 ```
 ---
 ### Prerequisites

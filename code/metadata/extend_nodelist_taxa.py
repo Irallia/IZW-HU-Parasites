@@ -20,7 +20,7 @@ def main():
     global taxa_otts
     global taxa_mapping
 
-    with open('../data/interaction_data/ott_taxa.csv') as csv_file:
+    with open('./data/interaction_data/ott_taxa.csv') as csv_file:
         reader = csv.reader(csv_file, delimiter=',')
         # row: ott_id, name, rank, uniqname
         for row in reader:
@@ -35,14 +35,14 @@ def main():
     print('all', taxa, ': ', len(taxa_otts))
     nr_taxa = len(taxa_otts)
 
-    subtree_path = '../data/subtree/Eukaryota.tre'
+    subtree_path = './data/subtree/Eukaryota.tre'
     tree = Phylo.read(subtree_path, 'newick')
     find_subtree(tree.clade)
     print(nr_taxa - len(taxa_otts))
     nr_taxa = len(taxa_otts)
 
     header = ['ott_id', taxa]
-    path = '../data/nodelist/Eukaryota-' + taxa + '_mapping.csv'
+    path = './data/nodelist/Eukaryota-' + taxa + '_mapping.csv'
     with open(path, 'w') as fp:
         writer = csv.writer(fp, delimiter=',')
         writer.writerow(header)
@@ -56,7 +56,7 @@ def main():
 
     header_taxa = taxa + '2'
     header = ['ott_id', header_taxa]
-    path = '../data/nodelist/Eukaryota-' + taxa + '2_mapping.csv'
+    path = './data/nodelist/Eukaryota-' + taxa + '2_mapping.csv'
     with open(path, 'w') as fp:
         writer = csv.writer(fp, delimiter=',')
         writer.writerow(header)
@@ -70,7 +70,7 @@ def main():
 
     header_taxa = taxa + '3'
     header = ['ott_id', header_taxa]
-    path = '../data/nodelist/Eukaryota-' + taxa + '3_mapping.csv'
+    path = './data/nodelist/Eukaryota-' + taxa + '3_mapping.csv'
     with open(path, 'w') as fp:
         writer = csv.writer(fp, delimiter=',')
         writer.writerow(header)
