@@ -16,17 +16,9 @@
   	
     	\vspace{20mm}
     	\begin{Large}
-    	    \textbf{An analysis of the Castor package to predict parasitism in Eukaryota}\\
+          \textbf{An analysis of maximum parsimony algorithms to predict parasitism in Eukaryota}\\
+          using a large multiurcated phylogenetic synthesis tree
       \end{Large}
-
-      \vspace{20mm}
-      or
-
-      \vspace{20mm}
-    	\begin{Large}
-    	    \textbf{Origins and losses of parasitism}\\
-          an analysis of the phylogenetic tree of life with a parsimony-like algorithm\\
-    	\end{Large}
 
   	\clearpage
   \end{titlepage}
@@ -200,17 +192,18 @@
         OTL also includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}. \\
       \todo{Das steht auf der Website nicht in dem Paper...} \\
       For phylogenetic data, there are at least five big data collections, namely: ITIS (Integrated 
-      Taxonomic Information System), NCBI (National Center for Biotechnology Information [18]), WORMS 
-      (World Register of Marine Species [14]), GBIF (Global Biodiversity Information Facility [17]), 
-      OTT (OpenTreeOfLife-Taxonomy [4]).
+        Taxonomic Information System) \cite{ITIS}, NCBI (National Center for Biotechnology Information) 
+        \cite{NCBI1988}, WORMS (World Register of Marine Species) \cite{WoRMS2018}, GBIF (Global 
+        Biodiversity Information Facility) \cite{GBIF}, OTT (OpenTreeOfLife-Taxonomy) 
+        \cite{Hinchliff2015}. \\
       \todotext{Marius:} "Every dataset has it's own characteristics and downsides. ITIS is only a small 
         set of 100\% confirmed and named species. GBIF is not composed with the help of phylogeny, the 
         same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small dataset of mostly 
         marine species. \\
       We choosed the taxonomy from OpenTreeOfLife because it's including most of the known taxonomies 
         and got synthesised by preffering taxonomies that match with available phylogenetic data. At the 
-        same time the team from OTL preferred a maximum number of species [4]. This is resulting in 
-        somekind of hybrid between taxonomy and phylogeny." \\
+        same time the team from OTL preferred a maximum number of species \cite{Hinchliff2015}. This is 
+        resulting in somekind of hybrid between taxonomy and phylogeny." \\
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Distribution of Taxa}
@@ -246,13 +239,13 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{GloBI}
-    \todotext{Marius:} "There aren't many big active interaction databases out there, most of them are 
-      offline or outdated. For example: Interaction Web Database [35], Webs on the Web [36], Animal 
-      Diversity Web [37] and ecoweb [38]. GloBI is including most of the known ones and is still growing 
-      actively [3]. So the question which interaction database could be used was answered rather quickly." \\ \\
+      \todotext{Marius:} "There aren't many big active interaction databases out there, most of them are 
+        offline or outdated. For example: IWDB (Interaction Web Database) \cite{IWDB2003}, Webs on the 
+        Web \cite{WOW2004}, Animal Diversity Web \cite{Myers2003} and ecoweb \cite{Cohen2010}. GloBI is 
+        including most of the known ones and is still growing actively \cite{Poelen2014}. So the 
+        question which interaction database could be used was answered rather quickly." \\
 
-      For tagging our leave nodes, we use the GloBI (Global Biotic Interactions) database. This database 
-        consists of entries of the form: species A (source) interacts with B (target). \\
+      This database consists of entries of the form: species A (source) interacts with B (target). \\
       We appointed some interactions, where we know from the biological perspective that the species 
       source or target has to be a parasite or a free-living species. These are the following:
       \begin{itemize}
@@ -730,40 +723,40 @@
             multifurc $\sim$ kingdom & 7774454 & \\
             multifurc $\sim$ phylum & 7435700 & 338754 \\
             multifurc $\sim$ class & 7337241 & 98459 \\
-            \rowcolor{green} multifurc $\sim$ order & 7076068 & 261172 \\
+            \rowcolor{green!50} multifurc $\sim$ order & 7076068 & 261172 \\
             \hline \hline \hline
             multifurc $\sim$ phylum + depth & 7431609 & \\
             multifurc $\sim$ phylum + max.height & 7375889 & 55721 \\
             multifurc $\sim$ phylum + min.height & 7233486 & 142403 \\
-            \rowcolor{green} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
+            \rowcolor{green!50} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
             \hline \hline
             multifurc ~ phylum * depth & 7335396 & \\
             multifurc ~ phylum * max.height & 7311241 & 24155 \\
             multifurc ~ phylum * min.height & 7177002 & 134238 \\
-            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
+            \rowcolor{green!50} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
             \hline \hline
             multifurc ~ phylum & 7435700 & \\
             multifurc ~ phylum + mean.height & 7128318 & 307381 \\
-            \rowcolor{green} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
+            \rowcolor{green!50} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
             \hline \hline \hline
             multifurc $\sim$ class + depth & 7334754 & \\
             multifurc $\sim$ class + max.height & 7275856 & 58898 \\
             multifurc $\sim$ class + min.height & 7144686 & 131170 \\
-            \rowcolor{green} multifurc $\sim$ class + mean.height & 7055313 & 89374 \\
+            \rowcolor{green!50} multifurc $\sim$ class + mean.height & 7055313 & 89374 \\
             \hline \hline
             multifurc ~ class * depth & 7250759 & \\
             multifurc ~ class * max.height & 7187504 & 63256 \\
             multifurc ~ class * min.height & 7094933 & 92570 \\
-            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 129139 \\
+            \rowcolor{green!50} multifurc ~ class * mean.height & 6965794 & 129139 \\
             \hline \hline
             multifurc ~ class & 7337241 & \\
             multifurc ~ class + mean.height & 7055313 & 281928 \\
-            \rowcolor{green} multifurc ~ class * mean.height & 6965794 & 89518 \\
+            \rowcolor{green!50} multifurc ~ class * mean.height & 6965794 & 89518 \\
             \hline \hline \hline
             multifurc $\sim$ order + depth & 7027578 & \\
             multifurc $\sim$ order + max.height & 7005424 & 22154 \\
             multifurc $\sim$ order + min.height & 6890703 & 114721 \\
-            \rowcolor{green} multifurc $\sim$ order + mean.height & 6815271 & 75432 \\
+            \rowcolor{green!50} multifurc $\sim$ order + mean.height & 6815271 & 75432 \\
             \hline
           \end{longtable}
         \end{center}
@@ -1021,6 +1014,61 @@
 
       \todo{without rounding change else: to elif $father_state == 1$}
       
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Cross evaluation - leave 100 out}
+      We ran the castor algorithm (\todo{10000}) 10 times with leaving 100 randomized free-living or 
+        parasitic species out of the input data to see how stable our result is. \\
+      What could happen by removing a parasite or free-living of the list?
+      \begin{itemize}
+        \item It could be a specie, which don't exist in the tree leaf nodes. -> no effect
+        \item It could be a specie, which exists in both lists. -> If it was a parasite, it is now 
+          free-living, because we prefer parasites. Otherwise we have no effect again. (1053 are possible)
+        \item Normal case: We loose information, because its a specie in our tree and we change it to a 
+          leave node with no information.
+      \end{itemize}
+      \begin{table}
+        \begin{center}
+          \begin{tabular}{ |c||r|r|r||c|r| }
+            \hline
+            run & \multicolumn{3}{c||}{distance} & changed & lost \\
+            & all nodes & leaf nodes & internal nodes & tag & tag \\
+            \hline \hline
+            0 & 4.0 & 4.0 & 0.0 & 4 & 48 \\
+            1 & 4.0 & 4.0 & 0.0 & 2 & \cellcolor{green!50}45 \\
+            2 & 85.3 & 79.3 & 6.0 & 3 & 51 \\
+            3 & 1.0 & 1.0 & 0.0 & 1 & 47 \\
+            \rowcolor{red!50}4 & 1248.0 & 1230.5 & 17.5 & \cellcolor{green!50}0 & 54 \\
+            5 & 169.0 & 168.0 & 1.0 & 3 & 52 \\
+            6 & 1.0 & 1.0 & 0.0 & 1 & 48 \\
+            7 & 1.0 & 1.0 & 0.0 & 1 & 53 \\
+            8 & 1.0 & 1.0 & 0.0 & 1 & \cellcolor{red!50}54 \\
+            9 & 1.0 & 1.0 & 0.0 & 1 & 52 \\
+            \hline
+          \end{tabular}
+        \end{center}
+        \caption{Example runs. \\ green: min value, red: max value}
+      \end{table}
+
+      \begin{table}
+        \begin{center}
+          \begin{tabular}{ |cl||r|r|r|r| }
+            \hline
+            & & min & max & mean & variance \\
+            \hline \hline
+            \multirow{3}{*}{distance} & all & 1.0 & 1248.0 & 151.53 & 151528.92 \\
+            & leaf nodes                    & 1.0 & 1230.5 & 149.08 & 147380.74 \\
+            & internal nodes                & 0.0 & 17.5 & 2.45 & 31.47 \\ \hline
+            \multicolumn{2}{|c||}{changed tag} & 0.0 & 4.0 & 1.7 & 1.57 \\ \hline
+            lost tag & all tags             & 45.0 & 54.0 & \cellcolor{green!50}50.40 & 10.04 \\
+            & FL tags                       & 16.0 & 32.0 & 23.10 & 18.77 \\
+            & P tags                        & 16.0 & 36.0 & 27.30 & 41.34 \\
+            \hline
+          \end{tabular}
+        \end{center}
+        \caption{Statistics to Cross validation}
+      \end{table}
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1065,7 +1113,6 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \bibliography{bibliographie}
-\bibliographystyle{alphadin}
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
