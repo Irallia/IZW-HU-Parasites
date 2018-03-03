@@ -1,15 +1,14 @@
 import csv
 import datetime
+from code.utilities.Helpers import print_time
 from copy import deepcopy
 from time import gmtime, strftime
 
 from Bio import Phylo
 from termcolor import colored, cprint
 
-from Helpers import print_time
-
-path_parasites = "../data/interaction_data/parasites.csv"
-path_freelivings = "../data/interaction_data/freelivings.csv"
+path_parasites = "./data/interaction_data/parasites.csv"
+path_freelivings = "./data/interaction_data/freelivings.csv"
 
 # global variables:
 START_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -44,13 +43,13 @@ def main():
     subtree_names = ['Bacteria', 'Archaea']
     for item in subtree_names:
         print(item, ':')
-        subtree_path = '../data/subtree/' + item + '.tre'
+        subtree_path = './data/subtree/' + item + '.tre'
         tree = Phylo.read(subtree_path, 'newick')
         delete_archaea_or_bacteria(tree.clade)
         CURRENT_TIME = print_time(CURRENT_TIME)
 
     print(colored("---------------- delete internal Eukaryota ----------------", "green"))
-    subtree_path = '../data/subtree/Eukaryota.tre'
+    subtree_path = './data/subtree/Eukaryota.tre'
     tree = Phylo.read(subtree_path, 'newick')
     delete_internal_nodes(tree.clade)
 
@@ -64,11 +63,11 @@ def main():
     print("Parasites:", len(parasites))
 
      # -------------------------------------------------
-    csv_title = '../data/interaction_data/reduced_freelivings.csv' 
+    csv_title = './data/interaction_data/reduced_freelivings.csv' 
     with open(csv_title, 'w') as species_file:
         writer = csv.writer(species_file, quoting=csv.QUOTE_ALL)
         writer.writerow(freelivings)
-    csv_title = '../data/interaction_data/reduced_parasites.csv' 
+    csv_title = './data/interaction_data/reduced_parasites.csv' 
     with open(csv_title, 'w') as species_file:
         writer = csv.writer(species_file, quoting=csv.QUOTE_ALL)
         writer.writerow(parasites)

@@ -3,7 +3,7 @@ library(Rcpp)
 library(castor)
 
 # -------- Tree: --------
-path_tree <- "code/bufferfiles/simulated_tree.tre"
+path_tree <- "data/subtree/Eukaryota.tre"
 # read.tree(file = "", text = NULL, tree.names = NULL, skip = 0, comment.char = "", keep.multi = FALSE, ...)
 tree <- read.tree(path_tree)
 
