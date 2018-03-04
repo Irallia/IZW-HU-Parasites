@@ -35,11 +35,11 @@ def sankoff_parsimony(run_id):
     f = open(r_path, "r")
     code = ''.join(f.readlines())
     if run_id >= 0:
-        print(colored("---------------- run castor ----------------", "green"))
+        print(colored("---------------- prepare R script ----------------", "green"))
         code_Array = code.split("code/bufferfiles/simulated_tagged_tree.tre")
         code = tagged_tree_path.join(code_Array)
 
-    print(colored("---------------- prepare R script ----------------", "green"))
+    print(colored("---------------- run castor ----------------", "green"))
 
     rpy2.robjects.r(code)
     # assume that...
@@ -51,8 +51,8 @@ def sankoff_parsimony(run_id):
     number_of_tips = rpy2.robjects.globalenv['number_of_tips']
     internal_nodes = rpy2.robjects.globalenv['internal_nodes']
 
+    print(colored("---------------- save likelihoods ----------------", "green"))
     l = int(len(likelihoods)/3)
-        
     j = 0
     k = 0
     for i in range(2*l, 3*l):
@@ -100,10 +100,10 @@ def randomly_change_nodelist():
     while changed < border:
         index = random.randrange(len(nodelist))
         element = nodelist[index]
-        if element[1] != 'NA':
-            element[1] = 'NA'
-            nodelist[index] = element
-            changed +=1
+        if element[5] == 0:
+            if element[1] != 'NA':
+                element[1] = 'NA'
+                changed +=1
     return
 
 def cache_tree(tagged_tree_path):
