@@ -318,29 +318,6 @@
       \#Parasiten und \#Freilebend und \#Blattknoten $\rightarrow$ Wieviele unbekannte Knoten haben wir?
       \#Interne Knoten und \#Blattknoten $\rightarrow$ Wie stark ist die Multifurkation?
 
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Data artifacts}
-        Zu der Frage, warum gibt es $nrChildren==1$. Es gibt tatsächlich 55700 Knoten mit nur einem Kind. 
-          Davon ist der großteil direkt vor einem Blatt (51744), aber 3956 ($height >2$) sind irgendwo im 
-          Baum. Ein paar Beispiele: \\
-        Nephroselmidophyceae: (class) \\
-        https://tree.opentreeoflife.org/opentree/argus/ottol@1038762 \\
-        Phrynocrinidae: (family) \\
-        https://tree.opentreeoflife.org/opentree/argus/ottol@3647979 \\
-        Elaeocarpus sylvestris: \\
-        https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969 \\
-        Was bedeutet das für unsere Analyse? Ignorieren wir die $\sim$ 4000 internen und Zählen sie zu den 
-          Blättern, oder zählen wir alle zu den Internen oder puzzlen wir sie einzeln raus. D.h. nur die 
-          mit der Zusatzeigenschaft ($height == 2$) sind auch Blätter. \\
-        Es könnte aber auch Fälle geben wie: ...-O-O-O-O-O, dann könnte man auch einen Knoten mit höherer 
-          Höhe als Blatt zählen. Das müsste dann gelten $min height = max height$. \\ 
-        \begin{lstlisting}[gobble=8]
-          leaf.taxa <-  all.taxa[all.taxa$nr_children==0, ]
-          extendedLeaf.taxa <- all.taxa[all.taxa$nr_children<2 & min.height==max.height, ]
-          inner.taxa <- all.taxa[all.taxa$nr_children>1 | (all.taxa$nr_children==1 & min.height!=max.height), ]
-        \end{lstlisting}
-        \todo{macht extendedLeaf wirklich einen Sinn?}
-
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -382,32 +359,9 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
-      One property of the tree is its ridge of multifurcation. A complete kinship tree would be binary, 
-        but since we only work with a synthesis tree of individual trees, this tree is multifurcated. 
-        For a first overview we collected for every node its number of children (degree $-1$), and 
-        plottet this in an histogram. In Figure \ref{fig:childrenOfNodes} you can see how much nodes we 
-        have for every degree. \\
-      \todotext{Subfigure \ref{fig:childrenOfNodes_innerNodes} beschränkt sich hierbei nur auf die inner 
-        nodes während Subfigure \ref{fig:childrenOfNodes_allNodes} alle Knoten abbildet.} \\
-      \todo{Welchen der beiden Plots wollen wir nehmen, einer genügt eigentlich:}
-      \begin{figure}[h!]
-        \begin{subfigure}{.5\textwidth}
-          \centering
-          \includegraphics[width=.8\linewidth]{Figures/multifurc.pdf}
-          \caption{all nodes}
-          \label{fig:childrenOfNodes_allNodes}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-          \centering
-          \includegraphics[width=.8\linewidth]{Figures/nr_children.pdf}
-          \caption{inner nodes (shiftet to 0)}
-          \label{fig:childrenOfNodes_innerNodes}
-        \end{subfigure}
-        \caption{plots of children of nodes}
-        \label{fig:childrenOfNodes}
-      \end{figure}
-      As you can see, we are very far from a binary tree. Therefore, the impact of multifurcations on 
-        our research question has been investigated:
+      We have a very high multifurcation rate \pageref{sec:ResultsMultifurcation}.
+
+      Therefore, the impact of multifurcations on our research question has been investigated:
       \begin{itemize}
         \item stärke der Multifurcation in verschiedenen Subbäumen
         \item zusammenhang zur tiefe im Baum
@@ -417,6 +371,9 @@
 
       "Nested models were compared using likelihood ratio tests, models using different predictors were 
       compared according to their deviance and AIC."
+      \begin{lstlisting}[gobble=8]
+        glm(formula = multifurc ~ 1, family = "poisson", data = inner.taxa)
+      \end{lstlisting}
 
         % \todo{old Stuff:} \\
         %   Then we tried to find a function which best discribes this behavior. In figure 
@@ -662,13 +619,13 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Results}
-  Ein großer Punkt in diesem Kapitel ist das Ergebnis der Untersuchung der Datenlage. Wie ist der 
-    Stand? Welchen Einfluss hat das auf unser eigentliches Ergebnis? Was kann man dagegen tun? \\
-  Ansonsten geht es in diesem Kapitel hauptsächlich um die tatsächliche Rekonstruktion der states.
-    Dass heißt zum einen der der inneren Knoten und dadurch der Untersuchung von Origins und Losses
-    und zum anderen der Vorhersage von unbekannten states von Leaf nodes. \\
-  Und natürlich dem Ergebnis der Simulation.
-
+  A big point in this chapter is the result of examining the input data. How is the situation? What 
+    influence does that have on our actual result? What can we do about it? Our simulation gave us 
+    some results to this. \\
+  Otherwise, this chapter is mainly about the actual reconstruction of the states. This means, on 
+    one hand investigation of origins and losses of the inner nodes and on the other, the prediction 
+    of unknown states of leaf nodes. \\
+   
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -677,35 +634,59 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Taxa}
-      Die Untersuchung der Taxa der Eukaryoten hat das folgende ergeben:
-      Es gibt 3 Kingdoms: Chloroplastida, Metazoa, Fungi. \\
-      \todo{Hier fehlt nichts. Ref einfügen.} \\
-      Phyla (53): \\
-      Acanthocephala, Amoebozoa, Apicomplexa, Arthropoda, Ascomycota, Bacillariophyta, Basidiomycota, 
-        Brachiopoda, Bryozoa, Chaetognatha, Chlorophyta, Chordata, Chromerida, Chytridiomycota, 
-        Ciliophora, Cnidaria, Colponemidia, Ctenophora, Cycliophora, Echinodermata, Entoprocta, 
-        Entorrhizomycota, Euglenida, Foraminifera, Gastrotricha, Glomeromycota, Gnathostomulida, 
-        Haplosporida, Haptophyta, Hemichordata, Kinorhyncha, Loricifera, Microsporidia, Mollusca, 
-        Myzostomida, Nematoda, Nematomorpha, Nemertea, Onychophora, Orthonectida, Phaeophyceae, 
-        Picozoa, Placozoa, Platyhelminthes, Porifera, Priapulida, Rhodophyta, Rhombozoa, Rotifera, 
-        Streptophyta, Tardigrada, Xanthophyceae \\
-      Wobei von Streptophyta -> Anthocerotophyta, Marchantiophyta, Bryophyta, Tracheophyta als
-        Phylum im Phylum gefunden und nicht einbezogen wurden und Magnoliophyta als Phylum in 
-        Tracheophyta ebenfalls nicht. \\
-      Außerdem haben wir 195 Klassen und 924 Ordnungen feststellen können.
+      The investigation of the taxonomy revealed that our tree has three kingdoms: Chloroplastida, 
+        Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
+      Since the analysis of the tree is not part of this work, it should be mentioned here that, 
+        according to recent findings, this is not complete and we lack some taxa in every rank. For 
+        example, Hans says that one distinguishes between seven and nine kingdoms 
+        \cite{CavalierSmith1981}. \\
+      In section \pageref{sec:listPhyla} of the appendix you can find a list of all phyla.
+      
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \section{Multifurcation}\label{sec:ResultsMultifurcation}
+      One property of the tree is its ridge of multifurcation. A complete phylogenetic tree would be 
+        binary, but since we only work with a synthesis tree, this tree is multifurcated. \\
+      For a first overview we collected for every node its number of children (degree $-1$), and plotted
+        this in an histogram, see figure \ref{fig:childrenOfNodes}. The multifurcation affects only the
+        internal nodes. We collected the number of children $-2$ of every node (a node with two children 
+        is binary). 
+      \begin{wrapfigure}{r}{0.6\textwidth}
+        \begin{center}
+          \includegraphics[trim = 0mm 0mm 30mm 0mm, clip, width=0.58\textwidth]{Figures/multifurc.pdf}
+        \end{center}
+        \caption{Histogram about the multifurcation of the internal nodes of the synthesis tree. \\ 
+          light blue: binary; dark blue: multifunction}
+        \label{fig:childrenOfNodes}
+      \end{wrapfigure}
+      That means it discribes the number of nodes which we have lost from the real (binary) 
+      phylogenetic tree. \\
+      As you can see, we are very far from a binary tree.
+    
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Data artifacts}
+      At this point we also found out that there are some nodes with only one child node (55700 nodes). \\
+      These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
+        tree (3956 with height $>2$). They are probably a result from the fact that taxonomic information 
+        has been incorporated into a phylogeny. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \section{Multifurcation}
+      Some examples:
+      \begin{itemize}
+        \item Nephroselmidophyceae: (class) \\
+          https://tree.opentreeoflife.org/opentree/argus/ottol@1038762
+        \item Phrynocrinidae: (family) \\
+          https://tree.opentreeoflife.org/opentree/argus/ottol@3647979
+        \item Elaeocarpus sylvestris: \\
+          https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969
+      \end{itemize}
+     
+      %---------------------------------------------------------------------------------------------------
+      %---------------------------------------------------------------------------------------------------
+      \subsection{Poisson regression}
+        glm (generalized linear model) analysis: \\
       
-       %---------------------------------------------------------------------------------------------------
-       %---------------------------------------------------------------------------------------------------
-       \subsection{Poisson regression}
-      
-        \begin{lstlisting}[gobble=8]
-          glm(formula = multifurc ~ 1, family = "poisson", data = inner.taxa)
-        \end{lstlisting}
+        
         The intercept is $2.821 > 0$ $\Rightarrow$ there is a multifunction.
         (Intercept: Stärke der Multifurcation) \\
         Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
@@ -772,18 +753,49 @@
           Appendix...} \\
         Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
           genauer umso kleinere Subtrees wir betrachten. ...
-        \begin{lstlisting}[gobble=8]
-          Model 1: multifurc ~ kingdom
-          Model 2: multifurc ~ phylum
-          Model 3: multifurc ~ class
-          Model 4: multifurc ~ order
-            Resid. Df Resid. Dev  Df Deviance  Pr(>Chi)
-          1    167222    7774454
-          2    167173    7435700  49   338754 < 2.2e-16 ***
-          3    167039    7337241 134    98459 < 2.2e-16 ***
-          4    166352    7076068 687   261172 < 2.2e-16 ***
-        \end{lstlisting}
+        
         \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
+
+        Because of the difference in the complexity of the models, we compared their BICs:
+        \begin{table}
+          \begin{center}
+            \begin{tabular}{ |l|r| }
+              \hline
+              Model & BIC \\
+              \hline \hline
+              multifurc $\sim$ 1 & 8623935 \\
+              multifurc $\sim$ kingdom & 8273333 \\
+              multifurc $\sim$ phylum & 7937828 \\
+              multifurc $\sim$ class & 7842157 \\
+              \rowcolor{green!50}multifurc $\sim$ order & 7644249\\
+              \hline \hline
+              multifurc $\sim$ phylum + depth & 7934322 \\
+              multifurc $\sim$ phylum + max.height & 7749121 \\
+              multifurc $\sim$ phylum + min.height & 7875521 \\
+              \rowcolor{green!50} multifurc $\sim$ phylum + mean.height & 7644249 \\
+              \hline
+              multifurc ~ phylum * depth & 7836755 \\
+              multifurc ~ phylum * max.height & 7693555 \\
+              multifurc ~ phylum * min.height & 7808940 \\
+              \rowcolor{green!50} multifurc ~ phylum * mean.height & 7536296 \\
+              \hline \hline
+              multifurc $\sim$ class + depth & \\
+              multifurc $\sim$ class + max.height & \\
+              multifurc $\sim$ class + min.height & \\
+              multifurc $\sim$ class + mean.height & \\
+              \hline
+              multifurc ~ class * depth & \\
+              multifurc ~ class * max.height & \\
+              multifurc ~ class * min.height & \\
+              multifurc ~ class * mean.height &\\
+              \hline
+            \end{tabular} 
+          \end{center}
+          \caption{BIC...}
+          \label{table:...} 
+        \end{table}
+
+
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1118,6 +1130,23 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Appendices}
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{List of all phyla}\label{sec:listPhyla}
+
+  Phyla (53): \\
+  Acanthocephala, Amoebozoa, Apicomplexa, Arthropoda, Ascomycota, Bacillariophyta, Basidiomycota, 
+    Brachiopoda, Bryozoa, Chaetognatha, Chlorophyta, Chordata, Chromerida, Chytridiomycota, 
+    Ciliophora, Cnidaria, Colponemidia, Ctenophora, Cycliophora, Echinodermata, Entoprocta, 
+    Entorrhizomycota, Euglenida, Foraminifera, Gastrotricha, Glomeromycota, Gnathostomulida, 
+    Haplosporida, Haptophyta, Hemichordata, Kinorhyncha, Loricifera, Microsporidia, Mollusca, 
+    Myzostomida, Nematoda, Nematomorpha, Nemertea, Onychophora, Orthonectida, Phaeophyceae, 
+    Picozoa, Placozoa, Platyhelminthes, Porifera, Priapulida, Rhodophyta, Rhombozoa, Rotifera, 
+    Streptophyta, Tardigrada, Xanthophyceae \\
+  Wobei von Streptophyta -> Anthocerotophyta, Marchantiophyta, Bryophyta, Tracheophyta als
+    Phylum im Phylum gefunden und nicht einbezogen wurden und Magnoliophyta als Phylum in 
+    Tracheophyta ebenfalls nicht. \\
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Distribution of data in the taxa}\label{sec:taxaTable1}
