@@ -696,61 +696,36 @@
         Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
           des Baums mit dem folgenden Deviance Table:
           
-        \begin{center}
-          \begin{longtable}{ |l|r|r| }
-            \hline
-            Model & Residuals Dev & Deviance Pr \\
-            \hline \hline
-            multifurc $\sim$ kingdom & 7774454 & \\
-            multifurc $\sim$ phylum & 7435700 & 338754 \\
-            multifurc $\sim$ class & 7337241 & 98459 \\
-            \rowcolor{green!50} multifurc $\sim$ order & 7076068 & 261172 \\
-            \hline \hline \hline
-            multifurc $\sim$ phylum + depth & 7431609 & \\
-            multifurc $\sim$ phylum + max.height & 7375889 & 55721 \\
-            multifurc $\sim$ phylum + min.height & 7233486 & 142403 \\
-            \rowcolor{green!50} multifurc $\sim$ phylum + mean.height & 7128318 & 105167 \\
-            \hline \hline
-            multifurc ~ phylum * depth & 7335396 & \\
-            multifurc ~ phylum * max.height & 7311241 & 24155 \\
-            multifurc ~ phylum * min.height & 7177002 & 134238 \\
-            \rowcolor{green!50} multifurc ~ phylum * mean.height & 7020258 & 156745 \\
-            \hline \hline
-            multifurc ~ phylum & 7435700 & \\
-            multifurc ~ phylum + mean.height & 7128318 & 307381 \\
-            \rowcolor{green!50} multifurc ~ phylum * mean.height & 7020258 & 108061 \\
-            \hline \hline \hline
-            multifurc $\sim$ class + depth & 7334754 & \\
-            multifurc $\sim$ class + max.height & 7275856 & 58898 \\
-            multifurc $\sim$ class + min.height & 7144686 & 131170 \\
-            \rowcolor{green!50} multifurc $\sim$ class + mean.height & 7055313 & 89374 \\
-            \hline \hline
-            multifurc ~ class * depth & 7250759 & \\
-            multifurc ~ class * max.height & 7187504 & 63256 \\
-            multifurc ~ class * min.height & 7094933 & 92570 \\
-            \rowcolor{green!50} multifurc ~ class * mean.height & 6965794 & 129139 \\
-            \hline \hline
-            multifurc ~ class & 7337241 & \\
-            multifurc ~ class + mean.height & 7055313 & 281928 \\
-            \rowcolor{green!50} multifurc ~ class * mean.height & 6965794 & 89518 \\
-            \hline \hline \hline
-            multifurc $\sim$ order + depth & 7027578 & \\
-            multifurc $\sim$ order + max.height & 7005424 & 22154 \\
-            multifurc $\sim$ order + min.height & 6890703 & 114721 \\
-            \rowcolor{green!50} multifurc $\sim$ order + mean.height & 6815271 & 75432 \\
-            \hline
-          \end{longtable}
-        \end{center}
+        \begin{table}
+          \begin{center}
+            \begin{tabular}{ |l|r|r|r|r| }
+              \hline
+              Model / Taxa & Kingdom & Phylum & Class & Order \\
+              \hline \hline
+              multifurc $\sim$ taxa & 7774454 & 7435700 & 7337241 & 7076068 \\
+              \hline
+              multifurc $\sim$ taxa + depth & 7752303 & 7431609 & 7334754 & 7027578 \\
+              multifurc $\sim$ taxa + max.height & 7730196 & 7375889 & 7275856 & 7005424 \\
+              multifurc $\sim$ taxa + min.height & 7472500 & 7233486 & 7144686 & \cellcolor{green!50}6890703 \\
+              multifurc $\sim$ taxa + mean.height & 7304402 & 7128318 & 7055313 & \cellcolor{green!50}6815271 \\
+              \hline
+              multifurc $\sim$ taxa * depth & 7714881 & 7335396 & 7250759 & \\
+              multifurc $\sim$ taxa * max.height & 7692980 & 7311241 & 7187504 & \\
+              multifurc $\sim$ taxa * min.height & 7442387 & 7177002 & 7094933 & \\
+              multifurc $\sim$ taxa * mean.height & 7247309 & 7020258 & \cellcolor{green!50}6965794 & \\
+              \hline
+            \end{tabular} 
+          \end{center}
+          \caption{Residuals...}
+          \label{table:...} 
+        \end{table}
         * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
-        * Deviance - Abweichung \\
         
         \begin{lstlisting}[gobble=8]
           class * depth / min/max/mean.height: Warning message: glm.fit: fitted rates numerically 0 occurred
           order * depth / min/max/mean.height: Error: cannot allocate vector of size 2.2 Gb
         \end{lstlisting}
 
-        \todotext{Nur ein Ausschnitt hier und dann... You can find the whole Deviance Table in the 
-          Appendix...} \\
         Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
           genauer umso kleinere Subtrees wir betrachten. ...
         
@@ -759,35 +734,21 @@
         Because of the difference in the complexity of the models, we compared their BICs:
         \begin{table}
           \begin{center}
-            \begin{tabular}{ |l|r| }
+            \begin{tabular}{ |l|r|r|r|r| }
               \hline
-              Model & BIC \\
+              Model / Taxa & Kingdom & Phylum & Class & Order \\
               \hline \hline
-              multifurc $\sim$ 1 & 8623935 \\
-              multifurc $\sim$ kingdom & 8273333 \\
-              multifurc $\sim$ phylum & 7937828 \\
-              multifurc $\sim$ class & 7842157 \\
-              \rowcolor{green!50}multifurc $\sim$ order & 7644249\\
-              \hline \hline
-              multifurc $\sim$ phylum + depth & 7934322 \\
-              multifurc $\sim$ phylum + max.height & 7749121 \\
-              multifurc $\sim$ phylum + min.height & 7875521 \\
-              \rowcolor{green!50} multifurc $\sim$ phylum + mean.height & 7644249 \\
+              multifurc $\sim$ taxa & 8273333 & 7937828 & 7842157 & 7644249\\
               \hline
-              multifurc ~ phylum * depth & 7836755 \\
-              multifurc ~ phylum * max.height & 7693555 \\
-              multifurc ~ phylum * min.height & 7808940 \\
-              \rowcolor{green!50} multifurc ~ phylum * mean.height & 7536296 \\
-              \hline \hline
-              multifurc $\sim$ class + depth & \\
-              multifurc $\sim$ class + max.height & \\
-              multifurc $\sim$ class + min.height & \\
-              multifurc $\sim$ class + mean.height & \\
+              multifurc $\sim$ taxa + depth & 8273318 & 7934322 & 7839364 & \\
+              multifurc $\sim$ taxa + max.height & 7993515 & 7749121 & 7661817 & \\
+              multifurc $\sim$ taxa + min.height & 8251211 & 7875521  & 7778327 & \\
+              multifurc $\sim$ taxa + mean.height & 7825417 & 7644249 &  \cellcolor{green!50}7572474 & \\
               \hline
-              multifurc ~ class * depth & \\
-              multifurc ~ class * max.height & \\
-              multifurc ~ class * min.height & \\
-              multifurc ~ class * mean.height &\\
+              multifurc $\sim$ taxa * depth & 8235932 & 7836755 & 7757688 & \\
+              multifurc $\sim$ taxa * max.height & 7963438 & 7693555 & 7614820 & \\
+              multifurc $\sim$ taxa * min.height & 8214030 & 7808940 & 7690618 & \\
+              multifurc $\sim$ taxa * mean.height & 7768360 & \cellcolor{green!50}7536296 & \cellcolor{green!50}7484953 & \\
               \hline
             \end{tabular} 
           \end{center}
