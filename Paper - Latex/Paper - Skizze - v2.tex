@@ -664,10 +664,10 @@
               multifurc $\sim$ taxa + min.height & 7472500 & 7233486 & 7144686 & \cellcolor{green!50}6890703 \\
               multifurc $\sim$ taxa + mean.height & 7304402 & 7128318 & 7055313 & \cellcolor{green!50}6815271 \\
               \hline
-              multifurc $\sim$ taxa * depth & 7714881 & 7335396 & 7250759 & \\
-              multifurc $\sim$ taxa * max.height & 7692980 & 7311241 & 7187504 & \\
-              multifurc $\sim$ taxa * min.height & 7442387 & 7177002 & 7094933 & \\
-              multifurc $\sim$ taxa * mean.height & 7247309 & 7020258 & \cellcolor{green!50}6965794 & \\
+              multifurc $\sim$ taxa * depth & 7714881 & 7335396 & 7250759 & \cellcolor{green!50}6843004 \\
+              multifurc $\sim$ taxa * max.height & 7692980 & 7311241 & 7187504 & \cellcolor{green!50}6795823 \\
+              multifurc $\sim$ taxa * min.height & 7442387 & 7177002 & 7094933 & \cellcolor{green!50}6795099 \\
+              multifurc $\sim$ taxa * mean.height & 7247309 & 7020258 & \cellcolor{green!50}6965794 & \cellcolor{green!50}6665565 \\
               \hline
             \end{tabular} 
           \end{center}
@@ -675,7 +675,7 @@
           \label{table:...} 
         \end{table}
         * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
-        
+
         \begin{lstlisting}[gobble=8]
           class * depth / min/max/mean.height: Warning message: glm.fit: fitted rates numerically 0 occurred
           order * depth / min/max/mean.height: Error: cannot allocate vector of size 2.2 Gb
@@ -701,9 +701,9 @@
               multifurc $\sim$ taxa + mean.height & 7825417 & 7644249 & \cellcolor{green!50}7572474 & \cellcolor{green!50}7340741 \\
               \hline
               multifurc $\sim$ taxa * depth & 8235932 & 7836755 & 7757688 & \cellcolor{green!50}7383808 \\
-              multifurc $\sim$ taxa * max.height & 7963438 & 7693555 & 7614820 & \\
-              multifurc $\sim$ taxa * min.height & 8214030 & 7808940 & 7690618 & \\
-              multifurc $\sim$ taxa * mean.height & 7768360 & \cellcolor{green!50}7536296 & \cellcolor{green!50}7484953 & \\
+              multifurc $\sim$ taxa * max.height & 7963438 & 7693555 & 7614820 & \cellcolor{green!50}7335338 \\
+              multifurc $\sim$ taxa * min.height & 8214030 & 7808940 & 7690618 & \cellcolor{green!50}7336627\\
+              multifurc $\sim$ taxa * mean.height & 7768360 & \cellcolor{green!50}7536296 & \cellcolor{green!50}7484953 & \cellcolor{green!50}7206369 \\
               \hline
             \end{tabular} 
           \end{center}
