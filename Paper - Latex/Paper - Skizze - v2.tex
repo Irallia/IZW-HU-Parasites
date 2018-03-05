@@ -28,11 +28,16 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Abstract}
-  \anmerkungstext{Alle Figures richtig beschriften. Generell: Alle Figure captions sollten 
-    selbsterklärend sein. Sprich, ich sollte nur die Caption (normalerweise auch unter dem Bild) 
-    lesen und nicht den Rest das Papers und dann trotzdem verstehen können, was eigentlich passiert 
-    ist und - hilfreich - auch warum das relevant ist. (Bernhard)} \\
-
+  With increasing amounts of data, new investigations are also possible in phylogeny. This work 
+    deals with the ancestral state reconstruction of parasitism in the tree of life of eukaryotes. 
+    To predict states of the unknown species and estimate origins and losses of parasitism. \\
+  We performed an analysis of existing algorithms and applied a Sankoff maximum parsimony algorithm 
+    using the R package Castor \cite{Louca2017}. \\
+  The challenge here is the size of the tree and the little information about it. On the one hand, 
+    such a large phylogenetic tree is not completely existent, and we therefore work with a synthesis 
+    tree of OTL \cite{Hinchliff2015}, which is highly multifurcated. On the other hand, for the 
+    approximately 300 000 leaf nodes we found only for $\approx 4,3\%$ information whether they are 
+    parasitic or free-living species (obtained from the GloBI database \cite{Poelen2014}).
 \tableofcontents
 \clearpage
 
@@ -44,8 +49,8 @@
   This paper is about the further development of parsimony algorithms for non-binary trees, applied 
   to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the application to 
   the ancestral state reconstruction of parasitism. \\
-  \anmerkungstext{Der erste Satz muss nochmal überarbeitet werden. Das Ziel / Ergebnis der Arbeit hat sich 
-    inzwischen geändert} \\
+  \anmerkungstext{Der erste Satz muss nochmal überarbeitet werden. Das Ziel / Ergebnis der Arbeit 
+    hat sich inzwischen geändert} \\
   \anmerkungstext{Wir haben mehr einen Algorithmus getestet und an unserem spezifischen Problem angewendet, 
     als viel selbst zu entwickeln. Allerdings haben wir den Fitch Algorithmus von binär auf multinär 
     umgeschrieben.} \\
@@ -59,7 +64,7 @@
           binäre Bäume und auf sehr große Datensätze. Insbesondere auf das Beispiel 'Entstehung des 
           Parasitismus' im ganzen Eukaryotischen Tree of Life.
         \item Was soll erreicht werden? \\
-          Wir wollen vorhandene Algorithm (Sankoff/castor) auf diese Aufgabenstellung hin testen 
+          Wir wollen vorhandene Algorithm (Sankoff/castor \cite{Louca2017}) auf diese Aufgabenstellung hin testen 
           und ihre Vorhersagekraft abschätzen. Außerdem wollen wir den Fitch algorithmus für binäre 
           Bäume auf unser Problem erweitern und mit dem Sankoff Algorithmus vergleichen.
         \item Warum ist das relevant? Was könnte man dann tun?\\
@@ -366,7 +371,7 @@
       \item run maximum parsimony algorithms
       \begin{itemize}
         \item Fitch
-        \item Sankoff (Castor package)
+        \item Sankoff (Castor package \cite{Louca2017}) 
         \item my algorithm
       \end{itemize}
       \item Evaluation
@@ -547,7 +552,7 @@
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Sankoff}
-        Maximum parsimony algorithm from Sankoff implemented in the R package castor.
+        Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}.
 
       %---------------------------------------------------------------------------------------------------  
       \subsubsection{my Algorithm}
