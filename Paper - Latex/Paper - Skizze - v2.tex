@@ -28,16 +28,28 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Abstract}
-  With increasing amounts of data, new investigations are also possible in phylogeny. This work 
+  With increasing amounts of data, new investigations are also possible in phylogeny. This study 
     deals with the ancestral state reconstruction of parasitism in the tree of life of eukaryotes. 
-    To predict states of the unknown species and estimate origins and losses of parasitism. \\
-  We performed an analysis of existing algorithms and applied a Sankoff maximum parsimony algorithm 
-    using the R package Castor \cite{Louca2017}. \\
-  The challenge here is the size of the tree and the little information about it. On the one hand, 
-    such a large phylogenetic tree is not completely existent, and we therefore work with a synthesis 
-    tree of OTL \cite{Hinchliff2015}, which is highly multifurcated. On the other hand, for the 
-    approximately 300 000 leaf nodes we found only for $\approx 4,3\%$ information whether they are 
-    parasitic or free-living species (obtained from the GloBI database \cite{Poelen2014}).
+    We predict unknown states of species and estimate origins and losses of parasitism. \\
+  We performed an analysis of existing algorithms and selected a Sankoff maximum parsimony algorithm 
+    using the R package \textit{Castor} \cite{Louca2017}. \\
+  The challenge here is the size of the tree and the little information about it. \\
+  Such a large phylogenetic tree does not completely exist and therefore we work with a synthesis 
+    tree of OTL \cite{Hinchliff2015} which is highly multifurcated. \\
+  For the 2,535,437 leaf nodes we could not gather much data. From the GloBI database 
+    \cite{Poelen2014} whith we used for this, we could only collect 25,992 parasitic and 34,879 
+    free-living species. It follows that we have only $\approx 2.4\%$ state information. \\
+
+  Nevertheless, the analysis of our results revealed that our forecast is largely credible. \\
+  We have compared the results of some subtrees with known knowledge (Chordata, Nematoda, 
+    Platyhelminthes and Apicomplexa) and except for the Nematoda the results looked very good. In 
+    the case of nematodes, the data situation is strongly shifted to the few parasites. \\
+  Our number of origins we could partly compare with the results of Sara B. Weinstein and Armand M. 
+  Kuris from their article \textit{Independent origins of parasitism in Animalia} \cite{Weinstein2016} 
+    and have come to a similar magnitude. They identified 223 parasitic origins in Metazoa and we 
+    were able to estimate about 300 origins. \\
+
+    
 \tableofcontents
 \clearpage
 
