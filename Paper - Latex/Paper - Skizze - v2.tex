@@ -272,52 +272,6 @@
         Since we currently use only OTT ids, we could not use this information. \\
       \todo{mehr dazu in section: unknown nodes...}
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Countings}
-      \begin{center}
-        \begin{tabular}{ | l | l | }
-          \hline
-          Name & Number of \\
-          \hline \hline
-          Eukaryota & 241 974 internal nodes, \\
-          & 2 293 463 leaf nodes \\ \hline
-          % Chloroplastida has 43486 internal nodes and 412434 leaf_nodes
-          % Metazoa has 179944 internal nodes and 1491012 leaf_nodes
-          % Nematoda has 3437 internal nodes and 30127 leaf_nodes
-          % Vertebrata has 30466 internal nodes and 88415 leaf_nodes
-          % Tetrapoda has 21870 internal nodes and 47540 leaf_nodes
-          % Mammalia has 4727 internal nodes and 8615 leaf_nodes
-          % Primates has 492 internal nodes and 686 leaf_nodes
-          % Hominidae has 12 internal nodes and 14 leaf_nodes
-          % Fungi has 9534 internal nodes and 314571 leaf_nodes
-          interactions & 5 346 414 \\ \hline
-          freeliving species & 51 337 (distinct) \\ \hline
-          parasite species &  47 332 (distinct) \\ \hline
-          $\rightarrow$ unknown nodes & ??? \\ \hline
-          unused possible species & 57 352 (source), \\
-          & 809 993 (target) \\
-          % number of freelivings: 489179
-          % number of freelivings: 42657 (distinct)
-          % number of parasites: 3353580
-          % number of parasites: 44260 (distinct)
-          % number of SAME_AS: 86198
-          % number of SAME_AS: 16710 (distinct)
-          \hline
-          Nr of Children $== 1$ & 55 700 \\
-          & 51 744 (height $=2$) \\
-          & 3 956 (height $>2$) \\ \hline
-        \end{tabular}
-      \end{center}
-      \todo{tree, subtrees? figure dazu?} \\
-      $\frac{100}{2293463 * (51337 + 47332)} \approx 4.3$ $\rightarrow$ only 4.3\% of leaf nodes are 
-        filled with information
-
-      \#interactions zu \#Parasiten und \#Freilebend $\rightarrow$ Wieviel gibt GloBI her? (dazu noch 
-        \#unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
-      \#Parasiten und \#Freilebend und \#Blattknoten $\rightarrow$ Wieviele unbekannte Knoten haben wir?
-      \#Interne Knoten und \#Blattknoten $\rightarrow$ Wie stark ist die Multifurkation?
-
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -647,7 +601,9 @@
     %---------------------------------------------------------------------------------------------------
     \section{Multifurcation}\label{sec:ResultsMultifurcation}
       One property of the tree is its ridge of multifurcation. A complete phylogenetic tree would be 
-        binary, but since we only work with a synthesis tree, this tree is multifurcated. \\
+        binary, which means the number of leaf nodes is closely to the number of internal nodes. But 
+        since we only work with a synthesis tree, this tree is multifurcated: we have 241 974 internal 
+        nodes and 2 293 463 leaf nodes. \\
       For a first overview we collected for every node its number of children (degree $-1$), and plotted
         this in an histogram, see figure \ref{fig:childrenOfNodes}. The multifurcation affects only the
         internal nodes. We collected the number of children $-2$ of every node (a node with two children 
@@ -670,7 +626,6 @@
       These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
         tree (3956 with height $>2$). They are probably a result from the fact that taxonomic information 
         has been incorporated into a phylogeny. \\
-
       Some examples:
       \begin{itemize}
         \item Nephroselmidophyceae: (class) \\
@@ -696,7 +651,7 @@
         Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
           des Baums mit dem folgenden Deviance Table:
           
-        \begin{table}
+        \begin{table}[h]
           \begin{center}
             \begin{tabular}{ |l|r|r|r|r| }
               \hline
@@ -732,7 +687,7 @@
         \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
 
         Because of the difference in the complexity of the models, we compared their BICs:
-        \begin{table}
+        \begin{table}[h]
           \begin{center}
             \begin{tabular}{ |l|r|r|r|r| }
               \hline
@@ -740,12 +695,12 @@
               \hline \hline
               multifurc $\sim$ taxa & 8273333 & 7937828 & 7842157 & 7644249\\
               \hline
-              multifurc $\sim$ taxa + depth & 8273318 & 7934322 & 7839364 & \\
-              multifurc $\sim$ taxa + max.height & 7993515 & 7749121 & 7661817 & \\
-              multifurc $\sim$ taxa + min.height & 8251211 & 7875521  & 7778327 & \\
-              multifurc $\sim$ taxa + mean.height & 7825417 & 7644249 &  \cellcolor{green!50}7572474 & \\
+              multifurc $\sim$ taxa + depth & 8273318 & 7934322 & 7839364 & \cellcolor{green!50}7539999 \\
+              multifurc $\sim$ taxa + max.height & 7993515 & 7749121 & 7661817 & \cellcolor{green!50}7416211 \\
+              multifurc $\sim$ taxa + min.height & 8251211 & 7875521  & 7778327 & \cellcolor{green!50}7516883 \\
+              multifurc $\sim$ taxa + mean.height & 7825417 & 7644249 & \cellcolor{green!50}7572474 & \cellcolor{green!50}7340741 \\
               \hline
-              multifurc $\sim$ taxa * depth & 8235932 & 7836755 & 7757688 & \\
+              multifurc $\sim$ taxa * depth & 8235932 & 7836755 & 7757688 & \cellcolor{green!50}7383808 \\
               multifurc $\sim$ taxa * max.height & 7963438 & 7693555 & 7614820 & \\
               multifurc $\sim$ taxa * min.height & 8214030 & 7808940 & 7690618 & \\
               multifurc $\sim$ taxa * mean.height & 7768360 & \cellcolor{green!50}7536296 & \cellcolor{green!50}7484953 & \\
@@ -756,7 +711,33 @@
           \label{table:...} 
         \end{table}
 
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Unknown leaf nodes}
+    Next to the problem of the multifurcation of the tree is the less of data we have for the species.
+      For the ancestral state reconstruction, we need information in the leaf nodes. \\
+    The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
+      (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
+      distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7\%$). \\
+    With this only $\approx 4.3\%$ information in our leaf nodes are 
 
+    \todo{einbauen?:} \\
+    unused possible species  57 352 (source), \\
+    809 993 (target) \\
+
+    \#interactions zu \#Parasiten und \#Freilebend $\rightarrow$ Wieviel gibt GloBI her? (dazu noch 
+      \#unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
+
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Results of simulation / Influence of different parameters}
+
+    \begin{figure}
+      \caption{Influence of unknown data to prediction}
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 50mm, clip,width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
+    \end{figure}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1041,22 +1022,6 @@
         \end{center}
         \caption{Statistics to Cross validation}
       \end{table}
-
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Results of simulation}
-
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Influence of different parameters}
-
-    \begin{figure}
-      \caption{Influence of unknown data to prediction}
-      \centering
-      \includegraphics[width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
-    \end{figure}
   
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
