@@ -62,10 +62,6 @@
 %\restylefloat{figure} %kannst du einen weiteren Positionierungsparameter [H] definieren. der setzt dir das bild an genau die stelle, wo du es haben willst. Ist allerdings auch nicht immer so praktisch.
 % wenn du ein \pagebreak einfügst, gibt er dir vor der neuen seite noch alle gleitobjekte aus, die noch anstehen
 
-%Zeichnen mit Tikz
-\usepackage{tikz}
-\usetikzlibrary{intersections,positioning,shapes.geometric,calc}
-
 % Tabellen
 \usepackage{multirow} % Tabellen-Zellen über mehrere Zeilen
 \usepackage{multicol} % mehre Spalten auf eine Seite
@@ -75,6 +71,17 @@
 \usepackage{colortbl}
 \newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
 \newcommand\clearrow{\global\let\rowmac\relax}
+\usepackage[table]{xcolor}
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+%Zeichnen mit Tikz
+\usepackage{tikz}
+\usetikzlibrary{intersections,positioning,shapes.geometric,calc}
 
 %Bibliographie
 \usepackage[square, comma, numbers, sort&compress, round]{natbib}
@@ -86,12 +93,6 @@
 % Default fixed font does not support bold face
 \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
 \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
-
-% Custom colors
-\usepackage{color}
-\definecolor{deepblue}{rgb}{0,0,0.5}
-\definecolor{deepred}{rgb}{0.6,0,0}
-\definecolor{deepgreen}{rgb}{0,0.5,0}
 
 % Code in a box
 \usepackage{listings}
