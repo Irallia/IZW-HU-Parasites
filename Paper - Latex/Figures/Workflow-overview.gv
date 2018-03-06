@@ -1,15 +1,19 @@
 digraph G {
-	node [style=filled, fillcolor=seagreen1, shape=box];
+	graph[fontname="arial"]
+	node [style=filled, fillcolor=seagreen1, shape=box, fontname="arial"];
 
 	cluster_0 [label = "GloBI", fillcolor=indianred1]
 	cluster_1 [label = "OTL", fillcolor=lightblue]
 	cluster_2 [label = "Metadata analysis", fillcolor=palegreen]
-	cluster_3 [label = "Simulation", fillcolor=lightyellow]
-	cluster_4 [label = "run maximum parsimony \n on the real tree \n (Sankoff & Fitch)", fillcolor=lightpink]
+	cluster_3 [label = "Simulation \n (Sankoff & Fitch)", fillcolor=lightyellow]
+	cluster_4 [label = "run maximum parsimony \n on the real tree \n (Sankoff)", fillcolor=lightpink]
+	cluster_5 [label = "Evaluation", fillcolor=aquamarine]
 
 	cluster_0 -> cluster_2
+	cluster_0 -> cluster_4
 	cluster_1 -> cluster_2
+	cluster_1 -> cluster_4
 	cluster_2 -> cluster_3
-	cluster_2 -> cluster_4
+	cluster_4 -> cluster_5
 
 }
