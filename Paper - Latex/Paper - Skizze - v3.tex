@@ -223,36 +223,9 @@
         same time the team from OTL preferred a maximum number of species \cite{Hinchliff2015}. This is 
         resulting in somekind of hybrid between taxonomy and phylogeny." \\
 
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Distribution of Taxa}
-        - In our tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
-        - The most of them are hardly represented. The major taxonomic groups are: ... \\
-        - Here you can see some characteristics of the Multifurcation of the tree. \\
-        \begin{figure}[h!]
-          \centering
-          \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
-          \caption{Distribution of Nodes in Rank-Cathegories}
-          \label{fig:taxaTable2}
-        \end{figure}
-        In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
-          be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
-          taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
-          multipliers for some are much bigger and for others much smaller, which you can see in in figure 
-          \ref{fig:taxaTable2}. \\
-        Please see the appendix on page \pageref{sec:taxaTable2} for a complete table \ref{sec:taxaTable2} 
-          of these data. \\
-        \todo{Was hierzu ist richtig und wichtig?}
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Distribution of data in the taxa}
-        Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
-          zugeteilt. \\
-        Please see the appendix on page \pageref{sec:taxaTable1} for a complete table \ref{sec:taxaTable1} 
-          of these data. \\
-        \todo{gibt es einen Zusammenhang zwischen Anzahl} \\
-        \todo{max max height zu anzahl nodes in phylum plotten? oder mean max height oder ... 
-          (mean, min height...)} \\
-        \todo{depth...}
+      We took a closer look at some of the features of the Synthesis tree. On the one hand the 
+        distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this
+        is not directly relevant to our study, there is a section in the appendix \ref{sec:otl analysis}.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -612,7 +585,7 @@
         according to recent findings, this is not complete and we lack some taxa in every rank. For 
         example, Hans says that one distinguishes between seven and nine kingdoms 
         \cite{CavalierSmith1981}. \\
-      In section \pageref{sec:listPhyla} of the appendix you can find a list of all phyla.
+      In section \pageref{subsec:listPhyla} of the appendix you can find a list of all phyla.
       
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -1083,112 +1056,142 @@
 \chapter{Appendices}
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{List of all phyla}\label{sec:listPhyla}
+  \section{OTL analysis}\label{sec:otl analysis}
 
-  Phyla (53): \\
-  Acanthocephala, Amoebozoa, Apicomplexa, Arthropoda, Ascomycota, Bacillariophyta, Basidiomycota, 
-    Brachiopoda, Bryozoa, Chaetognatha, Chlorophyta, Chordata, Chromerida, Chytridiomycota, 
-    Ciliophora, Cnidaria, Colponemidia, Ctenophora, Cycliophora, Echinodermata, Entoprocta, 
-    Entorrhizomycota, Euglenida, Foraminifera, Gastrotricha, Glomeromycota, Gnathostomulida, 
-    Haplosporida, Haptophyta, Hemichordata, Kinorhyncha, Loricifera, Microsporidia, Mollusca, 
-    Myzostomida, Nematoda, Nematomorpha, Nemertea, Onychophora, Orthonectida, Phaeophyceae, 
-    Picozoa, Placozoa, Platyhelminthes, Porifera, Priapulida, Rhodophyta, Rhombozoa, Rotifera, 
-    Streptophyta, Tardigrada, Xanthophyceae \\
-  Wobei von Streptophyta -> Anthocerotophyta, Marchantiophyta, Bryophyta, Tracheophyta als
-    Phylum im Phylum gefunden und nicht einbezogen wurden und Magnoliophyta als Phylum in 
-    Tracheophyta ebenfalls nicht. \\
+    %---------------------------------------------------------------------------------------------------
+    \subsection{List of all phyla}\label{subsec:listPhyla}
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Distribution of data in the taxa}\label{sec:taxaTable1}
-    \begin{center}
-      \begin{tabular}{ |l|r|l|r|r| }
-        \hline
-        Kingdom (3) & Number of Nodes & Phylum (25) & Number of Nodes & max max height \\
-        \hline \hline
-        Metazoa & 1 465 207 & Arthropoda & 1 170 539 & 54 \\
-        & & Chordata & 106 650 & 74 \\
-        & & Mollusca & 80 022 & 22 \\
-        & & Platyhelminthes & 27 141 & 9 \\
-        & & Nematoda & 24 564 & 23 \\
-        & & Cnidaria & 14 878 & 36 \\
-        & & Porifera & 11 737 & 26 \\
-        & & Echinodermata & 10 654 & 14 \\
-        & & Bryozoa & 8 631 & 11 \\
-        & & Rotifera & 3 093 & 7 \\
-        & & Nemertea & 1 793 & 7 \\
-        & & Tardigrada & 1 654 & 7 \\
-        & & Acanthocephala & 1 596 & 6 \\
-        & & Brachiopoda & 1 055 & 9 \\
-        & & Nematomorpha & 633 & 7 \\
-        & & Chaetognatha & 360 & 7 \\
-        & & Hemichordata & 196 & 5 \\ 
-        & & Cycliophora & 11 & 5 \\ 
-        % 1465207-(1170539+106650+80022+27141+24564+14878+11737+10654+8631+3093+1793+1654+1596+1055+633+360+196+11) = 0          \hline
-        Fungi & 254 871 & Ascomycota & 157 045 & 19 \\ 
-        & & Basidiomycota & 92 931 & 18 \\
-        & & Microsporidia & 1 949 & 6 \\ 
-        & & Glomeromycota & 1 490 & 6 \\
-        & & Chytridiomycota & 1 456 & 6 \\
-        % 254871-157045-92931-1949-1490-1456 = 0
-        \hline
-        Chloroplastida & 121 239 & Streptophyta & 120 731 & 49 \\
-        & & Chlorophyta & 508 & 6 \\
-        % 121239-120731-508 = 0
-        \hline  
-      \end{tabular}
-    \end{center}
+    Phyla (53): \\
+    Acanthocephala, Amoebozoa, Apicomplexa, Arthropoda, Ascomycota, Bacillariophyta, Basidiomycota, 
+      Brachiopoda, Bryozoa, Chaetognatha, Chlorophyta, Chordata, Chromerida, Chytridiomycota, 
+      Ciliophora, Cnidaria, Colponemidia, Ctenophora, Cycliophora, Echinodermata, Entoprocta, 
+      Entorrhizomycota, Euglenida, Foraminifera, Gastrotricha, Glomeromycota, Gnathostomulida, 
+      Haplosporida, Haptophyta, Hemichordata, Kinorhyncha, Loricifera, Microsporidia, Mollusca, 
+      Myzostomida, Nematoda, Nematomorpha, Nemertea, Onychophora, Orthonectida, Phaeophyceae, 
+      Picozoa, Placozoa, Platyhelminthes, Porifera, Priapulida, Rhodophyta, Rhombozoa, Rotifera, 
+      Streptophyta, Tardigrada, Xanthophyceae \\
+    Wobei von Streptophyta -> Anthocerotophyta, Marchantiophyta, Bryophyta, Tracheophyta als
+      Phylum im Phylum gefunden und nicht einbezogen wurden und Magnoliophyta als Phylum in 
+      Tracheophyta ebenfalls nicht. \\
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Taxa table}\label{sec:taxaTable2}
-    \begin{center}
-      % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
-      \begin{tabular}{ |l|r||r|r|r| }
-        \hline
-        Taxa & Number of Nodes & Internal Nodes & Leaf Nodes & Terminal Leaf Nodes \\
-        \hline \hline
-        \setrow{\bfseries}domain & 1 & 1 & &  \\ \hline
-        \setrow{\bfseries}kingdom & 3 & 3 & &  \\
-        subkingdom & 2 & 2 & & \\
-        infrakingdom & 5 & 5 & & \\
-        superphylum & 2 & 2 & & \\ \hline
-        \setrow{\bfseries}phylum & 57 & 54 & 3 & \\
-        subphylum & 22 & 20 & 2 & \\
-        infraphylum & 2 & 2 & & \\
-        superclass & 8 & 8 & & \\ \hline
-        \setrow{\bfseries}class & 209 & 175 & 34 & \\
-        subclass & 120 & 106 & 14 & \\
-        infraclass & 14 & 11 & 3 & \\
-        superorder & 40 & 37 & 3 & \\ \hline
-        \setrow{\bfseries}order & 1014 & 772 & 242 & \\
-        suborder & 285 & 222 & 63 & \\
-        infraorder & 95 & 78 & 17 & \\
-        parvorder & 14 & 12 & 2 & \\
-        superfamily & 829 & 626 & 203 & \\ \hline
-        \setrow{\bfseries}family & 8449 & 6143 & 2306 & \\
-        subfamily & 3090 & 2250 & 840 & \\
-        supertribe & 1 & 0 & 1 & \\
-        tribe & 1764 & 1285 & 479 & \\
-        subtribe & 435 & 359 & 77 & \\ \hline
-        \setrow{\bfseries}genus & 164656 & 105452 & 59204 & \\
-        subgenus & 1266 & 869 & 397 & \\
-        section & 3 & 2 & 1 & \\
-        subsection & 1 & 1 & 0 & \\
-        species group & 365 & 288 & 77 & \\
-        species subgroup & 123 & 100 & 23 & \\ \hline
-        \setrow{\bfseries}species & 2247251 & 7423 & 2239828 & 2228993 \\
-        subspecies & 22437 & 75 & 22362 & 22239 \\
-        variety & 1755 & 7 & 1748 & 1726 \\
-        varietas & 5970 & 19 & 5951 & 5909 \\
-        forma & 1181 & & 1181 & 1181 \\
-        \hline \hline
-        no rank & 954 & 719 & 235 & 7 \\
-        no rank - terminal & 37452 & & 37452 & 37452 \\
-        (no entry) & 40099 & 40099 & & \\
-        \hline  
-      \end{tabular}
-    \end{center}
+    %---------------------------------------------------------------------------------------------------
+    \subsubsection{Distribution of Taxa}
+    - In the tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
+    - The most of them are hardly represented. The major taxonomic groups are: ... \\
+    - Here you can see some characteristics of the Multifurcation of the tree. \\
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
+      \caption{Distribution of Nodes in Rank-Cathegories}
+      \label{fig:taxaTable2}
+    \end{figure}
+    In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
+      be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
+      taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
+      multipliers for some are much bigger and for others much smaller, which you can see in in figure 
+      \ref{fig:taxaTable2}. \\
+      ... (see Table \ref{table:...})
+    
+    \begin{table}[h!]
+      \begin{center}
+        % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
+        \begin{tabular}{ |l|r||r|r|r| }
+          \hline
+          Taxa & Number of Nodes & Internal Nodes & Leaf Nodes & Terminal Leaf Nodes \\
+          \hline \hline
+          \setrow{\bfseries}domain & 1 & 1 & &  \\ \hline
+          \setrow{\bfseries}kingdom & 3 & 3 & &  \\
+          subkingdom & 2 & 2 & & \\
+          infrakingdom & 5 & 5 & & \\
+          superphylum & 2 & 2 & & \\ \hline
+          \setrow{\bfseries}phylum & 57 & 54 & 3 & \\
+          subphylum & 22 & 20 & 2 & \\
+          infraphylum & 2 & 2 & & \\
+          superclass & 8 & 8 & & \\ \hline
+          \setrow{\bfseries}class & 209 & 175 & 34 & \\
+          subclass & 120 & 106 & 14 & \\
+          infraclass & 14 & 11 & 3 & \\
+          superorder & 40 & 37 & 3 & \\ \hline
+          \setrow{\bfseries}order & 1014 & 772 & 242 & \\
+          suborder & 285 & 222 & 63 & \\
+          infraorder & 95 & 78 & 17 & \\
+          parvorder & 14 & 12 & 2 & \\
+          superfamily & 829 & 626 & 203 & \\ \hline
+          \setrow{\bfseries}family & 8449 & 6143 & 2306 & \\
+          subfamily & 3090 & 2250 & 840 & \\
+          supertribe & 1 & 0 & 1 & \\
+          tribe & 1764 & 1285 & 479 & \\
+          subtribe & 435 & 359 & 77 & \\ \hline
+          \setrow{\bfseries}genus & 164656 & 105452 & 59204 & \\
+          subgenus & 1266 & 869 & 397 & \\
+          section & 3 & 2 & 1 & \\
+          subsection & 1 & 1 & 0 & \\
+          species group & 365 & 288 & 77 & \\
+          species subgroup & 123 & 100 & 23 & \\ \hline
+          \setrow{\bfseries}species & 2247251 & 7423 & 2239828 & 2228993 \\
+          subspecies & 22437 & 75 & 22362 & 22239 \\
+          variety & 1755 & 7 & 1748 & 1726 \\
+          varietas & 5970 & 19 & 5951 & 5909 \\
+          forma & 1181 & & 1181 & 1181 \\
+          \hline \hline
+          no rank & 954 & 719 & 235 & 7 \\
+          no rank - terminal & 37452 & & 37452 & 37452 \\
+          (no entry) & 40099 & 40099 & & \\
+          \hline  
+        \end{tabular}
+        \caption{\todo{...}}
+        \label{table:...} 
+      \end{center}  
+    \end{table}
     extended leaf nodes (real leaf nodes)
+
+  %---------------------------------------------------------------------------------------------------
+  \subsubsection{Distribution of data in the taxa}
+    Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
+      zugeteilt (see Table \ref{table:...}). \\
+
+    \begin{table}[h]
+      \begin{center}
+        \begin{tabular}{ |l|r|l|r|r| }
+          \hline
+          Kingdom (3) & Number of Nodes & Phylum (25) & Number of Nodes & max max height \\
+          \hline \hline
+          Metazoa & 1 465 207 & Arthropoda & 1 170 539 & 54 \\
+          & & Chordata & 106 650 & 74 \\
+          & & Mollusca & 80 022 & 22 \\
+          & & Platyhelminthes & 27 141 & 9 \\
+          & & Nematoda & 24 564 & 23 \\
+          & & Cnidaria & 14 878 & 36 \\
+          & & Porifera & 11 737 & 26 \\
+          & & Echinodermata & 10 654 & 14 \\
+          & & Bryozoa & 8 631 & 11 \\
+          & & Rotifera & 3 093 & 7 \\
+          & & Nemertea & 1 793 & 7 \\
+          & & Tardigrada & 1 654 & 7 \\
+          & & Acanthocephala & 1 596 & 6 \\
+          & & Brachiopoda & 1 055 & 9 \\
+          & & Nematomorpha & 633 & 7 \\
+          & & Chaetognatha & 360 & 7 \\
+          & & Hemichordata & 196 & 5 \\ 
+          & & Cycliophora & 11 & 5 \\ 
+          % 1465207-(1170539+106650+80022+27141+24564+14878+11737+10654+8631+3093+1793+1654+1596+1055+633+360+196+11) = 0          \hline
+          Fungi & 254 871 & Ascomycota & 157 045 & 19 \\ 
+          & & Basidiomycota & 92 931 & 18 \\
+          & & Microsporidia & 1 949 & 6 \\ 
+          & & Glomeromycota & 1 490 & 6 \\
+          & & Chytridiomycota & 1 456 & 6 \\
+          % 254871-157045-92931-1949-1490-1456 = 0
+          \hline
+          Chloroplastida & 121 239 & Streptophyta & 120 731 & 49 \\
+          & & Chlorophyta & 508 & 6 \\
+          % 121239-120731-508 = 0
+          \hline  
+        \end{tabular}
+        \caption{\todo{...}}
+        \label{table:...} 
+      \end{center}  
+    \end{table}
+    
+
 
 \end{document}
