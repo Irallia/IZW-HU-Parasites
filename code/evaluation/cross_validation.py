@@ -30,7 +30,7 @@ def main():
     print(len(nodelist))
 
     print(colored("---------------- read leave 100 out nodelists ----------------", "green"))
-    for i in range(0, 10):
+    for i in range(0, 70):
         print("run:", i)
         index = 0
         changed_tag = 0
@@ -41,7 +41,7 @@ def main():
         distance_leaf = 0
         distance_inner = 0
 
-        nodelist_path = './data/evaluation/Eukaryota' + str(i) + '-100-castor.csv' 
+        nodelist_path = './data/evaluation/Eukaryota' + str(i) + '-castor.csv' 
         #                0    1              2       3       4           5
         # nodelist    - [id, originaltag, finaltag, depth, heights, nr_children]
         with open(nodelist_path, 'r') as csv_file:
@@ -72,13 +72,18 @@ def main():
                         else:
                             print('Error: the nodelist entry-otts are unequal:')
                             print(nodelist[index][0], '!=', ott_id)
-                    # else:
-                    #     print(row)
                     index += 1
-        print('current list had', index, 'lines')
-        print(index - len(nodelist), 'lines where skipped')
         cross_evaluation_results.append([i, distance, distance_leaf, distance_inner, changed_tag, loose_tag, loose_FL, loose_P])
-    pprint(cross_evaluation_results)
+    # pprint(cross_evaluation_results)
+    
+    less_FL_results = []
+    less_P_results = []
+    for element in cross_evaluation_results:
+        if element[6] < 45:
+            less_FL_results.append(element)
+        if element[7] < 45:
+            less_P_results.append(element)
+
     cross_evaluation_results = array(cross_evaluation_results)
     print("distance:")
     print(stats.describe(cross_evaluation_results[:, 1]))
@@ -94,6 +99,37 @@ def main():
     print(stats.describe(cross_evaluation_results[:, 6]))
     print("loose_P:")
     print(stats.describe(cross_evaluation_results[:, 7]))
+
+    print('---- less FL and less P ----')
+
+    
+    print(len(less_FL_results))
+    print(len(less_P_results))
+    less_FL_results = array(less_FL_results)
+    less_P_results = array(less_P_results)
+
+    print("distance:")
+    print(stats.describe(less_FL_results[:, 1]))
+    print(stats.describe(less_P_results[:, 1]))
+    print("distance_leaf:")
+    print(stats.describe(less_FL_results[:, 2]))
+    print(stats.describe(less_P_results[:, 2]))
+    print("distance_inner:")
+    print(stats.describe(less_FL_results[:, 3]))
+    print(stats.describe(less_P_results[:, 3]))
+    print("changed_tag:")
+    print(stats.describe(less_FL_results[:, 4]))
+    print(stats.describe(less_P_results[:, 4]))
+    print("loose_tag:")
+    print(stats.describe(less_FL_results[:, 5]))
+    print(stats.describe(less_P_results[:, 5]))
+    print("loose_FL:")
+    print(stats.describe(less_FL_results[:, 6]))
+    print(stats.describe(less_P_results[:, 6]))
+    print("loose_P:")
+    print(stats.describe(less_FL_results[:, 7]))
+    print(stats.describe(less_P_results[:, 7]))
+
     return
 
 main()

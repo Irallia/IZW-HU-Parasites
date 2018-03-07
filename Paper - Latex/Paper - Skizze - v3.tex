@@ -969,7 +969,7 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Cross evaluation - leave 100 out}
-      We ran the castor algorithm (\todo{10000}) 10 times with leaving 100 randomized free-living or 
+      We ran the castor algorithm (\todo{10000}) 70 times with leaving 100 randomized free-living or 
         parasitic species out of the input data to see how stable our result is. \\
       What could happen by removing a parasite or free-living of the list?
       \begin{itemize}
@@ -979,27 +979,24 @@
         \item Normal case: We loose information, because its a specie in our tree and we change it to a 
           leave node with no information.
       \end{itemize}
+
       \begin{table}
         \begin{center}
-          \begin{tabular}{ |c||r|r|r||c|r| }
+          \begin{tabular}{ |cl||r|r|r|r| }
             \hline
-            run & \multicolumn{3}{c||}{distance} & changed & lost \\
-            & all nodes & leaf nodes & internal nodes & tag & tag \\
+            & & min & max & mean & variance \\
             \hline \hline
-            0 & 4.0 & 4.0 & 0.0 & 4 & 48 \\
-            1 & 4.0 & 4.0 & 0.0 & 2 & \cellcolor{green!50}45 \\
-            2 & 85.3 & 79.3 & 6.0 & 3 & 51 \\
-            3 & 1.0 & 1.0 & 0.0 & 1 & 47 \\
-            \rowcolor{red!50}4 & 1248.0 & 1230.5 & 17.5 & \cellcolor{green!50}0 & 54 \\
-            5 & 169.0 & 168.0 & 1.0 & 3 & 52 \\
-            6 & 1.0 & 1.0 & 0.0 & 1 & 48 \\
-            7 & 1.0 & 1.0 & 0.0 & 1 & 53 \\
-            8 & 1.0 & 1.0 & 0.0 & 1 & \cellcolor{red!50}54 \\
-            9 & 1.0 & 1.0 & 0.0 & 1 & 52 \\
+            \multirow{3}{*}{distance} & all   & 0 & 3587.70 & 199.68 & 253570.50 \\
+            & leaf nodes                      & 0 & 3021.12 & 185.59 & 194202.16 \\
+            & internal nodes                  & 0 & 566.58 & 14.08 & 5207.58 \\ \hline
+            \multicolumn{2}{|c||}{changed tag} & 0 & 0 & 0 & 0 \\ \hline
+            \multirow{3}{*}{lost} & all tags  & 100 & 100 & 100 & 0 \\
+            & FL tags                         & 44 & 66 & 57.24 & 20.08 \\
+            & P tags                          & 34 & 56 & 42.76 & 20.08 \\
             \hline
           \end{tabular}
         \end{center}
-        \caption{Example runs. \\ green: min value, red: max value}
+        \caption{Statistics to Cross validation}
       \end{table}
 
       \begin{table}
@@ -1008,19 +1005,24 @@
             \hline
             & & min & max & mean & variance \\
             \hline \hline
-            \multirow{3}{*}{distance} & all & 1.0 & 1248.0 & 151.53 & 151528.92 \\
-            & leaf nodes                    & 1.0 & 1230.5 & 149.08 & 147380.74 \\
-            & internal nodes                & 0.0 & 17.5 & 2.45 & 31.47 \\ \hline
-            \multicolumn{2}{|c||}{changed tag} & 0.0 & 4.0 & 1.7 & 1.57 \\ \hline
-            lost tag & all tags             & 45.0 & 54.0 & \cellcolor{green!50}50.40 & 10.04 \\
-            & FL tags                       & 16.0 & 32.0 & 23.10 & 18.77 \\
-            & P tags                        & 16.0 & 36.0 & 27.30 & 41.34 \\
+            \rowcolor{green!50}distance & all   & 1 & 2 & 1.33 & 0.33 \\
+            \rowcolor{orange!50}&               & 0 & 3587.70 & 217.94 & 273760.68 \\
+            \rowcolor{green!50}& leaf nodes     & 1 & 2 & 1.33 & 0.33 \\
+            \rowcolor{orange!50}&               & 0 & 3021.12 & 202.57 & 209274.86 \\
+            \rowcolor{green!50}& internal nodes& 0 & 0 & 0.00 & 0.00 \\
+            \rowcolor{orange!50}&               & 0 & 566.58 & 15.37 & 5684.00 \\ \hline
+            \rowcolor{green!50}lost & FL tags   & 44 & 49 & 46.67 & 6.33 \\
+            \rowcolor{orange!50}&               & 51 & 66 & 57.95 & 13.47 \\
+            \rowcolor{green!50}& P tags         & 51 & 56 & 53.33 & 6.33 \\
+            \rowcolor{orange!50}&               & 34 & 49 & 42.05 & 13.47 \\
             \hline
           \end{tabular}
         \end{center}
-        \caption{Statistics to Cross validation}
+        \caption{Statistics to Cross validation \\
+          - \colorbox{green!50}{Less free-livings - 3 examples} \\
+          - \colorbox{orange!50}{Less parasites - 64 examples}}
       \end{table}
-  
+
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
