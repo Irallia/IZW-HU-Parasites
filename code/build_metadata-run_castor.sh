@@ -11,11 +11,11 @@ python3 -m code.metadata.extract_globi_data > logs/log-extract_globi_data.txt
 echo "$(tput setaf 1)$(tput setab 7)------- Free-livings and Parasites extracted (3/7) --------$(tput sgr 0)" 1>&3
 python3 -m code.metadata.build_subtree ott304358 Eukaryota > logs/log-build_subtrees.txt
 echo "$(tput setaf 1)$(tput setab 7)------- Subtrees builded(4/7) --------$(tput sgr 0)" 1>&3
-python3 -m code.metadata.build_nodelist > logs/log-build_nodelist.txt
+python3 -m code.metadata.build_nodelist Eukaryota > logs/log-build_nodelist.txt
 echo "$(tput setaf 1)$(tput setab 7)------- Nodelists builded(5/7) --------$(tput sgr 0)" 1>&3
 
 # -------- -------- run castor files -------- -------- #
-python3 -m code.castor.run_castor > logs/log-run_castor.txt
+python3 -m code.castor.run_castor Eukaryota > logs/log-run_castor.txt
 echo "$(tput setaf 1)$(tput setab 7)------- Maximum Parsimony: Sankoff (Castor) ready(6/7) --------$(tput sgr 0)" 1>&3
 
 # -------- -------- build more metadata files -------- -------- #
