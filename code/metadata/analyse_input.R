@@ -28,24 +28,12 @@ all.taxa <- cbind(all.taxa, heights)
 ## which Phylum in which Kingdom:
 # table(all.taxa$kingdom, all.taxa$phylum)
 
-summary(all.taxa$nr_children)
+# summary(all.taxa$nr_children)
 ## [Min. 1st Qu.  Median    Mean 3rd Qu.    Max. ] over all phyla - max height
 # tapply(all.taxa$max.height, all.taxa$phylum, summary)
 
 ### all nodes sorted by rank
-table(all.taxa$rank)[order(table(all.taxa$rank))]
-
-### find out what is going on here...
-# print('------------------------ all.taxa$nr_children==1 --------------------------')
-# table(all.taxa[all.taxa$nr_children==1, "finaltag"])
-# print('---------------- nr_children==1 ---------------------')
-# table(all.taxa[all.taxa$nr_children==1, "rank"])
-# print('---------------- nr_children==1 & max.height>2 ---------------------')
-# table(all.taxa[all.taxa$nr_children==1 & all.taxa$max.height>2, "rank"])
-# print('--------------------------------------------------')
-# table(all.taxa[all.taxa$nr_children==1 & all.taxa$max.height>2, "finaltag"])
-# print('--------------------------------------------------')
-# table(all.taxa[all.taxa$nr_children==1 & all.taxa$max.height==2, "finaltag"])
+# table(all.taxa$rank)[order(table(all.taxa$rank))]
 
 print('--------------------------------------------------')
 
@@ -76,16 +64,18 @@ inner.taxa$multifurc <- inner.taxa$nr_children-1
 #     labs(x="number of children", y="number of nodes")
 # ggsave("multifurc.pdf")
 
-print('--------------------------------------------------')
 
-null.furc.mod <- glm(multifurc~1, data=inner.taxa,
-                   family="poisson")
+print('--------------------------------------------------')
+print('-------------------------multifurc data-------------------------')
+print('--------------------------------------------------')
+# null.furc.mod <- glm(multifurc~1, data=inner.taxa,
+#                    family="poisson")
 
 print('------------------------kingdom - phylum - class - order--------------------------')
 
-kingdom.furc.mod <- glm(multifurc~kingdom, data=inner.taxa,
-                        family="poisson")
-print(c('BIC=',  BIC(kingdom.furc.mod)))
+# kingdom.furc.mod <- glm(multifurc~kingdom, data=inner.taxa,
+#                         family="poisson")
+# print(c('BIC=',  BIC(kingdom.furc.mod)))
 
 # phylum.furc.mod <- glm(multifurc~phylum, data=inner.taxa,
 #                         family="poisson")
@@ -95,9 +85,9 @@ print(c('BIC=',  BIC(kingdom.furc.mod)))
 #                         family="poisson")
 # print(c('BIC=',  BIC(class.furc.mod)))
 
-order.furc.mod <- glm(multifurc~order, data=inner.taxa,
-                        family="poisson")
-print(c('BIC=',  BIC(order.furc.mod)))
+# order.furc.mod <- glm(multifurc~order, data=inner.taxa,
+#                         family="poisson")
+# print(c('BIC=',  BIC(order.furc.mod)))
 
 # anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, order.furc.mod, test="LRT")
 # anova(kingdom.furc.mod, phylum.furc.mod, test="LRT")
@@ -234,66 +224,65 @@ print('-------------------class * depth / min/max/mean.height-------------------
 
 print('-------------------order + depth / min/max/mean.height-----------------------')
 
-orderPdepth.furc.mod <- glm(multifurc~order+depth, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderPdepth.furc.mod)))
+# orderPdepth.furc.mod <- glm(multifurc~order+depth, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderPdepth.furc.mod)))
 
-orderPminHeight.furc.mod <- glm(multifurc~order+min.height, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderPminHeight.furc.mod)))
+# orderPminHeight.furc.mod <- glm(multifurc~order+min.height, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderPminHeight.furc.mod)))
 
-orderPmaxHeightt.furc.mod <- glm(multifurc~order+max.height, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderPmaxHeightt.furc.mod)))
+# orderPmaxHeightt.furc.mod <- glm(multifurc~order+max.height, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderPmaxHeightt.furc.mod)))
 
-orderPmeanHeight.furc.mod <- glm(multifurc~order+mean.height, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderPmeanHeight.furc.mod)))
+# orderPmeanHeight.furc.mod <- glm(multifurc~order+mean.height, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderPmeanHeight.furc.mod)))
 
-anova(orderPdepth.furc.mod, orderPmaxHeightt.furc.mod, orderPminHeight.furc.mod, orderPmeanHeight.furc.mod, test="LRT")
+# anova(orderPdepth.furc.mod, orderPmaxHeightt.furc.mod, orderPminHeight.furc.mod, orderPmeanHeight.furc.mod, test="LRT")
 
 print('-------------------order * depth / min/max/mean.height-----------------------')
 
-orderTdepth.furc.mod <- glm(multifurc~order*depth, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderTdepth.furc.mod)))
+# orderTdepth.furc.mod <- glm(multifurc~order*depth, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderTdepth.furc.mod)))
 
-orderTminHeight.furc.mod <- glm(multifurc~order*min.height, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderTminHeight.furc.mod)))
+# orderTminHeight.furc.mod <- glm(multifurc~order*min.height, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderTminHeight.furc.mod)))
 
-orderTmaxHeightt.furc.mod <- glm(multifurc~order*max.height, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderTmaxHeightt.furc.mod)))
+# orderTmaxHeightt.furc.mod <- glm(multifurc~order*max.height, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderTmaxHeightt.furc.mod)))
 
-orderTmeanHeight.furc.mod <- glm(multifurc~order*mean.height, data=inner.taxa,
-                   family="poisson")
-print(c('BIC=',  BIC(orderTmeanHeight.furc.mod)))
+# orderTmeanHeight.furc.mod <- glm(multifurc~order*mean.height, data=inner.taxa,
+#                    family="poisson")
+# print(c('BIC=',  BIC(orderTmeanHeight.furc.mod)))
 
-anova(orderTdepth.furc.mod, orderTmaxHeightt.furc.mod, orderTminHeight.furc.mod, orderTmeanHeight.furc.mod, test="LRT")
+# anova(orderTdepth.furc.mod, orderTmaxHeightt.furc.mod, orderTminHeight.furc.mod, orderTmeanHeight.furc.mod, test="LRT")
 
 
+# print('-------------------effect kingdom-----------------------')
 
-# print('--------------------------------------------------')
+# effect("kingdom", kingdom.furc.mod)
+
+# effect("kingdom:mean.height", kingdomPmeanHeight.furc.mod)
 
 # print('-------------------effect phylum-----------------------')
 
 # effect("phylum", phylum.furc.mod)
 
-# effect("phylum:mean.height", phylumPmeanHeight)
-
+# effect("phylum:mean.height", phylumPmeanHeight.furc.mod)
 
 # print('-------------------effect class-----------------------')
-
-# classTmeanHeight.furc.mod <- glm(multifurc~class*mean.height, data=inner.taxa,
-#                    family="poisson")
 
 # effect("class", class.furc.mod)
 
 # effect("class:mean.height", classPmeanHeight)
 
 print('--------------------------------------------------')
-
+print('--------------------------------------------------')
 
 # ggplot(inner.taxa, aes(rank, mean.height)) +
 #     geom_boxplot()
@@ -306,20 +295,12 @@ print('--------------------------------------------------')
 # ### parantheses
 # ## %>%
 
-# leaf.taxa$globi.data <- !is.na(leaf.taxa$originaltag)
+print('--------------------------------------------------')
+print('-------------------------unknown / globi data-------------------------')
+print('--------------------------------------------------')
 
-# null.globi.mod <- glm(globi.data~1,
-#                          data=leaf.taxa, family="binomial")
-
-# kingdom.globi.mod <- glm(globi.data~kingdom,
-#                          data=leaf.taxa, family="binomial")
-
-# summary(kingdom.globi.mod)
-
-# effect("kingdom", kingdom.globi.mod)
-
-# phylum.globi.mod <- glm(globi.data~phylum,
-#                         data=leaf.taxa, family="binomial")
+leaf.taxa$globi.data <- !is.na(leaf.taxa$originaltag)
+null.globi.mod <- glm(globi.data~1, data=leaf.taxa, family="binomial")
 
 # summary(phylum.globi.mod)
 
@@ -330,5 +311,74 @@ print('--------------------------------------------------')
 # phylum.globi.mod$aic
 
 # kingdom.globi.mod$aic
+
+
+print('------------------------kingdom - phylum - class - order--------------------------')
+
+kingdom.globi.mod <- glm(globi.data~kingdom, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(kingdom.globi.mod)))
+
+phylum.globi.mod <- glm(globi.data~phylum, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(phylum.globi.mod)))
+
+class.globi.mod <- glm(globi.data~class, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(class.globi.mod)))
+
+order.globi.mod <- glm(globi.data~order, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(order.globi.mod)))
+
+
+anova(null.globi.mod, kingdom.globi.mod)
+summary(kingdom.globi.mod)
+# anova(kingdom.globi.mod, phylum.globi.mod, class.globi.mod, order.globi.mod, test="LRT")
+anova(kingdom.globi.mod, phylum.globi.mod, test="LRT")
+effect("kingdom", kingdom.globi.mod)
+
+print('-------------------kingdom + depth / * depth-----------------------')
+
+kingdomPdepth.globi.mod <- glm(globi.data~kingdom+depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(kingdomPdepth.globi.mod)))
+
+kingdomTdepth.globi.mod <- glm(globi.data~kingdom*depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(kingdomTdepth.globi.mod)))
+
+anova(kingdomPdepth.globi.mod, kingdomTdepth.globi.mod, test="LRT")
+
+
+print('-------------------phylum + depth / * depth-----------------------')
+
+phylumPdepth.globi.mod <- glm(globi.data~phylum+depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(phylumPdepth.globi.mod)))
+
+phylumTdepth.globi.mod <- glm(globi.data~phylum*depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(phylumTdepth.globi.mod)))
+
+anova(phylumPdepth.globi.mod, phylumTdepth.globi.mod, test="LRT")
+
+
+print('-------------------class + depth / * depth-----------------------')
+
+classPdepth.globi.mod <- glm(globi.data~class+depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(classPdepth.globi.mod)))
+
+classTdepth.globi.mod <- glm(globi.data~class*depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(classTdepth.globi.mod)))
+
+anova(classPdepth.globi.mod, classTdepth.globi.mod, test="LRT")
+
+
+print('-------------------order + depth / * depth-----------------------')
+
+orderPdepth.globi.mod <- glm(globi.data~order+depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(orderPdepth.globi.mod)))
+
+orderTdepth.globi.mod <- glm(globi.data~order*depth, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(orderTdepth.globi.mod)))
+
+anova(orderPdepth.globi.mod, orderTdepth.globi.mod, test="LRT")
+
+
+
+
 
 format(Sys.time(), "%a %b %d %X %Y")
