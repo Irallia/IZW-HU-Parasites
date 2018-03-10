@@ -25,13 +25,17 @@ def main():
                 ott_id = row[0]
                 originaltag = row[1]
                 finaltag = float(row[2])
+                depth = row[3]
                 nr_children = row[5]
-                nodelist.append([ott_id, originaltag, finaltag, nr_children])
+                run = []
+                new_finaltag = []
+                correct_predicted = ""
+                nodelist.append([ott_id, originaltag, finaltag, depth, nr_children, run, new_finaltag, correct_predicted])
     print(len(nodelist))
 
     print(colored("---------------- read leave 100 out nodelists ----------------", "green"))
-    for i in range(0, 70):
-        print("run:", i)
+    for run in range(0, 100):
+        print("run:", run)
         index = 0
         changed_tag = 0
         loose_tag = 0
@@ -41,7 +45,7 @@ def main():
         distance_leaf = 0
         distance_inner = 0
 
-        nodelist_path = './data/evaluation/Eukaryota' + str(i) + '-castor.csv' 
+        nodelist_path = './data/evaluation/Eukaryota' + str(run) + '-castor.csv' 
         #                0    1              2       3       4           5
         # nodelist    - [id, originaltag, finaltag, depth, heights, nr_children]
         with open(nodelist_path, 'r') as csv_file:
@@ -55,6 +59,22 @@ def main():
                     if index < len(nodelist):
                         if nodelist[index][0] == ott_id:
                             if originaltag != nodelist[index][1]:
+                                # ----------------------------------
+                                nodelist[index][5].append(run)
+                                nodelist[index][6].append(finaltag)
+                                if float(nodelist[index][1])-1 == finaltag:
+                                    if nodelist[index][7] == 'False':
+                                        print('different prediction!')
+                                        nodelist[index][7] = 'True$False'
+                                    else:
+                                        nodelist[index][7] = 'True'
+                                else: 
+                                    if nodelist[index][7] == 'True':
+                                        print('different prediction!')
+                                        nodelist[index][7] = 'True$False'
+                                    else:
+                                        nodelist[index][7] = 'False'
+                                # ----------------------------------
                                 if originaltag != 'NA':
                                     changed_tag += 1
                                 else:
@@ -64,7 +84,7 @@ def main():
                                     else:
                                         loose_P += 1
                             distance = distance + abs(nodelist[index][2] - finaltag)
-                            if nodelist[index][3] == '0':
+                            if nodelist[index][4] == '0':
                                 distance_leaf = distance_leaf + abs(nodelist[index][2] - finaltag)
                             else:
                                 distance_inner = distance_inner + abs(nodelist[index][2] - finaltag)
@@ -73,15 +93,25 @@ def main():
                             print('Error: the nodelist entry-otts are unequal:')
                             print(nodelist[index][0], '!=', ott_id)
                     index += 1
-        cross_evaluation_results.append([i, distance, distance_leaf, distance_inner, changed_tag, loose_tag, loose_FL, loose_P])
+        cross_evaluation_results.append([run, distance, distance_leaf, distance_inner, changed_tag, loose_tag, loose_FL, loose_P])
     # pprint(cross_evaluation_results)
     
+    print(colored("---------------- Save nodelist ----------------", "green"))
+    nodelist_path = './data/evaluation/Eukaryota-cross_evaluation.csv' 
+    header = ['ott_id', 'originaltag', 'finaltag', 'depth', 'nr_children', 'run', 'new_finaltag', 'correct_predicted']
+    with open(nodelist_path, 'w') as nodelist_file:
+        writer = csv.writer(nodelist_file, delimiter=',')
+        writer.writerow(header)
+        for row in nodelist:
+            writer.writerow(row)
+
+    print(colored("---------------- cross evaluation stats ----------------", "green"))
     less_FL_results = []
     less_P_results = []
     for element in cross_evaluation_results:
-        if element[6] < 45:
+        if element[6] < 54:
             less_FL_results.append(element)
-        if element[7] < 45:
+        if element[7] < 39:
             less_P_results.append(element)
 
     cross_evaluation_results = array(cross_evaluation_results)

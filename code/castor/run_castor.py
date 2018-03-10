@@ -4,7 +4,6 @@ import datetime
 import sys
 from code.utilities.castor_util import sankoff_parsimony
 from code.utilities.Helpers import print_time
-from time import gmtime, strftime
 
 from termcolor import colored
 
