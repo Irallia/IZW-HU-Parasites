@@ -302,12 +302,6 @@ print('--------------------------------------------------')
 leaf.taxa$globi.data <- !is.na(leaf.taxa$originaltag)
 null.globi.mod <- glm(globi.data~1, data=leaf.taxa, family="binomial")
 
-# summary(phylum.globi.mod)
-
-# effect("phylum", phylum.globi.mod)
-
-# anova(null.globi.mod, phylum.globi.mod)
-
 # phylum.globi.mod$aic
 
 # kingdom.globi.mod$aic
@@ -317,30 +311,33 @@ print('------------------------kingdom - phylum - class - order-----------------
 
 kingdom.globi.mod <- glm(globi.data~kingdom, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(kingdom.globi.mod)))
+effect("kingdom", kingdom.globi.mod)
 
 phylum.globi.mod <- glm(globi.data~phylum, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(phylum.globi.mod)))
+effect("phylum", phylum.globi.mod)
 
 class.globi.mod <- glm(globi.data~class, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(class.globi.mod)))
+effect("class", class.globi.mod)
 
-order.globi.mod <- glm(globi.data~order, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(order.globi.mod)))
+# order.globi.mod <- glm(globi.data~order, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(order.globi.mod)))
+# effect("order", order.globi.mod)
 
-
-anova(null.globi.mod, kingdom.globi.mod)
-summary(kingdom.globi.mod)
 # anova(kingdom.globi.mod, phylum.globi.mod, class.globi.mod, order.globi.mod, test="LRT")
-anova(kingdom.globi.mod, phylum.globi.mod, test="LRT")
-effect("kingdom", kingdom.globi.mod)
+anova(kingdom.globi.mod, phylum.globi.mod, class.gloni.mod, test="LRT")
+
 
 print('-------------------kingdom + depth / * depth-----------------------')
 
 kingdomPdepth.globi.mod <- glm(globi.data~kingdom+depth, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(kingdomPdepth.globi.mod)))
+effect("kingdom", kingdomPdepth.globi.mod)
 
 kingdomTdepth.globi.mod <- glm(globi.data~kingdom*depth, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(kingdomTdepth.globi.mod)))
+effect("kingdom", kingdomTdepth.globi.mod)
 
 anova(kingdomPdepth.globi.mod, kingdomTdepth.globi.mod, test="LRT")
 
@@ -360,25 +357,29 @@ print('-------------------class + depth / * depth-----------------------')
 
 classPdepth.globi.mod <- glm(globi.data~class+depth, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(classPdepth.globi.mod)))
+effect("phylum", classPdepth.globi.mod)
 
 classTdepth.globi.mod <- glm(globi.data~class*depth, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(classTdepth.globi.mod)))
+effect("phylum", classTdepth.globi.mod)
 
 anova(classPdepth.globi.mod, classTdepth.globi.mod, test="LRT")
 
 
 print('-------------------order + depth / * depth-----------------------')
 
+order.globi.mod <- glm(globi.data~order, data=leaf.taxa, family="binomial")
+print(c('BIC=',  BIC(order.globi.mod)))
+effect("order", order.globi.mod)
+
 orderPdepth.globi.mod <- glm(globi.data~order+depth, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(orderPdepth.globi.mod)))
+effect("order", orderPdepth.globi.mod)
 
 orderTdepth.globi.mod <- glm(globi.data~order*depth, data=leaf.taxa, family="binomial")
 print(c('BIC=',  BIC(orderTdepth.globi.mod)))
+effect("order", orderTdepth.globi.mod)
 
 anova(orderPdepth.globi.mod, orderTdepth.globi.mod, test="LRT")
-
-
-
-
 
 format(Sys.time(), "%a %b %d %X %Y")
