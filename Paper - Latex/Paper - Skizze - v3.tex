@@ -237,8 +237,11 @@
         question which interaction database could be used was answered rather quickly." \\
 
       This database consists of entries of the form: species A (source) interacts with B (target). \\
-      We appointed some interactions, where we know from the biological perspective that the species 
-      source or target has to be a parasite or a free-living species. These are the following:
+      We appointed some interactions\footnote{\hyperlink{
+        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java
+        }{https://github.com/jhpoelen/eol-globi-data/.../InteractType.java}}
+        , where we know from the biological perspective that the species source or target has to be a 
+        parasite or a free-living species. These are the following:
       \begin{itemize}
         \item free-living source: preysOn, eats, flowersVisitedBy, hasPathogen, pollinatedBy, 
           hasParasite, hostOf
@@ -247,20 +250,14 @@
         \item parasite target: hasParasite, hasPathogen
       \end{itemize}
       We build two lists: parasites and free-livings, and add the source or targets of an interaction
-        to these. \\
-      % For every interaction from these lists, we get one or two species for our parasite or 
-      %   free-living lists.
-
-      \todo{You can find all interaction types here:
-        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .}
+        to these.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
-    Um eine möglichst realistische Simulation zu erzeugen haben wir auf der einen Seite einige Daten 
-      gesammelt (vorheriges Kaptiel), und außerdem beeinflussende Parameter untersucht. \\
-    Wir haben zwei große Arten von Parametern:
+    In order to generate the most realistic simulation, influencing parameters were investigated. \\
+    There are two major types of parameters:
     \begin{enumerate}
       \item Biological parameters (A result of the evolutionary process.):
         \begin{itemize}
@@ -268,8 +265,8 @@
         \end{itemize}
       \item Distribution of the loss of information:
         \begin{itemize}
-          \item Loss of topology ($\rightarrow$ mutlifurcations).
-          \item Unknown information about the states of some leaf nodes.
+          \item Loss of topology ($\rightarrow$ mutlifurcations)
+          \item Unknown information about states of some leaf nodes
         \end{itemize}
     \end{enumerate}
     We tested the influence of these parameters on our result using our simulation (Section 
@@ -278,108 +275,80 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Transition probabilities}
-      \anmerkungstext{Wir hätten aber maximal 2 beta-Verteilungen mit jeweils 2 Parametern und je einem 
-      eigenen Schwellenwert bei dem in die andere Verteilung gewechselt wird. Also 6 Parameter. Ich 
-      finde den Parameterraum den du bisher betrachtest zum einen nicht systematisch erfasst, zum 
-      anderen wahrscheinlich auch zu klein. Du kannst -Parameter sparen- indem zu z.B die beiden 
-      Verteilungen und cut-offs symmetrisch (gespiegelt an 0.5) machst. Solltest aber meines Erachtens 
-      die Schwellenwerte freier variieren. Das können wir bis zu unserem nächsten Treffen zurückstellen 
-      und dann gemeinsam diskutieren. (Emanuel)} \\
-      Das mit dem symmetrisch spiegeln geht halt nur bei maximal 40-60 Verteilungen richtig gut, danach 
-      haben brauchen eventuell eine lange Austestphase, bis ein Baum dieser Verteilung entspricht.
-      Wenn wir allerdings dafür zwei verschiedene Schwellenwerte einführen könnte das dieses Problem 
-      eventuell ausgleichen. Das müsste ich austesten. 
+      This subsection deals with the transition probabilities from free-living (hereinafter / as a 
+        formula FL) to parasitic (hereinafter P) and vice versa: $\mathcal{P}(FL \rightarrow P)$, 
+        $\mathcal{P}(P \rightarrow FL)$. \\
+      Different parasite types have different transition probabilities. It is very difficult to make a 
+        statement about these probabilities.
+      In general, we assume that there are 40\% parasites and 60\% free-livings \todo{ref} and 
+        $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation is 
+        usually less likely. \todo{This is discussed in section x of the discussion.} \\
 
-      \todo{Kapitel tag tree hier einbinden}
+      For the maximum parsimony analysis of the real data, all transition probabilities were equated.
+        However, the used castor package \cite{Louca2017} offers the possibility to enter different 
+        transition probabilities. \\
+
+      In the simulation, we chose two beta distributions and a threshold that indicates the change 
+        between states. \\
+      Different thresholds with different beta distributions were simulated, with different distributions 
+        of parasites and free-livings: 50\% P to 50\% FL, 40\% P to 60\% FL, 30\% P to 70\% FL and 
+        20\% P to 80 \% FL (\todo{see results simulation, ref...}).
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Multifurcation}
-      We have a very high multifurcation rate \pageref{sec:ResultsMultifurcation}.
-
-      Therefore, the impact of multifurcations on our research question has been investigated:
-      \begin{itemize}
-        \item stärke der Multifurcation in verschiedenen Subbäumen
-        \item zusammenhang zur tiefe im Baum
-        \item zusammenhang zu höhe im baum (max, min, mean)
-        \item einfluss auf die vorhersage des Castor und Fitch Algorithmus (Simulation) \todo{...}
-      \end{itemize}
-
-      "Nested models were compared using likelihood ratio tests, models using different predictors were 
-      compared according to their deviance and AIC."
-      \begin{lstlisting}[gobble=8]
-        glm(formula = multifurc ~ 1, family = "poisson", data = inner.taxa)
-      \end{lstlisting}
-
-        % \todo{old Stuff:} \\
-        %   Then we tried to find a function which best discribes this behavior. In figure 
-        %   \ref{fig:HistogramsOfMultifurcations} is this plot shown with three functions, which came 
-        %   closest to this goal: $\frac{1000000000000000}{x^4}$ (magenta), 
-        %   $\frac{300000000000}{x^3}$ (red) and $\frac{80000000}{x^2}$ (black). \\
-        % \begin{figure}[h]
-        %   \caption{Histogram of multifurcations and fitting functions}
-        %   \centering
-        %   \label{fig:HistogramsOfMultifurcations}
-        %   \includegraphics[width=0.7\textwidth]{Figures/HistogramsOfMultifurcations.png}
-        % \end{figure}
-        % From the biology we know, that this multifurcation is very clouded. Some parts of the tree are 
-        %   well known and others have not been very interesting for the research so far. So we also wanted 
-        %   to know how the multifurcations behave in some interesting subtrees. \\
-        % \anmerkung{do we? Is that really universal knowledge or could it be supported by data or a citation? (Bernhard)} \\
+      We have a very high multifurcation rate (see results section \pageref{sec:ResultsMultifurcation}).
+      Therefore, the impact of multifurcations on our research question has been investigated. \\
+      Generalized Linear Models with poisson regression were compared according to their residuals and 
+      BIC. \\
+      \anmerkungstext{Nested models were compared using likelihood ratio tests, models using different 
+        predictors were compared according to their deviance and AIC. (Emanuel)} \\
+      \todo{Einfluss auf die Vorhersage des Castor und Fitch Algorithmus (Simulation)}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}\label{sec:simulation}
-    \anmerkung{Motivate the goal of the simulation (Bernhard)}
-    \begin{itemize}
-      \item build random binary trees, tag these (parameters: parasites vs free-living, 
-        beta-distribution)
-      \item run fitch-parsimony, wagner-parsimony, our parsimony like algorithm
-      \item build not binary tree (poisson distribution?)
-      \item run new algorithms
-      \item compare trees (distances)
-    \end{itemize}
+    There are various possibilities of ancestral state reconstruction. The simulation compared 
+      different algorithms. \\
+    On the one hand different implementations of the Fitch maximum parsimony were compared and on the 
+      other hand the best of them with the implementation of the sankoff algorithm of the castor 
+      package \cite{Louca2017}. \\
 
-    \begin{enumerate}
-      \item build random binary trees
-      \item tag tree
-      \item multifurcate tree
-      \item run maximum parsimony algorithms
-      \begin{itemize}
-        \item Fitch
-        \item Sankoff (Castor package \cite{Louca2017}) 
-        \item my algorithm
-      \end{itemize}
-      \item Evaluation
-    \end{enumerate}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=1\textwidth]{Figures/Workflow-Simulation.png}
+      \caption{Course of the simulation with influence of the metadata analysis from the real data.}
+      \label{fig:Simulation Workflow}
+    \end{figure}
+
+    % \begin{wrapfigure}{r}{0.6\textwidth}
+    %   \begin{center}
+    %     \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.58\textwidth]{Figures/Workflow-Simulation.png}
+    %   \end{center}
+    %   \caption{Overview of the Simulation}
+    %   \label{fig:Simulation Workflow}
+    % \end{wrapfigure}
+
+    Figure \ref{fig:Simulation Workflow} shows the course of the simulation. The individual steps are 
+      explained in the following subsections.
+
+    \todo{Evaluation - compare trees (distances)}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{random binary tree}
-      \anmerkung{Again, motivate first, why this is required and why you choose this solution (Bernhard)} \\
-      To get a random binary tree, I used the Phylo package from biopython. They offer a randomized
-        function which returns a BaseTree \footnote{
-          https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py
-        }:
-      \begin{lstlisting}[gobble=6]
-        from Bio import Phylo
-        Phylo.BaseTree.Tree.randomized(number_leaf nodes)
-      \end{lstlisting}
-      From the BaseTree class:
-      \anmerkung{trivial, does not give real info (Emanuel)}
-      \begin{lstlisting}[gobble=6]
-        def randomized(cls, taxa, branch_length=1.0, 
-              branch_stdev=None):
-        """Create a randomized bifurcating tree given a list
-              of taxa.
-          :param taxa: Either an integer specifying the number
-              of taxa to create (automatically named taxon#), 
-              or an iterable of taxon names, as strings.
-          :returns: a tree of the same type as this class.
-        """
-      \end{lstlisting}
-      \todo{Zitat von BaseTree und buildTree.py}
+      You need a tree to do a simulation of ancestral state reconstruction. It had to be decided whether 
+        to take the real tree or simulate a tree. In this simulation, trees were created randomly, as 
+        one can replicate a complete binary phylogentic tree. Thus, there is also the possibility to 
+        simulate the multifurcation. \\
+      
+      To get a random binary tree, the Phylo package from biopython were used \cite{Cock2009}. They offer 
+        a randomized function which returns a BaseTree\footnote{
+          \hyperlink{https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
+          {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
+        }. \\
+      \todo{ref in die discussion über die randomized function? Diskutieren wir das?}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -531,8 +500,6 @@
       \subsubsection{Sankoff}
         Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}.
 
-      %---------------------------------------------------------------------------------------------------  
-      \subsubsection{my Algorithm}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -542,13 +509,17 @@
       \item Import tree
       \item Import interactions
       \item run castor algorithm / and others?
-      \item interprete results (leave one out)
+      \item interprete results (cross validation - leave 100 out)
     \end{itemize}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Implementation}
+    You can find the full code on GitHub: 
+      \hyperlink{github.com/Irallia/IZW-HU-Parasites}{github.com/Irallia/IZW-HU-Parasites}. \\
+    Most of the code was written in Python. The analyzes and the use of the Castor package in R. There 
+      are some shell scripts to execute whole workflows.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -1141,7 +1112,7 @@
           % & Chlorophyta & 3.084992e-04 \\
           \hline \hline
           \multicolumn{2}{|c|}{Taxa / Model} & correct predicted & correct predicted & correct predicted \\
-          \multicolumn{2}{|c|}{} & $\sim$ taxa & $\sim$ taxa + depth & $\sim$ taxa * depth\\
+          \multicolumn{2}{|c|}{} & $\sim$ taxa & $\sim$ taxa + depth & $\sim$ taxa * depth \\
           \hline \hline
           Kingdom & no kingdom  & 0.001139888 & ... & ... \\
           & Fungi               & 0.001789739 & ... & ... \\
