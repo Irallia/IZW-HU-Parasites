@@ -286,13 +286,22 @@
 
       For the maximum parsimony analysis of the real data, all transition probabilities were equated.
         However, the used castor package \cite{Louca2017} offers the possibility to enter different 
-        transition probabilities. \\
+        transition probabilities.
+      \begin{wrapfigure}{r}{0.5\textwidth}
+        \begin{center}
+          \includegraphics[trim = 0mm 0mm 0mm 15mm, clip, width=0.48\textwidth]{Figures/40-60.png}
+        \end{center}
+        \caption{60\% Free-living - 40\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
+        \label{fig:Beta distribution}
+      \end{wrapfigure}
 
       In the simulation, we chose two beta distributions and a threshold that indicates the change 
         between states. \\
       Different thresholds with different beta distributions were simulated, with different distributions 
         of parasites and free-livings: 50\% P to 50\% FL, 40\% P to 60\% FL, 30\% P to 70\% FL and 
-        20\% P to 80 \% FL (\todo{see results simulation, ref...}).
+        20\% P to 80 \% FL (\todo{see results simulation, ref...}). Figure \ref{fig:Beta distribution} 
+        shows one example of these. \\
+      \todo{Plot neu erstellen: Achsenbeschriftung, threshold}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -322,14 +331,6 @@
       \label{fig:Simulation Workflow}
     \end{figure}
 
-    % \begin{wrapfigure}{r}{0.6\textwidth}
-    %   \begin{center}
-    %     \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.58\textwidth]{Figures/Workflow-Simulation.png}
-    %   \end{center}
-    %   \caption{Overview of the Simulation}
-    %   \label{fig:Simulation Workflow}
-    % \end{wrapfigure}
-
     Figure \ref{fig:Simulation Workflow} shows the course of the simulation. The individual steps are 
       explained in the following subsections.
 
@@ -352,65 +353,47 @@
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{tag tree}
-      \anmerkung{instead of 'tag tee' simulating states and transitions between them (Emanuel)} \\
-      At this point we want one fully tagged tree, and one less tagged tree which looks like our real 
-        data.\\
-      Let's say the first specie (the root node) was free-living (start with a parasite without a host 
-        makes no sence). For every transition from a node to his child, we take a random number from
-        the father distribution. We decided that from the biological perspective a beta distribution
-        reflects our transition probabilities best (see Figure 2.1 \todo{ref einfügen}). \\
-      \anmerkung{why is that the case and why is that from a biological perspective? (Bernhard)} \\
-      \anmerkungstext{I'd rather say that to ensure that the parameter of the binomial distribution is 
-        restricted to the [0,1] interval, we model it... (Bernhard)} \\
-      For example when our father node was free-living, then we take from the free-living beta
-        distribution. Is the number under the threshold for beeing parasite, we get a change and tag
-        the current node as parasite. Otherwise we tag it as free-living. \\
-      With this procedure we traverse through the tree from the root to every leaf node. A part of
-        this code you see here:
-      \begin{lstlisting}[gobble=6]
-        from numpy import random
-        if father_tag == 0:
-          # freeliving_distribution:
-          new_random = random.beta(a=A_FL, b=B_FL)
-        else:
-          # parasite_distribution:
-          new_random = random.beta(a=A_P, b=B_P)
-        tag = 0         # $\rightarrow$ FL
-        if new_random < percentage_parasites:
-          tag = 1       # $\rightarrow$ P
-      \end{lstlisting}
-      \begin{figure}
-        \caption{60\% Free-living - 40\% Parasites}
-        \centering
-          \includegraphics[width=0.5\textwidth]{Figures/40-60.png}
-      \end{figure}
-      \todo{Bessere Beschriftung, Plot neu erstellen! U.a. mit threshold} \\
-      We save each tag with the associated node ID in a nodelist. \\
-      \anmerkung{simulationg loss of information (1) states (2) topology/multifurcation (Emanuel)} \\
-      The real tree has much less information, we have only information from some current species 
-        (leaf nodes) and \todo{and probably negligible internal nodes}. \\
-      To simulate our real tree we save for every node an empty placeholde except for some leaf nodes.
-      There we save the states again. The amount of these unknown information is one parameter, which we
-      got from our real tree. Or which we can change to \todo{...}
-      \todo{Was hiervon gehört ind Methoden, was schon in Implementierung oder ganz woanders hin?}
+    \subsection{simulating states and transitions between them}
+      The next step is to simulate the states of the nodes using the transitions. Again, we simulate 
+        fully known states and then 'forget' everything but a few in the leaf nodes so that you can 
+        later compare the reconstruction with the origin. \\
+      The root node (ancestor of all subsequent species) is (of course) free-living. That means it will 
+        start in the free-living beta distribution. Now traverse from the root to the leaf nodes, always 
+        pulling out of the current distribution until you get above the threshold and the new node 
+        changes state. \\
+      To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, we 
+        model it with a beta distribution as in Figure \ref{fig:Beta distribution}. \\
+
+      After traversing through the tree, each state is saved in a nodelist associated with the node ID 
+        which is the OTT from OTL. \\
+
+      Here begins the simulation of the lost information. This is on the one hand the states and on the 
+        other the topology of the tree. Some splits of nodes are unknown with which the tree is 
+        multifurcated (explained in the following section \todo{pageref}). \\
+
+      In the real tree, there is usually only information about species living today $\rightarrow$ leaf 
+        nodes. And beyond only a small percentage of these. All information about the states of the 
+        internal node and one leaf node is 'forgotten' and stored in another column to the node. \\
+      Different percentages of forgetting the information were simulated, as you can read in the 
+      \todo{section ... from the results}.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{multifurcate tree}
-      \anmerkung{simulating loss of information (Emanuel)} \\
-      Another parameter is the nature and strength of the multifunction of the tree, since we do not 
-        have a binary tree in the real case. After several measurements and analyzes, which we explain 
-        in \todo{section/chapter x}, \anmerkung{fit, justification (Emanuel)} we decided to use a $\frac{1}{x}$ distribution, where x is the depth 
-        of a node. This means, how deaper we are, how less information we have. \\
+    \subsection{simulating loss of information of the tree topology}
+      As previously explained, some divisions in the tree are not known, so the real tree is not binary.
+        We simulate this multifurcation of the tree by \todo{...}.
+      
+      On the one hand, the strength of multifunctionation plays a role, as does the distribution. 
+        Modeling was done as explained in \todo{sec x}.
+      
+      \todo{bisher ohne Begründung:!!!}
+      we decided to use a $\frac{1}{x}$ distribution, where x is the depth of a node. This means, how 
+      deaper we are, how less information we have. \\
       We traverse through the tree and pick a random number between 0 and 1. If random number is smaller 
         as our limit ($\frac{1}{x}$), than we forget the node and hang every child to the father node of 
         the current node. \\
       \anmerkung{poisson process $\rightarrow$ fit that distribution, include depth as a predictor, see if significant (Emanuel)}
       \begin{lstlisting}[gobble=6]
-        from numpy import random
-        from utilities import Helpers
-
         def get_non_binary_tree(subtree, nodelist):
           i = 0
           while i != len(subtree.clades):
@@ -434,16 +417,18 @@
               limit = 0.1
             return limit
       \end{lstlisting}
-      % # current clades: clade_1 clade_2 ... clade_i-1 clade_i ... clade:_n
-      % # add children of clade_i, delete clade_i
-      % # new clades:clade_1 clade_2 ... clade_i-1 child_clade_1 ... child_clade_m ... clade:_n
-      % # child_clade_1 is new clade i
-      Wir lassen das Limit nicht beliebig klein werden, sondern beschränken es auf 0.1.
+      Wir lassen das Limit nicht beliebig klein werden, sondern beschränken es auf 0.1. \\
+
+      With this loss of information the reconstruction can start.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{maximum parsimony algorithms}
-      \subsubsection{Fitch maximum parsimony}
+    %---------------------------------------------------------------------------------------------------
+    \section{maximum parsimony algorithms}
+    
+      %---------------------------------------------------------------------------------------------------
+      %---------------------------------------------------------------------------------------------------
+      \subsection{Fitch maximum parsimony}
         Described from [COO98] + others ... - implemented for multifurcating trees
 
         Fitch algorithm for binary trees:

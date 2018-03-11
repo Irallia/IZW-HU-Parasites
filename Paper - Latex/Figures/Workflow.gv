@@ -66,11 +66,13 @@ digraph G {
 		f0;
 		f1;
 		f2;
+		f3;
 	}
 
 	f0 [label = "Biological view"]
 	f1 [label = "Origins and Losses"]
 	f2 [label = "Cross evaluation - leave 100 out"]
+	f3 [label = "Evaluation of the Simulation"]
 
 	a1 -> e0;
 	a1 -> f2;
@@ -78,6 +80,7 @@ digraph G {
 	c0 -> d2;
 	c0 -> e0;
 	c3 -> d3;
+	d5 -> f3;
 	e0 -> c1;
 	e0 -> c2;
 	e0 -> f2;
