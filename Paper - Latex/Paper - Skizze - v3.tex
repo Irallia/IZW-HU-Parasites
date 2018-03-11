@@ -246,22 +246,13 @@
         \item parasite source: parasiteOf, pathogenOf
         \item parasite target: hasParasite, hasPathogen
       \end{itemize}
-      \todo{Interactions nochmal prüfen! Darauf basieren unsere Ergebnisse!} \\
       We build two lists: parasites and free-livings, and add the source or targets of an interaction
         to these. \\
-      \todo{klar? Oder Beispiel bringen? (Katze isst Maus $\rightarrow$ Katze ist Freilebend)} \\
       % For every interaction from these lists, we get one or two species for our parasite or 
       %   free-living lists.
-      \todo{einige spezies nicht mit einbezogen, da sie keine OTT id haben, hier könnte man noch 
-        verbessern (future work)}
+
       \todo{You can find all interaction types here:
-        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .} \\ \\
-      
-      With this we got $\sim 51000$ (distinct) freeliving species and $\sim 47000$ (distinct) parasite 
-        species (see section countings) \todo{ref einfügen}. But we found also  $\sim 57000$ (not 
-        distinct) source species and $\sim 810000$ (not distinct) target species without OTT ids. 
-        Since we currently use only OTT ids, we could not use this information. \\
-      \todo{mehr dazu in section: unknown nodes...}
+        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java .}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -667,17 +658,9 @@
         \end{table}
         * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
 
-        \begin{figure}
-          \centering
-          \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_Residuals.JPG}
-          \caption{Crosstable of Residual values}
-        \end{figure}
-
         Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
           genauer umso kleinere Subtrees wir betrachten. ...
         
-        \anmerkung{different parameters for different taxa? (Emanuel)} \\ \\
-
         Because of the difference in the complexity of the models, we compared their BICs:
         \begin{table}[h]
           \begin{center}
@@ -703,13 +686,6 @@
           \label{table:...} 
         \end{table}
 
-        \begin{figure}
-          \centering
-          \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_BIC.JPG}
-          \caption{Crosstable of BIC values}
-        \end{figure}
-
-
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -719,13 +695,41 @@
     The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
       (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
       distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7\%$). \\
-    With this only $\approx 4.3\%$ information in our leaf nodes are 
+    We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
+      species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
+    \todo{With this only $\approx 4.3\%$ information in our leaf nodes are ...} \\
+    We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
+      The Residuals are not very meaningful here, since all models have different dimensions.
 
-    \todo{einbauen?:} \\
-    unused possible species  57 352 (source), \\
-    809 993 (target) \\
-    \#interactions zu \#Parasiten und \#Freilebend $\rightarrow$ Wieviel gibt GloBI her? (dazu noch 
-      \#unused possible species, wieviele Parasiten ohne ott haben wir gefunden?)
+      % Model 1: globi.data ~ kingdom + depth
+      % Model 2: globi.data ~ kingdom * depth
+      %   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)
+      % 1   2297502     544789
+      % 2   2297499     544062  3   727.05 < 2.2e-16 ***
+
+      % Model 1: globi.data ~ phylum + depth
+      % Model 2: globi.data ~ phylum * depth
+      % Resid. Df Resid. Dev Df Deviance  Pr(>Chi)
+      % 1   2297453     493017
+      % 2   2297406     488366 47   4650.8 < 2.2e-16 ***
+
+      \begin{table}[h!]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
+            multifurc $\sim$ taxa & 545799 & 500004 & 485121 & XXXXX\\
+            \hline
+            multifurc $\sim$ taxa + depth & 544862 & 493808 & XXXXX & XXXXX \\
+            \hline
+            multifurc $\sim$ taxa * depth & 544179 & 489845 & XXXXX & \cellcolor{green!60}XXXXX \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{BIC of unknown information}
+        \label{table:BIC unknown information} 
+      \end{table}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -745,18 +749,19 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Biological view}
-    
 
       \todo{Castor replaces originaltags with finaltags. There are 82 originaltags != finaltag.} \\ \\
 
       We picked a few phyla to evaluate the results from the biological point of view. \\
       Table \ref{table:phylum leaf nodes states} shows some known phyla: Chordata, Nematoda, 
         Platyhelminthes and Apicomplexa. \\
-      As we know \todo{ref einfügen} the Chordata are full of free-living species and there are only a 
-        few parasites. The algorithm reflects this. We started with 99.83\% free-living species and 
-        predicted 99.94\% species as parasites \todo{(inklusive all known nodes)}. Only 0.06\% were 
-        predicted as parasites. These few parasites are mostly breeding parasites (brood parasitism) and 
-        some individual errors from the GloBI database. \\
+      Since GloBI is not perfect, all examples contain a few bugs.
+      As known the Chordata are full of free-living species and there are only a few parasites. Among 
+        the birds are some breeding parasites (brood parasitism) like the cuckoo and clepto-parasites as 
+        the skuas \cite{Rothschild1957}. The algorithm reflects this. We started with 99.83\% 
+        free-living species and predicted 99.94\% species as parasites \todo{(inklusive all known nodes)}. 
+        Only 0.06\% were predicted as parasites. \\
+      \todo{We found the cuckoo and some skuas...?} \\
       Same observation but with less free-livings is the Apicomplexa Phylum. Here we have only a few 
         free-livings \todo{ref einfügen}. And as we see, we had good start data and predicted 00.95\% as 
         parasites. \\
@@ -772,11 +777,12 @@
         from other related groups by the presence of a folded pharynx and of a number of diverticula 
         arising from the intestine. The intestine itself may be either simple or branched.[3]}
       
-      With the Nematoda it looks very different. In the Nematoda its much worse. Here speaks the 
-        literature of \todo{x percent} free-living, but we found only 2.63\% of them. The problem at 
-        this point, however, is obvious: The parasites have been much more studied and thus we start 
-        with only 0.63\% free-living species. Against such a shifted data situation, the algorithm is 
-        powerless. And yet the percentage has increased.
+      With the Nematoda it looks very different. In the Nematoda its much worse. Most Nematoda are 
+        free-living, but we found only 2.63\% of them. Blaxter et al. speaks of at least seven 
+        independently arosed parasitism \cite{Blaxter1998}. \\
+        The problem at this point, however, is obvious: The parasites have been much more studied and 
+        thus we start with only 0.63\% free-living species. Against such a shifted data situation, the 
+        algorithm is almost powerless. And yet the percentage has increased.
 
       \begin{table}
         \begin{center}
@@ -951,6 +957,10 @@
       Nematoda is again full of problems. The rootnode is predicted as a parasite and so we have more 
         losses of parasitism for the less information of free-living species in this phylum. The rest 
         is parasitic \\
+        As we have already mentioned Blaxter et al. found at least seven origins of parasitism 
+          \cite{Blaxter1998}. If we assume that the root node of Nematoda is free-living, then some 
+          losses would have to turn around and become Origins. So it could be that we end up in a similar 
+          size as Blaxter.
 
       \begin{lstlisting}[gobble=6]
         # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
@@ -969,8 +979,38 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Cross evaluation - leave 100 out}
-      We ran the castor algorithm (\todo{10000}) 70 times with leaving 100 randomized free-living or 
-        parasitic species out of the input data to see how stable our result is. \\
+      We ran the castor algorithm 100 times with leaving 100 randomized free-living or parasitic species 
+        out of the input data to see how stable our result is. Of these 10,000 nodes, 9,238 were unique. 
+        Of that, we predicted 9060 ($\approx 98.17\%$) correctly and 169 ($\approx 1.82\%$) wrongly, with 
+        duplicate draws always having the same prediction. \\
+      What is the best way to model this data? We again tested the influence of the taxa and the depth of 
+        leaf nodes and calculated the BICs (Table: \ref{table:BIC cross validation}).
+
+      \begin{table}[h]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
+            correct predicted $\sim$ taxa & 117936 & 112242 & XXXXX & XXXXX \\
+            \hline
+            correct predicted $\sim$ taxa + depth & 117776 & XXXXX & XXXXX & XXXXX \\
+            \hline
+            correct predicted $\sim$ taxa * depth & XXXXX & XXXXX & XXXXX & \cellcolor{green!60}XXXXX \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{BICs of cross validation prediction}
+        \label{table:BIC cross validation} 
+      \end{table}
+
+      Resiudals:
+      \begin{itemize}
+        \item correct predicted $\sim$ 1: 120325
+        \item correct predicted $\sim$ kingdom: 117877
+        \item correct predicted $\sim$ phylum: 111466
+      \end{itemize}
+
       What could happen by removing a parasite or free-living of the list?
       \begin{itemize}
         \item It could be a specie, which don't exist in the tree leaf nodes. -> no effect
@@ -980,9 +1020,10 @@
           leave node with no information.
       \end{itemize}
 
+      Influence on the rest of the data:
       \begin{table}
         \begin{center}
-          \begin{tabular}{ |cl||r|r|r|r| }
+          \begin{tabular}{ |cl||r|r|r|r|r| }
             \hline
             & & min & max & mean & variance ($\sigma^2$) & $\sigma$ \\
             \hline \hline
@@ -1022,6 +1063,201 @@
           - \colorbox{green!50}{Less free-livings - 3 examples} \\
           - \colorbox{orange!50}{Less parasites - 64 examples}}
       \end{table}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Effects of Taxa in the different models}
+
+    \anmerkung{different parameters for different taxa? (Emanuel) -> Effects...} \\ \\
+
+    The comparisons of the effects of the taxa can be found in Table \ref{table:Effects unknown data} 
+    and showed ...
+
+    \begin{table}[h!]
+      \begin{center}
+        \begin{longtable}{ |l|l|r|r|r| }
+          \hline
+          \multicolumn{2}{|c|}{Taxa / Model} & globi $\sim$ taxa & globi $\sim$ taxa + depth & globi $\sim$ taxa * depth\\
+          \hline \hline
+          Kingdom & no kingdom  & 0.007608091 & 0.009900630 & 0.0004645054 \\
+          & Fungi               & 0.011317000 & 0.013723310 & 0.0064413062 \\
+          & Chloroplastida      & 0.008634310 & 0.008018847 & 0.0058472786 \\
+          & Metazoa             & 0.035634187 & 0.034139782 & 0.0343237575 \\
+          \hline
+          Phylum & no phylum    & 1.569769e-02 & 3.001749e-02 & 5.757839e-03 \\
+          & Rhombozoa           & 1.538462e-02 & 4.128162e-02 & 1.000000e+00 \\
+          & Hemichordata        & 1.736770e-07 & 3.791496e-07 & 1.736742e-07 \\
+          & Chromerida          & 1.736770e-07 & 4.605436e-07 & 2.220446e-16 \\
+          & Amoebozoa           & 5.343198e-03 & 1.312565e-02 & 2.401619e-03 \\
+          & Onychophora         & 1.736770e-07 & 3.663718e-07 & 1.736753e-07 \\
+          & ... & ... & ... & ... \\
+          % & Priapulida          & 4.347826e-02 & 8.773029e-02 \\
+          % & Tardigrada          & 1.736770e-07 & 3.393298e-07 \\
+          % & Chordata            & 1.140600e-01 & 8.242171e-02 \\
+          % & Xanthophyceae       & 1.736770e-07 & 3.483928e-07 \\
+          % & Haptophyta          & 3.484321e-03 \\
+          % & Microsporidia       & 8.703271e-02 \\
+          % & Chytridiomycota     & 3.062361e-02 \\
+          % & Nematomorpha        & 1.495017e-02 \\
+          % & Loricifera          & 1.736770e-07 \\
+          % & Gnathostomulida     & 1.736770e-07 \\
+          % & Myzostomida         & 4.464286e-03 \\
+          % & Gastrotricha & 1.736770e-07 \\
+          % & Ciliophora & 8.372371e-03 \\
+          % & Entoprocta & 1.736770e-07 \\
+          % & Glomeromycota & 6.609385e-04 \\
+          % & Nematoda & 1.098682e-01 \\
+          % & Cycliophora & 1.736770e-07 \\
+          % & Apicomplexa & 1.374128e-01 \\
+          % & Ascomycota & 1.232671e-02 \\
+          % & Bryozoa & 4.194290e-03 \\
+          % & Nemertea & 9.465855e-03 \\
+          % & Echinodermata & 1.971448e-02 \\
+          % & Rotifera & 8.638563e-03 \\
+          % & Picozoa & 1.736770e-07 \\
+          % & Phaeophyceae & 1.219884e-03 \\
+          % & Acanthocephala & 3.935018e-01 \\
+          % & Bacillariophyta & 4.757374e-05 \\
+          % & Colponemidia & 1.736770e-07 \\
+          % & Platyhelminthes & 3.127011e-01 \\
+          % & Entorrhizomycota & 1.736770e-07 \\
+          % & Chaetognatha & 2.941176e-02 \\
+          % & Placozoa & 1.736770e-07 \\
+          % & Euglenida & 1.729107e-03 \\
+          % & Arthropoda & 2.506545e-02 \\
+          % & Basidiomycota & 6.149777e-03 \\
+          % & Cnidaria & 1.928587e-02 \\
+          % & Ctenophora & 4.205607e-02 \\
+          % & Kinorhyncha & 1.736770e-07 \\
+          % & Porifera & 7.720212e-03 \\
+          % & Orthonectida & 1.153846e-01 \\
+          % & Mollusca & 9.876095e-03 \\
+          % & Brachiopoda & 6.920415e-03 \\
+          % & Haplosporida & 8.108108e-02 \\
+          % & Rhodophyta & 1.971220e-04 \\
+          % & Streptophyta & 8.901842e-03 \\
+          % & Foraminifera & 3.395201e-04 \\
+          % & Chlorophyta & 3.084992e-04 \\
+          \hline \hline
+          \multicolumn{2}{|c|}{Taxa / Model} & correct predicted & correct predicted & correct predicted \\
+          \multicolumn{2}{|c|}{} & $\sim$ taxa & $\sim$ taxa + depth & $\sim$ taxa * depth\\
+          \hline \hline
+          Kingdom & no kingdom  & 0.001139888 & ... & ... \\
+          & Fungi               & 0.001789739 & ... & ... \\
+          & Chloroplastida      & 0.001251109 & ... & ... \\
+          & Metazoa             & 0.005414443 & ... & ... \\
+          % \hline
+          % Phylum & no phylum    & XXXXX & 3.001749e-02 & 5.757839e-03 \\
+          % & Rhombozoa           & XXXXX & 4.128162e-02 & 1.000000e+00 \\
+          % & Hemichordata        & XXXXX & 3.791496e-07 & 1.736742e-07 \\
+          % & Chromerida          & XXXXX & 4.605436e-07 & 2.220446e-16 \\
+          % & Amoebozoa           & XXXXX & 1.312565e-02 & 2.401619e-03 \\
+          % & Onychophora         & XXXXX & 3.663718e-07 & 1.736753e-07 \\
+          % & ... & ... & ... & ... \\
+          \hline
+        \end{longtable} 
+      \end{center}
+      \caption{Effects of Taxa in models for unknown data}
+      \label{table:Effects unknown data} 
+    \end{table}
+
+    globi $\sim$ taxa * depth: NOTE: kingdom is not a high-order term in the model
+
+%        ['ott151014', 'Haptophyta']      ['ott16113', 'Microsporidia']
+%                       1.023682e-02                       2.297956e-01
+%   ['ott177160', 'Chytridiomycota']      ['ott189836', 'Nematomorpha']
+%                       8.586035e-02                       3.000311e-02
+%        ['ott199402', 'Loricifera']   ['ott242963', 'Gnathostomulida']
+%                       3.538708e-07                       3.160858e-07
+%       ['ott260040', 'Myzostomida']       ['ott29723', 'Gastrotricha']
+%                       9.396517e-03                       3.335103e-07
+%        ['ott302424', 'Ciliophora']        ['ott362916', 'Entoprocta']
+%                       2.114329e-02                       3.281554e-07
+%     ['ott385878', 'Glomeromycota']          ['ott395057', 'Nematoda']
+%                       1.687966e-03                       1.582959e-01
+%        ['ott41147', 'Cycliophora']       ['ott422673', 'Apicomplexa']
+%                       3.160858e-07                       2.849943e-01
+%        ['ott439373', 'Ascomycota']           ['ott442934', 'Bryozoa']
+%                       2.217673e-02                       7.020371e-03
+%          ['ott445195', 'Nemertea']     ['ott451020', 'Echinodermata']
+%                       1.640797e-02                       3.399753e-02
+%          ['ott471706', 'Rotifera']          ['ott4738955', 'Picozoa']
+%                       1.516272e-02                       6.032169e-07
+%       ['ott48614', 'Phaeophyceae']     ['ott49622', 'Acanthocephala']
+%                       2.014280e-03                       5.672835e-01
+%  ['ott5342311', 'Bacillariophyta']     ['ott5355158', 'Colponemidia']
+%                       1.048765e-04                       5.155971e-07
+%   ['ott555379', 'Platyhelminthes'] ['ott5653719', 'Entorrhizomycota']
+%                       4.271198e-01                       4.449469e-07
+%      ['ott570366', 'Chaetognatha']          ['ott570376', 'Placozoa']
+%                       5.936368e-02                       4.965510e-07
+%        ['ott6137051', 'Euglenida']        ['ott632179', 'Arthropoda']
+%                       4.727403e-03                       1.935197e-02
+%     ['ott634628', 'Basidiomycota']          ['ott641033', 'Cnidaria']
+%                       1.149917e-02                       3.192464e-02
+%        ['ott641212', 'Ctenophora']       ['ott677389', 'Kinorhyncha']
+%                       1.077673e-01                       3.540771e-07
+%           ['ott67819', 'Porifera']      ['ott691845', 'Orthonectida']
+%                       1.613863e-02                       2.716252e-01
+%          ['ott802117', 'Mollusca']       ['ott826261', 'Brachiopoda']
+%                       1.372700e-02                       1.079344e-02
+%      ['ott858063', 'Haplosporida']        ['ott878953', 'Rhodophyta']
+%                       1.925711e-01                       5.358571e-04
+%      ['ott916750', 'Streptophyta']      ['ott936399', 'Foraminifera']
+%                       6.529378e-03                       7.447417e-04
+%       ['ott979501', 'Chlorophyta']
+%                       7.296356e-04
+
+% ['ott1085175', 'Priapulida']        ['ott111438', 'Tardigrada']
+%                       1.000000e+00                       1.736778e-07
+%          ['ott125642', 'Chordata']     ['ott151001', 'Xanthophyceae']
+%                       1.138205e-01                       1.736786e-07
+%        ['ott151014', 'Haptophyta']      ['ott16113', 'Microsporidia']
+%                       1.000000e+00                       9.998257e-01
+%   ['ott177160', 'Chytridiomycota']      ['ott189836', 'Nematomorpha']
+%                       1.000000e+00                       2.220446e-16
+%        ['ott199402', 'Loricifera']   ['ott242963', 'Gnathostomulida']
+%                       2.220446e-16                       2.220446e-16
+%       ['ott260040', 'Myzostomida']       ['ott29723', 'Gastrotricha']
+%                       4.381889e-06                       1.736782e-07
+%        ['ott302424', 'Ciliophora']        ['ott362916', 'Entoprocta']
+%                       5.518629e-05                       1.736802e-07
+%     ['ott385878', 'Glomeromycota']          ['ott395057', 'Nematoda']
+%                       9.966669e-01                       4.725574e-01
+%        ['ott41147', 'Cycliophora']       ['ott422673', 'Apicomplexa']
+%                       2.220446e-16                       8.049756e-01
+%        ['ott439373', 'Ascomycota']           ['ott442934', 'Bryozoa']
+%                       1.541511e-02                       1.230174e-03
+%          ['ott445195', 'Nemertea']     ['ott451020', 'Echinodermata']
+%                       1.777755e-01                       2.505179e-03
+%          ['ott471706', 'Rotifera']          ['ott4738955', 'Picozoa']
+%                       3.125183e-01                       1.736782e-07
+%       ['ott48614', 'Phaeophyceae']     ['ott49622', 'Acanthocephala']
+%                       9.252076e-04                       3.992551e-04
+%  ['ott5342311', 'Bacillariophyta']     ['ott5355158', 'Colponemidia']
+%                       1.114784e-10                       2.220446e-16
+%   ['ott555379', 'Platyhelminthes'] ['ott5653719', 'Entorrhizomycota']
+%                       2.478056e-02                       1.736781e-07
+%      ['ott570366', 'Chaetognatha']          ['ott570376', 'Placozoa']
+%                       1.000000e+00                       4.021433e-08
+%        ['ott6137051', 'Euglenida']        ['ott632179', 'Arthropoda']
+%                       9.257999e-01                       1.658528e-02
+%     ['ott634628', 'Basidiomycota']          ['ott641033', 'Cnidaria']
+%                       1.473459e-03                       1.218008e-02
+%        ['ott641212', 'Ctenophora']       ['ott677389', 'Kinorhyncha']
+%                       2.878555e-03                       1.736844e-07
+%           ['ott67819', 'Porifera']      ['ott691845', 'Orthonectida']
+%                       1.329787e-02                       2.931611e-02
+%          ['ott802117', 'Mollusca']       ['ott826261', 'Brachiopoda']
+%                       5.167513e-03                       9.974617e-01
+%      ['ott858063', 'Haplosporida']        ['ott878953', 'Rhodophyta']
+%                       9.999999e-01                       9.658119e-11
+%      ['ott916750', 'Streptophyta']      ['ott936399', 'Foraminifera']
+%                       6.037565e-03                       6.367782e-03
+%       ['ott979501', 'Chlorophyta']
+%                       2.027010e-05
+
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -1194,6 +1430,21 @@
       \end{center}  
     \end{table}
     
+%---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------
+\chapter{Komplett aussortierte Tabellen etc}
 
+  \begin{figure}
+    \centering
+    \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_Residuals.JPG}
+    \caption{Crosstable of Residual values}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_BIC.JPG}
+    \caption{Crosstable of BIC values}
+  \end{figure}
 
 \end{document}
