@@ -129,6 +129,11 @@
   We have decided to consider only parsimony algorithms since we have no information on branch 
   lengths and no other additional information like different transition probabilities of our states.
 
+  In den Bacteria und Archaea wurde das mal allgemein für binary traits gemacht:
+  "A total 90\% of all binary traits described molecular functions, specifically the presence or absence of a gene or a set of gene involved in biochemical pathways."
+  \cite{Goberna2015} \\
+  Unterschied bei uns ist parasitismus komplexer.. da sind meist nicht einzelne Gene zuständig..
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %--------------------------------------------------------------------------------------------------- 
@@ -571,19 +576,26 @@
         binary, which means the number of leaf nodes is closely to the number of internal nodes. But 
         since we only work with a synthesis tree, this tree is multifurcated: we have 241 974 internal 
         nodes and 2 293 463 leaf nodes. \\
-      For a first overview we collected for every node its number of children (degree $-1$), and plotted
-        this in an histogram, see figure \ref{fig:childrenOfNodes}. The multifurcation affects only the
-        internal nodes. We collected the number of children $-2$ of every node (a node with two children 
-        is binary). 
-      \begin{wrapfigure}{r}{0.6\textwidth}
-        \begin{center}
-          \includegraphics[trim = 0mm 0mm 30mm 0mm, clip, width=0.58\textwidth]{Figures/multifurc.pdf}
-        \end{center}
-        \caption{Histogram about the multifurcation of the internal nodes of the synthesis tree. \\ 
-          light blue: binary; dark blue: multifunction}
+      \begin{figure}[h]
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+          \includegraphics[width=\textwidth]{Figures/multifurc.pdf}
+          \caption{Histogram with automatic binwidth. \\ ~ \\ ~}
+        \end{subfigure}
+        ~~~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.42\textwidth}
+          \includegraphics[trim = 0mm 0mm 30mm 0mm, clip, width=\textwidth]{Figures/multifurc_small.pdf}
+          \caption{Histogram with $binwidth = 1$. \\ light blue: binary; dark blue: multifunction}
+        \end{subfigure}
+        \caption{Histograms about the multifurcation of the internal nodes of the synthesis tree.}
         \label{fig:childrenOfNodes}
-      \end{wrapfigure}
-      That means it discribes the number of nodes which we have lost from the real (binary) 
+      \end{figure}
+
+      For a first overview we collected for every node its number of children (degree $-1$), and plotted
+        this in two histograms, see figure \ref{fig:childrenOfNodes}. \\
+      The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
+        every node (a node with two children is binary). That means it discribes the number of nodes which we have lost from the real (binary) 
       phylogenetic tree. \\
       As you can see, we are very far from a binary tree.
     
@@ -688,15 +700,15 @@
 
       \begin{table}[h!]
         \begin{center}
-          \begin{tabular}{ |l|r|r|r|r| }
+          \begin{tabular}{ |l|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            Model / Taxa & Kingdom & Phylum & Class \\
             \hline \hline
-            multifurc $\sim$ taxa & 545740 & 499227 & 482265 & XXXXX\\
+            multifurc $\sim$ taxa & 545740 & 499227 & 482265 \\
             \hline
-            multifurc $\sim$ taxa + depth & 544789 & 493017 & XXXXX & XXXXX \\
+            multifurc $\sim$ taxa + depth & 544789 & 493017 & XXXXX \\
             \hline
-            multifurc $\sim$ taxa * depth & 544062 & 488366 & XXXXX & \cellcolor{green!60}XXXXX \\
+            multifurc $\sim$ taxa * depth & 544062 & 488366 & \cellcolor{green!60}XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
@@ -706,21 +718,23 @@
 
       \begin{table}[h!]
         \begin{center}
-          \begin{tabular}{ |l|r|r|r|r| }
+          \begin{tabular}{ |l|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            Model / Taxa & Kingdom & Phylum & Class \\
             \hline \hline
-            multifurc $\sim$ taxa & 545799 & 500004 & 485121 & XXXXX\\
+            multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 \\
             \hline
-            multifurc $\sim$ taxa + depth & 544862 & 493808 & XXXXX & XXXXX \\
+            multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 \\
             \hline
-            multifurc $\sim$ taxa * depth & 544179 & 489845 & XXXXX & \cellcolor{green!60}XXXXX \\
+            multifurc $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!50}XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
         \caption{BIC of unknown information}
         \label{table:BIC unknown information} 
       \end{table}
+
+      \todo{Taxa like order or family were too expensive to calculate...}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -770,10 +784,16 @@
       
       With the Nematoda it looks very different. In the Nematoda its much worse. Most Nematoda are 
         free-living, but we found only 2.63\% of them. Blaxter et al. speaks of at least seven 
-        independently arosed parasitism \cite{Blaxter1998}. \\
+        independently arosed parasitism \cite{Blaxter1998}. In a recent article Blaxter identifies 18 
+        origins \cite{Blaxter2015} in Nematoda. \\
         The problem at this point, however, is obvious: The parasites have been much more studied and 
         thus we start with only 0.63\% free-living species. Against such a shifted data situation, the 
         algorithm is almost powerless. And yet the percentage has increased.
+
+        The evolution of parasitism in Nematoda: \\
+        "while only approximately 23 000 species have been described (J. Hallan, unpublished; https://insects.tamu.edu/research/collection/hallan/), the true species-level diversity may be 1 million or more (Lambshead, 1993)." \\
+        " Estimates of the number of species of parasitic nematode per host suggest that there may be of the order of 25 000 nematode parasites just of vertebrates, most of which remain undescribed (Dobson et al. 2008)" \\
+        "a large proportion of nematode species may be parasites." \cite{Blaxter2015} \\
 
       \begin{table}
         \begin{center}
@@ -1059,195 +1079,34 @@
   %---------------------------------------------------------------------------------------------------
   \section{Effects of Taxa in the different models}
 
-    \anmerkung{different parameters for different taxa? (Emanuel) -> Effects...} \\ \\
-
     The comparisons of the effects of the taxa can be found in Table \ref{table:Effects unknown data} 
     and showed ...
 
     \begin{table}[h!]
       \begin{center}
-        \begin{longtable}{ |l|l|r|r|r| }
+        \begin{tabular}{ |l|l|r|r|r|r| }
           \hline
-          \multicolumn{2}{|c|}{Taxa / Model} & globi $\sim$ taxa & globi $\sim$ taxa + depth & globi $\sim$ taxa * depth\\
+          Taxa & Model / Effects & min & max & mean & median \\
           \hline \hline
-          Kingdom & no kingdom  & 0.007608091 & 0.009900630 & 0.0004645054 \\
-          & Fungi               & 0.011317000 & 0.013723310 & 0.0064413062 \\
-          & Chloroplastida      & 0.008634310 & 0.008018847 & 0.0058472786 \\
-          & Metazoa             & 0.035634187 & 0.034139782 & 0.0343237575 \\
+          Kingdom & globi $\sim$ taxa & 0,01 & 0,04 & 0,02 & 0,01 \\
+          & globi $\sim$ taxa + depth & 0,01 & 0,03 & 0,02 & 0,01 \\
+          & globi $\sim$ taxa * depth & 0,00 & 0,03 & 0,01 & 0,01 \\
           \hline
-          Phylum & no phylum    & 1.569769e-02 & 3.001749e-02 & 5.757839e-03 \\
-          & Rhombozoa           & 1.538462e-02 & 4.128162e-02 & 1.000000e+00 \\
-          & Hemichordata        & 1.736770e-07 & 3.791496e-07 & 1.736742e-07 \\
-          & Chromerida          & 1.736770e-07 & 4.605436e-07 & 2.220446e-16 \\
-          & Amoebozoa           & 5.343198e-03 & 1.312565e-02 & 2.401619e-03 \\
-          & Onychophora         & 1.736770e-07 & 3.663718e-07 & 1.736753e-07 \\
-          & ... & ... & ... & ... \\
-          % & Priapulida          & 4.347826e-02 & 8.773029e-02 \\
-          % & Tardigrada          & 1.736770e-07 & 3.393298e-07 \\
-          % & Chordata            & 1.140600e-01 & 8.242171e-02 \\
-          % & Xanthophyceae       & 1.736770e-07 & 3.483928e-07 \\
-          % & Haptophyta          & 3.484321e-03 \\
-          % & Microsporidia       & 8.703271e-02 \\
-          % & Chytridiomycota     & 3.062361e-02 \\
-          % & Nematomorpha        & 1.495017e-02 \\
-          % & Loricifera          & 1.736770e-07 \\
-          % & Gnathostomulida     & 1.736770e-07 \\
-          % & Myzostomida         & 4.464286e-03 \\
-          % & Gastrotricha & 1.736770e-07 \\
-          % & Ciliophora & 8.372371e-03 \\
-          % & Entoprocta & 1.736770e-07 \\
-          % & Glomeromycota & 6.609385e-04 \\
-          % & Nematoda & 1.098682e-01 \\
-          % & Cycliophora & 1.736770e-07 \\
-          % & Apicomplexa & 1.374128e-01 \\
-          % & Ascomycota & 1.232671e-02 \\
-          % & Bryozoa & 4.194290e-03 \\
-          % & Nemertea & 9.465855e-03 \\
-          % & Echinodermata & 1.971448e-02 \\
-          % & Rotifera & 8.638563e-03 \\
-          % & Picozoa & 1.736770e-07 \\
-          % & Phaeophyceae & 1.219884e-03 \\
-          % & Acanthocephala & 3.935018e-01 \\
-          % & Bacillariophyta & 4.757374e-05 \\
-          % & Colponemidia & 1.736770e-07 \\
-          % & Platyhelminthes & 3.127011e-01 \\
-          % & Entorrhizomycota & 1.736770e-07 \\
-          % & Chaetognatha & 2.941176e-02 \\
-          % & Placozoa & 1.736770e-07 \\
-          % & Euglenida & 1.729107e-03 \\
-          % & Arthropoda & 2.506545e-02 \\
-          % & Basidiomycota & 6.149777e-03 \\
-          % & Cnidaria & 1.928587e-02 \\
-          % & Ctenophora & 4.205607e-02 \\
-          % & Kinorhyncha & 1.736770e-07 \\
-          % & Porifera & 7.720212e-03 \\
-          % & Orthonectida & 1.153846e-01 \\
-          % & Mollusca & 9.876095e-03 \\
-          % & Brachiopoda & 6.920415e-03 \\
-          % & Haplosporida & 8.108108e-02 \\
-          % & Rhodophyta & 1.971220e-04 \\
-          % & Streptophyta & 8.901842e-03 \\
-          % & Foraminifera & 3.395201e-04 \\
-          % & Chlorophyta & 3.084992e-04 \\
-          \hline \hline
-          \multicolumn{2}{|c|}{Taxa / Model} & correct predicted & correct predicted & correct predicted \\
-          \multicolumn{2}{|c|}{} & $\sim$ taxa & $\sim$ taxa + depth & $\sim$ taxa * depth \\
-          \hline \hline
-          Kingdom & no kingdom  & 0.001139888 & ... & ... \\
-          & Fungi               & 0.001789739 & ... & ... \\
-          & Chloroplastida      & 0.001251109 & ... & ... \\
-          & Metazoa             & 0.005414443 & ... & ... \\
+          Phylum & globi $\sim$ taxa & 0,17 & 393501,80 & 32208,79 & 6149,78 \\
+          & globi $\sim$ taxa + depth & 0,32 & 567010,90 & 55149,54 & 10783,18 \\
+          & globi $\sim$ taxa * depth & 0,00 & 1000000,00 & 225375,33 & 2511,58 \\
           % \hline
-          % Phylum & no phylum    & XXXXX & 3.001749e-02 & 5.757839e-03 \\
-          % & Rhombozoa           & XXXXX & 4.128162e-02 & 1.000000e+00 \\
-          % & Hemichordata        & XXXXX & 3.791496e-07 & 1.736742e-07 \\
-          % & Chromerida          & XXXXX & 4.605436e-07 & 2.220446e-16 \\
-          % & Amoebozoa           & XXXXX & 1.312565e-02 & 2.401619e-03 \\
-          % & Onychophora         & XXXXX & 3.663718e-07 & 1.736753e-07 \\
-          % & ... & ... & ... & ... \\
+          % Class & globi $\sim$ taxa & 0,10 & 628190,10 & 44684,53 & 1491,77 \\
+          % & globi $\sim$ taxa + depth &  &  &  &  \\
+          % & globi $\sim$ taxa * depth &  &  &  &  \\
           \hline
-        \end{longtable} 
+        \end{tabular} 
       \end{center}
       \caption{Effects of Taxa in models for unknown data}
       \label{table:Effects unknown data} 
     \end{table}
 
     globi $\sim$ taxa * depth: NOTE: kingdom is not a high-order term in the model
-
-%        ['ott151014', 'Haptophyta']      ['ott16113', 'Microsporidia']
-%                       1.023682e-02                       2.297956e-01
-%   ['ott177160', 'Chytridiomycota']      ['ott189836', 'Nematomorpha']
-%                       8.586035e-02                       3.000311e-02
-%        ['ott199402', 'Loricifera']   ['ott242963', 'Gnathostomulida']
-%                       3.538708e-07                       3.160858e-07
-%       ['ott260040', 'Myzostomida']       ['ott29723', 'Gastrotricha']
-%                       9.396517e-03                       3.335103e-07
-%        ['ott302424', 'Ciliophora']        ['ott362916', 'Entoprocta']
-%                       2.114329e-02                       3.281554e-07
-%     ['ott385878', 'Glomeromycota']          ['ott395057', 'Nematoda']
-%                       1.687966e-03                       1.582959e-01
-%        ['ott41147', 'Cycliophora']       ['ott422673', 'Apicomplexa']
-%                       3.160858e-07                       2.849943e-01
-%        ['ott439373', 'Ascomycota']           ['ott442934', 'Bryozoa']
-%                       2.217673e-02                       7.020371e-03
-%          ['ott445195', 'Nemertea']     ['ott451020', 'Echinodermata']
-%                       1.640797e-02                       3.399753e-02
-%          ['ott471706', 'Rotifera']          ['ott4738955', 'Picozoa']
-%                       1.516272e-02                       6.032169e-07
-%       ['ott48614', 'Phaeophyceae']     ['ott49622', 'Acanthocephala']
-%                       2.014280e-03                       5.672835e-01
-%  ['ott5342311', 'Bacillariophyta']     ['ott5355158', 'Colponemidia']
-%                       1.048765e-04                       5.155971e-07
-%   ['ott555379', 'Platyhelminthes'] ['ott5653719', 'Entorrhizomycota']
-%                       4.271198e-01                       4.449469e-07
-%      ['ott570366', 'Chaetognatha']          ['ott570376', 'Placozoa']
-%                       5.936368e-02                       4.965510e-07
-%        ['ott6137051', 'Euglenida']        ['ott632179', 'Arthropoda']
-%                       4.727403e-03                       1.935197e-02
-%     ['ott634628', 'Basidiomycota']          ['ott641033', 'Cnidaria']
-%                       1.149917e-02                       3.192464e-02
-%        ['ott641212', 'Ctenophora']       ['ott677389', 'Kinorhyncha']
-%                       1.077673e-01                       3.540771e-07
-%           ['ott67819', 'Porifera']      ['ott691845', 'Orthonectida']
-%                       1.613863e-02                       2.716252e-01
-%          ['ott802117', 'Mollusca']       ['ott826261', 'Brachiopoda']
-%                       1.372700e-02                       1.079344e-02
-%      ['ott858063', 'Haplosporida']        ['ott878953', 'Rhodophyta']
-%                       1.925711e-01                       5.358571e-04
-%      ['ott916750', 'Streptophyta']      ['ott936399', 'Foraminifera']
-%                       6.529378e-03                       7.447417e-04
-%       ['ott979501', 'Chlorophyta']
-%                       7.296356e-04
-
-% ['ott1085175', 'Priapulida']        ['ott111438', 'Tardigrada']
-%                       1.000000e+00                       1.736778e-07
-%          ['ott125642', 'Chordata']     ['ott151001', 'Xanthophyceae']
-%                       1.138205e-01                       1.736786e-07
-%        ['ott151014', 'Haptophyta']      ['ott16113', 'Microsporidia']
-%                       1.000000e+00                       9.998257e-01
-%   ['ott177160', 'Chytridiomycota']      ['ott189836', 'Nematomorpha']
-%                       1.000000e+00                       2.220446e-16
-%        ['ott199402', 'Loricifera']   ['ott242963', 'Gnathostomulida']
-%                       2.220446e-16                       2.220446e-16
-%       ['ott260040', 'Myzostomida']       ['ott29723', 'Gastrotricha']
-%                       4.381889e-06                       1.736782e-07
-%        ['ott302424', 'Ciliophora']        ['ott362916', 'Entoprocta']
-%                       5.518629e-05                       1.736802e-07
-%     ['ott385878', 'Glomeromycota']          ['ott395057', 'Nematoda']
-%                       9.966669e-01                       4.725574e-01
-%        ['ott41147', 'Cycliophora']       ['ott422673', 'Apicomplexa']
-%                       2.220446e-16                       8.049756e-01
-%        ['ott439373', 'Ascomycota']           ['ott442934', 'Bryozoa']
-%                       1.541511e-02                       1.230174e-03
-%          ['ott445195', 'Nemertea']     ['ott451020', 'Echinodermata']
-%                       1.777755e-01                       2.505179e-03
-%          ['ott471706', 'Rotifera']          ['ott4738955', 'Picozoa']
-%                       3.125183e-01                       1.736782e-07
-%       ['ott48614', 'Phaeophyceae']     ['ott49622', 'Acanthocephala']
-%                       9.252076e-04                       3.992551e-04
-%  ['ott5342311', 'Bacillariophyta']     ['ott5355158', 'Colponemidia']
-%                       1.114784e-10                       2.220446e-16
-%   ['ott555379', 'Platyhelminthes'] ['ott5653719', 'Entorrhizomycota']
-%                       2.478056e-02                       1.736781e-07
-%      ['ott570366', 'Chaetognatha']          ['ott570376', 'Placozoa']
-%                       1.000000e+00                       4.021433e-08
-%        ['ott6137051', 'Euglenida']        ['ott632179', 'Arthropoda']
-%                       9.257999e-01                       1.658528e-02
-%     ['ott634628', 'Basidiomycota']          ['ott641033', 'Cnidaria']
-%                       1.473459e-03                       1.218008e-02
-%        ['ott641212', 'Ctenophora']       ['ott677389', 'Kinorhyncha']
-%                       2.878555e-03                       1.736844e-07
-%           ['ott67819', 'Porifera']      ['ott691845', 'Orthonectida']
-%                       1.329787e-02                       2.931611e-02
-%          ['ott802117', 'Mollusca']       ['ott826261', 'Brachiopoda']
-%                       5.167513e-03                       9.974617e-01
-%      ['ott858063', 'Haplosporida']        ['ott878953', 'Rhodophyta']
-%                       9.999999e-01                       9.658119e-11
-%      ['ott916750', 'Streptophyta']      ['ott936399', 'Foraminifera']
-%                       6.037565e-03                       6.367782e-03
-%       ['ott979501', 'Chlorophyta']
-%                       2.027010e-05
-
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
