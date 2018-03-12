@@ -65,14 +65,9 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Introduction}
-  This paper is about the further development of parsimony algorithms for non-binary trees, applied 
-  to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the application to 
-  the ancestral state reconstruction of parasitism. \\
-  \anmerkungstext{Der erste Satz muss nochmal überarbeitet werden. Das Ziel / Ergebnis der Arbeit 
-    hat sich inzwischen geändert} \\
-  \anmerkungstext{Wir haben mehr einen Algorithmus getestet und an unserem spezifischen Problem angewendet, 
-    als viel selbst zu entwickeln. Allerdings haben wir den Fitch Algorithmus von binär auf multinär 
-    umgeschrieben.} \\
+  This paper is about the analysis of ancestral state reconstruction algorithms for non-binary trees, 
+    applied to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the 
+    application of prediciton of parasitism. \\
 
   \anmerkung{Mein Vorschlag einer Gliederung (jeweils ca. ein Absatz) (Bernhard)}
   \begin{enumerate}
@@ -145,6 +140,19 @@
       \item maximum parsimony
       \item OTL, OTT, GloBI
     \end{itemize}
+
+    Parasite \\
+    Since we use Globi to classify species as parasitic or free-living, we use their definition of 
+      parasitism. In GloBi, ontobee definitions are used.
+    The interaction has parasite is defined as: "An interaction relationship between two organisms 
+      living together in more or less intimate association in a relationship in which association is 
+      disadvantageous or destructive to one of the organisms." \cite{...}. This definition includes: ecto,-
+    and endoparasites, parasitoids, kleptoparasites and pathogenes.
+
+    \todotext{Mungall, C., (2017). Definition for the interaction-term: "parasitised by; has parasite" ob
+    ontobee.org. Last checked: 24.07.2017 at 
+    \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
+    {ontobee.org/ontology/...}}
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -280,7 +288,8 @@
         $\mathcal{P}(P \rightarrow FL)$. \\
       Different parasite types have different transition probabilities. It is very difficult to make a 
         statement about these probabilities.
-      In general, we assume that there are 40\% parasites and 60\% free-livings \todo{ref} and 
+      In general, we assume that there are 40\% parasites and 60\% free-livings which is based on the 
+        estimates by Windsor \cite{Windsor1998} and 
         $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation is 
         usually less likely. \todo{This is discussed in section x of the discussion.} \\
 
@@ -367,6 +376,7 @@
       After traversing through the tree, each state is saved in a nodelist associated with the node ID 
         which is the OTT from OTL. \\
 
+% simulate loss of information
       Here begins the simulation of the lost information. This is on the one hand the states and on the 
         other the topology of the tree. Some splits of nodes are unknown with which the tree is 
         multifurcated (explained in the following section \todo{pageref}). \\
@@ -424,8 +434,27 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \section{maximum parsimony algorithms}
-    
+    \section{ancestral state reconstruction methods}
+      Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
+      The first is to explain the current state with the least number of state changes between an 
+        ancestor and his child, this is called parsimonious.
+      The other class she presents involves modeling the character evolution as a stochastic process and 
+        using the likelihoods to compute the possible ancestral character states. This is generally done 
+        with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
+
+      \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
+
+      One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
+        can not take divergece times (branch length) into account. Since we have no development times in 
+        our case, you can ignore this. \\
+      Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
+        predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
+        like irreversibility for dollo parsimony. Again, this problem is irrelevant for us, because you 
+        can only work with generalized models in the analysis of the entire Eukaryota tree. \\
+
+      Since the simpler parsimony methods are sufficient for our case, we have decided for them. \\
+      \todotext{In the following we introduce ... there are these methods .. which are important for us ...}
+
       %---------------------------------------------------------------------------------------------------
       %---------------------------------------------------------------------------------------------------
       \subsection{Fitch maximum parsimony}
@@ -657,17 +686,23 @@
     We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
       The Residuals are not very meaningful here, since all models have different dimensions.
 
-      % Model 1: globi.data ~ kingdom + depth
-      % Model 2: globi.data ~ kingdom * depth
-      %   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)
-      % 1   2297502     544789
-      % 2   2297499     544062  3   727.05 < 2.2e-16 ***
-
-      % Model 1: globi.data ~ phylum + depth
-      % Model 2: globi.data ~ phylum * depth
-      % Resid. Df Resid. Dev Df Deviance  Pr(>Chi)
-      % 1   2297453     493017
-      % 2   2297406     488366 47   4650.8 < 2.2e-16 ***
+      \begin{table}[h!]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
+            multifurc $\sim$ taxa & 545740 & 499227 & 482265 & XXXXX\\
+            \hline
+            multifurc $\sim$ taxa + depth & 544789 & 493017 & XXXXX & XXXXX \\
+            \hline
+            multifurc $\sim$ taxa * depth & 544062 & 488366 & XXXXX & \cellcolor{green!60}XXXXX \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{Residuals of unknown information}
+        \label{table:...} 
+      \end{table}
 
       \begin{table}[h!]
         \begin{center}
@@ -848,14 +883,13 @@
         \caption{Kingdom (leaf nodes)}
       \end{table}
 
-\newpage
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Origins and Losses}
 
-      Sara B. Weinstein and Armand M. Kuris have been searching for origins of parasitism in Animalia 
-        \cite{Weinstein2016}. They identified 223 parasitic origins: 223 in Metazoa $\supset$ 143 in 
-        Arthropoda $\supset$ 87 in Insecta. \\
+      Weinstein and Kuris have been searching for origins of parasitism in Animalia \cite{Weinstein2016}. 
+        They identified 223 parasitic origins: 223 in Metazoa $\supset$ 143 in Arthropoda $\supset$ 87 
+        in Insecta. \\
       This has led us to count the origins and losses of parasitism in our investigation as well. \\
       We count only one origin / loss in a parent node with different children's nodes. \\
       Here we have encountered a problem: The Castor algorithm gives us probabilities for states. That 
