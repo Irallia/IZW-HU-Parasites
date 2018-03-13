@@ -704,11 +704,11 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class \\
             \hline \hline
-            multifurc $\sim$ taxa & 545740 & 499227 & 482265 \\
+            multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
             \hline
-            multifurc $\sim$ taxa + depth & 544789 & 493017 & XXXXX \\
+            multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
             \hline
-            multifurc $\sim$ taxa * depth & 544062 & 488366 & \cellcolor{green!60}XXXXX \\
+            multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
             \hline
           \end{tabular} 
         \end{center}
@@ -722,15 +722,15 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class \\
             \hline \hline
-            multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 \\
+            multifurc $\sim$ taxa & 545799 & \cellcolor{green!10}500004 & \cellcolor{green!50}485121 \\
             \hline
-            multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 \\
+            multifurc $\sim$ taxa + depth & 544862 & \cellcolor{green!30}493808 & \cellcolor{green!50}481869 \\
             \hline
-            multifurc $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!50}XXXXX \\
+            multifurc $\sim$ taxa * depth & 544179 & \cellcolor{green!50}489845 & \cellcolor{green!50}481494 \\
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC of unknown information}
+        \caption{BICs of unknown information}
         \label{table:BIC unknown information} 
       \end{table}
 
@@ -1002,6 +1002,24 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class & Order \\
             \hline \hline
+            correct predicted $\sim$ taxa & XXXXX & XXXXX & XXXXX & XXXXX \\
+            \hline
+            correct predicted $\sim$ taxa + depth & 117703 & XXXXX & XXXXX & XXXXX \\
+            \hline
+            correct predicted $\sim$ taxa * depth & 117592 & XXXXX & XXXXX & \cellcolor{green!60}XXXXX \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{Residuals of cross validation prediction}
+        \label{table:Residuals cross validation} 
+      \end{table}
+
+      \begin{table}[h]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
             correct predicted $\sim$ taxa & 117936 & 112242 & XXXXX & XXXXX \\
             \hline
             correct predicted $\sim$ taxa + depth & 117776 & XXXXX & XXXXX & XXXXX \\
@@ -1088,17 +1106,13 @@
           \hline
           Taxa & Model / Effects & min & max & mean & median \\
           \hline \hline
-          Kingdom & globi $\sim$ taxa & 0,01 & 0,04 & 0,02 & 0,01 \\
-          & globi $\sim$ taxa + depth & 0,01 & 0,03 & 0,02 & 0,01 \\
-          & globi $\sim$ taxa * depth & 0,00 & 0,03 & 0,01 & 0,01 \\
+          Kingdom & globi $\sim$ taxa         & 0,01 & 0,04 & 0,02 & 0,01 \\
+                  & globi $\sim$ taxa + depth & 0,01 & 0,03 & 0,02 & 0,01 \\
+                  & globi $\sim$ taxa * depth & 0,00 & 0,03 & 0,01 & 0,01 \\
           \hline
-          Phylum & globi $\sim$ taxa & 0,17 & 393501,80 & 32208,79 & 6149,78 \\
-          & globi $\sim$ taxa + depth & 0,32 & 567010,90 & 55149,54 & 10783,18 \\
-          & globi $\sim$ taxa * depth & 0,00 & 1000000,00 & 225375,33 & 2511,58 \\
-          % \hline
-          % Class & globi $\sim$ taxa & 0,10 & 628190,10 & 44684,53 & 1491,77 \\
-          % & globi $\sim$ taxa + depth &  &  &  &  \\
-          % & globi $\sim$ taxa * depth &  &  &  &  \\
+          Phylum & globi $\sim$ taxa          & 0,17 & 393501,80 & 32208,79 & 6149,78 \\
+                  & globi $\sim$ taxa + depth & 0,32 & 567010,90 & 55149,54 & 10783,18 \\
+                  & globi $\sim$ taxa * depth & 0,00 & 1000000,00 & 225375,33 & 2511,58 \\
           \hline
         \end{tabular} 
       \end{center}
@@ -1107,6 +1121,25 @@
     \end{table}
 
     globi $\sim$ taxa * depth: NOTE: kingdom is not a high-order term in the model
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 15mm, clip, width=\textwidth]{Figures/EffectsOfModel-Data-Phylum.JPG}
+      \caption{Effects of Model: Data $\sim$ Phylum}
+      \label{fig:...}
+    \end{figure}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{Figures/EffectsOf3Models-Data-Phylum.JPG}
+      \caption{Effects of 3 Models: Data $\sim$ Phylum (+/* depth)}
+      \label{fig:...}
+    \end{figure}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{Figures/EffectsOf3Models-Data-Phylum_loglog.JPG}
+      \caption{Effects of 3 Models: Data $\sim$ Phylum (+/* depth) \\ both axis in log scale}
+      \label{fig:...}
+    \end{figure}
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
