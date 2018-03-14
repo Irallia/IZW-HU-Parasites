@@ -15,6 +15,33 @@
 
 %% pasimony algorithms
 
+@article{Camin1965,
+  ISSN = {00143820, 15585646},
+  URL = {http://www.jstor.org/stable/2406441},
+  abstract = {A method is described for reconstructing presumed cladistic evolutionary sequences of recent organisms and its implications are discussed. Characters of the organisms to be studied are presented in a data matrix of the type employed in numerical taxonomy with the character states arrayed according to a presumed evolutionary sequence. The reconstruction proceeds on the hypothesis that the minimum number of evolutionary steps yields the correct cladogram. The method has been programmed for computer processing.},
+  author = {Joseph H. Camin and Robert R. Sokal},
+  journal = {Evolution},
+  number = {3},
+  pages = {311--326},
+  publisher = {[Society for the Study of Evolution, Wiley]},
+  title = {A Method for Deducing Branching Sequences in Phylogeny},
+  volume = {19},
+  year = {1965}
+}
+
+@article{Farris1970,
+  author = {Farris, James S.},
+  title = {Methods for Computing Wagner Trees},
+  journal = {Systematic Biology},
+  volume = {19},
+  number = {1},
+  pages = {83-92},
+  year = {1970},
+  doi = {10.1093/sysbio/19.1.83},
+  URL = {http://dx.doi.org/10.1093/sysbio/19.1.83},
+  eprint = {/oup/backfile/content_public/journal/sysbio/19/1/10.1093/sysbio/19.1.83/2/19-1-83.pdf}
+}
+
 @article{Fitch1971,
   author = {Fitch, Walter M.},
   title = {Toward Defining the Course of Evolution: Minimum Change for a Specific Tree Topology},
@@ -24,24 +51,55 @@
   pages = {406-416},
   year = {1971},
   doi = {10.1093/sysbio/20.4.406},
-  URL = { + http://dx.doi.org/10.1093/sysbio/20.4.406},
+  URL = {http://dx.doi.org/10.1093/sysbio/20.4.406},
   eprint = {/oup/backfile/content_public/journal/sysbio/20/4/10.1093/sysbio/20.4.406/2/20-4-406.pdf}
 }
 
-@article{Swofford1987,
-  title = "Reconstructing ancestral character states under Wagner parsimony",
-  journal = "Mathematical Biosciences",
-  volume = "87",
-  number = "2",
-  pages = "199 - 229",
-  year = "1987",
-  issn = "0025-5564",
-  doi = "https://doi.org/10.1016/0025-5564(87)90074-5",
-  url = "http://www.sciencedirect.com/science/article/pii/0025556487900745",
-  author = "David L. Swofford and Wayne P. Maddison",
-  abstract = "Abstract The problem of assigning optimal character states to the hypothetical ancestors of an evolutionary tree under the Wagner parsimony criterion is examined. A proof is provided for the correctness of Farris's well-known, but previously unproven, algorithm for solving this problem. However, the solution is not, in general, unique, and Farris's method obtains only a subset (generally only one) of the possible solutions. Algorithms that discover other solutions and that resolve ambiguities through the imposition of ancillary criteria are developed and discussed. A method for determining the optimal length of a given tree without actually assigning character states to hypothetical ancestors is described."
+@article{Sankoff1975,
+  author = {Sankoff, David},
+  year = {1975},
+  month = {01},
+  pages = {},
+  title = {Minimal Mutation Trees of Sequences},
+  volume = {28},
+  booktitle = {Siam Journal on Applied Mathematics - SIAMAM}
 }
 
+@book{Felsenstein2003,
+  title={Inferring Phylogenies},
+  author={Felsenstein, J.},
+  isbn={9780878931774},
+  lccn={2003008942},
+  url={https://books.google.de/books?id=GI6PQgAACAAJ},
+  year={2003},
+  publisher={Sinauer}
+}
+
+@article{Cunningham1998,
+  title = "Reconstructing ancestral character states: a critical reappraisal",
+  journal = "Trends in Ecology \& Evolution",
+  volume = "13",
+  number = "9",
+  pages = "361 - 366",
+  year = "1998",
+  issn = "0169-5347",
+  doi = "https://doi.org/10.1016/S0169-5347(98)01382-2",
+  url = "http://www.sciencedirect.com/science/article/pii/S0169534798013822",
+  author = "Clifford W. Cunningham and Kevin E. Omland and Todd H. Oakley"
+}
+
+@article{Louca2017,
+  author = {Louca, Stilianos and Doebeli, Michael},
+  title = {Efficient comparative phylogenetics on large trees},
+  journal = {Bioinformatics},
+  volume = {},
+  number = {},
+  pages = {btx701},
+  year = {2017},
+  doi = {10.1093/bioinformatics/btx701},
+  URL = { + http://dx.doi.org/10.1093/bioinformatics/btx701},
+  eprint = {/oup/backfile/content_public/journal/bioinformatics/pap/10.1093_bioinformatics_btx701/3/btx701.pdf}
+}
 
 % ----------------------- Paper ------------------------
 
@@ -108,39 +166,6 @@
   journal = {Proceedings of the National Academy of Sciences} 
 }
 
-% algorithm:
-
-@article{Louca2017,
-  author = {Louca, Stilianos and Doebeli, Michael},
-  title = {Efficient comparative phylogenetics on large trees},
-  journal = {Bioinformatics},
-  volume = {},
-  number = {},
-  pages = {btx701},
-  year = {2017},
-  doi = {10.1093/bioinformatics/btx701},
-  URL = { + http://dx.doi.org/10.1093/bioinformatics/btx701},
-  eprint = {/oup/backfile/content_public/journal/bioinformatics/pap/10.1093_bioinformatics_btx701/3/btx701.pdf}
-}
-
-@article{Cunningham1998,
-  title = "Reconstructing ancestral character states: a critical reappraisal",
-  journal = "Trends in Ecology \& Evolution",
-  volume = "13",
-  number = "9",
-  pages = "361 - 366",
-  year = "1998",
-  issn = "0169-5347",
-  doi = "https://doi.org/10.1016/S0169-5347(98)01382-2",
-  url = "http://www.sciencedirect.com/science/article/pii/S0169534798013822",
-  author = "Clifford W. Cunningham and Kevin E. Omland and Todd H. Oakley",
-  keywords = "character mapping",
-  keywords = "ancestral reconstructions",
-  keywords = "maximum likelihood",
-  keywords = "parsimony",
-  keywords = "phylogeny"
-}
-% abstract = {Using parsimony to reconstruct ancestral character states on a phylogenetic tree has become a popular method for testing ecological and evolutionary hypotheses. Despite its popularity, the assumptions and uncertainties of reconstructing the ancestral states of a single character have received less attention than the much less challenging endeavor of reconstructing phylogenetic trees from many characters. Recent research suggests that parsimony reconstructions are often sensitive to violations of the almost universal assumption of equal probabilities of gains and losses. In addition, maximum likelihood has been developed as an alternative to parsimony reconstruction, and has also revealed a surprising amount of uncertainty in ancestral reconstructions.}
 
 % databases:
 
@@ -331,4 +356,18 @@
     url={http://dx.doi.org/10.1038/ismej.2015.171}
 }
 
+% ---- noch nicht zitiert ----
 
+@article{Swofford1987,
+  title = "Reconstructing ancestral character states under Wagner parsimony",
+  journal = "Mathematical Biosciences",
+  volume = "87",
+  number = "2",
+  pages = "199 - 229",
+  year = "1987",
+  issn = "0025-5564",
+  doi = "https://doi.org/10.1016/0025-5564(87)90074-5",
+  url = "http://www.sciencedirect.com/science/article/pii/0025556487900745",
+  author = "David L. Swofford and Wayne P. Maddison",
+  abstract = "Abstract The problem of assigning optimal character states to the hypothetical ancestors of an evolutionary tree under the Wagner parsimony criterion is examined. A proof is provided for the correctness of Farris's well-known, but previously unproven, algorithm for solving this problem. However, the solution is not, in general, unique, and Farris's method obtains only a subset (generally only one) of the possible solutions. Algorithms that discover other solutions and that resolve ambiguities through the imposition of ancillary criteria are developed and discussed. A method for determining the optimal length of a given tree without actually assigning character states to hypothetical ancestors is described."
+}

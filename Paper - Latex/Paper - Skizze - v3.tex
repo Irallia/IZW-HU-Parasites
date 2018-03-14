@@ -159,6 +159,9 @@
     \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
     {ontobee.org/ontology/...}}
 
+    Multifurcation \\
+    binary or bifurcating... \cite{Felsenstein2003}
+
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -439,10 +442,16 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \section{ancestral state reconstruction methods}
+    \section{Ancestral state reconstruction methods}
+      For about 50 years, people have been working on ancestral state reconstruction. The first paper 
+        mentioned above is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state 
+        data \cite{Camin1965}. Different methods have been developed and the question is which method is 
+        the most suitable for our problem. \\
+      For this purpose, various studied methods and their advantages and disadvantages were compared. \\
+    
       Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
       The first is to explain the current state with the least number of state changes between an 
-        ancestor and his child, this is called parsimonious.
+        ancestor and his child, this is called parsimonious. \\
       The other class she presents involves modeling the character evolution as a stochastic process and 
         using the likelihoods to compute the possible ancestral character states. This is generally done 
         with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
@@ -457,46 +466,84 @@
         like irreversibility for dollo parsimony. Again, this problem is irrelevant for us, because you 
         can only work with generalized models in the analysis of the entire Eukaryota tree. \\
 
-      Since the simpler parsimony methods are sufficient for our case, we have decided for them. \\
-      \todotext{In the following we introduce ... there are these methods .. which are important for us ...}
+      Following the principle of the simpler model first, the decision has \todo{fallen?} on parsimonious 
+        methods since these are sufficient for the case present here. \\
+      Felsenstein \cite{Felsenstein2003} discusses in his book two algorithms that generalize all 
+        previous methods (from Camin and Sokal \cite{Camin1965}, \todo{Kluge and Farris} and Farris 
+        \cite{Farris1970}): Fitch parsiomony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. \\
+      \anmerkungstext{Unter Farris war auch noch der Begriff Wagner trees in gebrauch, als 
+        Verallgemeinerung der parsimonious trees von Camin und Sokal. (Lydia)} \\
+      \todo{Wagner-parsimony \cite{Swofford1987}} \\
+      
+      Thus, the methods used in this work are those of Fitch and Sankoff. For Fitch, the algorithm has 
+        been extended from binary to multifurcated trees. For the Sankoff algorithm, Louca and Doebeli 
+        have presented an implementation for non-binary trees published in an R package named 
+        \textit{castor} \cite{Louca2017}.
 
       %---------------------------------------------------------------------------------------------------
       %---------------------------------------------------------------------------------------------------
       \subsection{Fitch maximum parsimony}
-        Described from [COO98] + others ... - implemented for multifurcating trees
+        Fitch maximum parsimony is an algorithm for rooted, binary trees and describes an ancestral state 
+          reconstruction for discrete states \cite{Fitch1971} by minimizing transitions between states. \\
+        Note, the original Fitch algorithm has the sole purpose of minimizing the number of transitions 
+          and not reconstructing the ancestral nodes. Felsenstein \cite{Felsenstein2003} describes a 
+          simple extension for the reconstruction. Cunningham et al. \cite{Cunningham1998} have refined 
+          these. \todotext{Wir haben mit ein paar kleinen änderungen optimiert... und schließlich auf multifurcated angepasst...} \\
+        To understand the differences to the multifurcated case, the algorithm for the binary case is 
+          explained briefly. \\
 
-        Fitch algorithm for binary trees:
-        \begin{figure}
-          \caption{bla}
+
+        Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
+          a set of states. Internal nodes have three sets, which are empty at the beginning, excluding the
+          root node, it has only one. Leaf nodes have their state as a set (eg \{FL\}, unknown leaf 
+          nodes) the union of all possible states (\{FL, P\}). \\
+        The algorithm traverses three times trough the tree and fills these sets. \\
+        In each step, two sets are considered and their intersect formed. There are two cases:
+        \begin{wrapfigure}{r}{0.4\textwidth}
           \centering
-            \includegraphics[width=0.5\textwidth]{Figures/Fitch1.png}
-        \end{figure}
+          \includegraphics[width=0.39\textwidth]{Figures/Fitch1.png}
+          \caption{Fitch algorithm for binary trees}
+          \label{fig: binary Fitch}
+        \end{wrapfigure}
+        \begin{enumerate}
+          \item The intersection is not empty and corresponds to the new set.
+          \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
+        \end{enumerate}
+        First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal. Each internal node is formed from its child nodes. \\
+        Second traverse from the root node to the leafs. Each internal node is formed from its father node 
+          and its sibling node. \\
+        Last traversion (direction does not matter \todotext{does it? Welche Mengen/Menge wird genommen 
+          von jedem Knoten?}): Build the final state for every node. It is formed 
+          from the sets of previous traversals. \\
+        
+        Figure \ref{fig: binary Fitch} shows the firch algorithm for binary trees with 5 leaf nodes, \todo{one unknown}.
 
-        Der Baum hat die folgende Struktur: Alle inneren Knoten sind leer. In den Blattknoten befindet 
-        sich entweder das Tag FL oder P, oder deren Vereinigung, wenn es sich um einen unknown node handelt.
+        The finale step is not part of the original Fitch algorithm, as it only aims to minimize the 
+          transitions without predicting actual states of internal nodes. This step is described by \todo{...}. \\
+        
 
-        Der Fitch Algorithmus ist aufgeteilt in drei Schritte, in welchen man jeweils durch den Baum traversiert.
-        Schritt 1 beginnt von de Blättern aus, da sich dort zu Beginn die einzige Information befindet. 
-        Für jeden Knoten gilt, wenn seine Kinder schon Information enthalten, dann bilde die Schnittmenge 
-        der states und schreibe diese als Information in den aktuellen Knoten. Ist die Schnittmenge leer, 
-        dann schreibe die Vereinigung aller möglichen states in den Knoten. Für alle Kinder, die noch keine 
-        Information haben, führe diesen Schritt erst für diese aus.
-        Schritt zwei geht von den Kindern der Wurzel bis zu den Vätern der Blätter. Jeder Knoten bekommt 
-        einen zweiten Tag, der sich aus der Vereinigung des states des Vaterknoten und der Geschwisterknoten
-        zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller states, also $\{FL,P\}$ als Tag.
+        % Der Fitch Algorithmus ist aufgeteilt in drei Schritte, in welchen man jeweils durch den Baum traversiert.
+        % Schritt 1 beginnt von de Blättern aus, da sich dort zu Beginn die einzige Information befindet. 
+        % Für jeden Knoten gilt, wenn seine Kinder schon Information enthalten, dann bilde die Schnittmenge 
+        % der states und schreibe diese als Information in den aktuellen Knoten. Ist die Schnittmenge leer, 
+        % dann schreibe die Vereinigung aller möglichen states in den Knoten. Für alle Kinder, die noch keine 
+        % Information haben, führe diesen Schritt erst für diese aus.
+        % Schritt zwei geht von den Kindern der Wurzel bis zu den Vätern der Blätter. Jeder Knoten bekommt 
+        % einen zweiten Tag, der sich aus der Vereinigung des states des Vaterknoten und der Geschwisterknoten
+        % zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller states, also $\{FL,P\}$ als Tag.
 
-        Hier gibt es einige Möglichkeiten, wie dieser Schritt genau aussieht.
-        1. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Außerdem wird von den 
-        Geschwisterknoten zuerst der Schnitt gebildet, und danach vom Ergebnis nochmal mit dem Vaterknoten zusammen.
-        (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller states, also $\{FL,P\}$. Auch im folgenden...)
-        2. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Er wird zusammen mit den 
-        Geschwisterstates genommen und direkt ein Schnitt aller Mengen gebildet.
-        3. Version: Es werden alle vorherigen states vom Vater genutzt und von diesen ein Schnitt gebildet.
-        Das selbe gilt für die Geschwisterstates. Und dann wird ein dritter Schnitt zwischend en Ergebnissen gebildet.
-        4. Version: Es werden alle states genutzt und direkt in einem Schnitt zusammengenommen.
+        % Hier gibt es einige Möglichkeiten, wie dieser Schritt genau aussieht.
+        % 1. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Außerdem wird von den 
+        % Geschwisterknoten zuerst der Schnitt gebildet, und danach vom Ergebnis nochmal mit dem Vaterknoten zusammen.
+        % (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller states, also $\{FL,P\}$. Auch im folgenden...)
+        % 2. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Er wird zusammen mit den 
+        % Geschwisterstates genommen und direkt ein Schnitt aller Mengen gebildet.
+        % 3. Version: Es werden alle vorherigen states vom Vater genutzt und von diesen ein Schnitt gebildet.
+        % Das selbe gilt für die Geschwisterstates. Und dann wird ein dritter Schnitt zwischend en Ergebnissen gebildet.
+        % 4. Version: Es werden alle states genutzt und direkt in einem Schnitt zusammengenommen.
 
-        Der Finale Schritt traversiert nochmal über den Baum und Bildet aus den zwei states pro Knoten einen finalen
-        Tag, indem wieder der Schnitt der beiden states das Ergebnis ist.
+        % Der Finale Schritt traversiert nochmal über den Baum und Bildet aus den zwei states pro Knoten einen finalen
+        % Tag, indem wieder der Schnitt der beiden states das Ergebnis ist.
 
         Ich habe diese Versionen mit 100 Bäumen mit 10000 Blattknoten und der Verteilung 60\% FL zu 40\% P simuliert.
         Bei 90 \% unbekannten Knoten lag Version 1 zu 89.67 \%, Version 2 zu 89.67 \%, Version 3 zu 
@@ -517,8 +564,8 @@
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Sankoff}
-        Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}.
-
+        Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}. \\
+        \todo{transition probabilities: all equal}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -632,9 +679,9 @@
 
         \begin{table}[h]
           \begin{center}
-              \begin{tabular}{ |l|r|r|r|r| }
+              \begin{tabular}{ |l|r|r|r|r|r| }
                 \hline
-                Model / Taxa & Kingdom & Phylum & Class & Order \\
+                Model / Taxa & Kingdom & Phylum & Class & Order & Family \\
                 \hline \hline
                 multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
                 \hline
@@ -661,11 +708,12 @@
         Because of the difference in the complexity of the models, we compared their BICs:
         \begin{table}[h]
           \begin{center}
-            \begin{tabular}{ |l|r|r|r|r| }
+            \begin{tabular}{ |l|r|r|r|r|r| }
               \hline
-              Model / Taxa & Kingdom & Phylum & Class & Order \\
+              Model / Taxa & Kingdom & Phylum & Class & Order & Family \\
               \hline \hline
-              multifurc $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249\\
+              multifurc $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
+              multifurc $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
               \hline
               multifurc $\sim$ taxa + depth & 8273318 & \cellcolor{green!15}7934322 & \cellcolor{green!20}7839364 & \cellcolor{green!35}7539999 \\
               multifurc $\sim$ taxa + max.height & \cellcolor{green!15}7993515 & \cellcolor{green!25}7749121 & \cellcolor{green!30}7661817 & \cellcolor{green!40}7416211 \\
@@ -710,21 +758,21 @@
             \hline
             multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
             \hline
-          \end{tabular} 
+          \end{tabular}
         \end{center}
         \caption{Residuals of unknown information}
-        \label{table:...} 
+        \label{table:...}
       \end{table}
 
       \begin{table}[h!]
         \begin{center}
-          \begin{tabular}{ |l|r|r|r| }
+          \begin{tabular}{ |l|r|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class \\
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
             \hline \hline
             multifurc $\sim$ taxa & 545799 & \cellcolor{green!10}500004 & \cellcolor{green!50}485121 \\
             \hline
-            multifurc $\sim$ taxa + depth & 544862 & \cellcolor{green!30}493808 & \cellcolor{green!50}481869 \\
+            multifurc $\sim$ taxa + depth & 544862 & \cellcolor{green!30}493808 & \cellcolor{green!50}481869 & 478851 \\
             \hline
             multifurc $\sim$ taxa * depth & 544179 & \cellcolor{green!50}489845 & \cellcolor{green!50}481494 \\
             \hline
