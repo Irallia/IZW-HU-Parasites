@@ -23,9 +23,10 @@ CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
 
 # values for simulation:
 number_leafnodes = int(sys.argv[1])
-number_trees = int(sys.argv[2])         # number of simulated trees
-percentage_parasites = float(sys.argv[3]) # between 0 and 1
-percentage_unknown = float(sys.argv[4])   # between 0 and 1
+number_trees = int(sys.argv[2])                 # number of simulated trees
+percentage_parasites = float(sys.argv[3])       # between 0 and 1
+percentage_unknown = float(sys.argv[4])         # between 0 and 1
+percentage_multifurcation = float(sys.argv[5])  # between 0 and 1
 
 def main():
     """Main method"""
@@ -47,7 +48,7 @@ def main():
     for i in range(1, number_trees + 1):
         print("Tree", colored(i, 'red'))
         print(colored("---------------- get random tree ----------------", "green"))
-        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, beta_distribution_parameters)
+        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, percentage_multifurcation, beta_distribution_parameters)
         current_tree = result[0]
         nodelist = result[1]
         # CURRENT_TIME = print_time(CURRENT_TIME)
@@ -77,7 +78,7 @@ def main():
     f_dif4 = round(f_dif4 / number_trees, 2)
 
     row = [percentage_unknown, f_dif1, f_dif2, f_dif3, f_dif4]
-    csv_title = "evaluation/" + str(int(percentage_parasites*100)) + "-fitch-unknown_plot.csv" 
+    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-fitch-unknown_plot.csv" 
     fp = open(csv_title, 'a')
     writer = csv.writer(fp)
     writer.writerow((row)) 
