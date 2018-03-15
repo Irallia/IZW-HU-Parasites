@@ -8,7 +8,7 @@ path_tree <- "data/subtree/Eukaryota.tre"
 tree <- read.tree(path_tree)
 
 # -------- Tagged tree: --------
-path_tagged_tree <- "code/bufferfiles/simulated_tagged_tree.tre"
+path_tagged_tree <- "code/bufferfiles/tagged_tree.tre"
 tagged_tree <- read.tree(path_tagged_tree)
 
 # ---- get the tagged tips of the tree ----

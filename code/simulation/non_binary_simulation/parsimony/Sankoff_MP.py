@@ -11,10 +11,10 @@ def sankoff_parsimony(tree, nodelist):
 
     # ---- cache tree for R script ---
 
-    Phylo.write(tree, 'bufferfiles/simulated_tree.tre', 'newick')
+    Phylo.write(tree, 'code/bufferfiles/tree.tre', 'newick')
 
     prepare_tree(tree.clade, nodelist)
-    Phylo.write(tree, 'bufferfiles/simulated_tagged_tree.tre', 'newick')
+    Phylo.write(tree, 'code/bufferfiles/tagged_tree.tre', 'newick')
     
     # -------- R code --------
     

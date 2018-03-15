@@ -22,10 +22,10 @@ def sankoff_parsimony(run_id):
 
     read_nodelist()
 
-    tagged_tree_path = 'code/bufferfiles/simulated_tagged_tree.tre'
+    tagged_tree_path = 'code/bufferfiles/tagged_tree.tre'
     if run_id >= 0:
         randomly_change_nodelist()
-        tagged_tree_path = './code/bufferfiles/simulated_tagged_tree' + str(run_id) + '.tre'
+        tagged_tree_path = './code/bufferfiles/tagged_tree' + str(run_id) + '.tre'
 
     # ---- cache tree for R script ---
     cache_tree(tagged_tree_path)
@@ -36,7 +36,7 @@ def sankoff_parsimony(run_id):
     code = ''.join(f.readlines())
     if run_id >= 0:
         print(colored("---------------- prepare R script ----------------", "green"))
-        code_Array = code.split("code/bufferfiles/simulated_tagged_tree.tre")
+        code_Array = code.split("code/bufferfiles/tagged_tree.tre")
         code = tagged_tree_path.join(code_Array)
 
     print(colored("---------------- run castor ----------------", "green"))
