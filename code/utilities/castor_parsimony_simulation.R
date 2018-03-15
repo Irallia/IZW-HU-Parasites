@@ -18,7 +18,7 @@ states <- tagged_tree$tip.label
 # print(states)
 # print(state_ids)
 
-## number_of_tips <- length(state_ids)
+number_of_tips <- length(state_ids)
 internal_nodes <- tree$node.label
 
 # ---- map them to numbers (NA for unknown states) ----
