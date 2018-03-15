@@ -35,7 +35,7 @@
     tree of OTL \cite{Hinchliff2015} which is highly multifurcated. \\
   For the 2,535,437 leaf nodes we could not gather much data. From the GloBI database 
     \cite{Poelen2014} which we used, we could only collect 25,992 parasitic and 34,879 
-    free-living species. It follows that we have only $\approx 2.4\%$ state information. \\
+    free-living species. It follows that we have only $\approx 2.4~\%$ state information. \\
   So far, especially small scale studies have been carried out or highly manual. In this scale, it 
     requires different data sources to be interconnected. \\
   We performed an analysis of existing algorithms and selected a Sankoff maximum parsimony algorithm 
@@ -130,7 +130,7 @@
   lengths and no other additional information like different transition probabilities of our states.
 
   In den Bacteria und Archaea wurde das mal allgemein für binary traits gemacht:
-  "A total 90\% of all binary traits described molecular functions, specifically the presence or absence of a gene or a set of gene involved in biochemical pathways."
+  "A total 90~\% of all binary traits described molecular functions, specifically the presence or absence of a gene or a set of gene involved in biochemical pathways."
   \cite{Goberna2015} \\
   Unterschied bei uns ist parasitismus komplexer.. da sind meist nicht einzelne Gene zuständig..
 
@@ -231,7 +231,7 @@
         Biodiversity Information Facility) \cite{GBIF}, OTT (OpenTreeOfLife-Taxonomy) 
         \cite{Hinchliff2015}. \\
       \todotext{Marius:} "Every dataset has it's own characteristics and downsides. ITIS is only a small 
-        set of 100\% confirmed and named species. GBIF is not composed with the help of phylogeny, the 
+        set of 100~\% confirmed and named species. GBIF is not composed with the help of phylogeny, the 
         same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small dataset of mostly 
         marine species. \\
       We choosed the taxonomy from OpenTreeOfLife because it's including most of the known taxonomies 
@@ -296,7 +296,7 @@
         $\mathcal{P}(P \rightarrow FL)$. \\
       Different parasite types have different transition probabilities. It is very difficult to make a 
         statement about these probabilities.
-      In general, we assume that there are 40\% parasites and 60\% free-livings which is based on the 
+      In general, we assume that there are 40~\% parasites and 60~\% free-livings which is based on the 
         estimates by Windsor \cite{Windsor1998} and 
         $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation is 
         usually less likely. \todo{This is discussed in section x of the discussion.} \\
@@ -308,15 +308,15 @@
         \begin{center}
           \includegraphics[trim = 0mm 0mm 0mm 15mm, clip, width=0.48\textwidth]{Figures/40-60.png}
         \end{center}
-        \caption{60\% Free-living - 40\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
+        \caption{60~\% Free-living - 40~\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
         \label{fig:Beta distribution}
       \end{wrapfigure}
 
       In the simulation, we chose two beta distributions and a threshold that indicates the change 
         between states. \\
       Different thresholds with different beta distributions were simulated, with different distributions 
-        of parasites and free-livings: 50\% P to 50\% FL, 40\% P to 60\% FL, 30\% P to 70\% FL and 
-        20\% P to 80 \% FL (\todo{see results simulation, ref...}). Figure \ref{fig:Beta distribution} 
+        of parasites and free-livings: 50~\% P to 50~\% FL, 40~\% P to 60~\% FL, 30~\% P to 70~\% FL and 
+        20~\% P to 80~\% FL (\todo{see results simulation, ref...}). Figure \ref{fig:Beta distribution} 
         shows one example of these. \\
       \todo{Plot neu erstellen: Achsenbeschriftung, threshold}
 
@@ -488,95 +488,90 @@
         Note, the original Fitch algorithm has the sole purpose of minimizing the number of transitions 
           and not reconstructing the ancestral nodes. Felsenstein \cite{Felsenstein2003} describes a 
           simple extension for the reconstruction. Cunningham et al. \cite{Cunningham1998} have refined 
-          these. \todotext{Wir haben mit ein paar kleinen änderungen optimiert... und schließlich auf multifurcated angepasst...} \\
+          these. \todotext{Wir haben mit ein paar kleinen änderungen optimiert... und schließlich auf 
+          multifurcated angepasst...} \todotext{eigentlich ist Cunningham 'nur' eine kritische 
+          Neubewertung. Sie beziehen ihren Algortihmus auf Swofford und Maddison...} \\
         To understand the differences to the multifurcated case, the algorithm for the binary case is 
-          explained briefly. \\
-
-
+          briefly explained and referred to the extension. \\
+          \begin{wrapfigure}[19]{r}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
+            \caption{Fitch algorithm for binary trees. \\
+              The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
+              root node) consists of three sets, where the last set is the final one (bold). \\
+              From the second internal node (seen from the root node) there are several possibilities to 
+              create the second and third set.}
+            \label{fig: binary Fitch}
+          \end{wrapfigure}
         Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
-          a set of states. Internal nodes have three sets, which are empty at the beginning, excluding the
-          root node, it has only one. Leaf nodes have their state as a set (eg \{FL\}, unknown leaf 
-          nodes) the union of all possible states (\{FL, P\}). \\
+          a set of states. There are only two states in this paper, free-living (FL) and parasitic (P). 
+          Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
+          has only one. Leaf nodes have their state as a set (eg \{FL\} or \{P\}, unknown leaf nodes the 
+          union of all possible states (\{FL, P\}). \\
         The algorithm traverses three times trough the tree and fills these sets. \\
         In each step, two sets are considered and their intersect formed. There are two cases:
-        \begin{wrapfigure}{r}{0.4\textwidth}
-          \centering
-          \includegraphics[width=0.39\textwidth]{Figures/Fitch1.png}
-          \caption{Fitch algorithm for binary trees}
-          \label{fig: binary Fitch}
-        \end{wrapfigure}
         \begin{enumerate}
           \item The intersection is not empty and corresponds to the new set.
           \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
         \end{enumerate}
-        First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal. Each internal node is formed from its child nodes. \\
+        First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal. 
+          Each internal node is formed from its child nodes, where at the beginning the only information
+          lies. \\
         Second traverse from the root node to the leafs. Each internal node is formed from its father node 
           and its sibling node. \\
-        Last traversion (direction does not matter \todotext{does it? Welche Mengen/Menge wird genommen 
-          von jedem Knoten?}): Build the final state for every node. It is formed 
+        Last traversion (direction does not matter): Build the final state for every node. It is formed 
           from the sets of previous traversals. \\
-        
-        Figure \ref{fig: binary Fitch} shows the firch algorithm for binary trees with 5 leaf nodes, \todo{one unknown}.
-
-        The finale step is not part of the original Fitch algorithm, as it only aims to minimize the 
-          transitions without predicting actual states of internal nodes. This step is described by \todo{...}. \\
-        
-
-        % Der Fitch Algorithmus ist aufgeteilt in drei Schritte, in welchen man jeweils durch den Baum traversiert.
-        % Schritt 1 beginnt von de Blättern aus, da sich dort zu Beginn die einzige Information befindet. 
-        % Für jeden Knoten gilt, wenn seine Kinder schon Information enthalten, dann bilde die Schnittmenge 
-        % der states und schreibe diese als Information in den aktuellen Knoten. Ist die Schnittmenge leer, 
-        % dann schreibe die Vereinigung aller möglichen states in den Knoten. Für alle Kinder, die noch keine 
-        % Information haben, führe diesen Schritt erst für diese aus.
-        % Schritt zwei geht von den Kindern der Wurzel bis zu den Vätern der Blätter. Jeder Knoten bekommt 
-        % einen zweiten Tag, der sich aus der Vereinigung des states des Vaterknoten und der Geschwisterknoten
-        % zusammensetzt. Ist diese leer, bekommt der Knoten wieder die Vereinigung aller states, also $\{FL,P\}$ als Tag.
-
-        % Hier gibt es einige Möglichkeiten, wie dieser Schritt genau aussieht.
-        % 1. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Außerdem wird von den 
-        % Geschwisterknoten zuerst der Schnitt gebildet, und danach vom Ergebnis nochmal mit dem Vaterknoten zusammen.
-        % (Immer wenn der Schnitt leer ist, ist das Ergebnis die Vereinigung aller states, also $\{FL,P\}$. Auch im folgenden...)
-        % 2. Version: Es wird nur der erste Tag vom Vaterknoten genutzt. Er wird zusammen mit den 
-        % Geschwisterstates genommen und direkt ein Schnitt aller Mengen gebildet.
-        % 3. Version: Es werden alle vorherigen states vom Vater genutzt und von diesen ein Schnitt gebildet.
-        % Das selbe gilt für die Geschwisterstates. Und dann wird ein dritter Schnitt zwischend en Ergebnissen gebildet.
-        % 4. Version: Es werden alle states genutzt und direkt in einem Schnitt zusammengenommen.
-
-        % Der Finale Schritt traversiert nochmal über den Baum und Bildet aus den zwei states pro Knoten einen finalen
-        % Tag, indem wieder der Schnitt der beiden states das Ergebnis ist.
-
-        Ich habe diese Versionen mit 100 Bäumen mit 10000 Blattknoten und der Verteilung 60\% FL zu 40\% P simuliert.
-        Bei 90 \% unbekannten Knoten lag Version 1 zu 89.67 \%, Version 2 zu 89.67 \%, Version 3 zu 
-          90.72 \% und Version 4 zu 90.74 \% richtig.
-
+        (The original Fitch algorithm was designed to minimize transitions without predicting actual states 
+          of internal nodes, so it was just the first traversal.) \\
+        The extension to the non-binary case is quite obvious, but holds some opportunities. In this case, 
+          more than two children may be present for the first traversal, but the incision or union may 
+          also be formed over more than two sets. Also in the second traversing, there may be several 
+          sibling nodes. However, there are several possibilities here that were all tested and compared 
+          in the simulation. Some of these options are already available in the binary case:
+        \begin{itemize}
+          \item The father node has (except for the root node) two state sets, because he came through 
+            the up-traversing previously. Are both sets used or only the first traversing?
+          \item Since there are several siblings, do you first of all make the cut or union, or directly 
+            in the whole with the father node?
+        \end{itemize}
+        The first point already has an effect on the binary case. Figure \ref{fig: binary Fitch} shows 
+          both possibilities of the three sets. \\
+        Cunningham uses only the first state set of the father node \cite{Cunningham1998}. \\
+        From these two points four different versions of Fitch were formed:
+        \begin{enumerate}
+          \item Fitch 1: First state set of father node; intersection/union of siblings first.
+          \item Fitch 2: First state set of father node; intersection/union of siblings together with father node.
+          \item Fitch 3: Both state sets of father node; intersection/union of siblings first.
+          \item Fitch 4: Both state sets of father node; intersection/union of siblings together with father node sets.
+        \end{enumerate}
         \begin{figure}
-          \caption{bla}
           \centering
-            \includegraphics[width=0.6\textwidth]{Figures/simulation_fitch_evaluation.png}
+          \includegraphics[width=0.8\textwidth]{Figures/simulation_fitch_evaluation.png}
+          \caption{Test of Fitch Versions.}
+          \label{fig:Fitch versions}
         \end{figure}
-
-        How to extend Fitch for multifunction?:
-        \begin{figure}
-          \caption{bla}
-          \centering
-            \includegraphics[width=1\textwidth]{Figures/Fitch2.png}
-        \end{figure}
+        These four versions were tested in the simulation with 100 trees and 10000 leaf nodes and a
+          distribution of 60~\% FL to 40~\% P. Figure \ref{fig:Fitch versions} shows this over all unknown 
+          node percentage. \\
+        At 90~\% unknown nodes, version 1 was 89.67~\%, version 2 was 89.67~\%, version 3 was 90.72~\%, 
+          and version 4 was 90.74~\% correct. Therefore, only version 4 was used for all further 
+          simulations.
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Sankoff}
         Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}. \\
         \todo{transition probabilities: all equal}
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{real data analysis}
-    \begin{itemize}
-      \item Import tree
-      \item Import interactions
-      \item run castor algorithm / and others?
-      \item interprete results (cross validation - leave 100 out)
-    \end{itemize}
+  % %---------------------------------------------------------------------------------------------------
+  % %---------------------------------------------------------------------------------------------------
+  % %---------------------------------------------------------------------------------------------------
+  % \section{real data analysis}
+  %   \begin{itemize}
+  %     \item Import tree
+  %     \item Import interactions
+  %     \item run castor algorithm / and others?
+  %     \item interprete results (cross validation - leave 100 out)
+  %   \end{itemize}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -739,10 +734,10 @@
       For the ancestral state reconstruction, we need information in the leaf nodes. \\
     The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
       (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
-      distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7\%$). \\
+      distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7~\%$). \\
     We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
       species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
-    \todo{With this only $\approx 4.3\%$ information in our leaf nodes are ...} \\
+    \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
     We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
       The Residuals are not very meaningful here, since all models have different dimensions.
 
@@ -811,15 +806,15 @@
       Since GloBI is not perfect, all examples contain a few bugs.
       As known the Chordata are full of free-living species and there are only a few parasites. Among 
         the birds are some breeding parasites (brood parasitism) like the cuckoo and clepto-parasites as 
-        the skuas \cite{Rothschild1957}. The algorithm reflects this. We started with 99.83\% 
-        free-living species and predicted 99.94\% species as parasites \todo{(inklusive all known nodes)}. 
-        Only 0.06\% were predicted as parasites. \\
+        the skuas \cite{Rothschild1957}. The algorithm reflects this. We started with 99.83~\% 
+        free-living species and predicted 99.94~\% species as parasites \todo{(inklusive all known nodes)}. 
+        Only 0.06~\% were predicted as parasites. \\
       \todo{We found the cuckoo and some skuas...?} \\
       Same observation but with less free-livings is the Apicomplexa Phylum. Here we have only a few 
-        free-livings \todo{ref einfügen}. And as we see, we had good start data and predicted 00.95\% as 
+        free-livings \todo{ref einfügen}. And as we see, we had good start data and predicted 00.95~\% as 
         parasites. \\
       For the Platyhelminthes the literature says that there are mostly all Platyhelminthes parasites
-        \todo{ref einfügen}. But at the end we predicted 4.18\% as free-living. The class Seriata is the 
+        \todo{ref einfügen}. But at the end we predicted 4.18~\% as free-living. The class Seriata is the 
         reason for the most of free-livings in this phylum. These are partly free-living flatworms, so 
         the prediction looks right. \\
         \todotext{ Wiki: \\
@@ -831,11 +826,11 @@
         arising from the intestine. The intestine itself may be either simple or branched.[3]}
       
       With the Nematoda it looks very different. In the Nematoda its much worse. Most Nematoda are 
-        free-living, but we found only 2.63\% of them. Blaxter et al. speaks of at least seven 
+        free-living, but we found only 2.63~\% of them. Blaxter et al. speaks of at least seven 
         independently arosed parasitism \cite{Blaxter1998}. In a recent article Blaxter identifies 18 
         origins \cite{Blaxter2015} in Nematoda. \\
         The problem at this point, however, is obvious: The parasites have been much more studied and 
-        thus we start with only 0.63\% free-living species. Against such a shifted data situation, the 
+        thus we start with only 0.63~\% free-living species. Against such a shifted data situation, the 
         algorithm is almost powerless. And yet the percentage has increased.
 
         The evolution of parasitism in Nematoda: \\
@@ -853,25 +848,25 @@
             \hline \hline
             Chordata & 91785 & 10451 & 18 
               & 91734 & 0 & 0 & 0 & 0 & 51 \\
-            & & 99.83\% & 0.49\%
-              & 99.94\% & & & & & 0.06\% \\ \hline
+            & & 99.83~\% & 0.49~\%
+              & 99.94~\% & & & & & 0.06~\% \\ \hline
             Nematoda & 30127 & 21 & 3289 
               & 791 & 0 & 1017 & 0 & 0 & 28319 \\
-            & & 0.63\% & 99.37\%
-              & 2.63\% & & 3.38\% & & & 94\% \\ \hline
+            & & 0.63~\% & 99.37~\%
+              & 2.63~\% & & 3.38~\% & & & 94~\% \\ \hline
             Platyhelminthes & 22683 & 7 & 7086 
               & 949 & 0 & 151 & 0 & 0 & 21583 \\
-            & & 0.1\% & 99.9\%
-              & 4.18\% & & 0.67\% & & & 95.15\% \\ \hline
+            & & 0.1~\% & 99.9~\%
+              & 4.18~\% & & 0.67~\% & & & 95.15~\% \\ \hline
             Apicomplexa & 1863 & 1 & 255 
               & 1 & 0 & 0 & 0 & 0 & 1862 \\
-            & & 0.39\% & 99.61\%
-              & 0.05\% & & & & & 99.95\% \\
+            & & 0.39~\% & 99.61~\%
+              & 0.05~\% & & & & & 99.95~\% \\
             \hline \hline
             Arthropoda & 1198981 & 18912 & 11141 
               & 1099509 & 1313 & 22478 & 4176 & 1665 & 70223 \\
-            & & 62.93\% & 37.07\%
-              & 91.7\% & 0.11\% & 1.87\% & 0.35\% & 0.14\% & 5.86\% \\
+            & & 62.93~\% & 37.07~\%
+              & 91.7~\% & 0.11~\% & 1.87~\% & 0.35~\% & 0.14~\% & 5.86~\% \\
             \hline
           \end{tabular} 
         \end{center}
@@ -1039,7 +1034,7 @@
     \subsection{Cross evaluation - leave 100 out}
       We ran the castor algorithm 100 times with leaving 100 randomized free-living or parasitic species 
         out of the input data to see how stable our result is. Of these 10,000 nodes, 9,238 were unique. 
-        Of that, we predicted 9060 ($\approx 98.17\%$) correctly and 169 ($\approx 1.82\%$) wrongly, with 
+        Of that, we predicted 9060 ($\approx 98.17~\%$) correctly and 169 ($\approx 1.82~\%$) wrongly, with 
         duplicate draws always having the same prediction. \\
       What is the best way to model this data? We again tested the influence of the taxa and the depth of 
         leaf nodes and calculated the BICs (Table: \ref{table:BIC cross validation}).
@@ -1375,6 +1370,12 @@
     \centering
     \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_BIC.JPG}
     \caption{Crosstable of BIC values}
+  \end{figure}
+
+  How to extend Fitch for multifunction?:
+  \begin{figure}
+    \centering
+      \includegraphics[width=1\textwidth]{Figures/Fitch2.png}
   \end{figure}
 
 \end{document}

@@ -3,7 +3,7 @@
 import rpy2.robjects
 from Bio import Phylo
 
-from utilities import Helpers
+from code.utilities.Helpers import find_element_in_nodelist
 
 
 def sankoff_parsimony(tree, nodelist):
@@ -37,13 +37,13 @@ def sankoff_parsimony(tree, nodelist):
     k = 0
     for i in range(2*l, 3*l):
         if j < number_of_tips[0]:
-            element = Helpers.find_element_in_nodelist(leaf_nodes[j], nodelist)
+            element = find_element_in_nodelist(leaf_nodes[j], nodelist)
             if element[3] == '':    # if unknown
                 # set finaltag:
                 element[3] = likelihoods[i]
             j += 1
         else:
-            element = Helpers.find_element_in_nodelist(internal_nodes[k], nodelist)
+            element = find_element_in_nodelist(internal_nodes[k], nodelist)
             # set finaltag:
             element[3] = likelihoods[i]
             k += 1
@@ -56,7 +56,7 @@ def prepare_tree(subtree, nodelist):
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     if subtree.is_terminal():
-        element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+        element = find_element_in_nodelist(subtree.name, nodelist)
         if len(element[4][0]) > 1:
             subtree.name = ''
         else:

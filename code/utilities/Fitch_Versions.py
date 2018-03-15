@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from Helpers import find_element_in_nodelist, get_intersect_or_union
+from code.utilities.Helpers import find_element_in_nodelist, get_intersect_or_union
 
 # Version 1:
 # use only first tag of parent, and every sibling

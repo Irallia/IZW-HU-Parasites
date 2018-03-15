@@ -1,20 +1,20 @@
 from copy import deepcopy
 
-from utilities import Helpers
+from code.utilities.Helpers import find_element_in_nodelist
 
 def my_parsimony(tree_clade, nodelist):
     """mean based parsimony"""
     # down:
     parsimony_down(tree_clade, nodelist)
     # up:
-    parent = Helpers.find_element_in_nodelist(tree_clade.name, nodelist)
+    parent = find_element_in_nodelist(tree_clade.name, nodelist)
     children = []
     for clade in tree_clade.clades:
-        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        child = find_element_in_nodelist(clade.name, nodelist)
         children.append(child)
     for i in range(0, len(tree_clade.clades)):
         clade = tree_clade.clades[i]
-        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        child = find_element_in_nodelist(clade.name, nodelist)
         sublist = deepcopy(children)
         del sublist[i]
         parsimony_up(clade, nodelist, parent, sublist)
@@ -30,7 +30,7 @@ def parsimony_down(subtree, nodelist):
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
     mean = 0
     for clade in subtree.clades:
-        child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+        child = find_element_in_nodelist(clade.name, nodelist)
         # if child is not tagged, first tag it:
         if child[4] == []:
             parsimony_down(clade, nodelist)
@@ -41,7 +41,7 @@ def parsimony_down(subtree, nodelist):
             else:
                 child[4][0] = child[4][0][0]
         mean = mean + child[4][0]     # else: +0 for 'P'
-    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    element = find_element_in_nodelist(subtree.name, nodelist)
     # calculate and add mean
     mean = mean / len(subtree.clades)
     element[4].append(mean)
@@ -61,7 +61,7 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     for sibling in siblings:
         siblings_tags += sibling[4]
 
-    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    element = find_element_in_nodelist(subtree.name, nodelist)
     # calculate and add mean
     mean = sum(siblings_tags) / len(siblings_tags)
     element[4].append(mean)
@@ -70,11 +70,11 @@ def parsimony_up(subtree, nodelist, parent, siblings):
     if not subtree.is_terminal():
         children = []
         for clade in subtree.clades:
-            child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+            child = find_element_in_nodelist(clade.name, nodelist)
             children.append(child)
         for i in range(0, len(subtree.clades) - 1):
             clade = subtree.clades[i]
-            child = Helpers.find_element_in_nodelist(clade.name, nodelist)
+            child = find_element_in_nodelist(clade.name, nodelist)
             sublist = deepcopy(children)
             del sublist[i]
             parsimony_up(clade, nodelist, element, sublist)
@@ -86,7 +86,7 @@ def parsimony_final(subtree, nodelist):
     #   subtree
     #                   0   1       2           3           4
     #   nodelist    - [id, depth, originaltag, finaltag, calc[taglist]]
-    element = Helpers.find_element_in_nodelist(subtree.name, nodelist)
+    element = find_element_in_nodelist(subtree.name, nodelist)
     if subtree.is_terminal() and element[4][0] != 0.5:
         element[3] = element[4][0]
     else:

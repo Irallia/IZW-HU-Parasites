@@ -12,12 +12,13 @@ path_tagged_tree <- "code/bufferfiles/simulated_tagged_tree.tre"
 tagged_tree <- read.tree(path_tagged_tree)
 
 # ---- get the tagged tips of the tree ----
-state_ids <- tree$tip.label
+ state_ids <- tree$tip.label
 states <- tagged_tree$tip.label
 # print("tip states:")
 # print(states)
 # print(state_ids)
-number_of_tips <- length(state_ids)
+
+## number_of_tips <- length(state_ids)
 internal_nodes <- tree$node.label
 
 # ---- map them to numbers (NA for unknown states) ----

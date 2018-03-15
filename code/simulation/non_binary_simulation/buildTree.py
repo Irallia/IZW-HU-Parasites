@@ -9,14 +9,19 @@ from Bio import Phylo
 
 # global variable:
 permitted_deviation = 0.02 # 2%
+percentage_multifurcation = 0.5
 
-def get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, beta_distribution_parameters):
+def get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, p_multifurcation, beta_distribution_parameters):
     """build a random binary tree fully tagged with FL and P"""
     # Arguments:
     #   number_leafnodes                - needed for randomized function
-    #   percentage_unknown              - proportion of unknown leafnodes
     #   percentage_parasites
+    #   percentage_unknown              - proportion of unknown leafnodes
+    #   percentage_multifurcation
     #   beta_distribution_parameters    - [A_FL, B_FL, A_P, B_P]
+
+    global percentage_multifurcation
+    percentage_multifurcation = p_multifurcation
 
     START_TIME = datetime.datetime.now().replace(microsecond=0)
     CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
@@ -119,17 +124,18 @@ def tag_tree(subtree, nodelist, father_tag, leaf_distr, percentage_parasites, pe
     return [subtree, nodelist, leaf_distr, depths]
 
 def get_non_binary_tree(subtree, nodelist):
+    global percentage_multifurcation
     i = 0
     while i != len(subtree.clades):
         if subtree.clades[i].is_terminal():                 # is leave node?
             i += 1
         else:
             element = find_element_in_nodelist(subtree.clades[i].name, nodelist)
-            limit = get_limit(element[1][2])
+            # limit = get_limit(element[1][2])
             # print('i=', i, 'len=', len(subtree.clades))
             new_random = uniform(0, 1)                      # choose if we want to delete ourselve
             # print(new_random, ' < ', limit)
-            if new_random < limit:                          # or new_random < 0.9:
+            if new_random < percentage_multifurcation:                          # or new_random < 0.9:
                 # print('delete me!')
                 subtree.clades += subtree.clades[i].clades  # add children
                 del subtree.clades[i]                       # delete internal node
@@ -143,9 +149,9 @@ def get_non_binary_tree(subtree, nodelist):
             
     return
 
-def get_limit(depth):
-    limit = 1 - 1/((depth+3)/4)
-    if limit < 0.1:
-        limit = 0.1
-    # print('depth=', depth, ' -> limit=', str(round(limit,3)))
-    return limit
+# def get_limit(depth):
+#     limit = 1 - 1/((depth+3)/4)
+#     if limit < 0.1:
+#         limit = 0.1
+#     # print('depth=', depth, ' -> limit=', str(round(limit,3)))
+#     return limit

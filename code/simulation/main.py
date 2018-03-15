@@ -26,9 +26,10 @@ CURRENT_TIME = datetime.datetime.now().replace(microsecond=0)
 
 # values for simulation:
 number_leafnodes = int(sys.argv[1])
-number_trees = int(sys.argv[2])         # number of simulated trees
-percentage_parasites = float(sys.argv[3]) # between 0 and 1
-percentage_unknown = float(sys.argv[4])   # between 0 and 1
+number_trees = int(sys.argv[2])                 # number of simulated trees
+percentage_parasites = float(sys.argv[3])       # between 0 and 1
+percentage_unknown = float(sys.argv[4])         # between 0 and 1
+percentage_multifurcation = float(sys.argv[5])  # between 0 and 1
 
 def main():
     """Main method"""
@@ -43,14 +44,15 @@ def main():
     print("Simulate", colored(number_trees, 'blue'), "random trees with", 
         colored(number_leafnodes, 'blue'), "leafnodes", 
         colored(percentage_parasites*100, 'blue'), "% parasites and",
-        colored(percentage_unknown*100, 'blue'), "% unknown leafnodes.")
+        colored(percentage_unknown*100, 'blue'), "% unknown leafnodes and",
+        colored(percentage_multifurcation*100, 'blue'), "% multifurcation of internal nodes.")
     beta_distribution_parameters = decide_for_beta_distribution_parameters(percentage_parasites)
     print(beta_distribution_parameters)
     diffs = [["Fitch", "My", "Sankoff"]]
     for i in range(1, number_trees + 1):
         print("Tree", colored(i, 'red'))
         print(colored("---------------- get random tree ----------------", "green"))
-        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, beta_distribution_parameters)
+        result = buildTree.get_random_tagged_tree(number_leafnodes, percentage_parasites, percentage_unknown, percentage_multifurcation, beta_distribution_parameters)
         current_tree = result[0]
         nodelist = result[1]
         # CURRENT_TIME = print_time(CURRENT_TIME)
@@ -85,7 +87,7 @@ def main():
     s_dif = round(s_dif / number_trees, 2)
 
     row = [percentage_unknown, f_dif, m_dif, s_dif]
-    csv_title = "evaluation/" + str(int(percentage_parasites*100)) + "-unknown_plot.csv" 
+    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown_plot.csv" 
     fp = open(csv_title, 'a')
     writer = csv.writer(fp)
     writer.writerow((row)) 
@@ -112,7 +114,7 @@ def run_parsimony_algorithms(current_tree, nodelist):
     print(colored("---------------- Fitch parsimony ----------------", "green"))
     fitch_MP_tree = deepcopy(current_tree)
     fitch_MP_nodelist = deepcopy(nodelist)
-    fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist, 3)
+    fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist, 4)
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- my parsimony ----------------", "green"))
     my_MP_tree = deepcopy(current_tree)
