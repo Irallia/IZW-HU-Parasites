@@ -11,7 +11,7 @@ def sankoff_parsimony(tree, nodelist):
 
     # ---- cache tree for R script ---
 
-    Phylo.write(tree, 'code/bufferfiles/tree.tre', 'newick')
+    Phylo.write(tree, 'code/bufferfiles/simulated_tree.tre', 'newick')
 
     prepare_tree(tree.clade, nodelist)
     Phylo.write(tree, 'code/bufferfiles/tagged_tree.tre', 'newick')
@@ -21,6 +21,10 @@ def sankoff_parsimony(tree, nodelist):
     path = "./code/utilities/castor_parsimony_simulation.R"
     f = open(path, "r")
     code = ''.join(f.readlines())
+    print("---------------- prepare R script ----------------")
+    code_Array = code.split("data/subtree/Eukaryota.tre")
+    code = "code/bufferfiles/simulated_tree.tre".join(code_Array)
+
     result = rpy2.robjects.r(code)
     # assume that...
     likelihoods = rpy2.robjects.globalenv['likelihoods'][0]
