@@ -43,7 +43,7 @@ def main():
         colored(percentage_parasites*100, 'blue'), "% parasites and",
         colored(percentage_unknown*100, 'blue'), "% unknown leafnodes and",
         colored(percentage_multifurcation*100, 'blue'), "% of multifurcation of the internal nodes.")
-        beta_distribution_parameters = decide_for_beta_distribution_parameters(percentage_parasites)
+    beta_distribution_parameters = decide_for_beta_distribution_parameters(percentage_parasites)
     print(beta_distribution_parameters)
     diffs = [["Fitch1", "Fitch2", "Fitch3", "Fitch4"]]
     for i in range(1, number_trees + 1):
