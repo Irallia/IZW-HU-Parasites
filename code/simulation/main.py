@@ -11,7 +11,7 @@ from code.simulation.non_binary_simulation.parsimony.Sankoff_MP import \
 from code.utilities.Drawings import tag_leaf_names, tag_names
 from code.utilities.Helpers import print_time
 from copy import deepcopy
-from pprint import pprint
+# from pprint import pprint
 from time import gmtime, strftime
 
 from Bio import Phylo
@@ -46,7 +46,7 @@ def main():
         colored(percentage_parasites*100, 'blue'), "% parasites and",
         colored(percentage_unknown*100, 'blue'), "% unknown leafnodes and",
         colored(percentage_multifurcation*100, 'blue'), "% multifurcation of internal nodes.")
-    beta_distribution_parameters = decide_for_beta_distribution_parameters(percentage_parasites)
+    beta_distribution_parameters = decide_for_beta_distribution_parameters()
     print(beta_distribution_parameters)
     diffs = [["Fitch", "My", "Sankoff"]]
     for i in range(1, number_trees + 1):
@@ -87,7 +87,7 @@ def main():
     s_dif = round(s_dif / number_trees, 2)
 
     row = [percentage_unknown, percentage_multifurcation, f_dif, m_dif, s_dif]
-    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown_" + str(int(percentage_multifurcation*100)) + "-multifurcation.csv" 
+    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown-multifurcation.csv"
     fp = open(csv_title, 'a')
     writer = csv.writer(fp)
     writer.writerow((row)) 
@@ -134,7 +134,8 @@ def run_parsimony_algorithms(current_tree, nodelist):
     print(colored("--------------------------------", "green"))
     return differences
 
-def decide_for_beta_distribution_parameters(percentage_parasites):
+def decide_for_beta_distribution_parameters():
+    global percentage_parasites
                                 # [A_FL, B_FL, A_P, B_P]
     beta_distribution_parameters = [7, 3.5, 3.5, 7]   # 40 P - 60 FL
 

@@ -4,17 +4,19 @@ import rpy2.robjects
 from Bio import Phylo
 
 from code.utilities.Helpers import find_element_in_nodelist
-
+from random import randint
 
 def sankoff_parsimony(tree, nodelist):
     """Using rpy2 for forwarding to R code"""
 
     # ---- cache tree for R script ---
+    random_name = str(randint(0, 1000))
+    path_simulated_tree = 'code/bufferfiles/simulated_tree' + random_name + '.tre'
+    path_tagged_tree = 'code/bufferfiles/tagged_tree' + random_name + '.tre'
 
-    Phylo.write(tree, 'code/bufferfiles/simulated_tree.tre', 'newick')
-
+    Phylo.write(tree, path_simulated_tree , 'newick')
     prepare_tree(tree.clade, nodelist)
-    Phylo.write(tree, 'code/bufferfiles/tagged_tree.tre', 'newick')
+    Phylo.write(tree, path_tagged_tree, 'newick')
     
     # -------- R code --------
     
@@ -23,7 +25,9 @@ def sankoff_parsimony(tree, nodelist):
     code = ''.join(f.readlines())
     print("---------------- prepare R script ----------------")
     code_Array = code.split("data/subtree/Eukaryota.tre")
-    code = "code/bufferfiles/simulated_tree.tre".join(code_Array)
+    code = path_simulated_tree.join(code_Array)
+    code_Array = code.split("code/bufferfiles/tagged_tree.tre")
+    code = path_tagged_tree.join(code_Array)
 
     result = rpy2.robjects.r(code)
     # assume that...
