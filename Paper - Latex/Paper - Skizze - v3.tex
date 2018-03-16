@@ -322,14 +322,25 @@
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Multifurcation}
-      We have a very high multifurcation rate (see results section \pageref{sec:ResultsMultifurcation}).
-      Therefore, the impact of multifurcations on our research question has been investigated. \\
-      Generalized Linear Models with poisson regression were compared according to their residuals and 
-      BIC. \\
-      \anmerkungstext{Nested models were compared using likelihood ratio tests, models using different 
-        predictors were compared according to their deviance and AIC. (Emanuel)} \\
-      \todo{Einfluss auf die Vorhersage des Castor und Fitch Algorithmus (Simulation)}
+    \subsection{Missing information}
+
+      A binary tree with $n$ leaf nodes has $n-1$ internal nodes. The present Eukaryota tree of OTL has 
+        2,293,463 leaf nodes and only 41,974 internal nodes, that is:
+      $$100-\frac{100}{(2293463-1) \times 41974} \approx 98.16 \%$$
+        missing internal nodes. \\
+
+      % \anmerkungstext{Nested models were compared using likelihood ratio tests, models using different 
+      %   predictors were compared according to their deviance and AIC. (Emanuel)} \\
+
+      For the present Eukaryota tree with 2,293,463 leaf nodes, 34,869 free-livings and 25,962 parasites 
+        are found, which are
+        $$100-\frac{100}{2293463 \times (34860+25962)} \approx 97.34 \%$$
+        unknown states of leaf nodes. \\
+
+      In the simulation, the influence of the multifurcations and missing data in leaf nodes on the 
+        predictive accuracy of the ancestral state reconstruction algorithms is tested. \\
+      For the real data, generalized linear models are compared with poisson respectively binomial 
+        regression according to their residuals and BICs.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -399,45 +410,7 @@
     %---------------------------------------------------------------------------------------------------
     \subsection{simulating loss of information of the tree topology}
       As previously explained, some divisions in the tree are not known, so the real tree is not binary.
-        We simulate this multifurcation of the tree by \todo{...}.
-      
-      On the one hand, the strength of multifunctionation plays a role, as does the distribution. 
-        Modeling was done as explained in \todo{sec x}.
-      
-      \todo{bisher ohne Begründung:!!!}
-      we decided to use a $\frac{1}{x}$ distribution, where x is the depth of a node. This means, how 
-      deaper we are, how less information we have. \\
-      We traverse through the tree and pick a random number between 0 and 1. If random number is smaller 
-        as our limit ($\frac{1}{x}$), than we forget the node and hang every child to the father node of 
-        the current node. \\
-      \anmerkung{poisson process $\rightarrow$ fit that distribution, include depth as a predictor, see if significant (Emanuel)}
-      \begin{lstlisting}[gobble=6]
-        def get_non_binary_tree(subtree, nodelist):
-          i = 0
-          while i != len(subtree.clades):
-            if subtree.clades[i].is_terminal():             # is leaf node?
-              i += 1
-            else:
-              element = Helpers.find_element_in_nodelist(subtree.clades[i].name, nodelist)
-              limit = get_limit(element[1])
-              new_random = random.uniform()                 # choose if we want to delete ourselve
-              if new_random < limit:                        # or new_random < 0.9:
-                subtree.clades += subtree.clades[i].clades  # add children
-                del subtree.clades[i]                       # delete internal node
-              else:                                         # if we don't deleted ourselve go on with children
-                get_non_binary_tree(subtree.clades[i], nodelist)  # otherwise the children are in the current clade array
-                i += 1
-          return
-
-          def get_limit(depth):
-            limit = 1 - 1 / ((depth + 3) / 4)
-            if limit < 0.1:
-              limit = 0.1
-            return limit
-      \end{lstlisting}
-      Wir lassen das Limit nicht beliebig klein werden, sondern beschränken es auf 0.1. \\
-
-      With this loss of information the reconstruction can start.
+      This multifurcation was simulated by an equally distributed percentage of forgotten internal nodes.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -553,9 +526,10 @@
         These four versions were tested in the simulation with 100 trees and 10000 leaf nodes and a
           distribution of 60~\% FL to 40~\% P. Figure \ref{fig:Fitch versions} shows this over all unknown 
           node percentage. \\
-        At 90~\% unknown nodes, version 1 was 89.67~\%, version 2 was 89.67~\%, version 3 was 90.72~\%, 
-          and version 4 was 90.74~\% correct. Therefore, only version 4 was used for all further 
-          simulations.
+        At 90~\% unknown nodes and 90~\% of multifurcation of the internal nodes, version 1 was 89.26~\%, 
+          version 2 was 89.26~\%, version 3 was 89.35~\%, and version 4 was 89.31~\% correct. Therefore, 
+          only version 3 was used for all further simulations.
+
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Sankoff}
@@ -598,23 +572,13 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Missing information}
+      As previously presented, we have two types of missing information: unknown states of leaf nodes 
+        and multifurcation. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Taxa}
-      The investigation of the taxonomy revealed that our tree has three kingdoms: Chloroplastida, 
-        Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
-      Since the analysis of the tree is not part of this work, it should be mentioned here that, 
-        according to recent findings, this is not complete and we lack some taxa in every rank. For 
-        example, Hans says that one distinguishes between seven and nine kingdoms 
-        \cite{CavalierSmith1981}. \\
-      In section \pageref{subsec:listPhyla} of the appendix you can find a list of all phyla.
-      
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \section{Multifurcation}\label{sec:ResultsMultifurcation}
-      One property of the tree is its ridge of multifurcation. A complete phylogenetic tree would be 
+      We examined the ridge of multifurcation of the tree. A complete phylogenetic tree would be 
         binary, which means the number of leaf nodes is closely to the number of internal nodes. But 
         since we only work with a synthesis tree, this tree is multifurcated: we have 241 974 internal 
         nodes and 2 293 463 leaf nodes. \\
@@ -639,30 +603,68 @@
       The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
         every node (a node with two children is binary). That means it discribes the number of nodes which we have lost from the real (binary) 
       phylogenetic tree. \\
-      As you can see, we are very far from a binary tree.
-    
+      As you can see, we are very far from a binary tree. \\
+
+      Some subtrees have been examined, these have the following percentages of missing information: See 
+        table \ref{table:percentage loss information subtrees}.
+
+      \begin{table} [h]
+        \begin{center}
+          \begin{tabular}{ |l|r|r||r|r|r| }
+            \hline
+            Domain  & \% unknown states & \% multifurcation \\ 
+            / Kingdom  & (missing state information & (missing \\
+            / Phylum / Class & of leaf nodes) & internal nodes) \\
+            \hline \hline
+            Eukaryota       & 97.34~\%  & 98.16~\% \\
+            \hline \hline
+            Metazoa         & 96.44~\%  & 87.93~\% \\ \hline
+            Fungi           & 98.87~\%  & 96.97~\% \\ \hline
+            Chloroplastida  & 99.14~\%  & 89.46~\% \\
+            \hline \hline            
+            Arthropoda      & 97.49~\%  & 89.95~\% \\ \hline
+            Apicomplexa     & 86.26~\%  & 87.16~\% \\ \hline
+            Nematoda        & 89.01~\%  & 88.59~\% \\ \hline
+            Chordata        & 88.59~\%  & \cellcolor{green!50}66.49~\% \\ \hline
+            Platyhelminthes & \cellcolor{green!50}68.73~\%  & 80.34~\% \\
+            \hline \hline            
+            Insecta         & 97.11~\%  & 90.78~\% \\
+            \hline  
+          \end{tabular}
+        \end{center}
+        \caption{Examination of subtrees regarding missing information}
+        \label{table:percentage loss information subtrees} 
+      \end{table}
+
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Data artifacts}
-      At this point we also found out that there are some nodes with only one child node (55700 nodes). \\
-      These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
-        tree (3956 with height $>2$). They are probably a result from the fact that taxonomic information 
-        has been incorporated into a phylogeny. \\
-      Some examples:
-      \begin{itemize}
-        \item Nephroselmidophyceae: (class) \\
-          https://tree.opentreeoflife.org/opentree/argus/ottol@1038762
-        \item Phrynocrinidae: (family) \\
-          https://tree.opentreeoflife.org/opentree/argus/ottol@3647979
-        \item Elaeocarpus sylvestris: \\
-          https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969
-      \end{itemize}
-     
+        At this point we also found out that there are some nodes with only one child node (55700 nodes). \\
+        These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
+          tree (3956 with height $>2$). They are probably a result from the fact that taxonomic information 
+          has been incorporated into a phylogeny. \\
+        Some examples:
+        \begin{itemize}
+          \item Nephroselmidophyceae: (class) \\
+            https://tree.opentreeoflife.org/opentree/argus/ottol@1038762
+          \item Phrynocrinidae: (family) \\
+            https://tree.opentreeoflife.org/opentree/argus/ottol@3647979
+          \item Elaeocarpus sylvestris: \\
+            https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969
+        \end{itemize}
+
       %---------------------------------------------------------------------------------------------------
+      \subsubsection{Taxa}
+        The investigation of the taxonomy revealed that our tree has three kingdoms: Chloroplastida, 
+          Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
+        Since the analysis of the tree is not part of this work, it should be mentioned here that, 
+          according to recent findings, this is not complete and we lack some taxa in every rank. For 
+          example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
+          \cite{CavalierSmith1981}. \\
+        In section \pageref{subsec:listPhyla} of the appendix you can find a list of all phyla.
+
       %---------------------------------------------------------------------------------------------------
-      \subsection{Poisson regression}
-        glm (generalized linear model) analysis: \\
-      
-        
+      \subsubsection{Poisson regression of the multifurcation}
+        % glm (generalized linear model) analysis: \\
         The intercept is $2.821 > 0$ $\Rightarrow$ there is a multifunction.
         (Intercept: Stärke der Multifurcation) \\
         Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
@@ -726,66 +728,67 @@
           \label{table:...} 
         \end{table}
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Unknown leaf nodes}
-    Next to the problem of the multifurcation of the tree is the less of data we have for the species.
-      For the ancestral state reconstruction, we need information in the leaf nodes. \\
-    The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
-      (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
-      distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7~\%$). \\
-    We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
-      species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
-    \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
-    We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
-      The Residuals are not very meaningful here, since all models have different dimensions.
+      %---------------------------------------------------------------------------------------------------
+      \subsubsection{Binomial regression of the unknown state information}
 
-      \begin{table}[h!]
-        \begin{center}
-          \begin{tabular}{ |l|r|r|r| }
-            \hline
-            Model / Taxa & Kingdom & Phylum & Class \\
-            \hline \hline
-            multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
-            \hline
-            multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
-            \hline
-            multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
-            \hline
-          \end{tabular}
-        \end{center}
-        \caption{Residuals of unknown information}
-        \label{table:...}
-      \end{table}
+        Next to the problem of the multifurcation of the tree is the less of data we have for the species.
+          For the ancestral state reconstruction, we need information in the leaf nodes. \\
+        The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
+          (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
+          distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7~\%$). \\
+        We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
+          species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
+        \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
+        We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
+          The Residuals are not very meaningful here, since all models have different dimensions.
 
-      \begin{table}[h!]
-        \begin{center}
-          \begin{tabular}{ |l|r|r|r|r| }
-            \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
-            \hline \hline
-            multifurc $\sim$ taxa & 545799 & \cellcolor{green!10}500004 & \cellcolor{green!50}485121 \\
-            \hline
-            multifurc $\sim$ taxa + depth & 544862 & \cellcolor{green!30}493808 & \cellcolor{green!50}481869 & 478851 \\
-            \hline
-            multifurc $\sim$ taxa * depth & 544179 & \cellcolor{green!50}489845 & \cellcolor{green!50}481494 \\
-            \hline
-          \end{tabular} 
-        \end{center}
-        \caption{BICs of unknown information}
-        \label{table:BIC unknown information} 
-      \end{table}
+        \begin{table}[h!]
+          \begin{center}
+            \begin{tabular}{ |l|r|r|r| }
+              \hline
+              Model / Taxa & Kingdom & Phylum & Class \\
+              \hline \hline
+              multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
+              \hline
+              multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
+              \hline
+              multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
+              \hline
+            \end{tabular}
+          \end{center}
+          \caption{Residuals of unknown information}
+          \label{table:...}
+        \end{table}
 
-      \todo{Taxa like order or family were too expensive to calculate...}
+        \begin{table}[h!]
+          \begin{center}
+            \begin{tabular}{ |l|r|r|r|r| }
+              \hline
+              Model / Taxa & Kingdom & Phylum & Class & Order \\
+              \hline \hline
+              multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & XXXXX \\
+              \hline
+              multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
+              \hline
+              multifurc $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!45}481494 & \cellcolor{green!50}478188 \\
+              \hline
+            \end{tabular} 
+          \end{center}
+          \caption{BICs of unknown information}
+          \label{table:BIC unknown information} 
+        \end{table}
+
+        \todo{Taxa like order or family were too expensive to calculate...}
+
+
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Results of simulation / Influence of different parameters}
 
-    \begin{figure}
+    \begin{figure}[h!]
       \centering
-      \includegraphics[trim = 0mm 0mm 0mm 50mm, clip,width=0.9\textwidth]{Figures/simulation_evaluation_1.png}
+      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.8\textwidth]{Figures/simulation_evaluation_1.png}
       \caption{Influence of unknown data to prediction}
     \end{figure}
 
@@ -798,12 +801,16 @@
     %---------------------------------------------------------------------------------------------------
     \subsection{Biological view}
 
-      \todo{Castor replaces originaltags with finaltags. There are 82 originaltags != finaltag.} \\ \\
+      \todo{Castor replaces originaltags with finaltags. There are 82 originaltags != finaltag.} \\
 
       We picked a few phyla to evaluate the results from the biological point of view. \\
       Table \ref{table:phylum leaf nodes states} shows some known phyla: Chordata, Nematoda, 
         Platyhelminthes and Apicomplexa. \\
       Since GloBI is not perfect, all examples contain a few bugs.
+
+      \todo{\ref{table:table:percentage loss information subtrees}} \\
+
+
       As known the Chordata are full of free-living species and there are only a few parasites. Among 
         the birds are some breeding parasites (brood parasitism) like the cuckoo and clepto-parasites as 
         the skuas \cite{Rothschild1957}. The algorithm reflects this. We started with 99.83~\% 
@@ -1189,24 +1196,37 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Discussion}
-  Wie gut ist der randomisiert erstellte Baum? \\
-  Wie gut kommt unsere Simulation an die echte Datenlage heran. \\
+
   Fehlerqoute der Daten an sich? \\
   Wie gut ist unsere Datenlage? 3 mio knoten, 1.8 named species (leaf nodes), 200.000 leaf nodes mit 
   Information. \\
-  Simulation von subtrees \\
   Welche Teile des Baumes sind gut, an welchen muss noch viel geforscht werden. \\
   Wieviele Origins haben wir gefunden, was bedeutet diese Zahl? \\
-  
-  Parameter der Simulation:
-  \begin{itemize}
-    \item Wie ist die Verteilung der vergessenen internen Knoten? Zum Wurzelknoten hin mehr vergessen?
-    \item Wie sehen die übergangswahrscheinlichkeiten aus von P$\rightarrow$FL und andersherum?
-    \item Verteilung Parasiten zu Freilebend zu keine Information
-  \end{itemize}
+  Es gibt noch ungenutze information in GloBI.
 
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Simulation}
+    For fixed calculations we assume a distribution of 60\% free-living to 40\% parasites, 95\% 
+      missing data and a multifuration rate of 95\%.
+    How well does our simulation approach the real data situation? \\
+    There are some points to discuss:
+    \begin{itemize}
+      \item How close is the randomized binary tree to a true phylogeny?
+      \item The distribution of parasites to free-ranging species is a pure assumption. From different 
+        sources about 40\% parasites are estimated, are these also beta-distributed?
+      \item How well do the transition probabilities match parasitism? Depending on the type of 
+        parasitism, this will certainly look different. In addition, it can be assumed that the 
+        probability for losses is lower than for origins.
+      \item The equal distribution of the multifurcation is a blank assumption. It is very likely to 
+        be higher towards the root node because there is less information back in time. On the other 
+        hand, there are many studies that have studied various species without considering phylogeny. 
+        Which also creates a high number of children of a node directly at the leaf nodes.
+    \end{itemize}
+    In order to be able to observe these problems, we have programmed our simulation according to the 
+      parameters. This allowed us to estimate the influence of some of these parameters.
 
-  Selecting of the 'right'  / best Distribution
   
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -1354,28 +1374,5 @@
         \label{table:...} 
       \end{center}  
     \end{table}
-    
-%---------------------------------------------------------------------------------------------------
-%---------------------------------------------------------------------------------------------------
-%---------------------------------------------------------------------------------------------------
-\chapter{Komplett aussortierte Tabellen etc}
-
-  \begin{figure}
-    \centering
-    \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_Residuals.JPG}
-    \caption{Crosstable of Residual values}
-  \end{figure}
-
-  \begin{figure}
-    \centering
-    \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.95\textwidth]{Figures/Kreuztabelle_BIC.JPG}
-    \caption{Crosstable of BIC values}
-  \end{figure}
-
-  How to extend Fitch for multifunction?:
-  \begin{figure}
-    \centering
-      \includegraphics[width=1\textwidth]{Figures/Fitch2.png}
-  \end{figure}
 
 \end{document}

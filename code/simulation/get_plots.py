@@ -13,7 +13,7 @@ COLS = 3
 def main():
     global PLOT_NUMBER
     f, axs = plt.subplots(ROWS, COLS, figsize=(9,10))
-    plt.suptitle('Influence of unknown data to prediction', fontsize=12, y=1, fontweight='bold')
+    # plt.suptitle('Influence of unknown data to prediction', fontsize=12, y=1, fontweight='bold')
     plt.NullFormatter()
 
     for pp in [10, 20, 30, 40, 50]: 
@@ -135,7 +135,7 @@ def plot_data_unknown(percentage_parasites):
         label='Sankoff', linewidth=0.5, marker='.', markerfacecolor='black')
     plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 50, 100])
-    if PLOT_NUMBER != 11:
+    if PLOT_NUMBER != 15:
         plt.xticks([])
     else:
         plt.xlabel('percentage unknown', fontsize=9)
@@ -163,7 +163,7 @@ def plot_data_multifurc(percentage_parasites):
         label='Sankoff', linewidth=0.5, marker='.', markerfacecolor='black')
     plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 50, 100])
-    if PLOT_NUMBER != 11:
+    if PLOT_NUMBER != 16:
         plt.xticks([])
     else:
         plt.xlabel('percentage multifurcation', fontsize=9)
