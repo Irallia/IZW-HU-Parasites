@@ -130,7 +130,7 @@ def get_non_binary_tree(subtree, nodelist):
         if subtree.clades[i].is_terminal():                 # is leave node?
             i += 1
         else:
-            element = find_element_in_nodelist(subtree.clades[i].name, nodelist)
+            # element = find_element_in_nodelist(subtree.clades[i].name, nodelist)
             # limit = get_limit(element[1][2])
             # print('i=', i, 'len=', len(subtree.clades))
             new_random = uniform(0, 1)                      # choose if we want to delete ourselve

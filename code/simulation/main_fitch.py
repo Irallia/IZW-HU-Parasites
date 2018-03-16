@@ -78,8 +78,8 @@ def main():
     f_dif3 = round(f_dif3 / number_trees, 2)
     f_dif4 = round(f_dif4 / number_trees, 2)
 
-    row = [percentage_unknown, f_dif1, f_dif2, f_dif3, f_dif4]
-    csv_title = "data/simulation/fitch" + str(int(percentage_parasites*100)) + "-unknown" + str(int(percentage_multifurcation*100)) + "-multifurcation.csv"
+    row = [percentage_unknown, percentage_multifurcation, f_dif1, f_dif2, f_dif3, f_dif4]
+    csv_title = "data/simulation/fitch_" + str(int(percentage_parasites*100)) + "-unknown_" + str(int(percentage_multifurcation*100)) + "-multifurcation.csv"
     fp = open(csv_title, 'a')
     writer = csv.writer(fp)
     writer.writerow((row)) 

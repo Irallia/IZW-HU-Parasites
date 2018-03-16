@@ -86,8 +86,8 @@ def main():
     m_dif = round(m_dif / number_trees, 2)
     s_dif = round(s_dif / number_trees, 2)
 
-    row = [percentage_unknown, f_dif, m_dif, s_dif]
-    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown" + str(int(percentage_multifurcation*100)) + "-multifurcation.csv" 
+    row = [percentage_unknown, percentage_multifurcation, f_dif, m_dif, s_dif]
+    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown_" + str(int(percentage_multifurcation*100)) + "-multifurcation.csv" 
     fp = open(csv_title, 'a')
     writer = csv.writer(fp)
     writer.writerow((row)) 
@@ -142,7 +142,7 @@ def decide_for_beta_distribution_parameters(percentage_parasites):
     if percentage_parasites == 0.1:
         beta_distribution_parameters = [7, 24, 0.5, 7]     # 10 P - 90 FL
     elif percentage_parasites == 0.2:
-            beta_distribution_parameters = [7, 13.25, 1.25, 7] # 20 P - 80 FL
+        beta_distribution_parameters = [7, 13.25, 1.25, 7] # 20 P - 80 FL
     elif percentage_parasites == 0.3:
         beta_distribution_parameters = [7, 8.5, 2, 7]      # 30 P - 70 FL
     elif percentage_parasites == 0.4:
