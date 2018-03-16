@@ -18,7 +18,7 @@ def sankoff_parsimony(tree, nodelist):
     
     # -------- R code --------
     
-    path = "./code/utilities/castor_parsimony_simulation.R"
+    path = "code/utilities/castor_parsimony_simulation.R"
     f = open(path, "r")
     code = ''.join(f.readlines())
     print("---------------- prepare R script ----------------")

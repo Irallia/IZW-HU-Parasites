@@ -87,7 +87,7 @@ def main():
     s_dif = round(s_dif / number_trees, 2)
 
     row = [percentage_unknown, f_dif, m_dif, s_dif]
-    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown_plot.csv" 
+    csv_title = "data/simulation/" + str(int(percentage_parasites*100)) + "-unknown" + str(int(percentage_multifurcation*100)) + "-multifurcation.csv" 
     fp = open(csv_title, 'a')
     writer = csv.writer(fp)
     writer.writerow((row)) 
@@ -99,7 +99,8 @@ def main():
     print(colored(number_trees, 'blue'), " trees simulated with", 
         colored(number_leafnodes, 'blue'), "leafnodes", 
         colored(percentage_parasites*100, 'blue'), "% parasites and",
-        colored(percentage_unknown*100, 'blue'), "% unknown leafnodes.")
+        colored(percentage_unknown*100, 'blue'), "% unknown leafnodes and",
+        colored(percentage_multifurcation*100, 'blue'), "% of multifurcation of the internal nodes.")
     print("correctly predicted (including already known leaf nodes):")
     print("differences Fitch / My / Sankoff")
     percentage_correctly_predicted = "| " + str(f_dif) +" % | " + str(m_dif) + " % | " + str(s_dif) + " % |"
@@ -114,7 +115,7 @@ def run_parsimony_algorithms(current_tree, nodelist):
     print(colored("---------------- Fitch parsimony ----------------", "green"))
     fitch_MP_tree = deepcopy(current_tree)
     fitch_MP_nodelist = deepcopy(nodelist)
-    fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist, 4)
+    fitch_parsimony(fitch_MP_tree.clade, fitch_MP_nodelist, 3)
     CURRENT_TIME = print_time(CURRENT_TIME)
     print(colored("---------------- my parsimony ----------------", "green"))
     my_MP_tree = deepcopy(current_tree)
