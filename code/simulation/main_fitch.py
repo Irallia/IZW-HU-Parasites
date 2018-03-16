@@ -139,7 +139,7 @@ def decide_for_beta_distribution_parameters(percentage_parasites):
     if percentage_parasites == 0.1:
         beta_distribution_parameters = [7, 24, 0.5, 7]     # 10 P - 90 FL
     elif percentage_parasites == 0.2:
-            beta_distribution_parameters = [7, 13.25, 1.25, 7] # 20 P - 80 FL
+        beta_distribution_parameters = [7, 13.25, 1.25, 7] # 20 P - 80 FL
     elif percentage_parasites == 0.3:
         beta_distribution_parameters = [7, 8.5, 2, 7]      # 30 P - 70 FL
     elif percentage_parasites == 0.4:
