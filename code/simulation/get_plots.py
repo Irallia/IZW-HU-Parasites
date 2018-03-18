@@ -109,8 +109,8 @@ def plot_hist(percentage_parasites):
     ax.get_legend().get_title().set_fontweight("bold")
     plt.axis([0, 1, 0, 8])
     # plt.ylabel('???', fontsize=9)
-    if PLOT_NUMBER != 11:
-        plt.xticks([])
+    # if PLOT_NUMBER != 11:
+    #     plt.xticks([])
     # else:
         # plt.xlabel('???', fontsize=9)
     plt.grid(True)
@@ -135,13 +135,10 @@ def plot_data_unknown(percentage_parasites):
         label='Sankoff', linewidth=0.5, marker='.', markerfacecolor='black')
     plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 50, 100])
-    if PLOT_NUMBER != 15:
-        plt.xticks([])
-    else:
+    if PLOT_NUMBER == 15:
         plt.xlabel('percentage unknown', fontsize=9)
-    # plt.yscale('log')
-    # plt.yscale('symlog')
-    # plt.yscale('logit')
+    # else:
+    #     plt.xticks([])
     plt.grid()
     return
 
@@ -154,22 +151,22 @@ def plot_data_multifurc(percentage_parasites):
     PLOT_NUMBER += 1
 
     # plt.title(str(percentage_parasites), fontweight='bold')
-    # plt.ylabel('correct predicted', fontsize=9)
+    plt.ylabel('correct predicted', fontsize=9)
     plt.plot(data['multifurcation'], data['y_fitch'], color='g', linestyle='dashed', 
         label='Fitch', linewidth=0.5, marker='.', markerfacecolor='black')#, markersize=5)
     # plt.plot(data['unknown'], data['y_my'], color='c', linestyle='dashed', 
     #     label='My', linewidth=0.5, marker='.', markerfacecolor='black')
     plt.plot(data['multifurcation'], data['y_sankoff'], color='m', linestyle='dashed', 
         label='Sankoff', linewidth=0.5, marker='.', markerfacecolor='black')
-    plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
+    if PLOT_NUMBER < 10:
+        plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
+    else: 
+        plt.legend(loc="upper left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 50, 100])
-    if PLOT_NUMBER != 16:
-        plt.xticks([])
-    else:
+    if PLOT_NUMBER == 16:
         plt.xlabel('percentage multifurcation', fontsize=9)
-    # plt.yscale('log')
-    # plt.yscale('symlog')
-    # plt.yscale('logit')
+    # else:
+    #     plt.xticks([])
     plt.grid()
     return
 
