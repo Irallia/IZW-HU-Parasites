@@ -81,38 +81,39 @@ table(apicomplexa[apicomplexa$finaltag==0, ]$name)
 
 print('-------------More about Chordata:-----------')
 print('--------Classes with parasites:-------')
-table(droplevels(chordata[chordata$finaltag==1, ]$class))
-Actinopteri <- chordata[chordata$class=="['ott285821', 'Actinopteri']", ]
-Sarcopterygii <- chordata[chordata$class=="['ott458402', 'Sarcopterygii']", ]
-print('--------Orders with parasites:-------')
-table(droplevels(Actinopteri[Actinopteri$originaltag==2, ]$order))
-table(droplevels(Actinopteri[Actinopteri$finaltag==1, ]$order))
-print('------------')
-table(droplevels(Sarcopterygii[Sarcopterygii$originaltag==2, ]$order))
-table(droplevels(Sarcopterygii[Sarcopterygii$finaltag==1, ]$order))
+# table(droplevels(chordata[chordata$finaltag==1, ]$class))
+table(chordata[chordata$originaltag==2, ]$name)
+# Actinopteri <- chordata[chordata$class=="['ott285821', 'Actinopteri']", ]
+# Sarcopterygii <- chordata[chordata$class=="['ott458402', 'Sarcopterygii']", ]
+# print('--------Orders with parasites:-------')
+# table(droplevels(Actinopteri[Actinopteri$originaltag==2, ]$order))
+# table(droplevels(Actinopteri[Actinopteri$finaltag==1, ]$order))
+# print('------------')
+# table(droplevels(Sarcopterygii[Sarcopterygii$originaltag==2, ]$order))
+# table(droplevels(Sarcopterygii[Sarcopterygii$finaltag==1, ]$order))
 
-Cypriniformes <- chordata[chordata$order=="['ott1005931', 'Cypriniformes']", ]
-Sauria <- chordata[chordata$order=="['ott329823', 'Sauria']", ]
-Anura <- chordata[chordata$order=="['ott991547', 'Anura']", ]
-Acanthomorphata <- chordata[chordata$order=="['ott108720', 'Acanthomorphata']", ]
-Siluriformes <- chordata[chordata$order=="['ott701516', 'Siluriformes']", ]
-print('--------Families with parasites:-------')
+# Cypriniformes <- chordata[chordata$order=="['ott1005931', 'Cypriniformes']", ]
+# Sauria <- chordata[chordata$order=="['ott329823', 'Sauria']", ]
+# Anura <- chordata[chordata$order=="['ott991547', 'Anura']", ]
+# Acanthomorphata <- chordata[chordata$order=="['ott108720', 'Acanthomorphata']", ]
+# Siluriformes <- chordata[chordata$order=="['ott701516', 'Siluriformes']", ]
+# print('--------Families with parasites:-------')
 
-table(Cypriniformes[Cypriniformes$finaltag==1, ]$family)
-table(Cypriniformes[Cypriniformes$finaltag==1, ]$name)
-print('------------------------')
-table(Sauria[Sauria$finaltag==1, ]$family)
-print('------------------------')
-table(Anura[Anura$finaltag==1, ]$name)
-print('------------------------')
-table(Acanthomorphata[Acanthomorphata$finaltag==1, ]$name)
-Blenniidae <- Acanthomorphata[Acanthomorphata$family=="['ott867524', 'Blenniidae']", ]
-table(Blenniidae[Blenniidae$finaltag==1, ]$name)
-print('------------------------')
-table(Siluriformes[Siluriformes$finaltag==1, ]$name)
-print('------------------------')
-table(Sauria[Sauria$finaltag==1, ]$family)
-table(Sauria[Sauria$finaltag==1, ]$name)
+# table(Cypriniformes[Cypriniformes$finaltag==1, ]$family)
+# table(Cypriniformes[Cypriniformes$finaltag==1, ]$name)
+# print('------------------------')
+# table(Sauria[Sauria$finaltag==1, ]$family)
+# print('------------------------')
+# table(Anura[Anura$finaltag==1, ]$name)
+# print('------------------------')
+# table(Acanthomorphata[Acanthomorphata$finaltag==1, ]$name)
+# Blenniidae <- Acanthomorphata[Acanthomorphata$family=="['ott867524', 'Blenniidae']", ]
+# table(Blenniidae[Blenniidae$finaltag==1, ]$name)
+# print('------------------------')
+# table(Siluriformes[Siluriformes$finaltag==1, ]$name)
+# print('------------------------')
+# table(Sauria[Sauria$finaltag==1, ]$family)
+# table(Sauria[Sauria$finaltag==1, ]$name)
 
 
 

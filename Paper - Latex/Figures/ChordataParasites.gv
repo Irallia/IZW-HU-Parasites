@@ -14,8 +14,8 @@ Siluriformes	[label=<Siluriformes <br/> 1 &#8594; 1>];
 Sauria	[label=<Sauria <br/> 6 &#8594; 6>];
 Anura	[label=<Anura <br/> 1 &#8594; 1>];
 
-Picidae	[label=<Picidae <br/> 1>];
-Anatidae	[label=<Anatidae <br/> 1>];
+Picidae	[label=<Picidae>];
+Anatidae	[label=<Anatidae>];
 
 
 Chordata -- Actinopteri
@@ -29,24 +29,29 @@ Sarcopterygii -- Anura
 
 Acanthomorphata -- Blenniidae
 
-node [fontsize=10, shape=box, margin=0.05 width=0.05 height=0.05]
+node [fontsize=10, shape=box, style=filled, fillcolor="darkolivegreen1", margin=0.05 width=0.05 height=0.05]
 
 Cypriniformes -- "Cyprinus carpio 'blue var'"
 Cypriniformes -- "Cyprinus carpio 'color'"
 Cypriniformes -- "Cyprinus carpio 'frigid carp'"
+node [fillcolor="white:darkolivegreen1"]
 Cypriniformes -- "Cyprinus carpio 'jian'"
 Cypriniformes -- "Cyprinus carpio 'koi'"
 Cypriniformes -- "Cyprinus carpio 'longfin'"
 Cypriniformes -- "Cyprinus carpio 'red mirror carp'"
 Cypriniformes -- "Cyprinus carpio 'singuonensis'"
+node [fillcolor="darkolivegreen1"]
 Cypriniformes -- "Cyprinus carpio 'Songpu carp'"
+node [fillcolor="white:darkolivegreen1"]
 Cypriniformes -- "Cyprinus carpio 'Songpu mirror carp'"
+node [fillcolor="darkolivegreen1"]
 Cypriniformes -- "Cyprinus carpio 'wananensis'"
 Cypriniformes -- "Cyprinus carpio 'wuyuanensis'"
 Cypriniformes -- "Cyprinus carpio 'xingguonensis'"
+node [fillcolor="white:darkolivegreen1"]
 Cypriniformes -- "Cyprinus carpio carpio"
 Cypriniformes -- "Cyprinus carpio nudus"
-
+node [fillcolor="darkolivegreen1"]
 
 Blenniidae -- "Chasmodes bosquianus"
 Acanthomorphata -- "Glossogobius circumspectus"

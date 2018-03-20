@@ -630,9 +630,9 @@
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Data artifacts}
-        At this point we also found out that there are some nodes with only one child node (55700 nodes). \\
+        At this point we also found out that there are some nodes with only one child node (55,700 nodes). \\
         These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
-          tree (3956 with height $>2$). They are probably a result from the fact that taxonomic information 
+          tree (3,956 with height $>2$). They are probably a result from the fact that taxonomic information 
           has been incorporated into a phylogeny. \\
         Some examples:
         \begin{itemize}
@@ -870,32 +870,33 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
-        \caption{Parasites of Phylum: Chordata}
+        \caption{Parasites of Phylum: Chordata \\ 
+          Input parasites (green) $\rightarrow$ predicted parasites (white $\rightarrow$ green)}
         \label{fig:ChordataParasites}
       \end{figure}
+    %---------------------------------------------------------------------------------------------------
 
       We mapped the few parasitic spezies in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
       Known parasitic birds belong to the order Sauria. Here we know from Rothschild  here there are 
         breeding parasites, like the cuckoo and clepto-parasites as the skuas \cite{Rothschild1957}. We
-        got 6 input parasites from GloBI and there are no predictions: A woodpecker - Sphyrapicus varius
-        and a duck - Aix sponsa, a cow bird - Molothrus ater known as broodparasite and some others. \\
+        got 6 input parasites from GloBI and there are no predictions: A woodpecker - 
+        \textit{Sphyrapicus varius} and a duck - \textit{Aix sponsa}, a cow bird - \textit{Molothrus ate} 
+        known as broodparasite and some others. \\
+      An example of the amplification of mistakes here are the carp. There seems to be a paper from the 
+        GloBI concluding: Grass carp (\textit{Ctenopharyngodon idella)} has Pathogen common carp 
+        (\textit{Cyprinus carpio})\footnote{
+          \hyperlink{https://www.globalbioticinteractions.org/?interactionType=hasParasite&targetTaxon=Cyprinus\%20carpio}
+          {https://www.globalbioticinteractions.org/?interactionType=hasParasite\&targetTaxon=Cyprinus\%20carpio}
+        }. Since there is hardly any information about free-living, it follows that all siblings are 
+        also predicted to be parasitic. \\
         % Other birds: Columba livia, Nestor meridionalis, Sphyrapicus varius \\
         % Snake: Storeria dekayi (probably caused by wrong input data.)
       % \begin{itemize}
-      %   \item Order Cypriniformes (7): carp-type without family.
       %   \item Order Acanthomorphata(3):, one slime fish (family Blenniidae) and two others without family
       %   \item Order Anura (1): a toad (Family Bufonidae) - there exists some parasitic species in here, 
       %     they eat fin or pieces of larger fish.
       %   \item Order Siluriformes (1): a catfish (Family Loricariidae) - there exists some parasitic 
       %     species in here.
-      % \end{itemize}
-      % For the Chordata as parasitic species were predicted in the following orders and families:
-      % \begin{itemize}
-      %   \item Order Cypriniformes (16), nine predicted parasites.
-      %   \item Order Sauria (6), only given input parasites.
-      %   \item Order Acanthomorphata(3), only given input parasites.
-      %   \item Order Anura (1), only given input parasite.
-      %   \item Order Siluriformes (1), only given input parasites.
       % \end{itemize}
 
       The Apicomplexa are a parasitic phylum. We found only one input organism: Stemonitis fusca as a 
