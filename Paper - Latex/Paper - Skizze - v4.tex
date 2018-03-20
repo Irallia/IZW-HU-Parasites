@@ -271,7 +271,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
-    In order to generate the most realistic simulation, influencing parameters were investigated. \\
+    In order to generate a realistic simulation, influencing parameters are investigated. \\
     There are two major types of parameters:
     \begin{enumerate}
       \item Biological parameters (A result of the evolutionary process.):
@@ -284,7 +284,7 @@
           \item Unknown information about states of some leaf nodes
         \end{itemize}
     \end{enumerate}
-    We tested the influence of these parameters on our result using our simulation (Section 
+    The influence of these parameters are tested on our result using our simulation (Section 
       \ref{sec:simulation}).
    
     %---------------------------------------------------------------------------------------------------
@@ -295,12 +295,12 @@
         $\mathcal{P}(P \rightarrow FL)$. \\
       Different parasite types have different transition probabilities. It is very difficult to make a 
         statement about these probabilities.
-      In general, we assume that there are 40~\% parasites and 60~\% free-livings which is based on the 
-        estimates by Windsor \cite{Windsor1998} and 
+      In general, \colorbox{red}{we} assume that there are 40~\% parasites and 60~\% free-livings which 
+        is based on the estimates by Windsor \cite{Windsor1998} and 
         $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation is 
         usually less likely. \todo{This is discussed in section x of the discussion.} \\
 
-      For the maximum parsimony analysis of the real data, all transition probabilities were equated.
+      For the maximum parsimony analysis of the real data, all transition probabilities are equated.
         However, the used castor package \cite{Louca2017} offers the possibility to enter different 
         transition probabilities.
       \begin{wrapfigure}{r}{0.5\textwidth}
@@ -311,11 +311,17 @@
         \label{fig:Beta distribution}
       \end{wrapfigure}
 
-      In the simulation, we chose two beta distributions and a threshold that indicates the change 
+      In the simulation two beta distributions have been chosen and a threshold that indicates the change 
         between states. \\
-      Different thresholds with different beta distributions were simulated, with different distributions 
-        of parasites and free-livings: 50~\% P to 50~\% FL, 40~\% P to 60~\% FL, 30~\% P to 70~\% FL and 
-        20~\% P to 80~\% FL (\todo{see results simulation, ref...}). Figure \ref{fig:Beta distribution} 
+      Different thresholds with different beta distributions are simulated, with different distributions 
+        of parasites and free-livings:
+        \begin{itemize}
+          \item 50~\% P to 50~\% FL,
+          \item 40~\% P to 60~\% FL,
+          \item 30~\% P to 70~\% FL and 
+          \item 20~\% P to 80~\% FL
+        \end{itemize}
+        (\todo{see results simulation, ref...}). Figure \ref{fig:Beta distribution} 
         shows one example of these. \\
       \todo{Plot neu erstellen: Achsenbeschriftung, threshold}
 
@@ -326,7 +332,8 @@
       A binary tree with $n$ leaf nodes has $n-1$ internal nodes. The present Eukaryota tree of OTL has 
         2,293,463 leaf nodes and only 41,974 internal nodes, that is:
       $$100-\frac{100}{(2293463-1) \times 41974} \approx 98.16 \%$$
-        missing internal nodes. \\
+        missing internal nodes. This means that there is a lack of information about the underlying 
+        phylogeny. Instead of a binary tree this tree is highly multifurcated. \\
 
       % \anmerkungstext{Nested models were compared using likelihood ratio tests, models using different 
       %   predictors were compared according to their deviance and AIC. (Emanuel)} \\
@@ -336,20 +343,22 @@
         $$100-\frac{100}{2293463 \times (34860+25962)} \approx 97.34 \%$$
         unknown states of leaf nodes. \\
 
-      In the simulation, the influence of the multifurcations and missing data in leaf nodes on the 
+      In the simulation, the influence of the multifurcation and missing data in leaf nodes on the 
         predictive accuracy of the ancestral state reconstruction algorithms is tested. \\
       For the real data, generalized linear models are compared with poisson respectively binomial 
         regression according to their residuals and BICs.
+      \anmerkungstext{Erklären, warum und wozu das gemacht wird. Warum BIC und nicht AIC? Erklären,
+        was beide bedeuten, wäre sinnvoll. (Thilo)}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}\label{sec:simulation}
-    There are various possibilities of ancestral state reconstruction. The simulation compared 
-      different algorithms. \\
-    On the one hand different implementations of the Fitch maximum parsimony were compared and on the 
-      other hand the best of them with the implementation of the sankoff algorithm of the castor 
-      package \cite{Louca2017}. \\
+    There are various possibilities of ancestral state reconstruction. The simulation compares
+      different algorithms with each other. \\
+    First different implementations of the Fitch maximum parsimony are compared and then the best of 
+      them is compared with the implementation of the sankoff algorithm of the castor package 
+      \cite{Louca2017}. \\
 
     \begin{figure}[h!]
       \centering
@@ -358,20 +367,20 @@
       \label{fig:Simulation Workflow}
     \end{figure}
 
-    Figure \ref{fig:Simulation Workflow} shows the course of the simulation. The individual steps are 
-      explained in the following subsections.
+    \todotext{Figure \ref{fig:Simulation Workflow} shows the course of the simulation. The individual 
+      steps are explained in the following subsections: ...}
 
     \todo{Evaluation - compare trees (distances)}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{random binary tree}
-      You need a tree to do a simulation of ancestral state reconstruction. It had to be decided whether 
-        to take the real tree or simulate a tree. In this simulation, trees were created randomly, as 
+      A tree is needed to do a simulation of ancestral state reconstruction. It had to be decided whether 
+        to take the real tree or simulate a tree. In this simulation, trees are created randomly, as 
         one can replicate a complete binary phylogentic tree. Thus, there is also the possibility to 
         simulate the multifurcation. \\
       
-      To get a random binary tree, the Phylo package from biopython were used \cite{Cock2009}. They offer 
+      To get a random binary tree, the Phylo package from biopython is used \cite{Cock2009}. They offer 
         a randomized function which returns a BaseTree\footnote{
           \hyperlink{https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
           {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
