@@ -860,12 +860,11 @@
       \end{table}
 
       In contrast to the other phyla examined, the phylogeny is more pronounced (less multifurcation) (see 
-        Table \ref{table:table:percentage loss information subtrees}). This results in a weaker spread of 
-        errors. This is reflected in the results from the table \ref{table:phylum leaf nodes states}. 
-        There are 18 parasites as input data and only 8 more are predicted. The chordata mostly consist of 
-        free-living species, so this seems believable. We started with 99.83~\%  species and 
-        predict 99.97~\% species as free-living (including already known nodes). 
-        \todo{A few punctual tests give us the following:}
+        Table \ref{table:percentage loss information subtrees}). This results in a weaker spread of errors. 
+        This is reflected in the results from the table \ref{table:phylum leaf nodes states}. There are 18 
+        parasites as input data and only 8 more are predicted. The chordata mostly consist of free-living 
+        species, so this seems believable. We started with 99.83~\%  species and predict 99.97~\% species 
+        as free-living (including already known nodes). \todo{A few punctual tests give us the following:}
 
       \begin{figure}[h!]
         \centering
@@ -874,7 +873,6 @@
           Input parasites (green) $\rightarrow$ predicted parasites (white $\rightarrow$ green)}
         \label{fig:ChordataParasites}
       \end{figure}
-    %---------------------------------------------------------------------------------------------------
 
       We mapped the few parasitic spezies in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
       Known parasitic birds belong to the order Sauria. Here we know from Rothschild  here there are 
@@ -906,19 +904,17 @@
           {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca}
         }. The algorithm has not predicted new free-livings. \\
 
-      For the Platyhelminthes the literature says that there are mostly all Platyhelminthes parasites
-        \todo{ref einfügen}. But at the end we predicted 0.1~\% as free-living. The class Seriata is the 
-        reason for the most of free-livings in this phylum. These are partly free-living flatworms, so 
-        the prediction looks right. \\
-        \todotext{ Wiki: \\
-        *The Seriata are an order of turbellarian flatworms.[1][2] \\
-        They are found in both freshwater and marine environments, and also include a number of species 
-        found in damp terrestrial conditions. Most are free-living, but the group includes the genus 
-        Bdelloura, which lives comensally on the gills of horseshoe crabs. Seriatans are distinguished 
-        from other related groups by the presence of a folded pharynx and of a number of diverticula 
-        arising from the intestine. The intestine itself may be either simple or branched.[3]} \\
-      Note:Plythylmintes had less missing information than starting point, see Table \ref{table:percentage loss information subtrees}.
-
+      Most species of Platyhelminthes (flatworms) are parasites, although there are also free-living, 
+        predatory feeding species. These are summarized in the Turbellaria, while the parasites are 
+        divided into three other classes \cite{Ax1961}. This also corresponds to our observations. There 
+        is one class (Rhabditophora) that contains all but one single exception of free-living species 
+        of this phylum, which includes the Turbellaria. \\
+      It should be noted, however, that this classification is outdated, as it has been proven that 
+        the Turbellaria are not monophyletic. But we will not go into that here. \\
+      For the Platyhelminthes we had more state information for the leaf nodes compared to the other 
+        considered subtrees, see Table \ref{table:percentage loss information subtrees}. We start with 
+        0.1~\% free-livings and predicted 0.77~\% as free-living spezies. \\
+     
       With the Nematoda it looks very different. In the Nematoda its much worse. Large parts of Nematoda 
         are free-living, but we found only 5.32~\% of them. Blaxter et al. speaks of at least seven 
         independently arosed parasitism \cite{Blaxter1998}. In a recent article Blaxter identifies 18 

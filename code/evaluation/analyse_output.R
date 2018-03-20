@@ -79,10 +79,10 @@ table(apicomplexa[apicomplexa$finaltag==0, ]$name)
 
 
 
-print('-------------More about Chordata:-----------')
-print('--------Classes with parasites:-------')
+# print('-------------More about Chordata:-----------')
+# print('--------Classes with parasites:-------')
 # table(droplevels(chordata[chordata$finaltag==1, ]$class))
-table(chordata[chordata$originaltag==2, ]$name)
+# table(chordata[chordata$originaltag==2, ]$name)
 # Actinopteri <- chordata[chordata$class=="['ott285821', 'Actinopteri']", ]
 # Sarcopterygii <- chordata[chordata$class=="['ott458402', 'Sarcopterygii']", ]
 # print('--------Orders with parasites:-------')
@@ -115,7 +115,14 @@ table(chordata[chordata$originaltag==2, ]$name)
 # table(Sauria[Sauria$finaltag==1, ]$family)
 # table(Sauria[Sauria$finaltag==1, ]$name)
 
-
-
+print('-------------More about platyhelminthes:-----------')
+print('--------Classes with parasites:-------')
+table(droplevels(platyhelminthes[platyhelminthes$originaltag==1, ]$class))
+table(droplevels(platyhelminthes[platyhelminthes$finaltag==0, ]$class))
+Rhabditophora <- platyhelminthes[platyhelminthes$class=="['ott3669734', 'Rhabditophora']", ]
+# and ['ott407243', 'Trematoda']
+print('--------Orders with parasites:-------')
+table(droplevels(Rhabditophora[Rhabditophora$originaltag==1, ]$order))
+table(droplevels(Rhabditophora[Rhabditophora$finaltag==1, ]$order))
 
 format(Sys.time(), "%a %b %d %X %Y")
