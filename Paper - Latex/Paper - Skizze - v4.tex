@@ -622,7 +622,7 @@
             Fungi           & 98.87~\%  & 96.97~\% \\ \hline
             Chloroplastida  & 99.14~\%  & 89.46~\% \\
             \hline \hline            
-            Arthropoda      & 97.49~\%  & 89.95~\% \\ \hline
+            % Arthropoda      & 97.49~\%  & 89.95~\% \\ \hline
             Apicomplexa     & 86.26~\%  & 87.16~\% \\ \hline
             Nematoda        & 89.01~\%  & 88.59~\% \\ \hline
             Chordata        & 88.59~\%  & \cellcolor{green!50}66.49~\% \\ \hline
@@ -821,33 +821,100 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Results of castor}
+  \section{Results of the real data analysis created with Sankoff}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Biological view}
+      To analyze the results, we have selected some phyla (sub-trees) to evaluate our results 
+        selectively from the biological point of view: Chordata, Nematoda, Platyhelminthes and 
+        Apicomplexa. \\
+      In Table \ref{table:phylum leaf nodes states} we compare the given states with the predicted ones. \\
+      There are several factors that play a role here, and in part, crystallize in these examples. \\
+      An important factor here is that the credibility of the results with the accuracy of the input 
+        data, i. the data of GloBI, stands and falls. Errors of incorrect input data can be amplified by 
+        incorrect prediction of unknown species and can be reversed in order to improve the data 
+        situation of GloBI. \\
+      Since we look at such large trees we can not expect to know all the parasites, so we look at 
+        individual positives. Positive in the sense that the majority have the opposite state.
 
-      \todo{Castor replaces originaltags with finaltags. There are 82 originaltags != finaltag.} \\
+      \begin{table}[h]
+        \begin{center}
+          \begin{tabular}{ |l|r||r|r||r|r|r|r| }
+            \hline
+            & & \multicolumn{2}{c||}{original states} & \multicolumn{4}{c|}{final states} \\
+            Phylum & \# nodes       & FL & P              & 0 (FL) & 0.3 & 0.5 & 1 (P) \\
+            \hline \hline
+            Chordata & 91785        & 10451 & 18          & 91759 & 0 & 0 & 26 \\
+            &                       & 99.83~\% & 0.49~\%  & 99.97~\% & & & 0.03~\% \\ \hline
+            Nematoda & 30127        & 21 & 3289           & 1604 & 142 & 1196 & 27185 \\
+            &                       & 0.63~\% & 99.37~\%  & 5.32~\% & 0.47~\% & 3.97~\% & 90.23~\% \\ \hline
+            Platyhelminthes & 22683 & 7 & 7086            & 175 & & & 22508 \\
+            &                       & 0.1~\% & 99.9~\%    & 0.77~\% & 0 & 0 & 99.23~\% \\ \hline
+            Apicomplexa & 1863      & 1 & 255             & 1 & 0 & 0 & 1862 \\
+            &                       & 0.39~\% & 99.61~\%  & 0.05~\% & & & 99.95~\% \\
+            % \hline \hline
+            % Phylum & \# nodes & FL & P
+            %   & 0 (FL) & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
+            % Arthropoda & 1198981 & 18912 & 11141 
+            %   & 1099509 & 1313 & 22478 & 4176 & 1665 & 70223 \\
+            % & & 62.93~\% & 37.07~\%
+            %   & 91.7~\% & 0.11~\% & 1.87~\% & 0.35~\% & 0.14~\% & 5.86~\% \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{Phylum (leaf nodes)}
+        \label{table:phylum leaf nodes states} 
+      \end{table}
 
-      We picked a few phyla to evaluate the results from the biological point of view. \\
-      Table \ref{table:phylum leaf nodes states} shows some known phyla: Chordata, Nematoda, 
-        Platyhelminthes and Apicomplexa. \\
-      Since GloBI is not perfect, all examples contain a few bugs.
+      In contrast to the other phyla examined, the phylogeny is more pronounced (less multifurcation) (see 
+        Table \ref{table:table:percentage loss information subtrees}). This results in a weaker spread of 
+        errors. This is reflected in the results from the table \ref{table:phylum leaf nodes states}. 
+        There are 18 parasites as input data and only 8 more are predicted. The chordata mostly consist of 
+        free-living species, so this seems believable. We started with 99.83~\%  species and 
+        predict 99.97~\% species as free-living (including already known nodes). 
+        \todo{A few punctual tests give us the following:}
 
-      \todo{\ref{table:table:percentage loss information subtrees}} \\
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.85\textwidth]{Figures/ChordataParasites.png}
+        \caption{Parasites of Phylum: Chordata}
+        \label{fig:ChordataParasites}
+      \end{figure}
 
+      We mapped the few parasitic spezies in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
+      Known parasitic birds belong to the order Sauria. Here we know from Rothschild  here there are 
+        breeding parasites, like the cuckoo and clepto-parasites as the skuas \cite{Rothschild1957}. We
+        got 6 input parasites from GloBI and there are no predictions: A woodpecker - Sphyrapicus varius
+        and a duck - Aix sponsa, a cow bird - Molothrus ater known as broodparasite and some others. \\
+        % Other birds: Columba livia, Nestor meridionalis, Sphyrapicus varius \\
+        % Snake: Storeria dekayi (probably caused by wrong input data.)
+      % \begin{itemize}
+      %   \item Order Cypriniformes (7): carp-type without family.
+      %   \item Order Acanthomorphata(3):, one slime fish (family Blenniidae) and two others without family
+      %   \item Order Anura (1): a toad (Family Bufonidae) - there exists some parasitic species in here, 
+      %     they eat fin or pieces of larger fish.
+      %   \item Order Siluriformes (1): a catfish (Family Loricariidae) - there exists some parasitic 
+      %     species in here.
+      % \end{itemize}
+      % For the Chordata as parasitic species were predicted in the following orders and families:
+      % \begin{itemize}
+      %   \item Order Cypriniformes (16), nine predicted parasites.
+      %   \item Order Sauria (6), only given input parasites.
+      %   \item Order Acanthomorphata(3), only given input parasites.
+      %   \item Order Anura (1), only given input parasite.
+      %   \item Order Siluriformes (1), only given input parasites.
+      % \end{itemize}
 
-      As known the Chordata are full of free-living species and there are only a few parasites. Among 
-        the birds are some breeding parasites (brood parasitism) like the cuckoo and clepto-parasites as 
-        the skuas \cite{Rothschild1957}. The algorithm reflects this. We started with 99.83~\% 
-        free-living species and predicted 99.94~\% species as parasites \todo{(inklusive all known nodes)}. 
-        Only 0.06~\% were predicted as parasites. \\
-      \todo{We found the cuckoo and some skuas...?} \\
-      Same observation but with less free-livings is the Apicomplexa Phylum. Here we have only a few 
-        free-livings \todo{ref einfügen}. And as we see, we had good start data and predicted 00.95~\% as 
-        parasites. \\
+      The Apicomplexa are a parasitic phylum. We found only one input organism: Stemonitis fusca as a 
+        free-living specie. In GloBI it is listed as being parasitized by Nectria candicans and Nectriopsis 
+        sporangiicola\footnote{
+          \hyperlink{https://www.globalbioticinteractions.org/?interactionType=parasiteOf&targetTaxon=Stemonitis\%20fusca}
+          {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca}
+        }. The algorithm has not predicted new free-livings. \\
+
       For the Platyhelminthes the literature says that there are mostly all Platyhelminthes parasites
-        \todo{ref einfügen}. But at the end we predicted 4.18~\% as free-living. The class Seriata is the 
+        \todo{ref einfügen}. But at the end we predicted 0.1~\% as free-living. The class Seriata is the 
         reason for the most of free-livings in this phylum. These are partly free-living flatworms, so 
         the prediction looks right. \\
         \todotext{ Wiki: \\
@@ -856,83 +923,31 @@
         found in damp terrestrial conditions. Most are free-living, but the group includes the genus 
         Bdelloura, which lives comensally on the gills of horseshoe crabs. Seriatans are distinguished 
         from other related groups by the presence of a folded pharynx and of a number of diverticula 
-        arising from the intestine. The intestine itself may be either simple or branched.[3]}
-      
-      With the Nematoda it looks very different. In the Nematoda its much worse. Most Nematoda are 
-        free-living, but we found only 2.63~\% of them. Blaxter et al. speaks of at least seven 
+        arising from the intestine. The intestine itself may be either simple or branched.[3]} \\
+      Note:Plythylmintes had less missing information than starting point, see Table \ref{table:percentage loss information subtrees}.
+
+      With the Nematoda it looks very different. In the Nematoda its much worse. Large parts of Nematoda 
+        are free-living, but we found only 5.32~\% of them. Blaxter et al. speaks of at least seven 
         independently arosed parasitism \cite{Blaxter1998}. In a recent article Blaxter identifies 18 
         origins \cite{Blaxter2015} in Nematoda. \\
         The problem at this point, however, is obvious: The parasites have been much more studied and 
         thus we start with only 0.63~\% free-living species. Against such a shifted data situation, the 
         algorithm is almost powerless. And yet the percentage has increased.
 
-        The evolution of parasitism in Nematoda: \\
-        "while only approximately 23 000 species have been described (J. Hallan, unpublished; https://insects.tamu.edu/research/collection/hallan/), the true species-level diversity may be 1 million or more (Lambshead, 1993)." \\
-        " Estimates of the number of species of parasitic nematode per host suggest that there may be of the order of 25 000 nematode parasites just of vertebrates, most of which remain undescribed (Dobson et al. 2008)" \\
-        "a large proportion of nematode species may be parasites." \cite{Blaxter2015} \\
+      \todo{The evolution of parasitism in Nematoda:} \\
+      "while only approximately 23 000 species have been described (J. Hallan, unpublished; https://insects.tamu.edu/research/collection/hallan/), the true species-level diversity may be 1 million or more (Lambshead, 1993)." \\
+      " Estimates of the number of species of parasitic nematode per host suggest that there may be of the order of 25 000 nematode parasites just of vertebrates, most of which remain undescribed (Dobson et al. 2008)" \\
+      "a large proportion of nematode species may be parasites." \cite{Blaxter2015} \\
 
-      \begin{table}
-        \begin{center}
-          \hspace*{-1cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
-            \hline
-            & & \multicolumn{2}{c||}{original states} & \multicolumn{6}{c|}{final states} \\
-            Phylum & \# nodes & FL & P
-              & 0 (FL) & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
-            \hline \hline
-            Chordata & 91785 & 10451 & 18 
-              & 91734 & 0 & 0 & 0 & 0 & 51 \\
-            & & 99.83~\% & 0.49~\%
-              & 99.94~\% & & & & & 0.06~\% \\ \hline
-            Nematoda & 30127 & 21 & 3289 
-              & 791 & 0 & 1017 & 0 & 0 & 28319 \\
-            & & 0.63~\% & 99.37~\%
-              & 2.63~\% & & 3.38~\% & & & 94~\% \\ \hline
-            Platyhelminthes & 22683 & 7 & 7086 
-              & 949 & 0 & 151 & 0 & 0 & 21583 \\
-            & & 0.1~\% & 99.9~\%
-              & 4.18~\% & & 0.67~\% & & & 95.15~\% \\ \hline
-            Apicomplexa & 1863 & 1 & 255 
-              & 1 & 0 & 0 & 0 & 0 & 1862 \\
-            & & 0.39~\% & 99.61~\%
-              & 0.05~\% & & & & & 99.95~\% \\
-            \hline \hline
-            Arthropoda & 1198981 & 18912 & 11141 
-              & 1099509 & 1313 & 22478 & 4176 & 1665 & 70223 \\
-            & & 62.93~\% & 37.07~\%
-              & 91.7~\% & 0.11~\% & 1.87~\% & 0.35~\% & 0.14~\% & 5.86~\% \\
-            \hline
-          \end{tabular} 
-        \end{center}
-        \caption{Phylum (leaf nodes)}
-        \label{table:phylum leaf nodes states} 
-      \end{table}
+      % \anmerkungstext{Das sind schonmal vier große Kontraste, wenn dann noch Zeit bleibt, die 
+      %   schwirigen... Arthropoden, Fungi, Pflanzen... (Emanuel)} \\
 
-      \anmerkungstext{Das sind schonmal vier große Kontraste, wenn dann noch Zeit bleibt, die 
-        schwirigen... Arthropoden, Fungi, Pflanzen... (Emanuel)} \\
+      \todotext{Im Folgenden folgen 3 weitere ähnliche tabellen. Einmal eine ähnliche Tabelle inklusive 
+        interner Knoten \ref{table:Phylum internal nodes}, zweimal die Übersicht über die Kingdoms 
+        Blattknoten \ref{table:Kingdom leaf nodes} bzw interne Knoten \ref{table:Kingdom internal nodes}. Welche 
+        nehmen wir? Rest Appendix oder ganz raus?}
 
-      \begin{table}
-        \begin{center}
-          \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
-            \hline
-            & & \multicolumn{2}{c||}{original states} & \multicolumn{8}{c|}{final states} \\
-            Kingdom & \# nodes & FL & P
-              & 0 (FL) & 0.25 & 0.33 & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
-            \hline \hline
-            none & 84456 & 45 & 529 
-              & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
-            Fungi & 324105 & 577 & 2983
-              & 39088 & 0 & 0 & 0 & 5858 & 0 & 0 & 274803 \\
-            Chloroplastida & 460457 & 3519 & 77
-              & 454211 & 0 & 0 & 0 & 4688 & 0 & 0 & 1558 \\
-            Metazoa & 1670956 & 30758 & 22373
-              & 1485749 & 0 & 0 & 1313 & 29002 & 5102 & 1957 & 147833 \\
-            \hline  
-          \end{tabular}
-        \end{center}
-        \caption{Kingdom (inkl internal nodes)}
-      \end{table}
-
-      \begin{table}
+      \begin{table}[h!]
         \begin{center}
           \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
             \hline
@@ -948,13 +963,14 @@
               & 1010 & 0 & 175 & 0 & 0 & 25957 \\
             Apicomplexa & 2102 & 1 & 255 
               & 1 & 0 & 0 & 0 & 0 & 2101 \\
-            \hline
-            Arthropoda & 1319460 & 18912 & 11141 
-              & 1207204 & 1313 & 25499 & 4852 & 1957 & 78635 \\
+            % \hline
+            % Arthropoda & 1319460 & 18912 & 11141 
+            %   & 1207204 & 1313 & 25499 & 4852 & 1957 & 78635 \\
             \hline
           \end{tabular}
         \end{center}
         \caption{Phylum (inkl internal nodes)}
+        \label{table:Phylum internal nodes}
       \end{table}
 
       \begin{table}
@@ -977,7 +993,32 @@
           \end{tabular}
         \end{center}
         \caption{Kingdom (leaf nodes)}
+        \label{table:Kingdom leaf nodes}
       \end{table}
+
+      \begin{table}
+        \begin{center}
+          \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
+            \hline
+            & & \multicolumn{2}{c||}{original states} & \multicolumn{8}{c|}{final states} \\
+            Kingdom & \# nodes & FL & P
+              & 0 (FL) & 0.25 & 0.33 & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
+            \hline \hline
+            none & 84456 & 45 & 529 
+              & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
+            Fungi & 324105 & 577 & 2983
+              & 39088 & 0 & 0 & 0 & 5858 & 0 & 0 & 274803 \\
+            Chloroplastida & 460457 & 3519 & 77
+              & 454211 & 0 & 0 & 0 & 4688 & 0 & 0 & 1558 \\
+            Metazoa & 1670956 & 30758 & 22373
+              & 1485749 & 0 & 0 & 1313 & 29002 & 5102 & 1957 & 147833 \\
+            \hline  
+          \end{tabular}
+        \end{center}
+        \caption{Kingdom (inkl internal nodes)}
+        \label{table:Kingdom internal nodes}
+      \end{table}
+
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -1228,7 +1269,9 @@
   Information. \\
   Welche Teile des Baumes sind gut, an welchen muss noch viel geforscht werden. \\
   Wieviele Origins haben wir gefunden, was bedeutet diese Zahl? \\
-  Es gibt noch ungenutze information in GloBI.
+  Es gibt noch ungenutze information in GloBI. \\
+  Wir können GloBI verbessern ... Wir haben GloBI auf die gefundenen Abweichungen aufmerksam gemacht... 
+    Fehler werden durch die prediction eventuell verstärkt...\\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------

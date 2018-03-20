@@ -1,0 +1,65 @@
+graph "Fitch1" {
+
+rankdir=LR;
+graph[fontsize=14, fontname="arial"];
+node [shape=Mrecord, fontname="arial"]
+
+Chordata	[label=<<B>Chordata</B><br/> 18 &#8594; 26 >] ;
+Actinopteri	[label=<Actinopteri <br/> 11 &#8594; 19>];
+Sarcopterygii	[label=<Sarcopterygii <br/>  7 &#8594; 7 >];
+
+Cypriniformes	 [label=<Cypriniformes <br/> 7 &#8594; 15 >];
+Acanthomorphata [label=<Acanthomorphata <br/> 3 &#8594; 3>];
+Siluriformes	[label=<Siluriformes <br/> 1 &#8594; 1>];
+Sauria	[label=<Sauria <br/> 6 &#8594; 6>];
+Anura	[label=<Anura <br/> 1 &#8594; 1>];
+
+Picidae	[label=<Picidae <br/> 1>];
+Anatidae	[label=<Anatidae <br/> 1>];
+
+
+Chordata -- Actinopteri
+Chordata -- Sarcopterygii
+
+Actinopteri -- Cypriniformes
+Actinopteri -- Acanthomorphata
+Actinopteri -- Siluriformes
+Sarcopterygii -- Sauria
+Sarcopterygii -- Anura
+
+Acanthomorphata -- Blenniidae
+
+node [fontsize=10, shape=box, margin=0.05 width=0.05 height=0.05]
+
+Cypriniformes -- "Cyprinus carpio 'blue var'"
+Cypriniformes -- "Cyprinus carpio 'color'"
+Cypriniformes -- "Cyprinus carpio 'frigid carp'"
+Cypriniformes -- "Cyprinus carpio 'jian'"
+Cypriniformes -- "Cyprinus carpio 'koi'"
+Cypriniformes -- "Cyprinus carpio 'longfin'"
+Cypriniformes -- "Cyprinus carpio 'red mirror carp'"
+Cypriniformes -- "Cyprinus carpio 'singuonensis'"
+Cypriniformes -- "Cyprinus carpio 'Songpu carp'"
+Cypriniformes -- "Cyprinus carpio 'Songpu mirror carp'"
+Cypriniformes -- "Cyprinus carpio 'wananensis'"
+Cypriniformes -- "Cyprinus carpio 'wuyuanensis'"
+Cypriniformes -- "Cyprinus carpio 'xingguonensis'"
+Cypriniformes -- "Cyprinus carpio carpio"
+Cypriniformes -- "Cyprinus carpio nudus"
+
+
+Blenniidae -- "Chasmodes bosquianus"
+Acanthomorphata -- "Glossogobius circumspectus"
+Acanthomorphata -- "Scorpaenopsis gibbosa"
+
+Siluriformes -- "Hypostomus alatus"
+
+Sauria -- Picidae -- "Sphyrapicus varius"
+Sauria -- Anatidae -- "Aix sponsa"
+Sauria -- "Columba livia"
+Sauria -- "Molothrus ater"
+Sauria -- "Nestor meridionalis"
+Sauria -- "Storeria dekayi"
+
+Anura -- "Bufo bufo"
+}
