@@ -68,77 +68,55 @@
   This paper is about the analysis of ancestral state reconstruction algorithms for non-binary trees, 
     applied to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the 
     application of prediciton of parasitism. \\
+  \todo{Or:} The aim of this thesis is the application of maximum parsiomony algorithms to non-binary 
+    trees and very large datasets. In particular, the example 'Origins of Parasitism' throughout the 
+    Eukaryota Tree of Life. \\
+  We will test the existing algorithms Sankoff (R package \textit{Castor}\cite{Louca2017}) and Fitch 
+    for this task and estimate their predictive power. In addition, we will extend the Fitch 
+    algorithm from binary trees to multifurcating trees to make it usable and comparable for our 
+    current problem. \\
+  This achieves that we can predict ancestral states and unknown states of living species for large 
+    non-binary relatives trees. \\
 
-  \anmerkung{Mein Vorschlag einer Gliederung (jeweils ca. ein Absatz) (Bernhard)}
-  \begin{enumerate}
-    \item Motivation:
-      \begin{itemize}
-        \item Was ist das große Ziel? \\
-          Das Ziel dieser Arbeit ist die Anwendung von maximum parsiomony algorithmen auf nicht 
-          binäre Bäume und auf sehr große Datensätze. Insbesondere auf das Beispiel 'Entstehung des 
-          Parasitismus' im ganzen Eukaryotischen Tree of Life.
-        \item Was soll erreicht werden? \\
-          Wir wollen vorhandene Algorithm (Sankoff/castor \cite{Louca2017}) auf diese Aufgabenstellung hin testen 
-          und ihre Vorhersagekraft abschätzen. Außerdem wollen wir den Fitch algorithmus für binäre 
-          Bäume auf unser Problem erweitern und mit dem Sankoff Algorithmus vergleichen.
-        \item Warum ist das relevant? Was könnte man dann tun?\\
-          predict states of species... \\
-          \todo{!!!}
-      \end{itemize}
-    \item Hintergrund:
-      \begin{itemize}
-        \item Was gab es in dieser Richtung bereits als ganze Ansätze oder wenn nicht, warum nicht?
-          Woran ist es bisher gescheitert? \\
-          For about 50 years, people have been working on ancestral state reconstruction. The first paper 
-            mentioned above is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state 
-            data \cite{Camin1965}. Different methods have been developed and the question is which method is 
-            the most suitable for our problem. \\
-          For this purpose, various studied methods and their advantages and disadvantages were compared. \\
+  For about 50 years, people have been working on ancestral state reconstruction. The first paper 
+    mentioned above is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state 
+    data \cite{Camin1965}. Different methods have been developed and the question is which method is 
+    the most suitable for our problem. \\
 
-          Bisher wurden vorallem Algorithmen für das binäre Problem entwickelt, da man wesentlich 
-            kleinere Teilbäume betrachtet hat, von welchen man auch alle Aufspaltungen kennt. Durch 
-            die Entwicklung von OTL, eines gesamten Baum des Lebens, ergibt sich das Problem, dass 
-            dieser bei weitem nicht binär ist. \\ \\
-  Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 
-    60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
-    Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
-    Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
-    With more and more data, there is now the possibility to use more information to calculate the 
-    probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
-    also use branch lengths. The likelihood based algorithms came more in interest. \\
-    Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
-    that exists at this moment, which goes over all observed species. For most \todo{most?} species 
-    there is no phylogeny, but only a taxonomic classification.
-  
-        \item Welche Grundlagen sind notwendig:
-          \begin{itemize}
-            \item open tree of life: Was ist das, warum relevant und überlegen als reine Ansätze? \\
-              \todo{!!!} \\ \\
-  So the biggest 'phylogenetic tree' is a synthesis 
-    of phylogenetic trees filled with a taxonomic tree given by Open Tree of Life \cite{Hinchliff2015}.
-    This tree is not binary and therefore the developed algorithms are not directly applicable. \\
-            \item Algorithmen: Was gibt es? Ruhig ausführlicher als hier bereits und vor allem auch 
-              nach einer Darstellung am Ende ableiten, was für uns relevant ist. Also beschreiben, 
-              wie Methode a, b, c funktionieren und dann abwägen, was daher für Dich am 
-              relevantesten ist. \\
-              \todo{!!!} \\
-              \anmerkung{GloBI und OTL in der Einleitung vorstellen. (Emanuel)}
-          \end{itemize}
-      \end{itemize}
-    \item Outlook/Structure of this work
-  \end{enumerate}
-
-
-  In this work, we have looked at the algorithms that are generally suited to our data, to develop 
-  them further for the not binary case, and finally to compare their usability with our sythesis 
-  tree. \\
-  We have decided to consider only parsimony algorithms since we have no information on branch 
-  lengths and no other additional information like different transition probabilities of our states.
-
-  In den Bacteria und Archaea wurde das mal allgemein für binary traits gemacht:
+  \todotext{In den Bacteria und Archaea wurde das mal allgemein für binary traits gemacht: \\
   "A total 90~\% of all binary traits described molecular functions, specifically the presence or absence of a gene or a set of gene involved in biochemical pathways."
   \cite{Goberna2015} \\
-  Unterschied bei uns ist parasitismus komplexer.. da sind meist nicht einzelne Gene zuständig..
+  Unterschied bei uns ist parasitismus komplexer.. da sind meist nicht einzelne Gene zuständig..} \\
+
+  For this purpose, various studied methods and their advantages and disadvantages will be compared. \\
+  These algorithms were developed especially for the binary problem, since one has considered much 
+    smaller subtrees, of which one knows all the splits. \\
+  By developing a whole of an entire tree of life, the problem arises that it is by no means binary. 
+
+  % Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 
+  %   60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
+  %   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
+  %   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
+  %   With more and more data, there is now the possibility to use more information to calculate the 
+  %   probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
+  %   also use branch lengths. The likelihood based algorithms came more in interest. \\
+  %   Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
+  %   that exists at this moment, which goes over all observed species. For most \todo{most?} species 
+  %   there is no phylogeny, but only a taxonomic classification.
+  To accomplish this task, a large phylogenetic tree and information about the current species states 
+    is needed. %In this work we use the synthesis tree of Open Tree of Life (OTL) \cite{Hinchliff2015} 
+  The biggest 'phylogenetic tree' is a synthesis of phylogenetic trees filled with a taxonomic tree 
+    given by Open Tree of Life \cite{Hinchliff2015}. This tree is not binary and therefore the 
+    developed algorithms are not directly applicable.Therefore, an algorithm must be found that can 
+    work with non-binary trees. \\
+  For the information about the current states of the species we use the interaction database Global 
+    Biotic Interactions (GloBI) \cite{Poelen2014}.
+
+  % In this work, we have looked at the algorithms that are generally suited to our data, to develop 
+  % them further for the not binary case, and finally to compare their usability with our sythesis 
+  % tree. \\
+  % We have decided to consider only parsimony algorithms since we have no information on branch 
+  % lengths and no other additional information like different transition probabilities of our states.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
