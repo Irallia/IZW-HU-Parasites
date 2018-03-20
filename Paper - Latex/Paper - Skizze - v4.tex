@@ -89,6 +89,12 @@
       \begin{itemize}
         \item Was gab es in dieser Richtung bereits als ganze Ansätze oder wenn nicht, warum nicht?
           Woran ist es bisher gescheitert? \\
+          For about 50 years, people have been working on ancestral state reconstruction. The first paper 
+            mentioned above is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state 
+            data \cite{Camin1965}. Different methods have been developed and the question is which method is 
+            the most suitable for our problem. \\
+          For this purpose, various studied methods and their advantages and disadvantages were compared. \\
+
           Bisher wurden vorallem Algorithmen für das binäre Problem entwickelt, da man wesentlich 
             kleinere Teilbäume betrachtet hat, von welchen man auch alle Aufspaltungen kennt. Durch 
             die Entwicklung von OTL, eines gesamten Baum des Lebens, ergibt sich das Problem, dass 
@@ -390,15 +396,17 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{simulating states and transitions between them}
-      The next step is to simulate the states of the nodes using the transitions. Again, we simulate 
-        fully known states and then 'forget' everything but a few in the leaf nodes so that you can 
-        later compare the reconstruction with the origin. \\
-      The root node (ancestor of all subsequent species) is (of course) free-living. That means it will 
-        start in the free-living beta distribution. Now traverse from the root to the leaf nodes, always 
-        pulling out of the current distribution until you get above the threshold and the new node 
-        changes state. \\
-      To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, we 
-        model it with a beta distribution as in Figure \ref{fig:Beta distribution}. \\
+      The next step is to simulate the states of the nodes using the transitions. Again, fully known 
+        states are simulated and then everything is 'forgotten' but a few in the leaf nodes so that 
+        \colorbox{red}{you} can later compare the reconstruction with the origin. \\
+      The root node is defined as ancestor of all subsequent species and in this case, determined to be
+        free-living. Therefore, a beta distribution for free-living is used at the beginning. Now 
+        traverse from the root to the leaf nodes, always pulling out of the current distribution until 
+        \colorbox{red}{you} get above the threshold and the new node changes state. \anmerkungstext{Für 
+        den Tree/Graph Traversal würde sich eine erklärende Abbildung anbieten. Nur Text macht es sehr 
+        schwer verständlich an der Stelle. (Thilo)} \\
+      To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, it 
+        is modeled with a beta distribution as in Figure \ref{fig:Beta distribution}. \\
 
       After traversing through the tree, each state is saved in a nodelist associated with the node ID 
         which is the OTT from OTL. \\
@@ -411,8 +419,8 @@
       In the real tree, there is usually only information about species living today $\rightarrow$ leaf 
         nodes. And beyond only a small percentage of these. All information about the states of the 
         internal node and one leaf node is 'forgotten' and stored in another column to the node. \\
-      Different percentages of forgetting the information were simulated, as you can read in the 
-      \todo{section ... from the results}.
+      Different percentages of forgetting the information are simulated, as \colorbox{red}{you} can read 
+      in the \todo{section ... from the results}.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -424,11 +432,8 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \section{Ancestral state reconstruction methods}
-      For about 50 years, people have been working on ancestral state reconstruction. The first paper 
-        mentioned above is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state 
-        data \cite{Camin1965}. Different methods have been developed and the question is which method is 
-        the most suitable for our problem. \\
-      For this purpose, various studied methods and their advantages and disadvantages were compared. \\
+      As presented in the introduction, there are some methods for ancestral state reconstruction. For 
+        this purpose, various studied methods and their advantages and disadvantages are compared below. \\
     
       Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
       The first is to explain the current state with the least number of state changes between an 
@@ -440,15 +445,16 @@
       \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
 
       One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
-        can not take divergece times (branch length) into account. Since we have no development times in 
-        our case, you can ignore this. \\
+        can not take divergece times (branch length) into account. Since there are no development times 
+        of species in our case, \colorbox{red}{you} can ignore this. \\
       Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
         predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
-        like irreversibility for dollo parsimony. Again, this problem is irrelevant for us, because you 
-        can only work with generalized models in the analysis of the entire Eukaryota tree. \\
+        like irreversibility of transitions for dollo parsimony. Again, this problem is irrelevant to 
+        the problem at hand, because \colorbox{red}{you} can only work with generalized models in the 
+        analysis of the entire Eukaryota tree. \\
 
-      Following the principle of the simpler model first, the decision has \todo{fallen?} on parsimonious 
-        methods since these are sufficient for the case present here. \\
+      Parsimony-based methods are used in this work, since they are fully sufficient for the presented 
+        use case here. Following the principle of the simpler model first. \\
       Felsenstein \cite{Felsenstein2003} discusses in his book two algorithms that generalize all 
         previous methods (from Camin and Sokal \cite{Camin1965}, \todo{Kluge and Farris} and Farris 
         \cite{Farris1970}): Fitch parsiomony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. \\
@@ -512,8 +518,8 @@
         \begin{itemize}
           \item The father node has (except for the root node) two state sets, because he came through 
             the up-traversing previously. Are both sets used or only the first traversing?
-          \item Since there are several siblings, do you first of all make the cut or union, or directly 
-            in the whole with the father node?
+          \item Since there are several siblings, do \colorbox{red}{you} first of all make the cut or union, 
+            or directly in the whole with the father node?
         \end{itemize}
         The first point already has an effect on the binary case. Figure \ref{fig: binary Fitch} shows 
           both possibilities of the three sets. \\
@@ -559,7 +565,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Implementation}
-    You can find the full code on GitHub: 
+    \colorbox{red}{You} can find the full code on GitHub: 
       \hyperlink{github.com/Irallia/IZW-HU-Parasites}{github.com/Irallia/IZW-HU-Parasites}. \\
     Most of the code was written in Python. The analyzes and the use of the Castor package in R. There 
       are some shell scripts to execute whole workflows.
@@ -611,7 +617,7 @@
       The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
         every node (a node with two children is binary). That means it discribes the number of nodes which we have lost from the real (binary) 
       phylogenetic tree. \\
-      As you can see, we are very far from a binary tree. \\
+      As \colorbox{red}{you} can see, we are very far from a binary tree. \\
 
       Some subtrees have been examined, these have the following percentages of missing information: See 
         table \ref{table:percentage loss information subtrees}.
@@ -668,7 +674,7 @@
           according to recent findings, this is not complete and we lack some taxa in every rank. For 
           example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
           \cite{CavalierSmith1981}. \\
-        In section \pageref{subsec:listPhyla} of the appendix you can find a list of all phyla.
+        In section \pageref{subsec:listPhyla} of the appendix \colorbox{red}{you} can find a list of all phyla.
 
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Poisson regression of the multifurcation}
@@ -808,10 +814,10 @@
       For the middle column we set the strength of the multifurcations to 0.95\% similar to the real 
         data and in the right column the amount of the unknowns to 0.95\% also similar to the real data. \\
 
-      As you can see both algortithms are always over 50\% and therefore better than guessing. Moreover, 
+      As \colorbox{red}{you} can see both algortithms are always over 50\% and therefore better than guessing. Moreover, 
         they are usually close to each other, with Sankoff always makes better predictions except for 
         equally distributed states as Fitch. \\
-      You can see that the distribution of states has a strong influence on the prediction. The more 
+      \colorbox{red}{You} can see that the distribution of states has a strong influence on the prediction. The more 
         evenly distributed, the harder it is to predict. \\
       If more than 60\% of internal nodes are missing, Fitch breaks significantly in his prediction 
         compared to Sankoff.
@@ -1038,7 +1044,7 @@
       This has led us to count the origins and losses of parasitism in our investigation as well. \\
       We count only one origin / loss in a parent node with different children's nodes. \\
       Here we have encountered a problem: The Castor algorithm gives us probabilities for states. That 
-        means there are also nodes with state like 0.3 or 0.5. So how do you count? Our solution was, 
+        means there are also nodes with state like 0.3 or 0.5. So how do \colorbox{red}{you} count? Our solution was, 
         to round these values. We have to say that we round 0.5 to 0.
 
       \begin{table} [h]
@@ -1354,7 +1360,7 @@
     \subsubsection{Distribution of Taxa}
     - In the tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
     - The most of them are hardly represented. The major taxonomic groups are: ... \\
-    - Here you can see some characteristics of the Multifurcation of the tree. \\
+    - Here \colorbox{red}{you} can see some characteristics of the Multifurcation of the tree. \\
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
@@ -1364,7 +1370,7 @@
     In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
       be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
       taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
-      multipliers for some are much bigger and for others much smaller, which you can see in in figure 
+      multipliers for some are much bigger and for others much smaller, which \colorbox{red}{you} can see in in figure 
       \ref{fig:taxaTable2}. \\
       ... (see Table \ref{table:...})
     
