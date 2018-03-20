@@ -138,74 +138,64 @@
   %---------------------------------------------------------------------------------------------------
   %--------------------------------------------------------------------------------------------------- 
   \section{Definitions}
+
     \begin{itemize}
-      \item Parasit - Freilebend
-      \item Multifurkation - binär
+      \item Multifurkation - binär (binary or bifurcating... \cite{Felsenstein2003})
       \item height (min, max, mean), depth of a tree/node (Distanz zur Wurzel vs distanz zum Blatt)
-      \item maximum parsimony
       \item OTL, OTT, GloBI
     \end{itemize}
 
-    Parasite \\
-    Since we use Globi to classify species as parasitic or free-living, we use their definition of 
-      parasitism. In GloBi, ontobee definitions are used.
-    The interaction has parasite is defined as: "An interaction relationship between two organisms 
-      living together in more or less intimate association in a relationship in which association is 
-      disadvantageous or destructive to one of the organisms." \cite{...}. This definition includes: ecto,-
-    and endoparasites, parasitoids, kleptoparasites and pathogenes.
+    %---------------------------------------------------------------------------------------------------
+    %--------------------------------------------------------------------------------------------------- 
+    \subsection{Parasite}
+      Since we use Globi to classify species as parasitic or free-living, we use their definition of 
+        parasitism. In GloBi, ontobee definitions are used.
+      The interaction has parasite is defined as: "An interaction relationship between two organisms 
+        living together in more or less intimate association in a relationship in which association is 
+        disadvantageous or destructive to one of the organisms." \cite{...}. This definition includes: ecto,-
+      and endoparasites, parasitoids, kleptoparasites and pathogenes.
 
-    \todotext{Mungall, C., (2017). Definition for the interaction-term: "parasitised by; has parasite" ob
-    ontobee.org. Last checked: 24.07.2017 at 
-    \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
-    {ontobee.org/ontology/...}}
+      \todotext{Mungall, C., (2017). Definition for the interaction-term: "parasitised by; has parasite" ob
+      ontobee.org. Last checked: 24.07.2017 at 
+      \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
+      {ontobee.org/ontology/...}}
 
-    Multifurcation \\
-    binary or bifurcating... \cite{Felsenstein2003}
+    %---------------------------------------------------------------------------------------------------
+    %--------------------------------------------------------------------------------------------------- 
+    \subsection{Maximum parsimony}
+      Maximum parsimony methods Maximum parsimony in phylogeny refers to favoring the tree that needs 
+        the least evolutionary change to explain the observed data. \\
+      In our case, it is about the change of states 'is free-living' or 'is parasitic'.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
-  As initiated, we would like to apply a maximum parsimony algorithm to the entire tree of life to 
+  As initiated, in this paper, a maximum parsimony algorithm is applied to the whole tree of life to 
     obtain an ancestral state reconstruction of free-living versus parasite states. \\
   So far, these reconstructions have been made mainly on binary trees with better data availability. 
-    Therefore, we decided to use a simulation to decide how to evaluate the existing algorithms and 
-    possibly adapt them to our given problem. \\
+    Therefore, a simulation is first performed to evaluate existing algorithms and decide how they 
+    may be adapted to our given problem. This is to perform the ancestral state reconstruction for a 
+    multifurcated (non-binary) tree using binary states. \\
   Accordingly, in addition to the necessary data sets (GloBI, OTL), the chosen algorithm and the 
     evaluation of its results, this chapter also deals with the previously performed simulation and 
     the evaluation of the various algorithms and their parameters. \\
   Figure \ref{fig:workflow} briefly outlines these relationships.
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.55\textwidth]{Figures/Workflow-overview.png}
+    \includegraphics[width=0.5\textwidth]{Figures/Workflow-overview.png}
     \caption{Workflow \\
-      The coming sections are thus subdivided into the following topics: \\
-      \todo{or:} The resulting procedure is as follows: \\
-      (1) Get the real tree and real data for the leaf nodes $\rightarrow$ OTL, GloBI databases.
-      (2) Get metadata of these for a realisitc the simulation.
+      The resulting procedure is as follows: \\
+      (1) Retrieve phylogenentic tree data as input for the tree (OTL) and the state information (GloBI).
+      (2) Get metadata of these for a realisitc the simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
       (3) Build and run the simulation.
-      (4) Evaluation of parameters for the simulation and the real problem.
-      (5) Run the resulted algorithm on the original data.
-      (6) Evalute and interprete results. $\rightarrow$ Origins etc...
+      (4) Evaluation of parameters for the simulation and the ancestral state reconstruction of the real tree.
+      (5) Evaluate the accuracy of developed algorithms and choose the best.
+      (6) Run the resulted algorithm on the original data.
+      (7) Evalute and interprete results. %$\rightarrow$ Origins etc...
     }
     \label{fig:workflow}
-  \end{figure}
-
-  % \begin{enumerate}
-  %   \item Get the real tree and real data for the leaf nodes. $\rightarrow$ OTL, GloBI databases
-  %   \item Get metadata of these for a realisitc the simulation.
-  %   \item Build and run the simulation.
-  %   \item Evaluation of parameters for the simulation and the real problem.
-  %   \item Run the resulted algorithm on the original data.
-  %   \item Evalute and interprete results. $\rightarrow$ Origins etc...
-  % \end{enumerate}
-  
-  \begin{figure}[h!]
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/Workflow.png}
-    \caption{Big overview of the whole Workflow}
-    \label{fig:Workflow}
   \end{figure}
 
   %---------------------------------------------------------------------------------------------------
@@ -810,7 +800,7 @@
       
       \begin{figure}
         \centering
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=\textwidth]{Figures/simulation_evaluation_1.png}
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
         \caption{Influence of unknown data to prediction}
         \label{fig:influence of unknown data}
       \end{figure}
@@ -877,7 +867,7 @@
 
       \begin{figure}[h!]
         \centering
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip,width=0.85\textwidth]{Figures/ChordataParasites.png}
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
         \caption{Parasites of Phylum: Chordata}
         \label{fig:ChordataParasites}
       \end{figure}
@@ -1306,6 +1296,22 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Appendices}
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Methods overview}
+    % \begin{figure}[h!]
+    %   \centering
+    %   \includegraphics[angle=90, width=0.4\textwidth]{Figures/Workflow.png}
+    %   \caption{Big overview of the whole Workflow}
+    %   \label{fig:BigWorkflow}
+    % \end{figure}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth]{Figures/Workflow.png}
+      \caption{Big overview of the whole Workflow}
+      \label{fig:BigWorkflow}
+    \end{figure}
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{OTL analysis}\label{sec:otl analysis}
