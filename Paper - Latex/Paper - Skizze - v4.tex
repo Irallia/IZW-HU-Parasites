@@ -198,40 +198,49 @@
     \label{fig:workflow}
   \end{figure}
 
+  \todo{In den einzelnen Abschnitten Teile von dem großen Workflow verwenden?: \ref{fig:BigWorkflow}}
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Get data - Properties of real Data}
-    For our research we need two types of data: a tree and information about the states. \\
-    For the tree we decided to use Open Tree of Life (OTL). \\
-    For the state information, we decided to use the Global biotic interaction database (GloBI).
+  \section{Description of data sets}
+    For \colorbox{red}{our} research two types of data are required: a tree and information about the 
+      states. \\
+    For the tree \colorbox{red}{we} decided to use Open Tree of Life (OTL) \cite{Hinchliff2015}. \\
+    For the state information, \colorbox{red}{we} decided to use the Global biotic interaction 
+      database (GloBI) \cite{Poelen2014}.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{OTL}
-      For our project we looked for a large database for phylogenetic trees and also for a taxonomic 
-        tree. Since we run our algorithm on the phylogenetic tree, and for the evaluation and other 
-        properties the taxonomy provides us with much more information. \\
-      OTL gives us both. A synthesis of phylogenetic trees (currently 819 trees) and a taxonomic tree. 
-        OTL also includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}. \\
+      For \colorbox{red}{our} project a large database for phylogenetic trees and also for a taxonomic 
+        tree is needed. Since an ancestral state reconstruction algorithm is applied to the phylogenetic 
+        tree, and for the assessment and other properties the taxonomy provides much more information. \\
+      OTL gives a synthesis of phylogenetic trees (currently 819 trees) and a taxonomic tree. OTL also 
+        includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}. \\
       \todo{Das steht auf der Website nicht in dem Paper...} \\
-      For phylogenetic data, there are at least five big data collections, namely: ITIS (Integrated 
-        Taxonomic Information System) \cite{ITIS}, NCBI (National Center for Biotechnology Information) 
-        \cite{NCBI1988}, WORMS (World Register of Marine Species) \cite{WoRMS2018}, GBIF (Global 
-        Biodiversity Information Facility) \cite{GBIF}, OTT (OpenTreeOfLife-Taxonomy) 
-        \cite{Hinchliff2015}. \\
-      \todotext{Marius:} "Every dataset has it's own characteristics and downsides. ITIS is only a small 
-        set of 100~\% confirmed and named species. GBIF is not composed with the help of phylogeny, the 
-        same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small dataset of mostly 
-        marine species. \\
-      We choosed the taxonomy from OpenTreeOfLife because it's including most of the known taxonomies 
-        and got synthesised by preffering taxonomies that match with available phylogenetic data. At the 
-        same time the team from OTL preferred a maximum number of species \cite{Hinchliff2015}. This is 
-        resulting in somekind of hybrid between taxonomy and phylogeny." \\
+      For phylogenetic data, there are at least five big data collections, namely:
+      \begin{itemize}
+        \item ITIS (Integrated Taxonomic Information System) \cite{ITIS}
+        \item NCBI (National Center for Biotechnology Information) \cite{NCBI1988}
+        \item WORMS (World Register of Marine Species) \cite{WoRMS2018}
+        \item GBIF (Global Biodiversity Information Facility) \cite{GBIF}
+        \item OTT (OpenTreeOfLife-Taxonomy) \cite{Hinchliff2015}
+      \end{itemize}
+      \todo{In die discussion?:} \\
+      ITIS is only a small set of 100~\% confirmed and named species. GBIF is not composed with the help 
+        of phylogeny, the same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small 
+        dataset of mostly marine species. \\
+      Here the taxonomy from OTL is used because it is including most of the known taxonomies and is 
+        synthesised by preffering taxonomies that match with available phylogenetic data. Furthermore 
+        the team from OTL preferre a maximum number of species \cite{Hinchliff2015}. This is resulting 
+        in somekind of hybrid between taxonomy and phylogeny. \anmerkungstext{Wie genau ist das ein 
+        Hybrid? Genauer beschreiben, was Du damit meinst... (Thilo)} \\
 
-      We took a closer look at some of the features of the Synthesis tree. On the one hand the 
-        distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this
-        is not directly relevant to our study, there is a section in the appendix \ref{sec:otl analysis}.
+      A closer look is being made to some of the features of the synthesis tree. On the one hand the 
+        distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this 
+        is not directly relevant to \colorbox{red}{our} study, there is a section in the appendix 
+        \ref{sec:otl analysis}.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -243,11 +252,11 @@
         question which interaction database could be used was answered rather quickly." \\
 
       This database consists of entries of the form: species A (source) interacts with B (target). \\
-      We appointed some interactions\footnote{\hyperlink{
+      A number of interactions have been identified\footnote{\hyperlink{
         https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java
         }{https://github.com/jhpoelen/eol-globi-data/.../InteractType.java}}
-        , where we know from the biological perspective that the species source or target has to be a 
-        parasite or a free-living species. These are the following:
+        ,including those that the species source or target has become a parasite or a free-living 
+        species from the biological perspective. These are the following:
       \begin{itemize}
         \item free-living source: preysOn, eats, flowersVisitedBy, hasPathogen, pollinatedBy, 
           hasParasite, hostOf
@@ -255,8 +264,8 @@
         \item parasite source: parasiteOf, pathogenOf
         \item parasite target: hasParasite, hasPathogen
       \end{itemize}
-      We build two lists: parasites and free-livings, and add the source or targets of an interaction
-        to these.
+      Two lists are formed: parasites and free-livings, and the source or targets of an interaction
+        are added to these.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
