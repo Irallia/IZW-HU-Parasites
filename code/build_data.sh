@@ -20,6 +20,7 @@ wait
 
 cd GloBI_Dump
 if wget -q https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/interactions/0.1/interactions-0.1-ott.zip -nv; then echo "GLoBI DL succesful"; else echo "GLoBI DL-link broken" 1>&3; exit 1;  fi
+unzip interactions-0.1-ott.zip
 gunzip interactions.tsv.gz
 wait
 
