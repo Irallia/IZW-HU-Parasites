@@ -565,252 +565,252 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Metadata analysis}
+  \section{Metadata analysis - Missing information}
+    As previously presented, we have two types of missing information: unknown states of leaf nodes 
+      and multifurcation. \\
+
+    We examined the ridge of multifurcation of the tree. A complete phylogenetic tree would be 
+      binary, which means the number of leaf nodes is closely to the number of internal nodes. But 
+      since we only work with a synthesis tree, this tree is multifurcated: we have 241 974 internal 
+      nodes and 2 293 463 leaf nodes. \\
+    For a first overview we collected for every node its number of children (degree $-1$), and plotted
+      this in two histograms, see figure \ref{fig:childrenOfNodes}. \\
+    The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
+      every node (a node with two children is binary). That means it discribes the number of nodes which we have lost from the real (binary) 
+    phylogenetic tree. \\
+    \begin{figure}[h!]
+      \centering
+      \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=0.9\textwidth]{Figures/multifurc.pdf}
+        \caption{Histogram with automatic binwidth. \\ ~ \\ ~}
+      \end{subfigure}
+      ~~~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+        %(or a blank line to force the subfigure onto a new line)
+      \begin{subfigure}[b]{0.42\textwidth}
+        \includegraphics[trim = 0mm 0mm 30mm 0mm, clip, width=0.9\textwidth]{Figures/multifurc_small.pdf}
+        \caption{Histogram with $binwidth = 1$. \\ light blue: binary; \\ dark blue: multifunction}
+      \end{subfigure}
+      \caption{Histograms about the multifurcation of the internal nodes of the synthesis tree.}
+      \label{fig:childrenOfNodes}
+    \end{figure}
+    As \colorbox{red}{you} can see, we are very far from a binary tree. \\
+    Some subtrees have been examined, these have the following percentages of missing information: See 
+      table \ref{table:percentage loss information subtrees}.
+    \begin{table}[h!]
+      \begin{center}
+        \begin{tabular}{ |l|r|r||r|r|r| }
+          \hline
+          Subtree of & unknown states & multifurcation \\ 
+          \hline \hline
+          Eukaryota       & 97.34~\%  & 98.16~\% \\
+          \hline \hline
+          Metazoa         & 96.44~\%  & 87.93~\% \\ \hline
+          Fungi           & 98.87~\%  & 96.97~\% \\ \hline
+          Chloroplastida  & 99.14~\%  & 89.46~\% \\
+          \hline \hline            
+          % Arthropoda      & 97.49~\%  & 89.95~\% \\ \hline
+          Apicomplexa     & 86.26~\%  & 87.16~\% \\ \hline
+          Nematoda        & 89.01~\%  & 88.59~\% \\ \hline
+          Chordata        & 88.59~\%  & \cellcolor{green!50}66.49~\% \\ \hline
+          Platyhelminthes & \cellcolor{green!50}68.73~\%  & 80.34~\% \\
+          \hline \hline            
+          Insecta         & 97.11~\%  & 90.78~\% \\
+          \hline  
+        \end{tabular}
+      \end{center}
+      \caption{Examination of subtrees regarding missing information. \\ 
+        % Taxa of subtrees: Domain, Kingdom, Phylum, Class \\ 
+        Unknown states: missing state information of leaf nodes \\ 
+        Multifurcation: missing internal nodes}
+      \label{table:percentage loss information subtrees} 
+    \end{table}
+
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Missing information}
-      As previously presented, we have two types of missing information: unknown states of leaf nodes 
-        and multifurcation. \\
+    \subsection{Data artifacts}
+      At this point we also found out that there are some nodes with only one child node (55,700 nodes). \\
+      These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
+        tree (3,956 with height $>2$). They are probably a result from the fact that taxonomic information 
+        has been incorporated into a phylogeny. \\
+      Some examples:
+      \begin{itemize}
+        \item Nephroselmidophyceae: (class) \\
+          https://tree.opentreeoflife.org/opentree/argus/ottol@1038762
+        \item Phrynocrinidae: (family) \\
+          https://tree.opentreeoflife.org/opentree/argus/ottol@3647979
+        \item Elaeocarpus sylvestris: \\
+          https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969
+      \end{itemize}
 
-      We examined the ridge of multifurcation of the tree. A complete phylogenetic tree would be 
-        binary, which means the number of leaf nodes is closely to the number of internal nodes. But 
-        since we only work with a synthesis tree, this tree is multifurcated: we have 241 974 internal 
-        nodes and 2 293 463 leaf nodes. \\
-      \begin{figure}[h]
-        \centering
-        \begin{subfigure}[b]{0.5\textwidth}
-          \includegraphics[width=\textwidth]{Figures/multifurc.pdf}
-          \caption{Histogram with automatic binwidth. \\ ~ \\ ~}
-        \end{subfigure}
-        ~~~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-          %(or a blank line to force the subfigure onto a new line)
-        \begin{subfigure}[b]{0.42\textwidth}
-          \includegraphics[trim = 0mm 0mm 30mm 0mm, clip, width=\textwidth]{Figures/multifurc_small.pdf}
-          \caption{Histogram with $binwidth = 1$. \\ light blue: binary; dark blue: multifunction}
-        \end{subfigure}
-        \caption{Histograms about the multifurcation of the internal nodes of the synthesis tree.}
-        \label{fig:childrenOfNodes}
-      \end{figure}
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Taxa}
+      The investigation of the taxonomy revealed that our tree has three kingdoms: Chloroplastida, 
+        Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
+      Since the analysis of the tree is not part of this work, it should be mentioned here that, 
+        according to recent findings, this is not complete and we lack some taxa in every rank. For 
+        example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
+        \cite{CavalierSmith1981}. \\
+      In section \pageref{subsec:listPhyla} of the appendix \colorbox{red}{you} can find a list of all phyla.
 
-      For a first overview we collected for every node its number of children (degree $-1$), and plotted
-        this in two histograms, see figure \ref{fig:childrenOfNodes}. \\
-      The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
-        every node (a node with two children is binary). That means it discribes the number of nodes which we have lost from the real (binary) 
-      phylogenetic tree. \\
-      As \colorbox{red}{you} can see, we are very far from a binary tree. \\
-
-      Some subtrees have been examined, these have the following percentages of missing information: See 
-        table \ref{table:percentage loss information subtrees}.
-
-      \begin{table} [h]
-        \begin{center}
-          \begin{tabular}{ |l|r|r||r|r|r| }
-            \hline
-            Domain  & \% unknown states & \% multifurcation \\ 
-            / Kingdom  & (missing state information & (missing \\
-            / Phylum / Class & of leaf nodes) & internal nodes) \\
-            \hline \hline
-            Eukaryota       & 97.34~\%  & 98.16~\% \\
-            \hline \hline
-            Metazoa         & 96.44~\%  & 87.93~\% \\ \hline
-            Fungi           & 98.87~\%  & 96.97~\% \\ \hline
-            Chloroplastida  & 99.14~\%  & 89.46~\% \\
-            \hline \hline            
-            % Arthropoda      & 97.49~\%  & 89.95~\% \\ \hline
-            Apicomplexa     & 86.26~\%  & 87.16~\% \\ \hline
-            Nematoda        & 89.01~\%  & 88.59~\% \\ \hline
-            Chordata        & 88.59~\%  & \cellcolor{green!50}66.49~\% \\ \hline
-            Platyhelminthes & \cellcolor{green!50}68.73~\%  & 80.34~\% \\
-            \hline \hline            
-            Insecta         & 97.11~\%  & 90.78~\% \\
-            \hline  
-          \end{tabular}
-        \end{center}
-        \caption{Examination of subtrees regarding missing information}
-        \label{table:percentage loss information subtrees} 
-      \end{table}
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Data artifacts}
-        At this point we also found out that there are some nodes with only one child node (55,700 nodes). \\
-        These are both, the most nodes are right in front of a leaf, as well as some nodes are deep in the 
-          tree (3,956 with height $>2$). They are probably a result from the fact that taxonomic information 
-          has been incorporated into a phylogeny. \\
-        Some examples:
-        \begin{itemize}
-          \item Nephroselmidophyceae: (class) \\
-            https://tree.opentreeoflife.org/opentree/argus/ottol@1038762
-          \item Phrynocrinidae: (family) \\
-            https://tree.opentreeoflife.org/opentree/argus/ottol@3647979
-          \item Elaeocarpus sylvestris: \\
-            https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969
-        \end{itemize}
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Taxa}
-        The investigation of the taxonomy revealed that our tree has three kingdoms: Chloroplastida, 
-          Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
-        Since the analysis of the tree is not part of this work, it should be mentioned here that, 
-          according to recent findings, this is not complete and we lack some taxa in every rank. For 
-          example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
-          \cite{CavalierSmith1981}. \\
-        In section \pageref{subsec:listPhyla} of the appendix \colorbox{red}{you} can find a list of all phyla.
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Poisson regression of the multifurcation}
-        % glm (generalized linear model) analysis: \\
-        The intercept is $2.821 > 0$ $\Rightarrow$ there is a multifunction.
-        (Intercept: Stärke der Multifurcation) \\
-        Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Poisson regression of the multifurcation}
+      First of all we measured the strength of the multifurcation with the help of the intercept: 
+        $2.821 > 0$ $\Rightarrow$ there is a multifunction. \\
+      Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
         Chloroplastida than in Metazoa:
-        $$4.0999 (Fungi Intercept) > -0.9132 (Chloroplastida Intercept) > -1.4320 (Metazoa Intercept)$$
-        % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
-        Wir haben außerdem drei komplexitätsstärken von Modellen verglichen bezüglich der höhe und tiefe 
-          des Baums mit dem folgenden Deviance Table:
-
-        \begin{table}[h]
-          \begin{center}
-              \begin{tabular}{ |l|r|r|r|r|r| }
-                \hline
-                Model / Taxa & Kingdom & Phylum & Class & Order & Family \\
-                \hline \hline
-                multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
-                \hline
-                multifurc $\sim$ taxa + depth & 7752303 & \cellcolor{green!10}7431609 & \cellcolor{green!15}7334754 & \cellcolor{green!30}7027578 \\
-                multifurc $\sim$ taxa + max.height & 7730196 & \cellcolor{green!15}7375889 & \cellcolor{green!20}7275856 & \cellcolor{green!30}7005424 \\
-                multifurc $\sim$ taxa + min.height & \cellcolor{green!10}7472500 & \cellcolor{green!20}7233486 & \cellcolor{green!25}7144686 & \cellcolor{green!40}6890703 \\
-                multifurc $\sim$ taxa + mean.height & \cellcolor{green!15}7304402 & \cellcolor{green!25}7128318 & \cellcolor{green!30}7055313 & \cellcolor{green!40}6815271 \\
-                \hline
-                multifurc $\sim$ taxa * depth & 7714881 & \cellcolor{green!15}7335396 & \cellcolor{green!20}7250759 & \cellcolor{green!40}6843004 \\
-                multifurc $\sim$ taxa * max.height & \cellcolor{green!5}7692980 & \cellcolor{green!15}7311241 & \cellcolor{green!25}7187504 & \cellcolor{green!45}6795823 \\
-                multifurc $\sim$ taxa * min.height & \cellcolor{green!10}7442387 & \cellcolor{green!25}7177002 & \cellcolor{green!30}7094933 & \cellcolor{green!45}6795099 \\
-                multifurc $\sim$ taxa * mean.height & \cellcolor{green!20}7247309 & \cellcolor{green!30}7020258 & \cellcolor{green!35}6965794 & \cellcolor{green!50}6665565 \\
-                \hline
-              \end{tabular}
-          \end{center}
-          \caption{Residuals...}
-          \label{table:...} 
-        \end{table}
-        * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
-
-        Interpretation: Die Multifurkation ist sehr ungleich verteilt. Daher ist die vorhersage umso 
-          genauer umso kleinere Subtrees wir betrachten. ...
-        
-        Because of the difference in the complexity of the models, we compared their BICs:
-        \begin{table}[h]
-          \begin{center}
-            \begin{tabular}{ |l|r|r|r|r|r| }
-              \hline
-              Model / Taxa & Kingdom & Phylum & Class & Order & Family \\
-              \hline \hline
-              multifurc $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
-              multifurc $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
-              \hline
-              multifurc $\sim$ taxa + depth & 8273318 & \cellcolor{green!15}7934322 & \cellcolor{green!20}7839364 & \cellcolor{green!35}7539999 \\
-              multifurc $\sim$ taxa + max.height & \cellcolor{green!15}7993515 & \cellcolor{green!25}7749121 & \cellcolor{green!30}7661817 & \cellcolor{green!40}7416211 \\
-              multifurc $\sim$ taxa + min.height & 8251211 & \cellcolor{green!20}7875521  & \cellcolor{green!25}7778327 & \cellcolor{green!35}7516883 \\
-              multifurc $\sim$ taxa + mean.height & \cellcolor{green!20}7825417 & \cellcolor{green!30}7644249 & \cellcolor{green!35}7572474 & \cellcolor{green!45}7340741 \\
-              \hline
-              multifurc $\sim$ taxa * depth & 8235932 & \cellcolor{green!20}7836755 & \cellcolor{green!25}7757688 & \cellcolor{green!45}7383808 \\
-              multifurc $\sim$ taxa * max.height & \cellcolor{green!15}7963438 & \cellcolor{green!30}7693555 & \cellcolor{green!30}7614820 & \cellcolor{green!45}7335338 \\
-              multifurc $\sim$ taxa * min.height & 8214030 & \cellcolor{green!20}7808940 & \cellcolor{green!30}7690618 & \cellcolor{green!45}7336627\\
-              multifurc $\sim$ taxa * mean.height & \cellcolor{green!25}7768360 & \cellcolor{green!35}7536296 & \cellcolor{green!50}7484953 & \cellcolor{green!50}7206369 \\
-              \hline
-            \end{tabular} 
-          \end{center}
-          \caption{BIC...}
-          \label{table:...} 
-        \end{table}
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Binomial regression of the unknown state information}
-
-        Next to the problem of the multifurcation of the tree is the less of data we have for the species.
-          For the ancestral state reconstruction, we need information in the leaf nodes. \\
-        The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
-          (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
-          distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7~\%$). \\
-        We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
-          species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
-        \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
-        We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
-          The Residuals are not very meaningful here, since all models have different dimensions.
-
-        \begin{table}[h!]
-          \begin{center}
-            \begin{tabular}{ |l|r|r|r| }
-              \hline
-              Model / Taxa & Kingdom & Phylum & Class \\
-              \hline \hline
-              multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
-              \hline
-              multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
-              \hline
-              multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
-              \hline
-            \end{tabular}
-          \end{center}
-          \caption{Residuals of unknown information}
-          \label{table:...}
-        \end{table}
-
-        \begin{table}[h!]
-          \begin{center}
+      $$4.0999 (Fungi Intercept) > -0.9132 (Chloroplastida Intercept) > -1.4320 (Metazoa Intercept)$$
+      % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
+      Then we have 9 times 4 models of different complexity levels.
+      \begin{table}[h!]
+        \begin{center}
             \begin{tabular}{ |l|r|r|r|r| }
               \hline
               Model / Taxa & Kingdom & Phylum & Class & Order \\
               \hline \hline
-              multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & XXXXX \\
+              multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
               \hline
-              multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
+              multifurc $\sim$ taxa + depth & 7752303 & \cellcolor{green!10}7431609 & \cellcolor{green!15}7334754 & \cellcolor{green!30}7027578 \\
+              multifurc $\sim$ taxa + max.height & 7730196 & \cellcolor{green!15}7375889 & \cellcolor{green!20}7275856 & \cellcolor{green!30}7005424 \\
+              multifurc $\sim$ taxa + min.height & \cellcolor{green!10}7472500 & \cellcolor{green!20}7233486 & \cellcolor{green!25}7144686 & \cellcolor{green!40}6890703 \\
+              multifurc $\sim$ taxa + mean.height & \cellcolor{green!15}7304402 & \cellcolor{green!25}7128318 & \cellcolor{green!30}7055313 & \cellcolor{green!40}6815271 \\
               \hline
-              multifurc $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!45}481494 & \cellcolor{green!50}478188 \\
+              multifurc $\sim$ taxa * depth & 7714881 & \cellcolor{green!15}7335396 & \cellcolor{green!20}7250759 & \cellcolor{green!40}6843004 \\
+              multifurc $\sim$ taxa * max.height & \cellcolor{green!5}7692980 & \cellcolor{green!15}7311241 & \cellcolor{green!25}7187504 & \cellcolor{green!45}6795823 \\
+              multifurc $\sim$ taxa * min.height & \cellcolor{green!10}7442387 & \cellcolor{green!25}7177002 & \cellcolor{green!30}7094933 & \cellcolor{green!45}6795099 \\
+              multifurc $\sim$ taxa * mean.height & \cellcolor{green!20}7247309 & \cellcolor{green!30}7020258 & \cellcolor{green!35}6965794 & \cellcolor{green!50}6665565 \\
               \hline
-            \end{tabular} 
-          \end{center}
-          \caption{BICs of unknown information}
-          \label{table:BIC unknown information} 
-        \end{table}
+            \end{tabular}
+        \end{center}
+        \caption{Residuals of multifurcation models}
+        \label{table:Residuals multifurcation} 
+      \end{table}
+      In Table \ref{table:Residuals multifurcation} is a deviance table, where the different residuals 
+        are listed. Since only residuals are comparable in complexity, we have also calculated the BIC 
+        values of the models in table \ref{table:BIC multifurcation}. \\
+      \begin{table}[h]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
+            multifurc $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
+            multifurc $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
+            \hline
+            multifurc $\sim$ taxa + depth & 8273318 & \cellcolor{green!15}7934322 & \cellcolor{green!20}7839364 & \cellcolor{green!35}7539999 \\
+            multifurc $\sim$ taxa + max.height & \cellcolor{green!15}7993515 & \cellcolor{green!25}7749121 & \cellcolor{green!30}7661817 & \cellcolor{green!40}7416211 \\
+            multifurc $\sim$ taxa + min.height & 8251211 & \cellcolor{green!20}7875521  & \cellcolor{green!25}7778327 & \cellcolor{green!35}7516883 \\
+            multifurc $\sim$ taxa + mean.height & \cellcolor{green!20}7825417 & \cellcolor{green!30}7644249 & \cellcolor{green!35}7572474 & \cellcolor{green!45}7340741 \\
+            \hline
+            multifurc $\sim$ taxa * depth & 8235932 & \cellcolor{green!20}7836755 & \cellcolor{green!25}7757688 & \cellcolor{green!45}7383808 \\
+            multifurc $\sim$ taxa * max.height & \cellcolor{green!15}7963438 & \cellcolor{green!30}7693555 & \cellcolor{green!30}7614820 & \cellcolor{green!45}7335338 \\
+            multifurc $\sim$ taxa * min.height & 8214030 & \cellcolor{green!20}7808940 & \cellcolor{green!30}7690618 & \cellcolor{green!45}7336627\\
+            multifurc $\sim$ taxa * mean.height & \cellcolor{green!25}7768360 & \cellcolor{green!35}7536296 & \cellcolor{green!50}7484953 & \cellcolor{green!50}7206369 \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{BIC of multifurcation models}
+        \label{table:BIC multifurcation} 
+      \end{table}
 
-        \todo{Taxa like order or family were too expensive to calculate...}
-
-
-
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Results of simulation / Influence of different parameters}
-
-      As presented, we compare two methods in our simulation to their prediction accuracy: Fitch and 
-        Sankoff. \\
-      We examine different parameters. In figure \ref{fig:influence of unknown data} is an overview of 
-        the results. \\
-      The first column describes the distributions of free-livings and parasites with a given threshold 
-        for the respective simulations to the right. \\
-      The middle column investigates the influence of the unknown states, the right the influence of the 
-        strength of the multifurcation. \\
-      The y-axes indicate the percentage of correctly predicted states (including known states). On the 
-        x-axis the percentage of forgotten states or missing internal nodes. \\
-      Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
-      For the middle column we set the strength of the multifurcations to 0.95\% similar to the real 
-        data and in the right column the amount of the unknowns to 0.95\% also similar to the real data. \\
-
-      As \colorbox{red}{you} can see both algortithms are always over 50\% and therefore better than guessing. Moreover, 
-        they are usually close to each other, with Sankoff always makes better predictions except for 
-        equally distributed states as Fitch. \\
-      \colorbox{red}{You} can see that the distribution of states has a strong influence on the prediction. The more 
-        evenly distributed, the harder it is to predict. \\
-      If more than 60\% of internal nodes are missing, Fitch breaks significantly in his prediction 
-        compared to Sankoff.
+      % * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
+      The Residuals give us the error of the model. If the value is small, our data will be well modeled. \\
+      Within the complexity classes it can be seen that the mean height gives the best additional factor. \\
       
-      \begin{figure}
-        \centering
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
-        \caption{Influence of unknown data to prediction}
-        \label{fig:influence of unknown data}
-      \end{figure}
+      Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
+        the finest model available here is also the best one of these. Smaller taxa than orders (eg 
+        family) were computationally too expensive to calculate.
 
-      In the end, Sankoff is in most cases the more accurate algortihmus and was therefore used for our 
-        prediction of the real data.
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Binomial regression of the unknown state information}
+
+      Next to the problem of the multifurcation of the tree is the less of data we have for the species.
+        For the ancestral state reconstruction, we need information in the leaf nodes. \\
+      The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
+        (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
+        distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7~\%$). \\
+      We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
+        species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
+      \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
+      We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
+        The Residuals are not very meaningful here, since all models have different dimensions.
+
+      \begin{table}[h!]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class \\
+            \hline \hline
+            multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
+            \hline
+            multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
+            \hline
+            multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
+            \hline
+          \end{tabular}
+        \end{center}
+        \caption{Residuals of unknown information}
+        \label{table:...}
+      \end{table}
+
+      \begin{table}[h!]
+        \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
+            multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & XXXXX \\
+            \hline
+            multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
+            \hline
+            multifurc $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!45}481494 & \cellcolor{green!50}478188 \\
+            \hline
+          \end{tabular} 
+        \end{center}
+        \caption{BICs of unknown information}
+        \label{table:BIC unknown information} 
+      \end{table}
+
+      \todo{Taxa like order or family were too expensive to calculate...}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Results of simulation / Influence of different parameters}
+
+    As presented, we compare two methods in our simulation to their prediction accuracy: Fitch and 
+      Sankoff. \\
+    We examine different parameters. In figure \ref{fig:influence of unknown data} is an overview of 
+      the results. \\
+    The first column describes the distributions of free-livings and parasites with a given threshold 
+      for the respective simulations to the right. \\
+    The middle column investigates the influence of the unknown states, the right the influence of the 
+      strength of the multifurcation. \\
+    The y-axes indicate the percentage of correctly predicted states (including known states). On the 
+      x-axis the percentage of forgotten states or missing internal nodes. \\
+    Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
+    For the middle column we set the strength of the multifurcations to 0.95\% similar to the real 
+      data and in the right column the amount of the unknowns to 0.95\% also similar to the real data. \\
+
+    As \colorbox{red}{you} can see both algortithms are always over 50\% and therefore better than guessing. Moreover, 
+      they are usually close to each other, with Sankoff always makes better predictions except for 
+      equally distributed states as Fitch. \\
+    \colorbox{red}{You} can see that the distribution of states has a strong influence on the prediction. The more 
+      evenly distributed, the harder it is to predict. \\
+    If more than 60\% of internal nodes are missing, Fitch breaks significantly in his prediction 
+      compared to Sankoff.
+    
+    \begin{figure}
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
+      \caption{Influence of unknown data to prediction}
+      \label{fig:influence of unknown data}
+    \end{figure}
+
+    In the end, Sankoff is in most cases the more accurate algortihmus and was therefore used for our 
+      prediction of the real data.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
