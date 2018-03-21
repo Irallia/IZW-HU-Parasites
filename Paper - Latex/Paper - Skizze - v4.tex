@@ -144,10 +144,7 @@
     algorithms to these. To evaluate them based on the results. \\
   The one by Louca et al. implemented Sankoff algorithm is the best in our comparisons. Therefore, 
     point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states. 
-    And then an evaluation of the results. \\
-
-  \todotext{Definitions of height (min, max, mean), depth of a tree/node (Distanz zur Wurzel vs 
-    distanz zum Blatt)}
+    And then an evaluation of the results.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -287,7 +284,7 @@
         transition probabilities.
       \begin{wrapfigure}{r}{0.5\textwidth}
         \begin{center}
-          \includegraphics[trim = 0mm 0mm 0mm 15mm, clip, width=0.48\textwidth]{Figures/40-60.png}
+          \includegraphics[trim = 0mm 0mm 0mm 13mm, clip, width=0.48\textwidth]{Figures/40-60.png}
         \end{center}
         \caption{60~\% Free-living - 40~\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
         \label{fig:Beta distribution}
@@ -328,9 +325,15 @@
       In the simulation, the influence of the multifurcation and missing data in leaf nodes on the 
         predictive accuracy of the ancestral state reconstruction algorithms is tested. \\
       For the real data, generalized linear models are compared with poisson respectively binomial 
-        regression according to their residuals and BICs.
+        regression according to their residuals and BICs. \\
       \anmerkungstext{Erklären, warum und wozu das gemacht wird. Warum BIC und nicht AIC? Erklären,
-        was beide bedeuten, wäre sinnvoll. (Thilo)}
+        was beide bedeuten, wäre sinnvoll. (Thilo)} \\
+
+      For each node, depth, min, max and mean height were noted. Where the depth of a node is the 
+        distance (number of edges) to the root node and the height of a knot is described as the 
+        largest distance to a leaf node. In this work, a distinction is made between minimum, maximum 
+        and average distance ($\rightarrow$ min, max and mean height). \\
+      The influence in the modeling of these parameters was tested, additive as well as multiplicative.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -417,7 +420,6 @@
       The other class she presents involves modeling the character evolution as a stochastic process and 
         using the likelihoods to compute the possible ancestral character states. This is generally done 
         with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
-
       \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
 
       One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
@@ -456,16 +458,7 @@
           Neubewertung. Sie beziehen ihren Algortihmus auf Swofford und Maddison...} \\
         To understand the differences to the multifurcated case, the algorithm for the binary case is 
           briefly explained and referred to the extension. \\
-          \begin{wrapfigure}[19]{r}{0.5\textwidth}
-            \centering
-            \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
-            \caption{Fitch algorithm for binary trees. \\
-              The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
-              root node) consists of three sets, where the last set is the final one (bold). \\
-              From the second internal node (seen from the root node) there are several possibilities to 
-              create the second and third set.}
-            \label{fig: binary Fitch}
-          \end{wrapfigure}
+
         Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
           a set of states. There are only two states in this paper, free-living (FL) and parasitic (P). 
           Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
@@ -477,7 +470,18 @@
           \item The intersection is not empty and corresponds to the new set.
           \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
         \end{enumerate}
-        First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal. 
+
+        First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal.
+          \begin{wrapfigure}{r}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
+            \caption{Fitch algorithm for binary trees. \\
+              The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
+              root node) consists of three sets, where the last set is the final one (bold). \\
+              From the second internal node (seen from the root node) there are several possibilities to 
+              create the second and third set.}
+            \label{fig: binary Fitch}
+          \end{wrapfigure} 
           Each internal node is formed from its child nodes, where at the beginning the only information
           lies. \\
         Second traverse from the root node to the leafs. Each internal node is formed from its father node 
