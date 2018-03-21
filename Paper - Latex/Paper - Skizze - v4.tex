@@ -66,90 +66,86 @@
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Introduction}
   This paper is about the analysis of ancestral state reconstruction algorithms for non-binary trees, 
-    applied to the currently largest phylogeny synthesis tree of Open Tree Of Life, with the 
-    application of prediciton of parasitism. \\
-  \todo{Or:} The aim of this thesis is the application of maximum parsiomony algorithms to non-binary 
-    trees and very large datasets. In particular, the example 'Origins of Parasitism' throughout the 
-    Eukaryota Tree of Life. \\
-  We will test the existing algorithms Sankoff (R package \textit{Castor}\cite{Louca2017}) and Fitch 
-    for this task and estimate their predictive power. In addition, we will extend the Fitch 
-    algorithm from binary trees to multifurcating trees to make it usable and comparable for our 
-    current problem. \\
+    applied to the currently largest phylogenetic synthesis tree of Open Tree Of Life (OTL)
+    \cite{Hinchliff2015}, with the application of prediciton of parasitism. \\
+  % \todo{Or:} The aim of this paper is the application of maximum parsiomony algorithms to non-binary 
+  %   trees and very large datasets. In particular, the example 'Origins of Parasitism' throughout the 
+  %   Eukaryota Tree of Life. \\
+
+  We will test the existing maximum parsimony algorithms Fitch \cite{Fitch1971} and Sankoff 
+    \cite{Sankoff1975} for this task and estimate their predictive power. The present tree of OTL is 
+    not binary. A tree is binary (or bifurcated), when every node has at most two children otherwise 
+    it is multifurcated \cite{Felsenstein2003}. \\
+  Maximum parsimony methods are developed for phylogenies, which are usually depicted as binary trees.
+    Parsimonious in phylogeny refers to favoring the tree that needs the least evolutionary change 
+    to explain the observed data. In our case, it is about the change of states 'is free-living' or 
+    'is parasitic'. \\
+    % Parsimonious in this context means to minimize the number of transitions between species states 
+    % (free-living or parasitic). 
+  The Sankoff method is implemented by Louca et al. for the non-binary case and is available as an R 
+    package called \textit{Castor} \cite{Louca2017}. In addition, we have implemented the Fitch 
+    method and adapted it for multifurcated trees. \\% to make it usable and comparable for our current problem.
   This achieves that we can predict ancestral states and unknown states of living species for large 
     non-binary relatives trees. \\
 
   For about 50 years, people have been working on ancestral state reconstruction. The first paper 
-    mentioned above is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state 
-    data \cite{Camin1965}. Different methods have been developed and the question is which method is 
-    the most suitable for our problem. \\
-
-  \todotext{In den Bacteria und Archaea wurde das mal allgemein für binary traits gemacht: \\
-  "A total 90~\% of all binary traits described molecular functions, specifically the presence or absence of a gene or a set of gene involved in biochemical pathways."
-  \cite{Goberna2015} \\
-  Unterschied bei uns ist parasitismus komplexer.. da sind meist nicht einzelne Gene zuständig..} \\
-
-  For this purpose, various studied methods and their advantages and disadvantages will be compared. \\
-  These algorithms were developed especially for the binary problem, since one has considered much 
-    smaller subtrees, of which one knows all the splits. \\
-  By developing a whole of an entire tree of life, the problem arises that it is by no means binary. 
-
-  % Researchers of the phylogenies have been dealt with the ancenstral state reconstruction in the 
-  %   60s. The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
+    is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state data 
+    \cite{Camin1965}. Different methods have been developed and the question is which method is the 
+    most suitable for our problem. \\
+  % The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
   %   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
   %   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
   %   With more and more data, there is now the possibility to use more information to calculate the 
   %   probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
   %   also use branch lengths. The likelihood based algorithms came more in interest. \\
-  %   Our focus came with another 'data extension'. We wanted to work with the biggest phylogenetic tree 
-  %   that exists at this moment, which goes over all observed species. For most \todo{most?} species 
-  %   there is no phylogeny, but only a taxonomic classification.
-  To accomplish this task, a large phylogenetic tree and information about the current species states 
-    is needed. %In this work we use the synthesis tree of Open Tree of Life (OTL) \cite{Hinchliff2015} 
-  The biggest 'phylogenetic tree' is a synthesis of phylogenetic trees filled with a taxonomic tree 
-    given by Open Tree of Life \cite{Hinchliff2015}. This tree is not binary and therefore the 
-    developed algorithms are not directly applicable.Therefore, an algorithm must be found that can 
-    work with non-binary trees. \\
-  For the information about the current states of the species we use the interaction database Global 
-    Biotic Interactions (GloBI) \cite{Poelen2014}.
-
-  % In this work, we have looked at the algorithms that are generally suited to our data, to develop 
-  % them further for the not binary case, and finally to compare their usability with our sythesis 
-  % tree. \\
+  
   % We have decided to consider only parsimony algorithms since we have no information on branch 
   % lengths and no other additional information like different transition probabilities of our states.
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  %--------------------------------------------------------------------------------------------------- 
-  \section{Definitions}
+  For this purpose, various studied methods and their advantages and disadvantages will be compared. \\
+  These algorithms were developed especially for the binary problem, since one has considered much 
+    smaller subtrees, of which one knows all the splits. \\
+  By developing a whole of an entire tree of life, the problem arises that it is by no means binary. \\
 
-    \begin{itemize}
-      \item Multifurkation - binär (binary or bifurcating... \cite{Felsenstein2003})
-      \item height (min, max, mean), depth of a tree/node (Distanz zur Wurzel vs distanz zum Blatt)
-      \item OTL, OTT, GloBI
-    \end{itemize}
+  For these large phylogenetic synthesis trees, however, ancestral state reconstruction has so far 
+    only been done for Bacteria and Archaea for binary traits by Goberna and Verdú \cite{Goberna2015}.
+    However, this differs from eukaryotes in the sense that complex traits such as parasitism depend
+    on more than one gene. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %--------------------------------------------------------------------------------------------------- 
-    \subsection{Parasite}
-      Since we use Globi to classify species as parasitic or free-living, we use their definition of 
-        parasitism. In GloBi, ontobee definitions are used.
-      The interaction has parasite is defined as: "An interaction relationship between two organisms 
-        living together in more or less intimate association in a relationship in which association is 
-        disadvantageous or destructive to one of the organisms." \cite{...}. This definition includes: ecto,-
-      and endoparasites, parasitoids, kleptoparasites and pathogenes.
+  To accomplish this task, a large phylogenetic tree and information about the current species states 
+    is needed. \\
+  The biggest 'phylogenetic tree' is a synthesis of phylogenetic trees filled with a taxonomic trees 
+    given by Open Tree of Life (OTL) \cite{Hinchliff2015}. %This tree is not binary and therefore the 
+    % developed algorithms are not directly applicable. Therefore, an algorithm must be found that can 
+    % work with non-binary trees. \\
+  For the information about the current states of the species we use the interaction database Global 
+    Biotic Interactions (GloBI) \cite{Poelen2014}. The data in GloBI are stored as interactions. 
+    Useful for us e.g. Species A parasitize species B. From this we conclude that species A is 
+    parasitic and species B free-living. In the case parasite parasitizes parasite, we get conflicting 
+    states for the second species. We solve this by preferring parasitic. \\
 
-      \todotext{Mungall, C., (2017). Definition for the interaction-term: "parasitised by; has parasite" ob
-      ontobee.org. Last checked: 24.07.2017 at 
-      \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
-      {ontobee.org/ontology/...}}
+  At this point a few words to the term parasitic. There are different definitions. Since we use Globi 
+    to classify species, we use their definition of parasitism. Again, in GloBi, ontobee definitions 
+    are used.
+  The interaction has parasite is defined as: "An interaction relationship between two organisms 
+    living together in more or less intimate association in a relationship in which association is 
+    disadvantageous or destructive to one of the organisms." \cite{...}. This definition includes: 
+    ecto- and endoparasites, parasitoids, kleptoparasites and pathogenes.
+  \todotext{Mungall, C., (2017). Definition for the interaction-term: "parasitised by; has parasite" ob
+  ontobee.org. Last checked: 24.07.2017 at 
+  \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
+  {ontobee.org/ontology/...}} \\
 
-    %---------------------------------------------------------------------------------------------------
-    %--------------------------------------------------------------------------------------------------- 
-    \subsection{Maximum parsimony}
-      Maximum parsimony methods Maximum parsimony in phylogeny refers to favoring the tree that needs 
-        the least evolutionary change to explain the observed data. \\
-      In our case, it is about the change of states 'is free-living' or 'is parasitic'.
+  This paper thus consists of the following points: (1) Find a suitable ancestral state 
+    reconstruction method. (2) Perform reconstructing on the Eucaryotic synthesis tree of OTL. \\
+  Point 1 consists of a simulation of our data situation and the application of various possible 
+    algorithms to these. To evaluate them based on the results. \\
+  The one by Louca et al. implemented Sankoff algorithm is the best in our comparisons. Therefore, 
+    point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states. 
+    And then an evaluation of the results. \\
+
+  \todotext{Definitions of height (min, max, mean), depth of a tree/node (Distanz zur Wurzel vs 
+    distanz zum Blatt)}
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -963,7 +959,7 @@
         \label{table:Phylum internal nodes}
       \end{table}
 
-      \begin{table}
+      \begin{table}[h!]
         \begin{center}
           \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
             \hline
@@ -986,7 +982,7 @@
         \label{table:Kingdom leaf nodes}
       \end{table}
 
-      \begin{table}
+      \begin{table}[h!]
         \begin{center}
           \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
             \hline
@@ -1080,18 +1076,23 @@
           size as Blaxter.
 
       \begin{lstlisting}[gobble=6]
-        # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
-        # rounded to:    0  0      0    0    1      1     1
-        if node_state != father_state:
-          if father_state == 0:
-              origins += 1        # FL -> P
-              new_found = True
-          else:
-              losses += 1         # P -> FL
-              new_found = True
+        possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
+        rounded to:    0  0      0    0    1      1     1
       \end{lstlisting}
 
-      \todo{without rounding change else: to elif $father_state == 1$}
+      % \begin{lstlisting}[gobble=6]
+      %   # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
+      %   # rounded to:    0  0      0    0    1      1     1
+      %   if node_state != father_state:
+      %     if father_state == 0:
+      %         origins += 1        # FL -> P
+      %         new_found = True
+      %     else:
+      %         losses += 1         # P -> FL
+      %         new_found = True
+      % \end{lstlisting}
+
+      % \todo{without rounding change else: to elif $father_state == 1$}
       
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
