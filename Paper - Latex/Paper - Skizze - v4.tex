@@ -520,9 +520,15 @@
         These four versions were tested in the simulation with 100 trees and 10000 leaf nodes and a
           distribution of 60~\% FL to 40~\% P. Figure \ref{fig:Fitch versions} shows this over all unknown 
           node percentage. \\
-        At 90~\% unknown nodes and 90~\% of multifurcation of the internal nodes, version 1 was 89.26~\%, 
-          version 2 was 89.26~\%, version 3 was 89.35~\%, and version 4 was 89.31~\% correct. Therefore, 
+        % At 90~\% unknown nodes and 90~\% of multifurcation of the internal nodes, version 1 was 89.26~\%, 
+        %   version 2 was 89.26~\%, version 3 was 89.35~\%, and version 4 was 89.31~\% correct. Therefore, 
+        %   only version 3 was used for all further simulations.
+        At 95~\% unknown nodes and 95~\% of multifurcation of the internal nodes, version 1 was 88.37~\%, 
+          version 2 was 88.37~\%, version 3 was 88.4~\%, and version 4 was 88.39~\% correct. Therefore, 
           only version 3 was used for all further simulations.
+          
+      % Fitch versions:
+      % | 88.37 % | 88.37 % | 88.4 % |88.39 % |
 
 
       %---------------------------------------------------------------------------------------------------
@@ -598,7 +604,7 @@
       table \ref{table:percentage loss information subtrees}.
     \begin{table}[h!]
       \begin{center}
-        \begin{tabular}{ |l|r|r||r|r|r| }
+        \begin{tabular}{ |l||r|r| }
           \hline
           Subtree of & unknown states & multifurcation \\ 
           \hline \hline
@@ -713,7 +719,6 @@
         \caption{BIC of multifurcation models}
         \label{table:BIC multifurcation} 
       \end{table}
-
       % * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
       The Residuals give us the error of the model. If the value is small, our data will be well modeled. \\
       Within the complexity classes it can be seen that the mean height gives the best additional factor. \\
@@ -728,32 +733,17 @@
 
       Next to the problem of the multifurcation of the tree is the less of data we have for the species.
         For the ancestral state reconstruction, we need information in the leaf nodes. \\
-      The eukaryotic synthesis tree has 293 463 leaf nodes. The GloBI database has 5 346 414 interactions 
-        (at this timepoint). Out of this data we got 51 337 distinct free-living species and 47 332 
-        distinct parasite species $\rightarrow$ unknown nodes 2194794 ($\approx 95.7~\%$). \\
-      We found also $57,352$ (not distinct) source species and $809,993$ (not distinct) target
+      The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5 346 414 interactions 
+        (at this timepoint). Out of this data we got 51,337 distinct free-living species and 47 332 
+        distinct parasite species $\rightarrow$ unknown nodes 2,194,794 ($\approx 95.7~\%$). \\
+      We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target
         species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
-      \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
-      We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
-        The Residuals are not very meaningful here, since all models have different dimensions.
+      % \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
 
-      \begin{table}[h!]
-        \begin{center}
-          \begin{tabular}{ |l|r|r|r| }
-            \hline
-            Model / Taxa & Kingdom & Phylum & Class \\
-            \hline \hline
-            multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
-            \hline
-            multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
-            \hline
-            multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
-            \hline
-          \end{tabular}
-        \end{center}
-        \caption{Residuals of unknown information}
-        \label{table:...}
-      \end{table}
+      We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
+        The Residuals are not very meaningful here, since all models have different complexities. % /dimensions
+        For the sake of completeness, the associated deviance tables are located with the residuals in 
+        the appendix \ref{sec:Residuals unknown information}.
 
       \begin{table}[h!]
         \begin{center}
@@ -772,8 +762,11 @@
         \caption{BICs of unknown information}
         \label{table:BIC unknown information} 
       \end{table}
+      It also follows from this table that the most complex model is the best. In general, the BIC 
+        values are smaller than those of the multifurcation models. The modeling here is thus better. \\
+      Again, the calculation of finer models (eg family) was too expensive. \\
 
-      \todo{Taxa like order or family were too expensive to calculate...}
+      These missing data modeling results can be used to better simulate the data.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1456,5 +1449,27 @@
         \label{table:...} 
       \end{center}  
     \end{table}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Missing leaf state modelling - Resiudal tables}\label{sec:Residuals unknown information}
+
+    \begin{table}[h!]
+      \begin{center}
+        \begin{tabular}{ |l|r|r|r| }
+          \hline
+          Model / Taxa & Kingdom & Phylum & Class \\
+          \hline \hline
+          multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
+          \hline
+          multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
+          \hline
+          multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
+          \hline
+        \end{tabular}
+      \end{center}
+      \caption{Residuals of unknown information}
+    \end{table}
+
 
 \end{document}
