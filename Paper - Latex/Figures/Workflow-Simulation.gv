@@ -7,14 +7,11 @@ digraph G {
 		node [fillcolor=palegreen];
 		color=palegreen3
 		c0;
-		c1;
-		c2 -> c3;
+		c2;
 	}
 
 	c0 [label = "known - unknown data"]
-	c1 [label = "extract heights \n and depth"]
 	c2 [label = "extract nr of children \n (multifurcations)"]
-	c3 [label = "regressionanalysis"]
 
 	subgraph cluster_3 {
 		label = "Simulation";
@@ -31,6 +28,6 @@ digraph G {
 	d5 [label = "run MP algorithms \n Fitch MP & Sankoff MP (Castor) "]
 
 	c0 -> d2;
-	c3 -> d3;
+	c2 -> d3;
 	
 }

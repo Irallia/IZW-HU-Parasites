@@ -26,7 +26,8 @@ digraph G {
 		node [fillcolor=palegreen];
 		color=palegreen3
 		c0;
-		c1;
+		c1 -> c3;
+		c0 -> c3;
 		c2 -> c3;
 	}
 
@@ -79,7 +80,9 @@ digraph G {
 	b0 -> e0;
 	c0 -> d2;
 	c0 -> e0;
-	c3 -> d3;
+	c2 -> d3;
+	c3 -> d2 [style=dashed];
+	c3 -> d3 [style=dashed];
 	d5 -> f3;
 	e0 -> c1;
 	e0 -> c2;

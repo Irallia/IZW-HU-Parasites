@@ -279,7 +279,6 @@
         \item GBIF (Global Biodiversity Information Facility) \cite{GBIF}
         \item OTT (OpenTreeOfLife-Taxonomy) \cite{Hinchliff2015}
       \end{itemize}
-      \todo{In die discussion?:} \\
       ITIS is only a small set of 100~\% confirmed and named species. GBIF is not composed with the help 
         of phylogeny, the same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small 
         dataset of mostly marine species. \\
@@ -291,7 +290,7 @@
 
       A closer look is being made to some of the features of the synthesis tree. On the one hand the 
         distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this 
-        is not directly relevant to \colorbox{red}{our} study, there is a section in the appendix 
+        is not directly relevant for this study, there is a section in the appendix 
         \ref{sec:otl analysis}.
 
     %---------------------------------------------------------------------------------------------------
@@ -306,8 +305,8 @@
       This database consists of entries of the form: species A (source) interacts with B (target). \\
       A number of interactions have been identified\footnote{\hyperlink{
         https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java
-        }{https://github.com/jhpoelen/eol-globi-data/.../InteractType.java}}
-        ,including those that the species source or target has become a parasite or a free-living 
+        }{https://github.com/jhpoelen/eol-globi-data/.../InteractType.java}; Last checked: 22.03.2018.}
+        , including those that the species source or target has become a parasite or a free-living 
         species from the biological perspective. These are the following:
       \begin{itemize}
         \item free-living source: preysOn, eats, flowersVisitedBy, hasPathogen, pollinatedBy, 
@@ -329,7 +328,9 @@
   %---------------------------------------------------------------------------------------------------
   \section{Metadata analysis}
     In order to generate a realistic simulation, influencing parameters are investigated. \\
-    There are two major types of parameters:
+    Since the transitions are minimized in an ancestral state reconstruction, this is an important 
+      parameter to consider. On the other hand, the completeness of our input data are influencing 
+      values. Therefore, two major types are distinguished:
     \begin{enumerate}
       \item Biological parameters (A result of the evolutionary process.):
         \begin{itemize}
@@ -347,15 +348,16 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Transition probabilities}
-      This subsection deals with the transition probabilities from free-living (hereinafter / as a 
+      As mentioned above, in an ancestral state reconstruction, transitions are minimized, with 
+        transition probabilities playing a role. \\
+      This subsection deals with these transition probabilities from free-living (hereinafter / as a 
         formula FL) to parasitic (hereinafter P) and vice versa: $\mathcal{P}(FL \rightarrow P)$, 
         $\mathcal{P}(P \rightarrow FL)$. \\
       Different parasite types have different transition probabilities. It is very difficult to make a 
-        statement about these probabilities.
-      In general, \colorbox{red}{we} assume that there are 40~\% parasites and 60~\% free-livings which 
-        is based on the estimates by Windsor \cite{Windsor1998} and 
-        $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation is 
-        usually less likely. \todo{This is discussed in section x of the discussion.} \\
+        statement about these probabilities. It is generally assumed in this work that there are 40~\% 
+        parasites and 60~\% free-livings which is based on the estimates by Windsor \cite{Windsor1998} 
+        and $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation 
+        is usually less likely. \todo{This is discussed in section x of the discussion.} \\
 
       For the maximum parsimony analysis of the real data, all transition probabilities are equated.
         However, the used castor package \cite{Louca2017} offers the possibility to enter different 
@@ -413,14 +415,150 @@
         and average distance ($\rightarrow$ min, max and mean height). \\
       The influence in the modeling of these parameters was tested, additive as well as multiplicative.
 
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Ancestral state reconstruction methods}
+    As presented in the introduction, there are some methods for ancestral state reconstruction. For 
+      this purpose, various studied methods and their advantages and disadvantages are compared below. \\
+  
+  % The first methods were only brute force \cite{Camin1965} 
+  %   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
+  %   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
+  %   With more and more data, there is now the possibility to use more information to calculate the 
+  %   probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
+  %   also use branch lengths. The likelihood based algorithms came more in interest. \\
+  
+    Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
+    The first is to explain the current state with the least number of state changes between an 
+      ancestor and his child, this is called parsimonious. \\
+    The other class she presents involves modeling the character evolution as a stochastic process and 
+      using the likelihoods to compute the possible ancestral character states. This is generally done 
+      with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
+    \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
+
+    One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
+      can not take divergece times (branch length) into account. Since there are no development times 
+      of species in our case, \colorbox{red}{you} can ignore this. \\
+    Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
+      predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
+      like irreversibility of transitions for dollo parsimony. Again, this problem is irrelevant to 
+      the problem at hand, because \colorbox{red}{you} can only work with generalized models in the 
+      analysis of the entire Eukaryota tree. \\
+
+    Parsimony-based methods are used in this work, since they are fully sufficient for the presented 
+      use case here. Following the principle of the simpler model first. \\
+    Felsenstein \cite{Felsenstein2003} discusses in his book two algorithms that generalize all 
+      previous methods (from Camin and Sokal \cite{Camin1965}, \todo{Kluge and Farris} and Farris 
+      \cite{Farris1970}): Fitch parsiomony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. \\
+    \anmerkungstext{Unter Farris war auch noch der Begriff Wagner trees in gebrauch, als 
+      Verallgemeinerung der parsimonious trees von Camin und Sokal. (Lydia)} \\
+    \todo{Wagner-parsimony \cite{Swofford1987}} \\
+    
+    Thus, the methods used in this work are those of Fitch and Sankoff. For Fitch, the algorithm has 
+      been extended from binary to multifurcated trees. For the Sankoff algorithm, Louca and Doebeli 
+      have presented an implementation for non-binary trees published in an R package named 
+      \textit{castor} \cite{Louca2017}.
+
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Fitch maximum parsimony}
+      Fitch maximum parsimony is an algorithm for rooted, binary trees and describes an ancestral state 
+        reconstruction for discrete states \cite{Fitch1971} by minimizing transitions between states. \\
+      Note, the original Fitch algorithm has the sole purpose of minimizing the number of transitions 
+        and not reconstructing the ancestral nodes. Felsenstein \cite{Felsenstein2003} describes a 
+        simple extension for the reconstruction. Cunningham et al. \cite{Cunningham1998} have refined 
+        these. \todotext{Wir haben mit ein paar kleinen änderungen optimiert... und schließlich auf 
+        multifurcated angepasst...} \todotext{eigentlich ist Cunningham 'nur' eine kritische 
+        Neubewertung. Sie beziehen ihren Algortihmus auf Swofford und Maddison...} \\
+      To understand the differences to the multifurcated case, the algorithm for the binary case is 
+        briefly explained and referred to the extension. \\
+        \begin{wrapfigure}[19]{r}{0.5\textwidth}
+          \centering
+          \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
+          \caption{Fitch algorithm for binary trees. \\
+            The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
+            root node) consists of three sets, where the last set is the final one (bold). \\
+            From the second internal node (seen from the root node) there are several possibilities to 
+            create the second and third set.}
+          \label{fig: binary Fitch}
+        \end{wrapfigure} 
+      Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
+        a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P). 
+        Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
+        has only one. Leaf nodes have their state as a set (eg \{FL\} or \{P\}, unknown leaf nodes the 
+        union of all possible states (\{FL, P\}). \\
+
+      The algorithm traverses three times trough the tree and fills these sets. \\
+      In each step, two sets are considered and their intersect formed. There are two cases:
+      \begin{enumerate}
+        \item The intersection is not empty and corresponds to the new set.
+        \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
+      \end{enumerate}
+      First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal.
+        Each internal node is formed from its child nodes, where at the beginning the only information
+        lies. \\
+      Second traverse from the root node to the leafs. Each internal node is formed from its father node 
+        and its sibling node. \\
+      Last traversion (direction does not matter): Build the final state for every node. It is formed 
+        from the sets of previous traversals. \\
+      (The original Fitch algorithm was designed to minimize transitions without predicting actual states 
+        of internal nodes, so it was just the first traversal.) \\
+      The extension to the non-binary case is quite obvious, but holds some opportunities. In this case, 
+        more than two children may be present for the first traversal, but the incision or union may 
+        also be formed over more than two sets. Also in the second traversing, there may be several 
+        sibling nodes. However, there are several possibilities here that were all tested and compared 
+        in the simulation. Some of these options are already available in the binary case:
+      \begin{itemize}
+        \item The father node has (except for the root node) two state sets, because he came through 
+          the up-traversing previously. Are both sets used or only the first traversing?
+        \item Since there are several siblings, do \colorbox{red}{you} first of all make the cut or union, 
+          or directly in the whole with the father node?
+      \end{itemize}
+      The first point already has an effect on the binary case. Figure \ref{fig: binary Fitch} shows 
+        both possibilities of the three sets. \\
+      Cunningham uses only the first state set of the father node \cite{Cunningham1998}. \\
+      From these two points four different versions of Fitch were formed:
+      \begin{enumerate}
+        \item Fitch 1: First state set of father node; intersection/union of siblings first.
+        \item Fitch 2: First state set of father node; intersection/union of siblings together with father node.
+        \item Fitch 3: Both state sets of father node; intersection/union of siblings first.
+        \item Fitch 4: Both state sets of father node; intersection/union of siblings together with father node sets.
+      \end{enumerate}
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Figures/simulation_fitch_evaluation.png}
+        \caption{Test of Fitch Versions.}
+        \label{fig:Fitch versions}
+      \end{figure}
+      These four versions were tested in the simulation with 100 trees and 10000 leaf nodes and a
+        distribution of 60~\% FL to 40~\% P. Figure \ref{fig:Fitch versions} shows this over all unknown 
+        node percentage. \\
+      % At 90~\% unknown nodes and 90~\% of multifurcation of the internal nodes, version 1 was 89.26~\%, 
+      %   version 2 was 89.26~\%, version 3 was 89.35~\%, and version 4 was 89.31~\% correct. Therefore, 
+      %   only version 3 was used for all further simulations.
+      At 95~\% unknown nodes and 95~\% of multifurcation of the internal nodes, version 1 was 88.37~\%, 
+        version 2 was 88.37~\%, version 3 was 88.4~\%, and version 4 was 88.39~\% correct. Therefore, 
+        only version 3 was used for all further simulations.
+        
+    % Fitch versions:
+    % | 88.37 % | 88.37 % | 88.4 % |88.39 % |
+
+
+    %---------------------------------------------------------------------------------------------------
+    \subsubsection{Sankoff}
+      Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}. \\
+      \todo{transition probabilities: all equal}
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}\label{sec:simulation}
-    There are various possibilities of ancestral state reconstruction. The simulation compares
-      different algorithms with each other. \\
+    The simulation compares these different of ancestral state reconstruction algorithms with each 
+      other. \\
     First different implementations of the Fitch maximum parsimony are compared and then the best of 
-      them is compared with the implementation of the sankoff algorithm of the castor package 
+      them is compared with the implementation of the Sankoff algorithm of the \textit{Castor} package 
       \cite{Louca2017}. \\
 
     \begin{figure}[h!]
@@ -432,7 +570,7 @@
 
     \todotext{Figure \ref{fig:Simulation Workflow} shows the course of the simulation. The individual 
       steps are explained in the following subsections: ...}
-
+  
     \todo{Evaluation - compare trees (distances)}
 
     %---------------------------------------------------------------------------------------------------
@@ -485,141 +623,6 @@
       As previously explained, some divisions in the tree are not known, so the real tree is not binary.
       This multifurcation was simulated by an equally distributed percentage of forgotten internal nodes.
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \section{Ancestral state reconstruction methods}
-      As presented in the introduction, there are some methods for ancestral state reconstruction. For 
-        this purpose, various studied methods and their advantages and disadvantages are compared below. \\
-    
-    % The first methods were only brute force \cite{Camin1965} 
-    %   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
-    %   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
-    %   With more and more data, there is now the possibility to use more information to calculate the 
-    %   probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
-    %   also use branch lengths. The likelihood based algorithms came more in interest. \\
-    
-      Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
-      The first is to explain the current state with the least number of state changes between an 
-        ancestor and his child, this is called parsimonious. \\
-      The other class she presents involves modeling the character evolution as a stochastic process and 
-        using the likelihoods to compute the possible ancestral character states. This is generally done 
-        with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
-      \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
-
-      One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
-        can not take divergece times (branch length) into account. Since there are no development times 
-        of species in our case, \colorbox{red}{you} can ignore this. \\
-      Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
-        predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
-        like irreversibility of transitions for dollo parsimony. Again, this problem is irrelevant to 
-        the problem at hand, because \colorbox{red}{you} can only work with generalized models in the 
-        analysis of the entire Eukaryota tree. \\
-
-      Parsimony-based methods are used in this work, since they are fully sufficient for the presented 
-        use case here. Following the principle of the simpler model first. \\
-      Felsenstein \cite{Felsenstein2003} discusses in his book two algorithms that generalize all 
-        previous methods (from Camin and Sokal \cite{Camin1965}, \todo{Kluge and Farris} and Farris 
-        \cite{Farris1970}): Fitch parsiomony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. \\
-      \anmerkungstext{Unter Farris war auch noch der Begriff Wagner trees in gebrauch, als 
-        Verallgemeinerung der parsimonious trees von Camin und Sokal. (Lydia)} \\
-      \todo{Wagner-parsimony \cite{Swofford1987}} \\
-      
-      Thus, the methods used in this work are those of Fitch and Sankoff. For Fitch, the algorithm has 
-        been extended from binary to multifurcated trees. For the Sankoff algorithm, Louca and Doebeli 
-        have presented an implementation for non-binary trees published in an R package named 
-        \textit{castor} \cite{Louca2017}.
-
-      %---------------------------------------------------------------------------------------------------
-      %---------------------------------------------------------------------------------------------------
-      \subsection{Fitch maximum parsimony}
-        Fitch maximum parsimony is an algorithm for rooted, binary trees and describes an ancestral state 
-          reconstruction for discrete states \cite{Fitch1971} by minimizing transitions between states. \\
-        Note, the original Fitch algorithm has the sole purpose of minimizing the number of transitions 
-          and not reconstructing the ancestral nodes. Felsenstein \cite{Felsenstein2003} describes a 
-          simple extension for the reconstruction. Cunningham et al. \cite{Cunningham1998} have refined 
-          these. \todotext{Wir haben mit ein paar kleinen änderungen optimiert... und schließlich auf 
-          multifurcated angepasst...} \todotext{eigentlich ist Cunningham 'nur' eine kritische 
-          Neubewertung. Sie beziehen ihren Algortihmus auf Swofford und Maddison...} \\
-        To understand the differences to the multifurcated case, the algorithm for the binary case is 
-          briefly explained and referred to the extension. \\
-
-        Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
-          a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P). 
-          Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
-          has only one. Leaf nodes have their state as a set (eg \{FL\} or \{P\}, unknown leaf nodes the 
-          union of all possible states (\{FL, P\}). \\
-        The algorithm traverses three times trough the tree and fills these sets. \\
-        In each step, two sets are considered and their intersect formed. There are two cases:
-        \begin{enumerate}
-          \item The intersection is not empty and corresponds to the new set.
-          \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
-        \end{enumerate}
-
-        First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal.
-          \begin{wrapfigure}{r}{0.5\textwidth}
-            \centering
-            \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
-            \caption{Fitch algorithm for binary trees. \\
-              The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
-              root node) consists of three sets, where the last set is the final one (bold). \\
-              From the second internal node (seen from the root node) there are several possibilities to 
-              create the second and third set.}
-            \label{fig: binary Fitch}
-          \end{wrapfigure} 
-          Each internal node is formed from its child nodes, where at the beginning the only information
-          lies. \\
-        Second traverse from the root node to the leafs. Each internal node is formed from its father node 
-          and its sibling node. \\
-        Last traversion (direction does not matter): Build the final state for every node. It is formed 
-          from the sets of previous traversals. \\
-        (The original Fitch algorithm was designed to minimize transitions without predicting actual states 
-          of internal nodes, so it was just the first traversal.) \\
-        The extension to the non-binary case is quite obvious, but holds some opportunities. In this case, 
-          more than two children may be present for the first traversal, but the incision or union may 
-          also be formed over more than two sets. Also in the second traversing, there may be several 
-          sibling nodes. However, there are several possibilities here that were all tested and compared 
-          in the simulation. Some of these options are already available in the binary case:
-        \begin{itemize}
-          \item The father node has (except for the root node) two state sets, because he came through 
-            the up-traversing previously. Are both sets used or only the first traversing?
-          \item Since there are several siblings, do \colorbox{red}{you} first of all make the cut or union, 
-            or directly in the whole with the father node?
-        \end{itemize}
-        The first point already has an effect on the binary case. Figure \ref{fig: binary Fitch} shows 
-          both possibilities of the three sets. \\
-        Cunningham uses only the first state set of the father node \cite{Cunningham1998}. \\
-        From these two points four different versions of Fitch were formed:
-        \begin{enumerate}
-          \item Fitch 1: First state set of father node; intersection/union of siblings first.
-          \item Fitch 2: First state set of father node; intersection/union of siblings together with father node.
-          \item Fitch 3: Both state sets of father node; intersection/union of siblings first.
-          \item Fitch 4: Both state sets of father node; intersection/union of siblings together with father node sets.
-        \end{enumerate}
-        \begin{figure}
-          \centering
-          \includegraphics[width=0.8\textwidth]{Figures/simulation_fitch_evaluation.png}
-          \caption{Test of Fitch Versions.}
-          \label{fig:Fitch versions}
-        \end{figure}
-        These four versions were tested in the simulation with 100 trees and 10000 leaf nodes and a
-          distribution of 60~\% FL to 40~\% P. Figure \ref{fig:Fitch versions} shows this over all unknown 
-          node percentage. \\
-        % At 90~\% unknown nodes and 90~\% of multifurcation of the internal nodes, version 1 was 89.26~\%, 
-        %   version 2 was 89.26~\%, version 3 was 89.35~\%, and version 4 was 89.31~\% correct. Therefore, 
-        %   only version 3 was used for all further simulations.
-        At 95~\% unknown nodes and 95~\% of multifurcation of the internal nodes, version 1 was 88.37~\%, 
-          version 2 was 88.37~\%, version 3 was 88.4~\%, and version 4 was 88.39~\% correct. Therefore, 
-          only version 3 was used for all further simulations.
-          
-      % Fitch versions:
-      % | 88.37 % | 88.37 % | 88.4 % |88.39 % |
-
-
-      %---------------------------------------------------------------------------------------------------
-      \subsubsection{Sankoff}
-        Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}. \\
-        \todo{transition probabilities: all equal}
 
   % %---------------------------------------------------------------------------------------------------
   % %---------------------------------------------------------------------------------------------------
