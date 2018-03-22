@@ -588,9 +588,7 @@
       }. \\
     \todo{ref in die discussion über die randomized function? Diskutieren wir das?}
 
-    The next step is to simulate the states of the nodes using the transitions. Again, fully known 
-      states are simulated and then everything is 'forgotten' but a few in the leaf nodes so that 
-      \colorbox{red}{you} can later compare the reconstruction with the origin. \\
+    The next step is to simulate states for all nodes. \\
     The root node is defined as ancestor of all subsequent species and in this case, determined to be
       free-living. Therefore, a beta distribution for free-living is used at the beginning. Now 
       traverse from the root to the leaf nodes, always pulling out of the current distribution until 
@@ -599,18 +597,20 @@
     To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, it 
       is modeled with a beta distribution as in Figure \ref{fig:set node states}. \\
 
-    After traversing through the tree, each state is saved in a nodelist associated with the node ID 
-      which is the OTT from OTL. \\
-    \begin{wrapfigure}{r}{0.65\textwidth}
+    After traversing through the tree, each state is saved in a nodelist associated with the  
+    \begin{wrapfigure}[21]{r}{0.65\textwidth}
       \centering
       \includegraphics[width=0.65\textwidth]{Figures/40-60_all.jpg}
-      \caption{Set node states: Start with a free-living (FL) root node (red); \\
-        (1) + (2) draw random numbers for its children, the numbers are under the threshold 
-        $\rightarrow$ the nodes are again free-living; go on with the children; \\
-        (3) draw a random number, this nubmer is over the threshold the node state changes to parasitic (P) (blue); \\
-        (4) now the node states stay parasitic until the random numer lies unter the threshold.}
+      \caption{Set node states: Distribution of states (left); traversion through the tree (right). \\
+        Start with a free-living root node (FL: red). \\
+        (1) + (2) Draw random numbers for its children from the free-living distribution (red), the numbers are under the threshold 
+        $\rightarrow$ the nodes are again free-living; go on with the children. \\
+        (3) The number drawn is above the threshold. $\rightarrow$ The node state changes to parasitic (P: blue). \\
+        (4) Now draw random numbers from the parasite distribution (red) until one number lies unter the threshold. Then change back.}
       \label{fig:set node states}
     \end{wrapfigure}
+    node ID which is the OTT from OTL. \\
+
 % simulate loss of information
     Here begins the simulation of the lost information. This is on the one hand the states and on the 
       other the topology of the tree. \\
@@ -647,7 +647,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Implementation}
-    \colorbox{red}{You} can find the full code on GitHub: 
+    The complete code is located on GitHub: 
       \hyperlink{github.com/Irallia/IZW-HU-Parasites}{github.com/Irallia/IZW-HU-Parasites}. \\
     Most of the code was written in Python. The analyzes and the use of the Castor package in R. There 
       are some shell scripts to execute whole workflows.
