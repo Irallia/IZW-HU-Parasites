@@ -364,7 +364,7 @@
         transition probabilities.
       \begin{wrapfigure}{r}{0.5\textwidth}
         \begin{center}
-          \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.45\textwidth]{Figures/40-60.JPG}
+          \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.45\textwidth]{Figures/40-60.png}
         \end{center}
         \caption{60~\% Free-living - 40~\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
         \label{fig:Beta distribution}
@@ -594,15 +594,23 @@
     The root node is defined as ancestor of all subsequent species and in this case, determined to be
       free-living. Therefore, a beta distribution for free-living is used at the beginning. Now 
       traverse from the root to the leaf nodes, always pulling out of the current distribution until 
-      the randomly drawn number is above the threshold and the new node changes state. 
-      \anmerkungstext{Für den Tree/Graph Traversal würde sich eine erklärende Abbildung anbieten. Nur 
-      Text macht es sehr schwer verständlich an der Stelle. (Thilo)} \\
+      the randomly drawn number is above the threshold and the new node changes state. Figure 
+      \ref{fig:set node states} shows a part of this simulating states. \\
     To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, it 
-      is modeled with a beta distribution as in Figure \ref{fig:Beta distribution}. \\
+      is modeled with a beta distribution as in Figure \ref{fig:set node states}. \\
 
     After traversing through the tree, each state is saved in a nodelist associated with the node ID 
       which is the OTT from OTL. \\
-
+    \begin{wrapfigure}{r}{0.65\textwidth}
+      \centering
+      \includegraphics[width=0.65\textwidth]{Figures/40-60_all.jpg}
+      \caption{Set node states: Start with a free-living (FL) root node (red); \\
+        (1) + (2) draw random numbers for its children, the numbers are under the threshold 
+        $\rightarrow$ the nodes are again free-living; go on with the children; \\
+        (3) draw a random number, this nubmer is over the threshold the node state changes to parasitic (P) (blue); \\
+        (4) now the node states stay parasitic until the random numer lies unter the threshold.}
+      \label{fig:set node states}
+    \end{wrapfigure}
 % simulate loss of information
     Here begins the simulation of the lost information. This is on the one hand the states and on the 
       other the topology of the tree. \\

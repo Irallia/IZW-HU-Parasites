@@ -23,19 +23,58 @@ def main():
 
     plt.tight_layout()
     plt.show()
+    # ------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
-    # PLOT_NUMBER = 1
-    # f, axs = plt.subplots(ROWS, COLS, figsize=(7, 10))
-    # plt.suptitle('Influence of unknown data to prediction', fontsize=12, y=1)
+    f, axs = plt.subplots(1, 1, figsize=(4,3))
 
-    # plot_hist(40)
-    # plot_data(40)
+    # -------------------------------------plot distribution------------------------------------
+    beta_distribution_parameters = [7, 5.5, 2.75, 7]   # 40 P - 60 FL
+    #   for freeliving_distribution
+    A_FL = beta_distribution_parameters[0]
+    B_FL = beta_distribution_parameters[1]
+    #   for parasite_distribution
+    A_P = beta_distribution_parameters[2]
+    B_P = beta_distribution_parameters[3]
+
+    freeliving_distribution = []
+    parasite_distribution = []
+    for item in range(0, 1000000):
+        freeliving_distribution.append(betavariate(A_FL, B_FL))
+        parasite_distribution.append(betavariate(A_P, B_P))
+
+    ax = plt.subplot(1, 1, 1)
+
+    # the histogram of the data
+    n, bins, patches = plt.hist(parasite_distribution, 100, normed=1, facecolor='r', alpha=0.75)
+    n, bins, patches = plt.hist(freeliving_distribution, 100, normed=1, facecolor='b', alpha=0.75)
+
+    plt.xlabel('drawn random number', fontsize=9)
+    plt.ylabel('number of draws', fontsize=9)
+
+    title = str(40) + '% P - ' + str(100-40) + '% FL'
+    plt.axvline(x=40/100, color='black')#, xmin=0.25, xmax=0.402, linewidth=2)
     
-    # plot_hist('40-old')
-    # plot_data('40-old')
+    blue_patch = mpatches.Patch(color='blue', label='free-livings')
+    red_patch = mpatches.Patch(color='red', label='parasites')
+    black_line = mlines.Line2D([], [], color='black', label='threshold')#, marker='*', markersize=15)
+    plt.legend(handles=[blue_patch, red_patch, black_line], title=title, loc="upper right", fontsize=9) # shadow=True, fancybox=True)
+    ax.get_legend().get_title().set_fontweight("bold")
+    # plt.axis([0, 1, 0, 8])
+    plt.axis([0, 1, -0.2, 8])
+    plt.grid(True)
 
-    # plt.tight_layout()
-    # plt.show()
+    # -------------------------------------plot points------------------------------------
+    plt.plot([0.15,0.33,0.52], [0,0,0], color='black', marker='o', markersize=10, markerfacecolor='red') #maroon
+    plt.plot([0.44], [0], color='black', marker='o', markersize=10, markerfacecolor='blue') #navy
+    ax.annotate('1', xy=(0.33, 0), xytext=(0.34, 0.1), color='white', fontweight='bold')
+    ax.annotate('2', xy=(0.15, 0), xytext=(0.16, 0.1), color='white', fontweight='bold')
+    ax.annotate('3', xy=(0.52, 0), xytext=(0.53, 0.1), color='white', fontweight='bold')
+    ax.annotate('4', xy=(0.44, 0), xytext=(0.45, 0.1), color='white', fontweight='bold')
+    plt.tight_layout()
+    plt.show()
+    # ------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     PLOT_NUMBER = 1
     f, axs = plt.subplots(ROWS, 1, figsize=(4, 10))
