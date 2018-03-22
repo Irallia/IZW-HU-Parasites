@@ -13,13 +13,30 @@
   % Titelseite
   \begin{titlepage}
     \pagestyle{empty}
-  	
-    	\vspace{20mm}
+  	\begin{center}
+      {\Large Freie Universität Berlin} \\
+    	\begin{Huge}
+      	Fachbereich Mathematik und Informatik \\
+      	\vspace{3mm}
+    	\end{Huge}
+    	\vspace{2cm}
     	\begin{Large}
-          \textbf{An analysis of maximum parsimony algorithms to predict parasitism in Eukaryota}\\
-          using a large multiurcated phylogenetic synthesis tree
-      \end{Large}
-
+        \textbf{An analysis of maximum parsimony algorithms to predict parasitism in Eukaryota} \\
+        \vspace{3mm}
+        using a large multifurcated phylogenetic synthesis tree \\
+    	\end{Large}
+      \vspace{3cm}
+      \textbf{Eingereicht am:} \\
+      3.4.2018 \\
+    	\vspace{2cm}
+    	Lydia Buntrock \\
+      E-Mail: info@irallia.de \\
+     	\vspace{3cm}
+      \textbf{Betreuer:} \\
+      Dr. Bernhard Y. Renard \\
+      \& \\
+      Prof. Dr. rer. nat. Emanuel Heitlinger \\      
+  	\end{center}
   	\clearpage
   \end{titlepage}
 
@@ -28,6 +45,46 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter*{Abstract}
+
+% Parasitism in Eukaryota - Reconstruction of ancestral and unavailable extant states
+
+% Lydia Buntrock^1; Jorrit Poelen^?; Berhard Renard^2; Emanuel Heitlinger^1,3;
+
+% 1 - Institute for Biology, Molecular Parasitology, Humboldt University, Berlin, Germany
+% 2 - Bioinformatics Unit (MF1), Department for Methods Development and Research Infrastructure, Robert Koch Institute, Berlin, Germany
+% 3 - Research Group Ecology and Evolution of Molecular Parasite Host Interactions, Leibniz Institute for Zoo and Wildlife Research, Berlin, Germany
+
+% ## Wenn du willst kannst du auch das IZW (3) an deinen Namen heften!
+% ## Yorrit bitte das Abstract schicken und fragen ob er Co-Author sein will. 
+
+  Parasitism can be defined as an interaction between species in which one of the interaction 
+    partners, the parasite, lives in or on the other, the host. The parasite draws food from its 
+    host and harms it in the process. According to some estimates, above 50\% of all eukaryotes are 
+    parasites. Nevertheless, it is difficult to obtain information whether a particular taxon is a 
+    parasite computationally making it difficult to query large sets of taxa. \\
+
+  Here we test in how far it is possible to use the open tree of life (OTL), a synthesis of 
+    phylogenetic trees on a backbone taxonomy (resulting in unresolved nodes), to expand available 
+    information via phylogenetic trait prediction. We use the Global Biotic Interactions (GloBI) 
+    database to categorise 25,992 and 34,879 species as parasites and free-living, respectively and 
+    predict states for over ~2.7 million (97.6\%) leaf nodes without state information. \\
+
+  We estimate the accuracy of our maximum parsimony based predictions using cross-evaluation and 
+    simulation at roughly 80\% overall, but strongly varying between clades. We describe this 
+    variation across taxa as associated with available state and topology information. We compare 
+    our results with several smaller scale studies, which used manual expert curation and conclude 
+    that computationally inferred state changes largely agree in number and placement with those. In 
+    clades in which available state information is biased (mostly towards parasites, e.g. in 
+    Nematodes) phylogenetic prediction is bound to provide results contradicting conventional 
+    wisdom. \\
+
+  This represents, to our knowledge, the first comprehensive computational reconstruction of the 
+    emergence of parasitism in eukaryotes. We argue that such an approach is necessary to allow 
+    further incorporation of parasitism as an important trait in species interaction databases and 
+    in individual studies on eukaryotes e.g. in the microbiome. \\
+
+  ------------ \\
+
   This study focuses on the ancestral state reconstruction of parasitism in the tree of life of
     Eukaryota. We predict unknown states of species and estimate origins and losses of parasitism. \\
   The challenge here is the size of the tree and the little information about it. \\
