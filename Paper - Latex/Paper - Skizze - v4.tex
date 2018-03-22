@@ -73,9 +73,11 @@
   %   Eukaryota Tree of Life. \\
 
   We will test the existing maximum parsimony algorithms Fitch \cite{Fitch1971} and Sankoff 
-    \cite{Sankoff1975} for this task and estimate their predictive power. The present tree of OTL is 
-    not binary. A tree is binary (or bifurcated), when every node has at most two children otherwise 
-    it is multifurcated \cite{Felsenstein2003}. \\
+    \cite{Sankoff1975} for this task and estimate their predictive power. The present tree structure 
+    of OTL is not binary. A tree is binary (or bifurcated), when each node has at most two children 
+    otherwise it is multifurcated \cite{Felsenstein2003}. \\
+  % \anmerkungstext{auch hier kannst du multiifurcated direkt erklären: that is it each not has 
+    % multiple (n >= 3) children (Thilo)}
   Maximum parsimony methods are developed for phylogenies, which are usually depicted as binary trees.
     Parsimonious in phylogeny refers to favoring the tree that needs the least evolutionary change 
     to explain the observed data. In our case, it is about the change of states 'is free-living' or 
@@ -91,9 +93,17 @@
   For about 50 years, people have been working on ancestral state reconstruction. The first paper 
     is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state data 
     \cite{Camin1965}. Different methods have been developed and the question is which method is the 
-    most suitable for our problem. \\
+    most suitable for the problem at hand: The ancestral state reconstruction for a huge 
+    multifurcated tree with \colorbox{red}{binary/two discrete} states. \\
   \anmerkungstext{hier mehr dazu? Likelihood vs parsiomony... das befindet sich momentan im Methoden 
     Teil: Ancestral state reconstruction methods} \\
+  % Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
+  %   The first is to explain the current state with the least number of state changes between an 
+  %     ancestor and his child, this is called parsimonious. \\
+  %   The other class she presents involves modeling the character evolution as a stochastic process and 
+  %     using the likelihoods to compute the possible ancestral character states. This is generally done 
+  %     with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
+  
   % The first methods were only brute force \todo{Quelle, siehe Fitch: Camin and Sokal 1965}. 
   %   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
   %   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
@@ -121,30 +131,29 @@
     % developed algorithms are not directly applicable. Therefore, an algorithm must be found that can 
     % work with non-binary trees. \\
   For the information about the current states of the species we use the interaction database Global 
-    Biotic Interactions (GloBI) \cite{Poelen2014}. The data in GloBI are stored as interactions. 
-    Useful for us e.g. Species A parasitize species B. From this we conclude that species A is 
-    parasitic and species B free-living. In the case parasite parasitizes parasite, we get conflicting 
-    states for the second species. We solve this by preferring parasitic. \\
+    Biotic Interactions (GloBI) \cite{Poelen2014}. The data in GloBI are stored as interactions e.g. 
+    species A parasitize species B. From this we conclude that species A is parasitic and species B 
+    free-living. \\
 
-  At this point a few words to the term parasitic. There are different definitions. Since we use Globi 
-    to classify species, we use their definition of parasitism. Again, in GloBi, ontobee definitions 
-    are used.
-  The interaction has parasite is defined as: "An interaction relationship between two organisms 
-    living together in more or less intimate association in a relationship in which association is 
-    disadvantageous or destructive to one of the organisms." \cite{...}. This definition includes: 
-    ecto- and endoparasites, parasitoids, kleptoparasites and pathogenes.
+  At this point a few words to the term parasitic. There are different definitions. Since we use 
+    GloBI to classify species, we use their definition of parasitism. Again, in GloBi, Ontobee 
+    definitions are used \cite{Xiang2011}.
+  The interaction \textit{has parasite} is defined as: "An interaction relationship between two 
+    organisms living together in more or less intimate association in a relationship in which 
+    association is disadvantageous or destructive to one of the organisms." \cite{...}. This 
+    definition includes: ecto- and endoparasites, parasitoids, kleptoparasites and pathogenes.
   \todotext{Mungall, C., (2017). Definition for the interaction-term: "parasitised by; has parasite" 
   ob ontobee.org. Last checked: 24.07.2017 at 
   \hyperlink{ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
   {ontobee.org/ontology/...}} \\
 
-  This paper thus consists of the following points: (1) Find a suitable ancestral state 
+  The objectives of this work are the following points: (1) Find a suitable ancestral state 
     reconstruction method. (2) Perform reconstructing on the Eucaryotic synthesis tree of OTL. \\
-  Point 1 consists of a simulation of our data situation and the application of various possible 
-    algorithms to these. To evaluate them based on the results. \\
+  The goal of Point 1 is to evaluate the possible methods based on a simulation of our data 
+    situation. \\
   The one by Louca et al. implemented Sankoff algorithm is the best in our comparisons. Therefore, 
     point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states. 
-    And then an evaluation of the results.
+    And then perform an evaluation of the results.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -243,6 +252,10 @@
         \item parasite source: parasiteOf, pathogenOf
         \item parasite target: hasParasite, hasPathogen
       \end{itemize}
+      Of these interactions, e.g. species A parasitize species B, the state of the species is 
+        determined, here is species A parasitic and species B free-living. The case a parasite 
+        conquers (parasitizes) another parasite yields conflicting states for the second species. 
+        This is solved by preferring parasitic. \\
       Two lists are formed: parasites and free-livings, and the source or targets of an interaction
         are added to these.
 
@@ -751,7 +764,7 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class & Order \\
             \hline \hline
-            multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & XXXXX \\
+            multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & \cellcolor{green!45}484681 \\
             \hline
             multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
             \hline
@@ -764,7 +777,7 @@
       \end{table}
       It also follows from this table that the most complex model is the best. In general, the BIC 
         values are smaller than those of the multifurcation models. The modeling here is thus better. \\
-      Again, the calculation of finer models (eg family) was too expensive. \\
+      Again, the calculation of finer models (eg order or family) was too expensive. \\
 
       These missing data modeling results can be used to better simulate the data.
 
@@ -784,15 +797,15 @@
     The y-axes indicate the percentage of correctly predicted states (including known states). On the 
       x-axis the percentage of forgotten states or missing internal nodes. \\
     Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
-    For the middle column we set the strength of the multifurcations to 0.95\% similar to the real 
-      data and in the right column the amount of the unknowns to 0.95\% also similar to the real data. \\
+    For the middle column we set the strength of the multifurcations to 0.95~\% similar to the real 
+      data and in the right column the amount of the unknowns to 0.95~\% also similar to the real data. \\
 
-    As \colorbox{red}{you} can see both algortithms are always over 50\% and therefore better than guessing. Moreover, 
+    As \colorbox{red}{you} can see both algortithms are always over 50~\% and therefore better than guessing. Moreover, 
       they are usually close to each other, with Sankoff always makes better predictions except for 
       equally distributed states as Fitch. \\
     \colorbox{red}{You} can see that the distribution of states has a strong influence on the prediction. The more 
       evenly distributed, the harder it is to predict. \\
-    If more than 60\% of internal nodes are missing, Fitch breaks significantly in his prediction 
+    If more than 60~\% of internal nodes are missing, Fitch breaks significantly in his prediction 
       compared to Sankoff.
     
     \begin{figure}
@@ -1098,10 +1111,10 @@
     \subsection{Cross evaluation - leave 100 out}
       We ran the castor algorithm 100 times with leaving 100 randomized free-living or parasitic species 
         out of the input data to see how stable our result is. Of these 10,000 nodes, 9,238 were unique. 
-        Of that, we predicted 9060 ($\approx 98.17~\%$) correctly and 169 ($\approx 1.82~\%$) wrongly, with 
-        duplicate draws always having the same prediction. \\
-      What is the best way to model this data? We again tested the influence of the taxa and the depth of 
-        leaf nodes and calculated the BICs (Table: \ref{table:BIC cross validation}).
+        Of that, we predicted 9060 ($\approx 98.17~\%$) correctly and 169 ($\approx 1.82~\%$) wrongly, 
+        with duplicate draws always having the same prediction. \\
+      What is the best way to model this data? We again tested the influence of the taxa and the depth 
+        of leaf nodes and calculated the BICs (Table: \ref{table:BIC cross validation}).
 
       \begin{table}[h]
         \begin{center}
@@ -1109,7 +1122,7 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class & Order \\
             \hline \hline
-            correct predicted $\sim$ taxa & XXXXX & XXXXX & XXXXX & XXXXX \\
+            correct predicted $\sim$ taxa & 117877 & 111466 & XXXXX & XXXXX \\
             \hline
             correct predicted $\sim$ taxa + depth & 117703 & XXXXX & XXXXX & XXXXX \\
             \hline
@@ -1127,7 +1140,7 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class & Order \\
             \hline \hline
-            correct predicted $\sim$ taxa & 117936 & 112242 & XXXXX & XXXXX \\
+            correct predicted $\sim$ taxa & 117936 & 112242 & 111733 & XXXXX \\
             \hline
             correct predicted $\sim$ taxa + depth & 117776 & XXXXX & XXXXX & XXXXX \\
             \hline
@@ -1138,13 +1151,6 @@
         \caption{BICs of cross validation prediction}
         \label{table:BIC cross validation} 
       \end{table}
-
-      Resiudals:
-      \begin{itemize}
-        \item correct predicted $\sim$ 1: 120325
-        \item correct predicted $\sim$ kingdom: 117877
-        \item correct predicted $\sim$ phylum: 111466
-      \end{itemize}
 
       What could happen by removing a parasite or free-living of the list?
       \begin{itemize}
