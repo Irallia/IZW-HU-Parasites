@@ -14,6 +14,7 @@ digraph G {
 	cluster_1 -> cluster_2
 	cluster_1 -> cluster_4
 	cluster_2 -> cluster_3
+	cluster_3 -> cluster_5
 	cluster_4 -> cluster_5
 
 }

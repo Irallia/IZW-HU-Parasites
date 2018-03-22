@@ -94,6 +94,9 @@ def plot_hist(percentage_parasites):
     n, bins, patches = plt.hist(parasite_distribution, 100, normed=1, facecolor='r', alpha=0.75)
     n, bins, patches = plt.hist(freeliving_distribution, 100, normed=1, facecolor='b', alpha=0.75)
 
+
+    plt.ylabel('number of draws', fontsize=9)
+
     if PLOT_NUMBER == 1:
         plt.title('Histogram of distributions', fontweight='bold')
     if percentage_parasites != '40-old':
@@ -108,19 +111,16 @@ def plot_hist(percentage_parasites):
     plt.legend(handles=[blue_patch, red_patch, black_line], title=title, loc="upper right", fontsize=9) # shadow=True, fancybox=True)
     ax.get_legend().get_title().set_fontweight("bold")
     plt.axis([0, 1, 0, 8])
-    # plt.ylabel('???', fontsize=9)
-    # if PLOT_NUMBER != 11:
-    #     plt.xticks([])
-    # else:
-        # plt.xlabel('???', fontsize=9)
+    if PLOT_NUMBER == 14:
+        plt.xlabel('drawn random number', fontsize=9)
     plt.grid(True)
 
     return
 
 def plot_data_unknown(percentage_parasites):
     global PLOT_NUMBER
-    filepath = 'data/simulation/' + str(percentage_parasites) + '-unknown_plot.csv'
-    data = genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'y_fitch', 'y_my', 'y_sankoff'])
+    filepath = 'data/simulation/' + str(percentage_parasites) + '-unknown.csv'
+    data = genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'multifurcation', 'y_fitch', 'y_my', 'y_sankoff'])
 
     plt.subplot(ROWS, COLS, PLOT_NUMBER)
     PLOT_NUMBER += 1
@@ -144,7 +144,7 @@ def plot_data_unknown(percentage_parasites):
 
 def plot_data_multifurc(percentage_parasites):
     global PLOT_NUMBER
-    filepath = 'data/simulation/' + str(percentage_parasites) + '-unknown-multifurcation.csv'
+    filepath = 'data/simulation/' + str(percentage_parasites) + '-multifurcation.csv'
     data = genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'multifurcation', 'y_fitch', 'y_my', 'y_sankoff'])
 
     plt.subplot(ROWS, COLS, PLOT_NUMBER)

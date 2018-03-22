@@ -33,7 +33,7 @@
       E-Mail: info@irallia.de \\
      	\vspace{3cm}
       \textbf{Betreuer:} \\
-      Dr. Bernhard Y. Renard \\
+      Prof. Dr. Bernhard Y. Renard \\
       \& \\
       Prof. Dr. rer. nat. Emanuel Heitlinger \\      
   	\end{center}
@@ -236,7 +236,7 @@
     workflow can be found in the appendix \ref{fig:BigWorkflow}.
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.45\textwidth]{Figures/Workflow-overview.png}
+    \includegraphics[width=0.6\textwidth]{Figures/Workflow-overview.png}
     \caption{The Workflow of the resulting procedure with the following steps: \\
       (1) Retrieve phylogenentic tree data as input for the tree (OTL) and the state information (GloBI).
       (2) Get metadata of these for a realisitc the simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
@@ -364,7 +364,7 @@
         transition probabilities.
       \begin{wrapfigure}{r}{0.5\textwidth}
         \begin{center}
-          \includegraphics[trim = 0mm 0mm 0mm 13mm, clip, width=0.48\textwidth]{Figures/40-60.png}
+          \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.45\textwidth]{Figures/40-60.JPG}
         \end{center}
         \caption{60~\% Free-living - 40~\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
         \label{fig:Beta distribution}
@@ -382,7 +382,6 @@
         \end{itemize}
         (\todo{see results simulation, ref...}). Figure \ref{fig:Beta distribution} 
         shows one example of these. \\
-      \todo{Plot neu erstellen: Achsenbeschriftung, threshold}
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -474,16 +473,7 @@
         Neubewertung. Sie beziehen ihren Algortihmus auf Swofford und Maddison...} \\
       To understand the differences to the multifurcated case, the algorithm for the binary case is 
         briefly explained and referred to the extension. \\
-        \begin{wrapfigure}[19]{r}{0.5\textwidth}
-          \centering
-          \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
-          \caption{Fitch algorithm for binary trees. \\
-            The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
-            root node) consists of three sets, where the last set is the final one (bold). \\
-            From the second internal node (seen from the root node) there are several possibilities to 
-            create the second and third set.}
-          \label{fig: binary Fitch}
-        \end{wrapfigure} 
+
       Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
         a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P). 
         Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
@@ -496,7 +486,18 @@
         \item The intersection is not empty and corresponds to the new set.
         \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
       \end{enumerate}
+      \begin{wrapfigure}{r}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
+        \caption{Fitch algorithm for binary trees. \\
+          The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
+          root node) consists of three sets, where the last set is the final one (bold). \\
+          From the second internal node (seen from the root node) there are several possibilities to 
+          create the second and third set.}
+        \label{fig: binary Fitch}
+      \end{wrapfigure}
       First traverse from the leaf nodes to the root / move down the tree / postorder tree traversal.
+      
         Each internal node is formed from its child nodes, where at the beginning the only information
         lies. \\
       Second traverse from the root node to the leafs. Each internal node is formed from its father node 
@@ -564,65 +565,64 @@
     \begin{figure}[h!]
       \centering
       \includegraphics[width=1\textwidth]{Figures/Workflow-Simulation.png}
-      \caption{Course of the simulation with influence of the metadata analysis from the real data.}
+      \caption{A simulation was performed to compare different maximum parsimony algorithms. \\
+        The course of the simulation with influence of the metadata analysis from the real data can
+          be seen: \\
+        (1) A phylogenetic tree is created randomly. (2) Simulate node states for all nodes. (3) 
+          'Forget' internal states and some leaf node states. (4) 'Lose' phylogeny information. (5) 
+          Make a nodelist for the algorithm. (6) Run algorithms. (7) Evaluate results. \\
+        Points 3 and 4 are influenced by metadata of the real-data analysis.}
       \label{fig:Simulation Workflow}
     \end{figure}
+    The course of a simulation is shown in Figure \ref{fig:Simulation Workflow}. The individual steps 
+      are explained in the following. \\
 
-    \todotext{Figure \ref{fig:Simulation Workflow} shows the course of the simulation. The individual 
-      steps are explained in the following subsections: ...}
-  
-    \todo{Evaluation - compare trees (distances)}
+    A tree is needed to do a simulation of ancestral state reconstruction. It had to be decided whether 
+      to take the real tree or simulate a tree. In this simulation, trees are created randomly, as 
+      one can replicate a complete binary phylogentic tree. Thus, there is also the possibility to 
+      simulate the multifurcation. \\
+    To get a random binary tree, the Phylo package from biopython is used \cite{Cock2009}. They offer 
+      a randomized function which returns a BaseTree\footnote{
+        \hyperlink{https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
+        {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
+      }. \\
+    \todo{ref in die discussion über die randomized function? Diskutieren wir das?}
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{random binary tree}
-      A tree is needed to do a simulation of ancestral state reconstruction. It had to be decided whether 
-        to take the real tree or simulate a tree. In this simulation, trees are created randomly, as 
-        one can replicate a complete binary phylogentic tree. Thus, there is also the possibility to 
-        simulate the multifurcation. \\
-      
-      To get a random binary tree, the Phylo package from biopython is used \cite{Cock2009}. They offer 
-        a randomized function which returns a BaseTree\footnote{
-          \hyperlink{https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
-          {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
-        }. \\
-      \todo{ref in die discussion über die randomized function? Diskutieren wir das?}
+    The next step is to simulate the states of the nodes using the transitions. Again, fully known 
+      states are simulated and then everything is 'forgotten' but a few in the leaf nodes so that 
+      \colorbox{red}{you} can later compare the reconstruction with the origin. \\
+    The root node is defined as ancestor of all subsequent species and in this case, determined to be
+      free-living. Therefore, a beta distribution for free-living is used at the beginning. Now 
+      traverse from the root to the leaf nodes, always pulling out of the current distribution until 
+      the randomly drawn number is above the threshold and the new node changes state. 
+      \anmerkungstext{Für den Tree/Graph Traversal würde sich eine erklärende Abbildung anbieten. Nur 
+      Text macht es sehr schwer verständlich an der Stelle. (Thilo)} \\
+    To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, it 
+      is modeled with a beta distribution as in Figure \ref{fig:Beta distribution}. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{simulating states and transitions between them}
-      The next step is to simulate the states of the nodes using the transitions. Again, fully known 
-        states are simulated and then everything is 'forgotten' but a few in the leaf nodes so that 
-        \colorbox{red}{you} can later compare the reconstruction with the origin. \\
-      The root node is defined as ancestor of all subsequent species and in this case, determined to be
-        free-living. Therefore, a beta distribution for free-living is used at the beginning. Now 
-        traverse from the root to the leaf nodes, always pulling out of the current distribution until 
-        \colorbox{red}{you} get above the threshold and the new node changes state. \anmerkungstext{Für 
-        den Tree/Graph Traversal würde sich eine erklärende Abbildung anbieten. Nur Text macht es sehr 
-        schwer verständlich an der Stelle. (Thilo)} \\
-      To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, it 
-        is modeled with a beta distribution as in Figure \ref{fig:Beta distribution}. \\
-
-      After traversing through the tree, each state is saved in a nodelist associated with the node ID 
-        which is the OTT from OTL. \\
+    After traversing through the tree, each state is saved in a nodelist associated with the node ID 
+      which is the OTT from OTL. \\
 
 % simulate loss of information
-      Here begins the simulation of the lost information. This is on the one hand the states and on the 
-        other the topology of the tree. Some splits of nodes are unknown with which the tree is 
-        multifurcated (explained in the following section \todo{pageref}). \\
+    Here begins the simulation of the lost information. This is on the one hand the states and on the 
+      other the topology of the tree. \\
 
-      In the real tree, there is usually only information about species living today $\rightarrow$ leaf 
-        nodes. And beyond only a small percentage of these. All information about the states of the 
-        internal node and one leaf node is 'forgotten' and stored in another column to the node. \\
-      Different percentages of forgetting the information are simulated, as \colorbox{red}{you} can read 
-      in the \todo{section ... from the results}.
+    In the real tree, there is usually only information about species living today $\rightarrow$ leaf 
+      nodes. And beyond only a small percentage of these. All information about the states of the 
+      internal node and one leaf node is 'forgotten' and stored in another column to the node. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{simulating loss of information of the tree topology}
-      As previously explained, some divisions in the tree are not known, so the real tree is not binary.
-      This multifurcation was simulated by an equally distributed percentage of forgotten internal nodes.
-
+    Last step for the preparation is the multifurcation of the tree. As previously explained, some 
+      divisions in the tree are not known, so the real tree is not binary. This multifurcation is 
+      simulated by an equally distributed percentage of forgotten internal nodes. \\
+    
+    Different percentages of forgetting information are simulated, see figure 
+      \ref{fig:influence of unknown data} in the results. \\
+  
+    The last step is the evaluation of the results. This is done with a simple difference calculation 
+      of the node states. \\
+    In the nodelist, the originally simulated states and the newly calculated states are stored for 
+      each node ($FL = 0$, $P = 1$). The sum of the differences of the node states gives the distance 
+      of the prediction to the original tree.
 
   % %---------------------------------------------------------------------------------------------------
   % %---------------------------------------------------------------------------------------------------

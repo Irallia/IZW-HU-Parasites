@@ -21,13 +21,23 @@ digraph G {
 	}
 
 	d0 [label = "build random binary tree"]
-	d1 [label = "tag tree"]
+	d1 [label = "set node states"]
 	d2 [label = "forget data \n (unknown leaf nodes)"]
 	d3 [label = "multifurcate tree"]
 	d4 [label = "get nodelist"]
 	d5 [label = "run MP algorithms \n Fitch MP & Sankoff MP (Castor) "]
 
+	subgraph cluster_5 {
+		label = "Evaluation";
+		node [fillcolor=aquamarine];
+		color=aquamarine3
+		f3;
+	}
+
+	f3 [label = "Evaluation of the Simulation"]
+
 	c0 -> d2;
 	c2 -> d3;
+	d5 -> f3;
 	
 }
