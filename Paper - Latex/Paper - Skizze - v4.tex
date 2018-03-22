@@ -438,13 +438,13 @@
     \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
 
     One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
-      can not take divergece times (branch length) into account. Since there are no development times 
-      of species in our case, \colorbox{red}{you} can ignore this. \\
+      can not take divergece times (branch length) into account. Since the OTL does not include 
+      development times of species, this is irrelevant. \\
     Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
       predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
-      like irreversibility of transitions for dollo parsimony. Again, this problem is irrelevant to 
-      the problem at hand, because \colorbox{red}{you} can only work with generalized models in the 
-      analysis of the entire Eukaryota tree. \\
+      like irreversibility of transitions for dollo parsimony. Again, this problem is unimportant to 
+      the problem at hand, because in the analysis of the entire Eukaryota tree only generalized 
+      models make sense. \\
 
     Parsimony-based methods are used in this work, since they are fully sufficient for the presented 
       use case here. Following the principle of the simpler model first. \\
@@ -1205,11 +1205,11 @@
             \hline
             Model / Taxa & Kingdom & Phylum & Class & Order \\
             \hline \hline
-            correct predicted $\sim$ taxa & 117877 & 111466 & XXXXX & XXXXX \\
+            correct predicted $\sim$ taxa & 117877 & 111466 & 108878 & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa + depth & 117703 & XXXXX & XXXXX & XXXXX \\
+            correct predicted $\sim$ taxa + depth & 117703 & 110513 & XXXXX & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa * depth & 117592 & XXXXX & XXXXX & \cellcolor{green!60}XXXXX \\
+            correct predicted $\sim$ taxa * depth & 117592 & 109827 & XXXXX & \cellcolor{green!60}XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
@@ -1225,9 +1225,9 @@
             \hline \hline
             correct predicted $\sim$ taxa & 117936 & 112242 & 111733 & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa + depth & 117776 & XXXXX & XXXXX & XXXXX \\
+            correct predicted $\sim$ taxa + depth & 117776 & 111304 & 111273 & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa * depth & XXXXX & XXXXX & XXXXX & \cellcolor{green!60}XXXXX \\
+            correct predicted $\sim$ taxa * depth & 117709 & 111262 & XXXXX & \cellcolor{green!60}XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
