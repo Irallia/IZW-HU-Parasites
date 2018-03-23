@@ -651,7 +651,7 @@
       \item interprete results (cross validation - leave 100 out)
     \end{itemize}
     We then evaluated the results in two ways. On the one hand, we have examined the results of some 
-      sub-trees for their credibility with the help of biological background knowledge. On the other 
+      subtrees for their credibility with the help of biological background knowledge. On the other 
       hand, we performed a leaf 100 out cross validation.
 
   %---------------------------------------------------------------------------------------------------
@@ -681,7 +681,7 @@
     which performs best, for the actual reconstruction on the real data. \\
 
   We then evaluated the results in two ways. On the one hand, we have examined the results of some 
-    sub-trees for their credibility with the help of biological background knowledge (Subsection 
+    subtrees for their credibility with the help of biological background knowledge (subsection 
     \ref{sec:biological view}). On the other hand, we performed a leaf 100 out cross validation
     (Subsection \ref{sec:results cross evaluation}).
 
@@ -711,7 +711,7 @@
       \begin{center}
         \begin{tabular}{ |l||r|r| }
           \hline
-          Subtree of & unknown states & multifurcation \\ 
+          \bfseries Subtree of & \bfseries Unknown States & \bfseries Multifurcation \\ 
           \hline \hline
           Eukaryota       & 97.34~\%  & 98.16~\% \\
           \hline \hline
@@ -808,7 +808,6 @@
         % kingdom['ott691846', 'Metazoa']        -0.114873   0.003732  -30.78   <2e-16
         that means the strength of the multifurcation \colorbox{red}{is the same/has the same size 
         sorting}. \todo{kann das sein?} \\
-    %---------------------------------------------------------------------------------------------------
 
       We investigated several models that could describe multifurcation: \\
       In doing so, we allowed the different influence of the taxa and the heights and depths of a node 
@@ -817,14 +816,14 @@
       We first compared the models based on their residuals. These give us the error of the model. If 
         the value is small, our data will be well modeled. These values are meaningful only for the same 
         complexity, therefore we then calculated the BIC (Bayesian information criterion) values of the 
-        models and used them to evaluate the models.
-      \lstset{language=R}
-      \begin{lstlisting}[gobble=6]
-        anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, 
-                      order.furc.mod, family.furc.mod, test="LRT")
-        BIC(kingdom.furc.mod)
-        ...
-      \end{lstlisting}
+        models and used them to evaluate the models. \\
+      % \lstset{language=R}
+      % \begin{lstlisting}[gobble=6]
+      %   anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, 
+      %                 order.furc.mod, family.furc.mod, test="LRT")
+      %   BIC(kingdom.furc.mod)
+      %   ...
+      % \end{lstlisting}
       The deviance table with the residuals can be found in the appendix (table 
         \ref{table:Residuals multifurcation}). Table \ref{table:BIC multifurcation}. lists the BICs.
 
@@ -832,7 +831,7 @@
         \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
             multifurc $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
             multifurc $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
@@ -849,7 +848,7 @@
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC (Bayesian information criterion) values of the multifurcation models \\
+        \caption{BIC (Bayesian information criterion) values of the multifurcation models. \\
           These models were created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC multifurcation} 
@@ -857,21 +856,25 @@
       % * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
       Within the every complexity class it can be seen that the mean height gives the best additional factor. \\
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
-        the finest model available here is also the best one of these. Smaller taxa than orders (eg 
-        family) were computationally too expensive to calculate.
+        the finest model available here is also the best one of these. Lower taxa than orders (eg 
+        family) were computationally too expensive to calculate. \\
+      The model multifurc $\sim$ order * mean.height turns out to be the best of our models, whereby it 
+        is possible that eg multifurc $\sim$ family * mean.height is better.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Binomial regression of the unknown state information}
 
-      Next to the problem of the multifurcation of the tree is the less of data we have for the species.
-        For the ancestral state reconstruction, we need information in the leaf nodes. \\
-      The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5 346 414 interactions 
-        (at this timepoint). Out of this data we got 51,337 distinct free-living species and 47 332 
+      Next to the problem of the multifurcation of the tree is the less of interaction data we have for 
+        the species. For the ancestral state reconstruction, we need information about the states 
+        (free-living or parasite) in the leaf nodes. \\
+      The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
+        (at 29.01.2018). Out of this data we got 51,337 distinct free-living species and 47 332 
         distinct parasite species $\rightarrow$ unknown nodes 2,194,794 ($\approx 95.7~\%$). \\
       We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target
         species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
       % \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
+      \todo{discussion!!!} \\
 
       We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
         The Residuals are not very meaningful here, since all models have different complexities. % /dimensions
@@ -882,7 +885,7 @@
         \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
             multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & \cellcolor{green!45}484681 \\
             \hline
@@ -908,45 +911,55 @@
 
     As presented, we compare two methods in our simulation to their prediction accuracy: Fitch and 
       Sankoff. \\
-    We examine different parameters. In figure \ref{fig:influence of unknown data} is an overview of 
-      the results. \\
-    The first column describes the distributions of free-livings and parasites with a given threshold 
-      for the respective simulations to the right. \\
-    The middle column investigates the influence of the unknown states, the right the influence of the 
-      strength of the multifurcation. \\
-    The y-axes indicate the percentage of correctly predicted states (including known states). On the 
-      x-axis the percentage of forgotten states or missing internal nodes. \\
-    Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
-    For the middle column we set the strength of the multifurcations to 0.95~\% similar to the real 
-      data and in the right column the amount of the unknowns to 0.95~\% also similar to the real data. \\
-
-    As \colorbox{red}{you} can see both algortithms are always over 50~\% and therefore better than guessing. Moreover, 
-      they are usually close to each other, with Sankoff always makes better predictions except for 
-      equally distributed states as Fitch. \\
-    \colorbox{red}{You} can see that the distribution of states has a strong influence on the prediction. The more 
-      evenly distributed, the harder it is to predict. \\
-    If more than 60~\% of internal nodes are missing, Fitch breaks significantly in his prediction 
-      compared to Sankoff.
-    
+    Figure \ref{fig:influence of unknown data} shows the results of examining various parameters.
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[trim = 0mm 100mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
+    \end{figure}
+    ~ \\ ~ \\ ~ \\
     \begin{figure}
       \centering
-      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
-      \caption{Influence of unknown data to prediction}
+      \includegraphics[trim = 0mm 0mm 0mm 150mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
+      \caption{Influence of unknown data to prediction. \\
+        The first column describes the distributions of free-livings and parasites with a given 
+          threshold for the respective simulations to the right. \\
+        The middle column investigates the influence of the unknown states, the right the influence of
+          the strength of the multifurcation. \\
+        The y-axes indicate the percentage of correctly predicted states (including known states). On 
+          the x-axis the percentage of forgotten states or missing internal nodes. \\
+        Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
+        For the middle column we set the strength of the multifurcations to 0.95~\% similar to the 
+          real data and in the right column the amount of the unknowns to 0.95~\% also similar to the 
+          real data.}
       \label{fig:influence of unknown data}
     \end{figure}
+    First, we tested different trasition probability distributions including threshold (first column). 
+      It can be observed that the more balanced the percentages of free-livings and parasites, the 
+      worse the prediction of the algorithms (second and third column). \\
+    It can be seen that both algortithms are always over 50~\% prediction and therefore better than 
+      guessing. Moreover, they are usually close to each other, with Sankoff always makes better 
+      predictions except for equally distributed states as Fitch. \\
+    On the other hand, we examined the influence of missing internal nodes (ridge of multifurcation) 
+      and missing leaf node information (unknown leaf nodes). \\
+    Both factors have a relatively linear influence on the Sankoff method. Fitch, on the other hand, 
+      breaks significantly in his prediction from about 70\% unknown leaf nodes or mutifurcation. \\
 
-    In the end, Sankoff is in most cases the more accurate algortihmus and was therefore used for our 
-      prediction of the real data.
+    Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
+      the Sankoff gives a better prediction and was thus used for real data analysis.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Results of the real data analysis created with Sankoff}
+    This section is about evaluating the prediction of real data using the Sankoff method. \\
+    It is divided into two subsections. \ref{sec:biological view}: The analysis of some subtrees using 
+      biological background knowledge. \ref{sec:results cross evaluation}: Presentation of the results 
+      of the leaf 100 out cross validation.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Biological view} \label{sec:biological view}
-      To analyze the results, we have selected some phyla (sub-trees) to evaluate our results 
+      To analyze the results, we have selected some phyla (subtrees) to evaluate our results 
         selectively from the biological point of view: Chordata, Nematoda, Platyhelminthes and 
         Apicomplexa. \\
       In Table \ref{table:phylum leaf nodes states} we compare the given states with the predicted ones. \\
@@ -962,8 +975,8 @@
         \begin{center}
           \begin{tabular}{ |l|r||r|r||r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c||}{original states} & \multicolumn{4}{c|}{final states} \\
-            Phylum & \# nodes       & FL & P              & 0 (FL) & 0.3 & 0.5 & 1 (P) \\
+            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{4}{c|}{\bfseries final states} \\
+            \bfseries Phylum & \bfseries \# nodes & \bfseries FL & \bfseries P & \bfseries 0 \bfseries (FL) & \bfseries 0.3 &\bfseries  0.5 & \bfseries 1 (P) \\
             \hline \hline
             Chordata & 91785        & 10451 & 18          & 91759 & 0 & 0 & 26 \\
             &                       & 99.83~\% & 0.49~\%  & 99.97~\% & & & 0.03~\% \\ \hline
@@ -1042,7 +1055,6 @@
       For the Platyhelminthes we had more state information for the leaf nodes compared to the other 
         considered subtrees, see Table \ref{table:percentage loss information subtrees}. We start with 
         0.1~\% free-livings and predicted 0.77~\% as free-living spezies. \\
-    %---------------------------------------------------------------------------------------------------
 
       With the Nematoda it looks more complicated. Large parts of Nematoda are free-living, but we 
         found only 5.32~\% of them. Blaxter et al. estimates the order of 25,000 parasites in the 
@@ -1069,9 +1081,9 @@
         \begin{center}
           \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c||}{original states} & \multicolumn{6}{c|}{final states} \\
-            Phylum & \# nodes & FL & P
-              & 0 (FL) & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{6}{c|}{\bfseries final states} \\
+            \bfseries Phylum & \bfseries \# nodes & \bfseries FL & \bfseries P
+              & \bfseries 0 (FL) & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
             \hline \hline
             Chordata & 122546 & 10451 & 18 
               & 122473 & 0 & 0 & 0 & 0 & 73 \\
@@ -1095,9 +1107,9 @@
         \begin{center}
           \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c||}{original states} & \multicolumn{8}{c|}{final states} \\
-            Kingdom & \# nodes & FL & P
-              & 0 (FL) & 0.25 & 0.33 & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{8}{c|}{\bfseries final states} \\
+            \bfseries Kingdom & \bfseries \# nodes & \bfseries FL & \bfseries P
+              & \bfseries 0 (FL) & \bfseries 0.25 & \bfseries 0.33 & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
             \hline \hline
             none & 75446 & 45 & 529 
               & 13426 & 220 & 24082 & 0 & 7792 & 5302 & 0 & 24493 \\
@@ -1118,9 +1130,9 @@
         \begin{center}
           \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
             \hline
-            & & \multicolumn{2}{c||}{original states} & \multicolumn{8}{c|}{final states} \\
-            Kingdom & \# nodes & FL & P
-              & 0 (FL) & 0.25 & 0.33 & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
+            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{8}{c|}{\bfseries final states} \\
+            \bfseries Kingdom & \bfseries \# nodes & \bfseries FL & \bfseries P
+              & \bfseries 0 (FL) & \bfseries 0.25 & \bfseries 0.33 & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
             \hline \hline
             none & 84456 & 45 & 529 
               & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
@@ -1153,9 +1165,9 @@
           \begin{center}
             \begin{tabular}{ |l|r|r||r|r|r| }
               \hline
-              Domain  & \# internal & \# leaf & Rootnode & \multicolumn{2}{c|}{without and with rounding} \\ 
-              / Kingdom  & \multicolumn{2}{c||}{nodes} & state & \# origins & \# losses \\
-              / Phylum / Class & & & & (FL -> P) & (P -> FL) \\
+              \bfseries Domain  & \bfseries \# internal & \bfseries \# leaf & \bfseries Rootnode & \multicolumn{2}{c|}{\bfseries without and with rounding} \\ 
+              \bfseries / Kingdom  & \multicolumn{2}{c||}{\bfseries nodes} & \bfseries state & \bfseries \# origins & \bfseries \# losses \\
+              \bfseries / Phylum / Class & & & & \bfseries (FL -> P) & \bfseries (P -> FL) \\
               \hline \hline
               Eukaryota & 241974 & 2293463 & 1.0 & 415 & 363 \\
               & & & P & 462 & 369 \\
@@ -1238,7 +1250,7 @@
         \begin{center}
           \begin{tabular}{ |l|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class \\% & Order \\
+            \bfseries Model / Taxa &\bfseries  Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
             \hline \hline
             correct predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
             \hline
@@ -1256,7 +1268,7 @@
         \begin{center}
           \begin{tabular}{ |l|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class \\% & Order \\
+            \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
             \hline \hline
             correct predicted $\sim$ taxa & 117936 & \cellcolor{green!40}112242 & \cellcolor{green!50}111733 \\% & XXXXX \\
             \hline
@@ -1269,6 +1281,8 @@
         \caption{BICs of cross validation prediction}
         \label{table:BIC cross validation} 
       \end{table}
+
+      Lower taxa than classes (eg order) were computationally too expensive to calculate. \\
 
       What could happen by removing a parasite or free-living of the list?
       \begin{itemize}
@@ -1284,7 +1298,7 @@
         \begin{center}
           \begin{tabular}{ |cl||r|r|r|r|r| }
             \hline
-            & & min & max & mean & variance ($\sigma^2$) & $\sigma$ \\
+            & & \bfseries min & \bfseries max & \bfseries mean & \bfseries variance ($\sigma^2$) & $\sigma$ \\
             \hline \hline
             \multirow{3}{*}{distance} & all   & 0 & 3587.70 & 224.96 & 313650.61 & 560.05 \\
             & leaf nodes                      & 0 & 3021.12 & 208.69 & 248103.38 & 498.10 \\
@@ -1303,7 +1317,7 @@
         \begin{center}
           \begin{tabular}{ |cl||r|r|r|r| }
             \hline
-            & & min & max & mean & variance \\
+            & & \bfseries min & \bfseries max & \bfseries mean & \bfseries variance \\
             \hline \hline
             \rowcolor{green!50}distance & all   & 1 & 2 & 1.33 & 0.33 \\
             \rowcolor{orange!50}&               & 0 & 3587.70 & 217.94 & 273760.68 \\
@@ -1335,7 +1349,7 @@
       \begin{center}
         \begin{tabular}{ |l|l|r|r|r|r| }
           \hline
-          Taxa & Model / Effects & min & max & mean & median \\
+          \bfseries Taxa & \bfseries Model / Effects & \bfseries min & \bfseries max & \bfseries mean & \bfseries median \\
           \hline \hline
           Kingdom & globi $\sim$ taxa         & 0,01 & 0,04 & 0,02 & 0,01 \\
                   & globi $\sim$ taxa + depth & 0,01 & 0,03 & 0,02 & 0,01 \\
@@ -1495,7 +1509,7 @@
         % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
         \begin{tabular}{ |l|r||r|r|r| }
           \hline
-          Taxa & Number of Nodes & Internal Nodes & Leaf Nodes & Terminal Leaf Nodes \\
+          \bfseries Taxa & \bfseries Number of Nodes & \bfseries Internal Nodes & \bfseries Leaf Nodes & \bfseries Terminal Leaf Nodes \\
           \hline \hline
           \setrow{\bfseries}domain & 1 & 1 & &  \\ \hline
           \setrow{\bfseries}kingdom & 3 & 3 & &  \\
@@ -1552,7 +1566,7 @@
       \begin{center}
         \begin{tabular}{ |l|r|l|r|r| }
           \hline
-          Kingdom (3) & Number of Nodes & Phylum (25) & Number of Nodes & max max height \\
+          \bfseries Kingdom (3) & \bfseries Number of Nodes & \bfseries Phylum (25) & \bfseries Number of Nodes & \bfseries max max height \\
           \hline \hline
           Metazoa & 1 465 207 & Arthropoda & 1 170 539 & 54 \\
           & & Chordata & 106 650 & 74 \\
@@ -1597,7 +1611,7 @@
       \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
             multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
             \hline
@@ -1626,7 +1640,7 @@
       \begin{center}
         \begin{tabular}{ |l|r|r|r| }
           \hline
-          Model / Taxa & Kingdom & Phylum & Class \\
+          \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class \\
           \hline \hline
           multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
           \hline

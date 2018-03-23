@@ -150,7 +150,7 @@ def plot_hist(percentage_parasites):
     plt.legend(handles=[blue_patch, red_patch, black_line], title=title, loc="upper right", fontsize=9) # shadow=True, fancybox=True)
     ax.get_legend().get_title().set_fontweight("bold")
     plt.axis([0, 1, 0, 8])
-    if PLOT_NUMBER == 14:
+    if (PLOT_NUMBER == 14) or (PLOT_NUMBER == 8):
         plt.xlabel('drawn random number', fontsize=9)
     plt.grid(True)
 
@@ -174,7 +174,7 @@ def plot_data_unknown(percentage_parasites):
         label='Sankoff', linewidth=0.5, marker='.', markerfacecolor='black')
     plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 50, 100])
-    if PLOT_NUMBER == 15:
+    if (PLOT_NUMBER == 15) or (PLOT_NUMBER == 9):
         plt.xlabel('percentage unknown', fontsize=9)
     # else:
     #     plt.xticks([])
@@ -202,7 +202,7 @@ def plot_data_multifurc(percentage_parasites):
     else: 
         plt.legend(loc="upper left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 50, 100])
-    if PLOT_NUMBER == 16:
+    if (PLOT_NUMBER == 16) or (PLOT_NUMBER == 10):
         plt.xlabel('percentage multifurcation', fontsize=9)
     # else:
     #     plt.xticks([])
