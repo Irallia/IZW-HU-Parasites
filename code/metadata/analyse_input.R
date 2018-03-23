@@ -227,13 +227,17 @@ inner.taxa$multifurc <- inner.taxa$nr_children-1
 print('--------------------------------------------------')
 print('-------------------------multifurc data-------------------------')
 print('--------------------------------------------------')
-# null.furc.mod <- glm(multifurc~1, data=inner.taxa,
-#                    family="poisson")
-
+null.furc.mod <- glm(multifurc~1, data=inner.taxa, family="poisson")
+summary(null.furc.mod)
 print('------------------------kingdom - phylum - class - order - family--------------------------')
 
-# kingdom.furc.mod <- glm(multifurc~kingdom, data=inner.taxa,
-#                         family="poisson")
+kingdom.furc.mod <- glm(multifurc~kingdom, data=inner.taxa, family="poisson")
+# get the intercept:
+summary(kingdom.furc.mod)
+summary(kingdom.furc.mod)$kingdom
+print("---")
+mean(inner.taxa$multifurc)
+
 # print(c('BIC=',  BIC(kingdom.furc.mod)))
 
 # phylum.furc.mod <- glm(multifurc~phylum, data=inner.taxa,

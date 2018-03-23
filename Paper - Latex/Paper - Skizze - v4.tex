@@ -404,16 +404,21 @@
       In the simulation, the influence of the multifurcation and missing data in leaf nodes on the 
         predictive accuracy of the ancestral state reconstruction algorithms is tested. \\
       For the real data, generalized linear models are compared with poisson respectively binomial 
-        regression according to their residuals and BICs. \\
-      \anmerkungstext{Erklären, warum und wozu das gemacht wird. Warum BIC und nicht AIC? Erklären,
-        was beide bedeuten, wäre sinnvoll. (Thilo)} \\
+        regression according to their residuals. In order to compare models of different complexity, the 
+        BIC (Bayesian Information Criterion) values were calculated in addition to the residuals.\\
+      There are two different information criteria: AIC (Akaike Information Criteria) and BIC. \\
+      The advantage of the BIC is that the penalty is dependent on the sample size and is therefore 
+        advantageous for large samples. \\
 
       For each node, depth, min, max and mean height were noted. Where the depth of a node is the 
         distance (number of edges) to the root node and the height of a knot is described as the 
         largest distance to a leaf node. In this work, a distinction is made between minimum, maximum 
         and average distance ($\rightarrow$ min, max and mean height). \\
-      The influence in the modeling of these parameters was tested, additive as well as multiplicative.
+      The influence in the modeling of these parameters was tested, additive as well as multiplicative. \\
 
+      For all these calculations, the following R functions were used: \textit{glm()}, \textit{anova()} 
+        and \textit{BIC()}.
+      % https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -780,39 +785,49 @@
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Poisson regression of the multifurcation}
-      First of all we measured the strength of the multifurcation with the help of the intercept: 
-        $2.821 > 0$ $\Rightarrow$ there is a multifunction. \\
-      Comparing the different kingdoms, we find that multifunctionality is greater in Fungi than in 
-        Chloroplastida than in Metazoa:
-      $$4.0999 (Fungi Intercept) > -0.9132 (Chloroplastida Intercept) > -1.4320 (Metazoa Intercept)$$
-      % Degrees of Freedom: 96010 Total (i.e. Null);  96010 Residual
-      Then we have 9 times 4 models of different complexity levels.
-      \begin{table}[h!]
-        \begin{center}
-            \begin{tabular}{ |l|r|r|r|r| }
-              \hline
-              Model / Taxa & Kingdom & Phylum & Class & Order \\
-              \hline \hline
-              multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
-              \hline
-              multifurc $\sim$ taxa + depth & 7752303 & \cellcolor{green!10}7431609 & \cellcolor{green!15}7334754 & \cellcolor{green!30}7027578 \\
-              multifurc $\sim$ taxa + max.height & 7730196 & \cellcolor{green!15}7375889 & \cellcolor{green!20}7275856 & \cellcolor{green!30}7005424 \\
-              multifurc $\sim$ taxa + min.height & \cellcolor{green!10}7472500 & \cellcolor{green!20}7233486 & \cellcolor{green!25}7144686 & \cellcolor{green!40}6890703 \\
-              multifurc $\sim$ taxa + mean.height & \cellcolor{green!15}7304402 & \cellcolor{green!25}7128318 & \cellcolor{green!30}7055313 & \cellcolor{green!40}6815271 \\
-              \hline
-              multifurc $\sim$ taxa * depth & 7714881 & \cellcolor{green!15}7335396 & \cellcolor{green!20}7250759 & \cellcolor{green!40}6843004 \\
-              multifurc $\sim$ taxa * max.height & \cellcolor{green!5}7692980 & \cellcolor{green!15}7311241 & \cellcolor{green!25}7187504 & \cellcolor{green!45}6795823 \\
-              multifurc $\sim$ taxa * min.height & \cellcolor{green!10}7442387 & \cellcolor{green!25}7177002 & \cellcolor{green!30}7094933 & \cellcolor{green!45}6795099 \\
-              multifurc $\sim$ taxa * mean.height & \cellcolor{green!20}7247309 & \cellcolor{green!30}7020258 & \cellcolor{green!35}6965794 & \cellcolor{green!50}6665565 \\
-              \hline
-            \end{tabular}
-        \end{center}
-        \caption{Residuals of multifurcation models}
-        \label{table:Residuals multifurcation} 
-      \end{table}
-      In Table \ref{table:Residuals multifurcation} is a deviance table, where the different residuals 
-        are listed. Since only residuals are comparable in complexity, we have also calculated the BIC 
-        values of the models in table \ref{table:BIC multifurcation}. \\
+      For a regression analysis of the multifurcation first set up a simple generalized linear model and 
+        then output the intercept of it:
+      \lstset{language=R}
+      \begin{lstlisting}[gobble=6]
+        kingdom.furc.mod <- glm(multifurc~kingdom, 
+                                    data=inner.taxa,
+                                        family="poisson")
+        # get the intercept:
+        summary(kingdom.furc.mod)
+      \end{lstlisting}
+      Since the multifurcation can also be 0, the intercept describes the expected mean value and thus, 
+        if it is greater than 0, it says that we have a multifurcation: $2.62 > 0$ $\Rightarrow$ there 
+        is a multifurcation. \\
+      We next compared the intercept of the different kingdoms and found that
+        $$1.22 \text{ (Fungi intercept)} > -0.11 \text{ (Metazoa intercept)} > -0.09 \text{ (Chloroplastida intercept)}$$
+        % Coefficients:
+        %                                         Estimate Std. Error z value Pr(>|z|)
+        % (Intercept)                             2.624897   0.003641  721.00   <2e-16
+        % kingdom['ott352914', 'Fungi']           1.224650   0.004054  302.10   <2e-16
+        % kingdom['ott361838', 'Chloroplastida'] -0.090993   0.003960  -22.98   <2e-16
+        % kingdom['ott691846', 'Metazoa']        -0.114873   0.003732  -30.78   <2e-16
+        that means the strength of the multifurcation \colorbox{red}{is the same/has the same size 
+        sorting}. \todo{kann das sein?} \\
+    %---------------------------------------------------------------------------------------------------
+
+      We investigated several models that could describe multifurcation: \\
+      In doing so, we allowed the different influence of the taxa and the heights and depths of a node 
+        to be included. From this we got 9 times 4 models of different complexity levels (see first row 
+        of table \ref{table:BIC multifurcation}). \\
+      We first compared the models based on their residuals. These give us the error of the model. If 
+        the value is small, our data will be well modeled. These values are meaningful only for the same 
+        complexity, therefore we then calculated the BIC (Bayesian information criterion) values of the 
+        models and used them to evaluate the models.
+      \lstset{language=R}
+      \begin{lstlisting}[gobble=6]
+        anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, 
+                      order.furc.mod, family.furc.mod, test="LRT")
+        BIC(kingdom.furc.mod)
+        ...
+      \end{lstlisting}
+      The deviance table with the residuals can be found in the appendix (table 
+        \ref{table:Residuals multifurcation}). Table \ref{table:BIC multifurcation}. lists the BICs.
+
       \begin{table}[h]
         \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
@@ -834,13 +849,13 @@
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC of multifurcation models}
+        \caption{BIC (Bayesian information criterion) values of the multifurcation models \\
+          These models were created with the R function \textit{glm()} and compared with the 
+            \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC multifurcation} 
       \end{table}
       % * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
-      The Residuals give us the error of the model. If the value is small, our data will be well modeled. \\
-      Within the complexity classes it can be seen that the mean height gives the best additional factor. \\
-      
+      Within the every complexity class it can be seen that the mean height gives the best additional factor. \\
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
         the finest model available here is also the best one of these. Smaller taxa than orders (eg 
         family) were computationally too expensive to calculate.
@@ -1221,15 +1236,15 @@
 
       \begin{table}[h]
         \begin{center}
-          \begin{tabular}{ |l|r|r|r|r| }
+          \begin{tabular}{ |l|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            Model / Taxa & Kingdom & Phylum & Class \\% & Order \\
             \hline \hline
-            correct predicted $\sim$ taxa & 117877 & 111466 & 108878 & XXXXX \\
+            correct predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa + depth & 117703 & 110513 & XXXXX & XXXXX \\
+            correct predicted $\sim$ taxa + depth & 117703 & \cellcolor{green!35}110513 & \cellcolor{green!45}108403 \\% & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa * depth & 117592 & 109827 & XXXXX & \cellcolor{green!60}XXXXX \\
+            correct predicted $\sim$ taxa * depth & 117592 & \cellcolor{green!40}109827 & \cellcolor{green!50}107994 \\% & XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
@@ -1239,15 +1254,15 @@
 
       \begin{table}[h]
         \begin{center}
-          \begin{tabular}{ |l|r|r|r|r| }
+          \begin{tabular}{ |l|r|r|r| }
             \hline
-            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            Model / Taxa & Kingdom & Phylum & Class \\% & Order \\
             \hline \hline
-            correct predicted $\sim$ taxa & 117936 & 112242 & 111733 & XXXXX \\
+            correct predicted $\sim$ taxa & 117936 & \cellcolor{green!40}112242 & \cellcolor{green!50}111733 \\% & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa + depth & 117776 & 111304 & 111273 & XXXXX \\
+            correct predicted $\sim$ taxa + depth & 117776 & \cellcolor{green!50}111304 & \cellcolor{green!50}111273 \\% & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa * depth & 117709 & 111262 & XXXXX & \cellcolor{green!60}XXXXX \\
+            correct predicted $\sim$ taxa * depth & 117709 & \cellcolor{green!50}111262 & \cellcolor{green!30}113135 \\% & XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
@@ -1387,7 +1402,6 @@
         example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
         \cite{CavalierSmith1981}. \\
       In section \pageref{subsec:listPhyla} of the appendix is a list of all phyla.
-
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1578,8 +1592,36 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Missing leaf state modelling - Resiudal tables}\label{sec:Residuals unknown information}
+  \section{Missing internal node modelling - Resiudal table} %\label{sec:Residuals unknown information}
+    \begin{table}[h!]
+      \begin{center}
+          \begin{tabular}{ |l|r|r|r|r| }
+            \hline
+            Model / Taxa & Kingdom & Phylum & Class & Order \\
+            \hline \hline
+            multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
+            \hline
+            multifurc $\sim$ taxa + depth & 7752303 & \cellcolor{green!10}7431609 & \cellcolor{green!15}7334754 & \cellcolor{green!30}7027578 \\
+            multifurc $\sim$ taxa + max.height & 7730196 & \cellcolor{green!15}7375889 & \cellcolor{green!20}7275856 & \cellcolor{green!30}7005424 \\
+            multifurc $\sim$ taxa + min.height & \cellcolor{green!10}7472500 & \cellcolor{green!20}7233486 & \cellcolor{green!25}7144686 & \cellcolor{green!40}6890703 \\
+            multifurc $\sim$ taxa + mean.height & \cellcolor{green!15}7304402 & \cellcolor{green!25}7128318 & \cellcolor{green!30}7055313 & \cellcolor{green!40}6815271 \\
+            \hline
+            multifurc $\sim$ taxa * depth & 7714881 & \cellcolor{green!15}7335396 & \cellcolor{green!20}7250759 & \cellcolor{green!40}6843004 \\
+            multifurc $\sim$ taxa * max.height & \cellcolor{green!5}7692980 & \cellcolor{green!15}7311241 & \cellcolor{green!25}7187504 & \cellcolor{green!45}6795823 \\
+            multifurc $\sim$ taxa * min.height & \cellcolor{green!10}7442387 & \cellcolor{green!25}7177002 & \cellcolor{green!30}7094933 & \cellcolor{green!45}6795099 \\
+            multifurc $\sim$ taxa * mean.height & \cellcolor{green!20}7247309 & \cellcolor{green!30}7020258 & \cellcolor{green!35}6965794 & \cellcolor{green!50}6665565 \\
+            \hline
+          \end{tabular}
+      \end{center}
+      \caption{Residuals of multifurcation models \\
+        These models were created with the R function \textit{glm()} and compared with the 
+          \textit{anova()} function. This results in the listed residuals.}
+      \label{table:Residuals multifurcation} 
+    \end{table}
 
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Missing leaf state modelling - Resiudal tables}\label{sec:Residuals unknown information}
     \begin{table}[h!]
       \begin{center}
         \begin{tabular}{ |l|r|r|r| }
