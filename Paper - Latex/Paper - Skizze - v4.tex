@@ -92,8 +92,8 @@
   Such a large phylogenetic tree does not completely exist and therefore we work with a synthesis 
     tree of OTL \cite{Hinchliff2015} which is highly multifurcated. \\
   For the 2,535,437 leaf nodes we could not gather much data. From the GloBI database 
-    \cite{Poelen2014} which we used, we could only collect 25,992 parasitic and 34,879 
-    free-living species. It follows that we have only $\approx 2.4~\%$ state information. \\
+    \cite{Poelen2014} which we used, we could only collect 25,992 parasitic and 34,879 free-living 
+    species. It follows that we have $\approx 2.4~\%$ state information. \\
   So far, especially small scale studies have been carried out or highly manual. In this scale, it 
     requires different data sources to be interconnected. \\
   We performed an analysis of existing algorithms and selected a Sankoff maximum parsimony algorithm 
@@ -648,11 +648,11 @@
       \item Import tree
       \item Import interactions
       \item run castor algorithm / and others?
-      \item interprete results (cross validation - leave 100 out)
+      \item interprete results (leave-100-out cross validation)
     \end{itemize}
     We then evaluated the results in two ways. On the one hand, we have examined the results of some 
       subtrees for their credibility with the help of biological background knowledge. On the other 
-      hand, we performed a leaf 100 out cross validation.
+      hand, we performed a leave-100-out cross validation.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -682,10 +682,10 @@
 
   We then evaluated the results in two ways. On the one hand, we have examined the results of some 
     subtrees for their credibility with the help of biological background knowledge (subsection 
-    \ref{sec:biological view}). On the other hand, we performed a leaf 100 out cross validation
-    (Subsection \ref{sec:results cross evaluation}).
+    \ref{sec:biological view}). On the other hand, we performed a leave-100-out cross validation
+    (Subsection \ref{sec:results - cross validation}) and predicted approximately 98.17~\% states 
+    correct.
 
-  % The next sections now guide you through the results of these different steps.
   
 %   Otherwise, this chapter is mainly about the actual reconstruction of the states. This means, on 
 %     one hand investigation of origins and losses of the inner nodes and on the other, the prediction 
@@ -858,8 +858,8 @@
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
         the finest model available here is also the best one of these. Lower taxa than orders (eg 
         family) were computationally too expensive to calculate. \\
-      The model multifurc $\sim$ order * mean.height turns out to be the best of our models, whereby it 
-        is possible that eg multifurc $\sim$ family * mean.height is better.
+      The model \textit{multifurc $\sim$ order * mean.height} turns out to be the best of our models, 
+        whereby it is possible that eg \textit{multifurc $\sim$ family * mean.height} is better.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -870,10 +870,11 @@
         (free-living or parasite) in the leaf nodes. \\
       The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
         (at 29.01.2018). Out of this data we got 51,337 distinct free-living species and 47 332 
-        distinct parasite species $\rightarrow$ unknown nodes 2,194,794 ($\approx 95.7~\%$). \\
+        distinct parasite species for the whole tree of life. From the Eukaryota we could determine 
+        25,992 and 34,879 species as parasites and free-living. With 2,293,463 leaf nodes we still have 
+        about 97.34~\% unknown leaf nodes. \\
       We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target
-        species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
-      % \todo{With this only $\approx 4.3~\%$ information in our leaf nodes are ...} \\
+        species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\        
       \todo{discussion!!!} \\
 
       We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
@@ -895,7 +896,9 @@
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BICs of unknown information}
+        \caption{BIC (Bayesian information criterion) values unknown state information models. \\
+          These models were created with the R function \textit{glm()} and compared with the 
+            \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC unknown information} 
       \end{table}
       It also follows from this table that the most complex model is the best. In general, the BIC 
@@ -953,8 +956,8 @@
   \section{Results of the real data analysis created with Sankoff}
     This section is about evaluating the prediction of real data using the Sankoff method. \\
     It is divided into two subsections. \ref{sec:biological view}: The analysis of some subtrees using 
-      biological background knowledge. \ref{sec:results cross evaluation}: Presentation of the results 
-      of the leaf 100 out cross validation.
+      biological background knowledge. \ref{sec:results - cross validation}: Presentation of the results 
+      of the leave-100-out cross validation.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -1011,7 +1014,7 @@
         started with 99.83~\%  species and predict 99.97~\% species as free-living (including already 
         known nodes).
 
-      \begin{figure}[h!]
+      \begin{figure}
         \centering
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
         \caption{Parasites of Phylum: Chordata. \\
@@ -1175,7 +1178,7 @@
           means there are also nodes with state like 0.3 or 0.5. The question is, how to count these state 
           changes. We decided to round the values.
         % \begin{lstlisting}[gobble=6]
-        %   possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
+        %   possible states: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
         %   rounded to:    0  0      0    0    1      1     1
         % \end{lstlisting}
 
@@ -1237,31 +1240,30 @@
       
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Cross evaluation - leave 100 out} \label{sec:results cross evaluation}
-      We ran the castor algorithm 100 times with leaving 100 randomized free-living or parasitic species 
-        out of the input data to see how stable our result is. Of these 10,000 nodes, 9,238 were unique. 
-        Of that, we predicted 9060 ($\approx 98.17~\%$) correctly and 169 ($\approx 1.82~\%$) wrongly, 
-        with duplicate draws always having the same prediction. \\
-      What is the best way to model this data? We again tested the influence of the taxa and the depth 
-        of leaf nodes and calculated the BICs (Table: \ref{table:BIC cross validation}).
+    \subsection{Leave-100-out cross validation} \label{sec:results - cross validation}
+      For a further validation of our results, we carried out a leave-100-out cross validation. \\
+      In order to achieve about 15\% of the 60,871 input node states with a validation, 
+        we randomly left out 100 states 100 times. To make smaller amounts up to leave-one-out had too 
+        much computational effort. \todo{warum 15\%?}\\
+        
+      Of these 10,000 nodes, 9,238 were unique. From the unique nodes, we predicted approximately 
+        98.17~\% correct and thus 1.82~\% wrong, with duplicate draws always having the same prediction 
+        (data not shown). \\
+      
+      We have again dealt with the question of how this data is best modeled. The influence of the taxa 
+        (kingdom, phylum, class) and the depth of the leaf nodes was re-modeled and the BICs compared 
+        (table \ref{table:BIC cross validation}). Lower taxa than classes (eg order) were 
+        computationally too expensive to calculate. \\
+      The Residuals are included in the appendix (table \ref{table:Residuals cross validation}) for the 
+        sake of completeness; here too, due to the different complexity, they do not have much meaning 
+        for the comparison of the models. \\
 
-      \begin{table}[h]
-        \begin{center}
-          \begin{tabular}{ |l|r|r|r| }
-            \hline
-            \bfseries Model / Taxa &\bfseries  Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
-            \hline \hline
-            correct predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
-            \hline
-            correct predicted $\sim$ taxa + depth & 117703 & \cellcolor{green!35}110513 & \cellcolor{green!45}108403 \\% & XXXXX \\
-            \hline
-            correct predicted $\sim$ taxa * depth & 117592 & \cellcolor{green!40}109827 & \cellcolor{green!50}107994 \\% & XXXXX \\
-            \hline
-          \end{tabular} 
-        \end{center}
-        \caption{Residuals of cross validation prediction}
-        \label{table:Residuals cross validation} 
-      \end{table}
+      \todo{table for these numbers?}
+      % 100/(25992+34879)*10000 = 16.43
+      % 100/(25992+34879)*9238 = 15.18
+      % 10000 nodes 9238 unique
+      % 9060 nodes $\approx 98.17~\%$ correctly predicted
+      % 169 ($\approx 1.82~\%$) wrongly predicted
 
       \begin{table}[h]
         \begin{center}
@@ -1277,64 +1279,68 @@
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BICs of cross validation prediction}
+        \caption{BIC (Bayesian information criterion) values of cross validation prediction models. \\
+          These models were created with the R function \textit{glm()} and compared with the 
+            \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC cross validation} 
       \end{table}
 
-      Lower taxa than classes (eg order) were computationally too expensive to calculate. \\
+      The BIC values this time did not prove that the finest model is the best. Of our calculated models, 
+       \textit{correct predicted $\sim$ phylum * depth} has the smallest value. \\
 
-      What could happen by removing a parasite or free-living of the list?
-      \begin{itemize}
-        \item It could be a specie, which don't exist in the tree leaf nodes. -> no effect
-        \item It could be a specie, which exists in both lists. -> If it was a parasite, it is now 
-          free-living, because we prefer parasites. Otherwise we have no effect again. (1053 are possible)
-        \item Normal case: We loose information, because its a specie in our tree and we change it to a 
-          leave node with no information.
-      \end{itemize}
-
-      Influence on the rest of the data:
-      \begin{table}
+      We examined the influence of the omitted data on the prediction. On average, about twice as many 
+        leaf nodes are predicted differently. \color{red}The variance is very high. This means that 
+        we have a high degree of dispersion and thus a stochastic situation exists. It also describes 
+        the width of the present probability function. The standard deviation is about five times as 
+        high as the number of omitted nodes, so the variability is quintupled. \normalfont Table 
+        \ref{table:statistics cross validation} shows these results. \\
+      \begin{table}[h!]
         \begin{center}
           \begin{tabular}{ |cl||r|r|r|r|r| }
             \hline
             & & \bfseries min & \bfseries max & \bfseries mean & \bfseries variance ($\sigma^2$) & $\sigma$ \\
             \hline \hline
-            \multirow{3}{*}{distance} & all   & 0 & 3587.70 & 224.96 & 313650.61 & 560.05 \\
-            & leaf nodes                      & 0 & 3021.12 & 208.69 & 248103.38 & 498.10 \\
-            & internal nodes                  & 0 & 566.58 & 16.28 & 4927.95 & 70.20 \\ \hline
-            \multicolumn{2}{|c||}{changed tag} & 0 & 0 & 0 & 0 & 0 \\ \hline
-            \multirow{3}{*}{lost} & all tags  & 100 & 100 & 100 & 0 & 0 \\
-            & FL tags                         & 44 & 66 & 57.25 & 19.50 & 4.42 \\
-            & P tags                          & 34 & 56 & 42.75 & 19.50 & 4.42 \\
+            \multirow{3}{*}{\bfseries distance} & \bfseries all     & 0 & 3587.70 & 224.96 & 313650.61 & 560.05 \\
+            & \bfseries leaf nodes                                  & 0 & 3021.12 & 208.69 & 248103.38 & 498.10 \\
+            & \bfseries internal nodes                              & 0 & 566.58 & 16.28 & 4927.95 & 70.20 \\ \hline
+            \multirow{3}{*}{\bfseries lost} & \bfseries all states  & 100 & 100 & 100 & 0 & 0 \\
+            & \bfseries FL states                                   & 44 & 66 & 57.25 & 19.50 & 4.42 \\
+            & \bfseries P states                                    & 34 & 56 & 42.75 & 19.50 & 4.42 \\
             \hline
           \end{tabular}
         \end{center}
-        \caption{Statistics to Cross validation}
+        \caption{Statistics about the leave-100-out cross validation \\
+          The distance between original and new states was calculated using the Euclidean metric. This 
+            was summed over all states / all leaf node states and all internal node states. \\
+          The lower half of the table describes the distribution of the 'lost' states between parasites 
+            (P) and free-livings (FL).}
+        \label{table:statistics cross validation}
       \end{table}
+    %---------------------------------------------------------------------------------------------------
 
-      \begin{table}
-        \begin{center}
-          \begin{tabular}{ |cl||r|r|r|r| }
-            \hline
-            & & \bfseries min & \bfseries max & \bfseries mean & \bfseries variance \\
-            \hline \hline
-            \rowcolor{green!50}distance & all   & 1 & 2 & 1.33 & 0.33 \\
-            \rowcolor{orange!50}&               & 0 & 3587.70 & 217.94 & 273760.68 \\
-            \rowcolor{green!50}& leaf nodes     & 1 & 2 & 1.33 & 0.33 \\
-            \rowcolor{orange!50}&               & 0 & 3021.12 & 202.57 & 209274.86 \\
-            \rowcolor{green!50}& internal nodes& 0 & 0 & 0.00 & 0.00 \\
-            \rowcolor{orange!50}&               & 0 & 566.58 & 15.37 & 5684.00 \\ \hline
-            \rowcolor{green!50}lost & FL tags   & 44 & 49 & 46.67 & 6.33 \\
-            \rowcolor{orange!50}&               & 51 & 66 & 57.95 & 13.47 \\
-            \rowcolor{green!50}& P tags         & 51 & 56 & 53.33 & 6.33 \\
-            \rowcolor{orange!50}&               & 34 & 49 & 42.05 & 13.47 \\
-            \hline
-          \end{tabular}
-        \end{center}
-        \caption{Statistics to Cross validation \\
-          - \colorbox{green!50}{Less free-livings - 3 examples} \\
-          - \colorbox{orange!50}{Less parasites - 64 examples}}
-      \end{table}
+      % \begin{table}
+      %   \begin{center}
+      %     \begin{tabular}{ |cl||r|r|r|r| }
+      %       \hline
+      %       & & \bfseries min & \bfseries max & \bfseries mean & \bfseries variance \\
+      %       \hline \hline
+      %       \rowcolor{green!50}distance & all   & 1 & 2 & 1.33 & 0.33 \\
+      %       \rowcolor{orange!50}&               & 0 & 3587.70 & 217.94 & 273760.68 \\
+      %       \rowcolor{green!50}& leaf nodes     & 1 & 2 & 1.33 & 0.33 \\
+      %       \rowcolor{orange!50}&               & 0 & 3021.12 & 202.57 & 209274.86 \\
+      %       \rowcolor{green!50}& internal nodes& 0 & 0 & 0.00 & 0.00 \\
+      %       \rowcolor{orange!50}&               & 0 & 566.58 & 15.37 & 5684.00 \\ \hline
+      %       \rowcolor{green!50}lost & FL states & 44 & 49 & 46.67 & 6.33 \\
+      %       \rowcolor{orange!50}&               & 51 & 66 & 57.95 & 13.47 \\
+      %       \rowcolor{green!50}& P states       & 51 & 56 & 53.33 & 6.33 \\
+      %       \rowcolor{orange!50}&               & 34 & 49 & 42.05 & 13.47 \\
+      %       \hline
+      %     \end{tabular}
+      %   \end{center}
+      %   \caption{Statistics to cross validation \\
+      %     - \colorbox{green!50}{Less free-livings - 3 examples} \\
+      %     - \colorbox{orange!50}{Less parasites - 64 examples}}
+      % \end{table}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1634,7 +1640,7 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Missing leaf state modelling - Resiudal tables}\label{sec:Residuals unknown information}
+  \section{Missing leaf state modelling - Resiudal table}\label{sec:Residuals unknown information}
     \begin{table}[h!]
       \begin{center}
         \begin{tabular}{ |l|r|r|r| }
@@ -1649,7 +1655,32 @@
           \hline
         \end{tabular}
       \end{center}
-      \caption{Residuals of unknown information}
+      \caption{Residuals of unknown information models \\
+        These models were created with the R function \textit{glm()} and compared with the 
+          \textit{anova()} function. This results in the listed residuals.}
+    \end{table}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Cross validation prediction - Resiudal table}
+    \begin{table}[h]
+      \begin{center}
+        \begin{tabular}{ |l|r|r|r| }
+          \hline
+          \bfseries Model / Taxa &\bfseries  Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
+          \hline \hline
+          correct predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
+          \hline
+          correct predicted $\sim$ taxa + depth & 117703 & \cellcolor{green!35}110513 & \cellcolor{green!45}108403 \\% & XXXXX \\
+          \hline
+          correct predicted $\sim$ taxa * depth & 117592 & \cellcolor{green!40}109827 & \cellcolor{green!50}107994 \\% & XXXXX \\
+          \hline
+        \end{tabular} 
+      \end{center}
+      \caption{Residuals of cross validation prediction \\
+        These models were created with the R function \textit{glm()} and compared with the 
+          \textit{anova()} function. This results in the listed residuals.}
+      \label{table:Residuals cross validation} 
     \end{table}
 
 
