@@ -356,8 +356,9 @@
       Different parasite types have different transition probabilities. It is very difficult to make a 
         statement about these probabilities. It is generally assumed in this work that there are 40~\% 
         parasites and 60~\% free-livings which is based on the estimates by Windsor \cite{Windsor1998} 
-        and $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because a reverse mutation 
-        is usually less likely. \todo{This is discussed in section x of the discussion.} \\
+        and $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$, as a result of the 
+        diversity of parasites and the lack of general determinations for this. These parameters are 
+        debated in subsection \ref{sec:discussion - transition probabilities} of the discussion. \\
 
       For the maximum parsimony analysis of the real data, all transition probabilities are equated.
         However, the used castor package \cite{Louca2017} offers the possibility to enter different 
@@ -589,11 +590,11 @@
       one can replicate a complete binary phylogentic tree. Thus, there is also the possibility to 
       simulate the multifurcation. \\
     To get a random binary tree, the Phylo package from biopython is used \cite{Cock2009}. They offer 
-      a randomized function which returns a BaseTree\footnote{
+      a \textit{randomized()} function which returns a BaseTree\footnote{
         \hyperlink{https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
         {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
-      }. \\
-    \todo{ref in die discussion über die randomized function? Diskutieren wir das?}
+      }. The credibility of this choice is examined in subsection 
+        \ref{sec:discussion - simulate phylogeny} of the discussion.\\
 
     The next step is to simulate states for all nodes. \\
     The root node is defined as ancestor of all subsequent species and in this case, determined to be
@@ -1292,7 +1293,7 @@
         leaf nodes are predicted differently. \color{red}The variance is very high. This means that 
         we have a high degree of dispersion and thus a stochastic situation exists. It also describes 
         the width of the present probability function. The standard deviation is about five times as 
-        high as the number of omitted nodes, so the variability is quintupled. \normalfont Table 
+        high as the number of omitted nodes, so the variability is quintupled. \color{black} Table 
         \ref{table:statistics cross validation} shows these results. \\
       \begin{table}[h!]
         \begin{center}
@@ -1316,31 +1317,6 @@
             (P) and free-livings (FL).}
         \label{table:statistics cross validation}
       \end{table}
-    %---------------------------------------------------------------------------------------------------
-
-      % \begin{table}
-      %   \begin{center}
-      %     \begin{tabular}{ |cl||r|r|r|r| }
-      %       \hline
-      %       & & \bfseries min & \bfseries max & \bfseries mean & \bfseries variance \\
-      %       \hline \hline
-      %       \rowcolor{green!50}distance & all   & 1 & 2 & 1.33 & 0.33 \\
-      %       \rowcolor{orange!50}&               & 0 & 3587.70 & 217.94 & 273760.68 \\
-      %       \rowcolor{green!50}& leaf nodes     & 1 & 2 & 1.33 & 0.33 \\
-      %       \rowcolor{orange!50}&               & 0 & 3021.12 & 202.57 & 209274.86 \\
-      %       \rowcolor{green!50}& internal nodes& 0 & 0 & 0.00 & 0.00 \\
-      %       \rowcolor{orange!50}&               & 0 & 566.58 & 15.37 & 5684.00 \\ \hline
-      %       \rowcolor{green!50}lost & FL states & 44 & 49 & 46.67 & 6.33 \\
-      %       \rowcolor{orange!50}&               & 51 & 66 & 57.95 & 13.47 \\
-      %       \rowcolor{green!50}& P states       & 51 & 56 & 53.33 & 6.33 \\
-      %       \rowcolor{orange!50}&               & 34 & 49 & 42.05 & 13.47 \\
-      %       \hline
-      %     \end{tabular}
-      %   \end{center}
-      %   \caption{Statistics to cross validation \\
-      %     - \colorbox{green!50}{Less free-livings - 3 examples} \\
-      %     - \colorbox{orange!50}{Less parasites - 64 examples}}
-      % \end{table}
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1396,6 +1372,8 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Discussion}
+  As in the previous chapters, the discussion is divided into three sections: input data, simulation 
+    and reconstruction of the real data.
 
   Fehlerqoute der Daten an sich? \\
   Wie gut ist unsere Datenlage? 3 mio knoten, 1.8 named species (leaf nodes), 200.000 leaf nodes mit 
@@ -1426,9 +1404,10 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}
-    For fixed calculations we assume a distribution of 60\% free-living to 40\% parasites, 95\% 
-      missing data and a multifuration rate of 95\%.
-    How well does our simulation approach the real data situation? \\
+    % For fixed calculations we assume a distribution of 60\% free-living to 40\% parasites, 95\% 
+    %   missing data and a multifuration rate of 95\%.
+
+
     There are some points to discuss:
     \begin{itemize}
       \item How close is the randomized binary tree to a true phylogeny?
@@ -1445,6 +1424,47 @@
     In order to be able to observe these problems, we have programmed our simulation according to the 
       parameters. This allowed us to estimate the influence of some of these parameters.
 
+
+
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Transition probabilities} \label{sec:discussion - transition probabilities}
+      We assume that different parasite types have different transition probabilities. Establishing a 
+        common distribution across the eukaryotic tree is therefore difficult. \\
+      Based on the estimates of Windsor \cite{Windsor1998}, we have assumed a distribution of 40\% 
+        parasites to 60\% free livings in this work. As a result of the diversity of parasites and the 
+        lack of generalizations, we have generally stated that 
+        $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$. But it is also reasonable to 
+        assume that in general $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because 
+        a reverse mutation is usually less likely. However, one would have to determine how much this 
+        difference is and thus discuss another parameter. \\
+      
+      In the simulation, we tested different beta distributions with different thresholds and found that 
+        this combination has a considerable influence on the predictive power of the algorithms. \\
+      At this point it would be possible to test other distributions with equal threshold values or 
+        different threshold values with equal distributions. \\
+      However, if you choose a strong free-living distribution and balance it with the threshold to 
+        achieve a 40:60 parasite free-living distribution, for example, this could be very 
+        computationally expensive. \\
+      
+      With these further simulations you could find out if the issue of distributions plays a big role. 
+        Conversely, one could estimate possible distributions based on the data location in the tree. 
+        However, this is likely to be very difficult given the poor data. For this reason, we have 
+        decided in this work to accept very general values and not to speculate much. \\
+
+    %---------------------------------------------------------------------------------------------------
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Simulation of a phylogeny} \label{sec:discussion - simulate phylogeny}
+      In our simulation, we start with the simulation of a phylogeny and then depict our data situation. \\
+      For this first step we use the \textit{randomized()} function of the phylo package from biopython
+        \cite{Cock2009}. The question is how close is such a randomized tree to a phylogeny. \\
+      
+      The problems that can arise are that different species develop at different rates. This means that 
+        there could be sections in the tree with many branches (for example, subtrees of unicellular 
+        species), ie with high depths and opposite sections (of very complex species, for example). It 
+        can thus be assumed that the tree is not balanced. \\
+      For more precise statements, one would have to take deeper undercurrents, which was not possible 
+        in the context of this work.
   
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
