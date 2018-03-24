@@ -963,15 +963,17 @@
         selectively from the biological point of view: Chordata, Nematoda, Platyhelminthes and 
         Apicomplexa. \\
       In Table \ref{table:phylum leaf nodes states} we compare the given states with the predicted ones. \\
-      There are several factors that play a role here, and in part, crystallize in these examples. \\
-      An important factor here is that the credibility of the results with the accuracy of the input 
-        data, i. the data of GloBI, stands and falls. Errors of incorrect input data can be amplified by 
-        incorrect prediction of unknown species and can be reversed in order to improve the data 
-        situation of GloBI. \\
+      Several factors such as the distribution of existing input data via parasitics and free-livings, 
+        faulty input data from GloBI and reinforcement of errors by multifurcation play an important 
+        role, which crystallize out in these examples. \\
+      An important factor here is that the credibility of the results. The accuracy of the input data 
+        stands and falls with the presence and the correctness of the data of GloBI. Errors of incorrect 
+        input data can be amplified by incorrect prediction of unknown species and can be reversed in 
+        order to improve the data situation of GloBI. \\
       Since we look at such large trees we can not expect to know all the parasites, so we look at 
-        individual positives. Positive in the sense that the majority have the opposite state.
+        individual positives. This is positive in the sense that the majority have the opposite state.
 
-      \begin{table}[h]
+      \begin{table}
         \begin{center}
           \begin{tabular}{ |l|r||r|r||r|r|r|r| }
             \hline
@@ -996,33 +998,40 @@
             \hline
           \end{tabular} 
         \end{center}
-        \caption{Phylum (leaf nodes)}
+        \caption{Some selected phyla (subtrees), only leaf nodes, were examined for the evolution 
+          of the amount and percentage of given data to predicted data.}
         \label{table:phylum leaf nodes states} 
       \end{table}
 
-      In contrast to the other phyla examined, the phylogeny is more pronounced (less multifurcation) (see 
-        Table \ref{table:percentage loss information subtrees}). This results in a weaker spread of errors. 
-        This is reflected in the results from the table \ref{table:phylum leaf nodes states}. There are 18 
-        parasites as input data and only 8 more are predicted. The chordata mostly consist of free-living 
-        species, so this seems believable. We started with 99.83~\%  species and predict 99.97~\% species 
-        as free-living (including already known nodes). \todo{A few punctual tests give us the following:}
+      In contrast to the other phyla examined, the phylogeny in the Chordata is more pronounced (less 
+        multifurcation) (see Table \ref{table:percentage loss information subtrees}). This results in 
+        less variance of errors. What is reflected in the results from the table 
+        \ref{table:phylum leaf nodes states}. There are 18 parasites as input data and only 8 more are 
+        predicted. The Chordata mostly consist of free-living species, so this seems believable. We 
+        started with 99.83~\%  species and predict 99.97~\% species as free-living (including already 
+        known nodes).
 
       \begin{figure}[h!]
         \centering
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
-        \caption{Parasites of Phylum: Chordata \\ 
-          Input parasites (green) $\rightarrow$ predicted parasites (white $\rightarrow$ green)}
+        \caption{Parasites of Phylum: Chordata. \\
+          All parasite data of the chordata were mapped into a rough taxonomy (phylum, class, order, 
+            family) in order to understand their distribution and affiliation. \\
+          The internal nodes are the wanted taxa from OTL (with the addition of \# input parasites to 
+            $\rightarrow$ \# predicted parasites). \\
+          The leaf nodes are the input parasites (green) and the predicted parasites (white $\rightarrow$ 
+            green).}
         \label{fig:ChordataParasites}
       \end{figure}
 
-      We mapped the few parasitic spezies in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
+      We mapped the few parasitic species in a \colorbox{red}{rough/simple} taxonomy (see Figure \ref{fig:ChordataParasites}): \\
       Known parasitic birds belong to the order Sauria. Here we know from Rothschild  here there are 
         breeding parasites, like the cuckoo and clepto-parasites as the skuas \cite{Rothschild1957}. We
         got 6 input parasites from GloBI and there are no predictions: A woodpecker - 
         \textit{Sphyrapicus varius} and a duck - \textit{Aix sponsa}, a cow bird - \textit{Molothrus ate} 
         known as broodparasite and some others. \\
-      An example of the amplification of mistakes here are the carp. There seems to be a paper from the 
-        GloBI concluding: Grass carp (\textit{Ctenopharyngodon idella)} has Pathogen common carp 
+      An example of the amplification of mistakes here are the carp. There is a paper from which GloBI 
+        concludes: Grass carp (\textit{Ctenopharyngodon idella)} has Pathogen common carp 
         (\textit{Cyprinus carpio})\footnote{
           \hyperlink{https://www.globalbioticinteractions.org/?interactionType=hasParasite&targetTaxon=Cyprinus\%20carpio}
           {https://www.globalbioticinteractions.org/?interactionType=hasParasite\&targetTaxon=Cyprinus\%20carpio}
@@ -1054,20 +1063,22 @@
         the Turbellaria are not monophyletic. But we will not go into that here. \\
       For the Platyhelminthes we had more state information for the leaf nodes compared to the other 
         considered subtrees, see Table \ref{table:percentage loss information subtrees}. We start with 
-        0.1~\% free-livings and predicted 0.77~\% as free-living spezies. \\
+        0.1~\% free-livings and predicted 0.77~\% as free-living species. \\
 
       With the Nematoda it looks more complicated. Large parts of Nematoda are free-living, but we 
         found only 5.32~\% of them. Blaxter et al. estimates the order of 25,000 parasites in the 
         Nematoda \cite{Blaxter2015} and speaks of at least seven independently arosed parasitism 
         \cite{Blaxter1998}. In a recent article Blaxter identifies 18 origins \cite{Blaxter2015} in 
         Nematoda. \\
-      The problem at this point, however, is obvious: Hallan speaks of the fact that only 23,00 species 
-        were described by the Nematoda but one assumes 1 million or more\footnote{J. Hallan, unpublished; 
+      The problem at this point, however, is: Hallan speaks of the fact that only 23,000 species 
+        were described by the Nematoda but is it assumed that one million or more species are in this 
+        phylum.\footnote{J. Hallan, unpublished; 
           \hyperlink{https://insects.tamu.edu/research/collection/hallan/}
           {https://insects.tamu.edu/research/collection/hallan/}
         }. \todo{Link ist nicht erreichbar!} The parasites have been much more studied and thus we start 
-        with only 0.63~\% free-living species. Against such a shifted data situation, the algorithm is 
-        almost powerless. And yet the percentage has increased. \\
+        with only 0.63~\% (table \ref{table:phylum leaf nodes states}) free-living species. Against such 
+        a shifted data situation, the algorithm is almost powerless to make correct predictions. And yet 
+        the percentage has increased to 5.34~\%. \\
 
       % \anmerkungstext{Das sind schonmal vier große Kontraste, wenn dann noch Zeit bleibt, die 
       %   schwirigen... Arthropoden, Fungi, Pflanzen... (Emanuel)} \\
@@ -1099,7 +1110,8 @@
             \hline
           \end{tabular}
         \end{center}
-        \caption{Phylum (inkl internal nodes)}
+        \caption{Some selected phyla (subtrees), including internal nodes, were examined for the evolution 
+        of the amount and percentage of given data to predicted data.}
         \label{table:Phylum internal nodes}
       \end{table}
 
@@ -1122,7 +1134,8 @@
             \hline  
           \end{tabular}
         \end{center}
-        \caption{Kingdom (leaf nodes)}
+        \caption{All kingdoms (subtrees), only leaf nodes, were examined for the evolution of the 
+          amount and percentage of given data to predicted data.}
         \label{table:Kingdom leaf nodes}
       \end{table}
 
@@ -1145,7 +1158,8 @@
             \hline  
           \end{tabular}
         \end{center}
-        \caption{Kingdom (inkl internal nodes)}
+        \caption{All kingdoms (subtrees), inkluding internal nodes, were examined for the evolution of the 
+        amount and percentage of given data to predicted data.}
         \label{table:Kingdom internal nodes}
       \end{table}
 
@@ -1158,8 +1172,12 @@
         This has led us to count the origins and losses of parasitism in our investigation as well. \\
         We count only one origin / loss in a parent node with different children's nodes. \\
         Here we have encountered a problem: The Castor algorithm gives us probabilities for states. That 
-          means there are also nodes with state like 0.3 or 0.5. So how do \colorbox{red}{you} count? Our solution was, 
-          to round these values. We have to say that we round 0.5 to 0.
+          means there are also nodes with state like 0.3 or 0.5. The question is, how to count these state 
+          changes. We decided to round the values.
+        % \begin{lstlisting}[gobble=6]
+        %   possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
+        %   rounded to:    0  0      0    0    1      1     1
+        % \end{lstlisting}
 
         \begin{table} [h]
           \begin{center}
@@ -1201,40 +1219,21 @@
 
         In Table \ref{table:origins and losses} we can see, that we found some more origins than Weinstein 
           and on top of that some losses. \\
-        
-        Lets have a look at the same phyla as in the section before: Chordata, Nematoda, 
+
+        When more closely regarding the same phyla as in the section before: Chordata, Nematoda, 
           Platyhelminthes and Apicomplexa. \\
         Chordata are full of free-living species and so we see only a few origins of parasitism. The root
         and mostly all species are predicted as free-living. \\
-        In Apicomplexa and the Platyhelminthes are looking fine too. Our algorithm gives us only one loss 
-          of parasitism in Apicomplexa and five in the Platyhelminthes. They are both from the root over 
+        In Apicomplexa and the Platyhelminthes also look credible. Our algorithm gives us only one loss of
+          parasitism in Apicomplexa and five in the Platyhelminthes. They are both from the root over
           mostly all species predicted as parasites. \\
         Nematoda is again full of problems. The rootnode is predicted as a parasite and so we have more 
           losses of parasitism for the less information of free-living species in this phylum. The rest 
           is parasitic \\
-          As we have already mentioned Blaxter et al. found at least seven origins of parasitism 
-            \cite{Blaxter1998}. If we assume that the root node of Nematoda is free-living, then some 
-            losses would have to turn around and become Origins. So it could be that we end up in a similar 
-            size as Blaxter.
-
-        \begin{lstlisting}[gobble=6]
-          possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
-          rounded to:    0  0      0    0    1      1     1
-        \end{lstlisting}
-
-        % \begin{lstlisting}[gobble=6]
-        %   # possible tags: 0, 0.333, 0.4, 0.5, 0.667, 0.75, 1
-        %   # rounded to:    0  0      0    0    1      1     1
-        %   if node_state != father_state:
-        %     if father_state == 0:
-        %         origins += 1        # FL -> P
-        %         new_found = True
-        %     else:
-        %         losses += 1         # P -> FL
-        %         new_found = True
-        % \end{lstlisting}
-
-        % \todo{without rounding change else: to elif $father_state == 1$}
+        As we have already mentioned Blaxter et al. found at least seven origins of parasitism 
+          \cite{Blaxter1998}. If we assume that the root node of Nematoda is free-living, then some 
+          losses would have to turn around and become Origins. So it could be that we end up in a similar 
+          size as Blaxter.
       
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
