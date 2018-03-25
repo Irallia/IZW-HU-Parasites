@@ -26,13 +26,13 @@
         using a large multifurcated phylogenetic synthesis tree \\
     	\end{Large}
       \vspace{3cm}
-      \textbf{Eingereicht am:} \\
-      3.4.2018 \\
+      \textbf{Submitted on:} \\
+      3 April 2018 \\
     	\vspace{2cm}
     	Lydia Buntrock \\
       E-Mail: info@irallia.de \\
      	\vspace{3cm}
-      \textbf{Betreuer:} \\
+      \textbf{Supervisor:} \\
       Prof. Dr. Bernhard Y. Renard \\
       \& \\
       Prof. Dr. rer. nat. Emanuel Heitlinger \\      
@@ -730,7 +730,7 @@
           \hline  
         \end{tabular}
       \end{center}
-      \caption{Examination of subtrees regarding missing information. \\ 
+      \caption{Examination of subtrees regarding missing information. \\
         The percentage values show the ratio of missing information of: unknown states (missing state 
           information of leaf nodes) and multifurcation (missing internal nodes). \\
         The subtrees are from different taxa: domain (Eukaryota), kingdom (Metazoa, Fungi, 
@@ -873,11 +873,9 @@
         (at 29.01.2018). Out of this data we got 51,337 distinct free-living species and 47 332 
         distinct parasite species for the whole tree of life. From the Eukaryota we could determine 
         25,992 and 34,879 species as parasites and free-living. With 2,293,463 leaf nodes we still have 
-        about 97.34~\% unknown leaf nodes. \\
-      We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target
-        species without OTT ids. Since we currently use only OTT ids, we could not use this information. \\        
-      \todo{discussion!!!} \\
-
+        about 97.34~\% unknown leaf nodes. In the discussion, section 
+        \ref{sec:discussion - data situation}, we will talk about ways to extend this data. \\
+      
       We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
         The Residuals are not very meaningful here, since all models have different complexities. % /dimensions
         For the sake of completeness, the associated deviance tables are located with the residuals in 
@@ -1372,59 +1370,78 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Discussion}
-  As in the previous chapters, the discussion is divided into three sections: input data, simulation 
-    and reconstruction of the real data.
+  This chapter deals with the question of how trustworthy our result of the ancestral state 
+    reconstruction of the Eukaryota tree is. And further on how well our simulation can simulate the 
+    real problem and thus make statements about the predictive power of the applied Sankoff algorithm.
 
-  Fehlerqoute der Daten an sich? \\
-  Wie gut ist unsere Datenlage? 3 mio knoten, 1.8 named species (leaf nodes), 200.000 leaf nodes mit 
-  Information. \\
-  Welche Teile des Baumes sind gut, an welchen muss noch viel geforscht werden. \\
-  Wieviele Origins haben wir gefunden, was bedeutet diese Zahl? \\
-  Es gibt noch ungenutze information in GloBI. \\
-  Wir können GloBI verbessern ... Wir haben GloBI auf die gefundenen Abweichungen aufmerksam gemacht... 
-    Fehler werden durch die prediction eventuell verstärkt...\\
+  We have pursued this question in various investigations and yet, of course, further possibilities 
+    for improvement remain. Despite these possibilities for improvement, our reconstruction gives a 
+    first good assessment of the whole tree.
+
+  \todo{Why is the study important?} \\
+  \todo{How does this study relate to previous studies?}
+  
+  We evaluated our ancestral state reconstruction and the relational state prediction using three 
+    methods: a simulation, a selective analysis from a biological perspective and a leave-100-out 
+    cross validation.
+  
+  Each theme has its own limitations. \\
+  There are various expansion options and points of criticism for the simulation, which in 
+    particular revolve around the question of how well we can simulate our real data. We dedicate 
+    this question to the subsection \ref{sec:discussion - simulation}. \\
+  Above all, the 'biological view' gives a first impression of the credibility of the results. But 
+    he can not make any statistical statements. Here the interested researcher may have to analyze 
+    the subtrees of relevant to him for himself. \\
+   Of course, cross-validation can be expanded. With more computing power, a leave-1-out cross 
+    validation could also be performed. However, our result on this point yields a strong result 
+    with 98.17~\% correct prediction that this does not seem necessary. \\
+  One last limitation also exists in the data situation itself. We have pointed out in various 
+    sections that we have a strong multifurcation and only a few data about leaf node states. In 
+    figure \ref{fig:influence of unknown data} you can see how the predictive power can improve if 
+    we have more data available. We discuss this point in section 
+    \ref{sec:discussion - data situation}.
+
+  % Wieviele Origins haben wir gefunden, was bedeutet diese Zahl? \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Data situation}
+  \section{Data situation} \label{sec:discussion - data situation}
+    The used eukaryotic synthesis tree from OTL \cite{Hinchliff2015} has 241,974 internal nodes and 
+      293,463 leaf nodes. In addition, we could specify 25,992 parasitic and 34,879 free-living 
+      species from GloBI \cite{Poelen2014}. \\
+    This gives us a high number of missing internal nodes (high multifurcation) and a low number of 
+      node states of the leaf nodes. In table \ref{table:percentage loss information subtrees} we have 
+      written down this percentage including some subtrees. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Taxa}
-      The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
-        Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
-      Since the analysis of the tree is not part of this work, it should be mentioned here that, 
-        according to recent findings, this is not complete and we lack some taxa in every rank. For 
-        example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
-        \cite{CavalierSmith1981}. \\
-      In section \pageref{subsec:listPhyla} of the appendix is a list of all phyla.
+    The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
+      Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
+    Since the analysis of the tree is not part of this work, it should be mentioned here that, 
+      according to recent findings, this is not complete and we lack some taxa in every rank. For 
+      example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
+      \cite{CavalierSmith1981}. \\
+    In section \pageref{subsec:listPhyla} of the appendix is a list of all phyla. \\
+
+    Also, the global database is not fallible. We found out (section x) that there is some 
+      misinformation. \\
+    We were able to report some of these directly to Globi.
+
+    We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target species 
+      without OTT ids. Since we currently use only OTT ids, we could not use this information. \\
+    At this point there is thus the possibility to use more of the existing data, if one performs a 
+      matching with the other Ids.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Simulation}
-    % For fixed calculations we assume a distribution of 60\% free-living to 40\% parasites, 95\% 
-    %   missing data and a multifuration rate of 95\%.
-
-
-    There are some points to discuss:
-    \begin{itemize}
-      \item How close is the randomized binary tree to a true phylogeny?
-      \item The distribution of parasites to free-ranging species is a pure assumption. From different 
-        sources about 40\% parasites are estimated, are these also beta-distributed?
-      \item How well do the transition probabilities match parasitism? Depending on the type of 
-        parasitism, this will certainly look different. In addition, it can be assumed that the 
-        probability for losses is lower than for origins.
-      \item The equal distribution of the multifurcation is a blank assumption. It is very likely to 
-        be higher towards the root node because there is less information back in time. On the other 
-        hand, there are many studies that have studied various species without considering phylogeny. 
-        Which also creates a high number of children of a node directly at the leaf nodes.
-    \end{itemize}
-    In order to be able to observe these problems, we have programmed our simulation according to the 
-      parameters. This allowed us to estimate the influence of some of these parameters.
-
-
+  \section{Simulation} \label{sec:discussion - simulation}
+    The aim of the simulation was to test the influence of various unknown or unsafe parameters in 
+      order to test the credibility of the prediction. \\
+    Some of these influences could not be tested: Firstly, the distribution of parasites and 
+      free-livings in the tree produces various parameters that we could not test all (see subsection 
+      \ref{sec:discussion - transition probabilities}) and, secondly, we discuss the simulation of a 
+      phylogenetic tree on which the evaluation based on certain parts (see subsection 
+      \ref{sec:discussion - simulate phylogeny}).
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -1465,7 +1482,16 @@
         can thus be assumed that the tree is not balanced. \\
       For more precise statements, one would have to take deeper undercurrents, which was not possible 
         in the context of this work.
-  
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Conclusion}
+
+  Die simulation ergab: x \\
+  Der biological view ergab: y \\
+  Die leave-100-out cross validation ergab: z
+
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
