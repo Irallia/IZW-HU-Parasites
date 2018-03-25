@@ -132,8 +132,8 @@
   %---------------------------------------------------------------------------------------------------
   %--------------------------------------------------------------------------------------------------- 
   \section{Motivation}
-    The aim of this thesis is the application of maximum parsiomony algorithms to non-binary 
-      trees and very large datasets. In particular, the example find the 'Origins of Parasitism' 
+    The aim of this thesis is the application of maximum parsimony algorithms to non-binary 
+      trees and very large data sets. In particular, the example find the 'Origins of Parasitism' 
       throughout the Eukaryota Tree of Life. \\
     For these large phylogenetic synthesis trees, however, ancestral state reconstruction has so far 
       only been done for Bacteria and Archaea for binary traits by Goberna and Verdú \cite{Goberna2015}.
@@ -152,7 +152,7 @@
       multifurcated tree with \colorbox{red}{binary/two discrete} states. \\
     Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
     The first is maximum parsimony: explain the current state with the least number of state changes 
-      between the child and his ancestor. \\
+      between the child and its ancestor. \\
     The other class she presents describes modeling the character evolution as a stochastic process and 
       using the likelihoods to compute the possible ancestral character states. This is generally done 
       with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
@@ -163,7 +163,7 @@
       available for the present relationship tree, and thus can not take advantage of the 
       other models, we decided in favor for parsimonious. \\
 
-    We will test the existing maximum parsimony algorithms Fitch \cite{Fitch1971} and Sankoff 
+    We will test the existing maximum parsimony algorithms of Fitch \cite{Fitch1971} and Sankoff 
       \cite{Sankoff1975} for this task and estimate their predictive power. The present tree structure 
       of OTL is not binary. A tree is multifurcated if each node has multiple ($n >= 3$) children 
       \cite{Felsenstein2003}. \\
@@ -239,12 +239,12 @@
     \includegraphics[width=0.6\textwidth]{Figures/Workflow-overview.png}
     \caption{The Workflow of the resulting procedure with the following steps: \\
       (1) Retrieve phylogenentic tree data as input for the tree (OTL) and the state information (GloBI).
-      (2) Get metadata of these for a realisitc the simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
+      (2) Get metadata of these for a realisitc simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
       (3) Build and run the simulation.
       (4) Evaluation of parameters for the simulation and the ancestral state reconstruction of the real tree.
       (5) Evaluate the accuracy of developed algorithms and choose the best.
-      (6) Run the resulted algorithm on the original data.
-      (7) Evalute and interprete results. %$\rightarrow$ Origins etc...
+      (6) Run the resulting algorithm on the original data.
+      (7) Evalute and interprete the results. %$\rightarrow$ Origins etc...
     }
     \label{fig:workflow}
   \end{figure}
@@ -255,7 +255,7 @@
   \section{Description of data sets}
     Two types of data are needed for an ancestral state reconstruction: a tree and information about 
       the states. \\
-    For the Tree Open Tree of Life (OTL) is used \cite{Hinchliff2015} and for the state information 
+    For the tree Open Tree of Life (OTL) is used \cite{Hinchliff2015} and for the state information 
       the Global Biotic Interaction database (GloBI) is taken \cite{Poelen2014}. \\
     % These are presented below.
 
@@ -367,7 +367,10 @@
         \begin{center}
           \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.45\textwidth]{Figures/40-60.png}
         \end{center}
-        \caption{60~\% Free-living - 40~\% Parasites \\ red: parasites, blue: free-living, \\ the threshold is at 0.4}
+        \caption{Simulated distributions of the states: \\
+          60~\% Free-living - 40~\% Parasites \\
+          red: parasites, blue: free-living, \\
+          the threshold is at 0.4}
         \label{fig:Beta distribution}
       \end{wrapfigure}
 
@@ -458,7 +461,7 @@
       nicht, dass man sie nehmen muss. Also: motiviere! (Renard)} \\
     Felsenstein \cite{Felsenstein2003} discusses in his book two algorithms that generalize all 
       previous methods (from Camin and Sokal \cite{Camin1965}, \todo{Kluge and Farris} and Farris 
-      \cite{Farris1970}): Fitch parsiomony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. \\
+      \cite{Farris1970}): Fitch parsimony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. \\
     \anmerkungstext{Unter Farris war auch noch der Begriff Wagner trees in gebrauch, als 
       Verallgemeinerung der parsimonious trees von Camin und Sokal. (Lydia)} \\
     \todo{Wagner-parsimony \cite{Swofford1987}} \\
@@ -485,10 +488,10 @@
       Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
         a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P). 
         Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
-        has only one. Leaf nodes have their state as a set (eg \{FL\} or \{P\}, unknown leaf nodes the 
+        has only one. Leaf nodes have their state as a set (e.g. \{FL\} or \{P\}, unknown leaf nodes the 
         union of all possible states (\{FL, P\}). \\
 
-      The algorithm traverses three times trough the tree and fills these sets. \\
+      The algorithm traverses three times through the tree and fills these sets. \\
       In each step, two sets are considered and their intersect formed. There are two cases:
       \begin{enumerate}
         \item The intersection is not empty and corresponds to the new set.
@@ -643,17 +646,17 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{real data analysis}
+  \section{Real data analysis}
     \todo{Evaluation section in methods?}
     \begin{itemize}
       \item Import tree
       \item Import interactions
       \item run castor algorithm / and others?
-      \item interprete results (leave-100-out cross validation)
+      \item interprete results (leave-100-out cross-validation)
     \end{itemize}
     We then evaluated the results in two ways. On the one hand, we have examined the results of some 
       subtrees for their credibility with the help of biological background knowledge. On the other 
-      hand, we performed a leave-100-out cross validation.
+      hand, we performed a leave-100-out cross-validation.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -683,8 +686,8 @@
 
   We then evaluated the results in two ways. On the one hand, we have examined the results of some 
     subtrees for their credibility with the help of biological background knowledge (subsection 
-    \ref{sec:results - biological view}). On the other hand, we performed a leave-100-out cross validation
-    (Subsection \ref{sec:results - cross validation}) and predicted approximately 98.17~\% states 
+    \ref{sec:results - biological view}). On the other hand, we performed a leave-100-out cross-validation
+    (Subsection \ref{sec:results - cross-validation}) and predicted approximately 98.17~\% states 
     correct.
 
   
@@ -760,7 +763,7 @@
       \label{fig:childrenOfNodes}
     \end{figure}
     The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
-      every node (a node with two children is binary). That means it discribes the number of nodes 
+      every node (a node with two children is binary). That means it describes the number of nodes 
       which we have lost from the real (binary) phylogenetic tree. \\
     It can be recognized that we are very far from a binary tree. \\
 
@@ -857,10 +860,10 @@
       % * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
       Within the every complexity class it can be seen that the mean height gives the best additional factor. \\
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
-        the finest model available here is also the best one of these. Lower taxa than orders (eg 
+        the finest model available here is also the best one of these. Lower taxa than orders (e.g. 
         family) were computationally too expensive to calculate. \\
       The model \textit{multifurc $\sim$ order * mean.height} turns out to be the best of our models, 
-        whereby it is possible that eg \textit{multifurc $\sim$ family * mean.height} is better.
+        whereby it is possible that e.g. \textit{multifurc $\sim$ family * mean.height} is better.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -870,7 +873,7 @@
         the species. For the ancestral state reconstruction, we need information about the states 
         (free-living or parasite) in the leaf nodes. \\
       The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
-        (at 29.01.2018). Out of this data we got 51,337 distinct free-living species and 47 332 
+        (at 29.01.2018). Out of this data we got 51,337 distinct free-living species and 47,332 
         distinct parasite species for the whole tree of life. From the Eukaryota we could determine 
         25,992 and 34,879 species as parasites and free-living. With 2,293,463 leaf nodes we still have 
         about 97.34~\% unknown leaf nodes. In the discussion, section 
@@ -902,7 +905,7 @@
       \end{table}
       It also follows from this table that the most complex model is the best. In general, the BIC 
         values are smaller than those of the multifurcation models. The modeling here is thus better. \\
-      Again, the calculation of finer models (eg order or family) was too expensive. \\
+      Again, the calculation of finer models (e.g. order or family) was too expensive. \\
 
       These missing data modeling results can be used to better simulate the data.
 
@@ -935,7 +938,7 @@
           real data.}
       \label{fig:influence of unknown data}
     \end{figure}
-    First, we tested different trasition probability distributions including threshold (first column). 
+    First, we tested different transition probability distributions including threshold (first column). 
       It can be observed that the more balanced the percentages of free-livings and parasites, the 
       worse the prediction of the algorithms (second and third column). \\
     It can be seen that both algortithms are always over 50~\% prediction and therefore better than 
@@ -955,8 +958,8 @@
   \section{Results of the real data analysis created with Sankoff}
     This section is about evaluating the prediction of real data using the Sankoff method. \\
     It is divided into two subsections. \ref{sec:results - biological view}: The analysis of some subtrees using 
-      biological background knowledge. \ref{sec:results - cross validation}: Presentation of the results 
-      of the leave-100-out cross validation.
+      biological background knowledge. \ref{sec:results - cross-validation}: Presentation of the results 
+      of the leave-100-out cross-validation.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -1050,7 +1053,7 @@
       % \end{itemize}
 
       The Apicomplexa are a parasitic phylum. We found only one input organism: Stemonitis fusca as a 
-        free-living specie. In GloBI it is listed as being parasitized by Nectria candicans and Nectriopsis 
+        free-living species. In GloBI it is listed as being parasitized by Nectria candicans and Nectriopsis 
         sporangiicola\footnote{
           \hyperlink{https://www.globalbioticinteractions.org/?interactionType=parasiteOf&targetTaxon=Stemonitis\%20fusca}
           {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca}
@@ -1229,7 +1232,7 @@
         In Apicomplexa and the Platyhelminthes also look credible. Our algorithm gives us only one loss of
           parasitism in Apicomplexa and five in the Platyhelminthes. They are both from the root over
           mostly all species predicted as parasites. \\
-        Nematoda is again full of problems. The rootnode is predicted as a parasite and so we have more 
+        Nematoda is again full of problems. The root node is predicted as a parasite and so we have more 
           losses of parasitism for the less information of free-living species in this phylum. The rest 
           is parasitic \\
         As we have already mentioned Blaxter et al. found at least seven origins of parasitism 
@@ -1239,8 +1242,8 @@
       
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Leave-100-out cross validation} \label{sec:results - cross validation}
-      For a further validation of our results, we carried out a leave-100-out cross validation. \\
+    \subsection{Leave-100-out cross-validation} \label{sec:results - cross-validation}
+      For a further validation of our results, we carried out a leave-100-out cross-validation. \\
       In order to achieve about 15\% of the 60,871 input node states with a validation, 
         we randomly left out 100 states 100 times. To make smaller amounts up to leave-one-out had too 
         much computational effort. \todo{warum 15\%?}\\
@@ -1251,9 +1254,9 @@
       
       We have again dealt with the question of how this data is best modeled. The influence of the taxa 
         (kingdom, phylum, class) and the depth of the leaf nodes was re-modeled and the BICs compared 
-        (table \ref{table:BIC cross validation}). Lower taxa than classes (eg order) were 
+        (table \ref{table:BIC cross-validation}). Lower taxa than classes (e.g. order) were 
         computationally too expensive to calculate. \\
-      The Residuals are included in the appendix (table \ref{table:Residuals cross validation}) for the 
+      The Residuals are included in the appendix (table \ref{table:Residuals cross-validation}) for the 
         sake of completeness; here too, due to the different complexity, they do not have much meaning 
         for the comparison of the models. \\
 
@@ -1270,29 +1273,29 @@
             \hline
             \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
             \hline \hline
-            correct predicted $\sim$ taxa & 117936 & \cellcolor{green!40}112242 & \cellcolor{green!50}111733 \\% & XXXXX \\
+            correctly predicted $\sim$ taxa & 117936 & \cellcolor{green!40}112242 & \cellcolor{green!50}111733 \\% & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa + depth & 117776 & \cellcolor{green!50}111304 & \cellcolor{green!50}111273 \\% & XXXXX \\
+            correctly predicted $\sim$ taxa + depth & 117776 & \cellcolor{green!50}111304 & \cellcolor{green!50}111273 \\% & XXXXX \\
             \hline
-            correct predicted $\sim$ taxa * depth & 117709 & \cellcolor{green!50}111262 & \cellcolor{green!30}113135 \\% & XXXXX \\
+            correctly predicted $\sim$ taxa * depth & 117709 & \cellcolor{green!50}111262 & \cellcolor{green!30}113135 \\% & XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC (Bayesian information criterion) values of cross validation prediction models. \\
+        \caption{BIC (Bayesian information criterion) values of cross-validation prediction models. \\
           These models were created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values.}
-        \label{table:BIC cross validation} 
+        \label{table:BIC cross-validation} 
       \end{table}
 
       The BIC values this time did not prove that the finest model is the best. Of our calculated models, 
-       \textit{correct predicted $\sim$ phylum * depth} has the smallest value. \\
+       \textit{correctly predicted $\sim$ phylum * depth} has the smallest value. \\
 
       We examined the influence of the omitted data on the prediction. On average, about twice as many 
         leaf nodes are predicted differently. \color{red}The variance is very high. This means that 
         we have a high degree of dispersion and thus a stochastic situation exists. It also describes 
         the width of the present probability function. The standard deviation is about five times as 
         high as the number of omitted nodes, so the variability is quintupled. \color{black} Table 
-        \ref{table:statistics cross validation} shows these results. \\
+        \ref{table:statistics cross-validation} shows these results. \\
       \begin{table}[h!]
         \begin{center}
           \begin{tabular}{ |cl||r|r|r|r|r| }
@@ -1308,12 +1311,12 @@
             \hline
           \end{tabular}
         \end{center}
-        \caption{Statistics about the leave-100-out cross validation \\
+        \caption{Statistics about the leave-100-out cross-validation \\
           The distance between original and new states was calculated using the Euclidean metric. This 
             was summed over all states / all leaf node states and all internal node states. \\
           The lower half of the table describes the distribution of the 'lost' states between parasites 
             (P) and free-livings (FL).}
-        \label{table:statistics cross validation}
+        \label{table:statistics cross-validation}
       \end{table}
 
   %---------------------------------------------------------------------------------------------------
@@ -1383,7 +1386,7 @@
   
   We evaluated our ancestral state reconstruction and the relational state prediction using three 
     methods: a simulation, a selective analysis from a biological perspective and a leave-100-out 
-    cross validation.
+    cross-validation.
   
   Each theme has its own limitations. \\
   There are various expansion options and points of criticism for the simulation, which in 
@@ -1490,8 +1493,8 @@
 
     From the simulation, we can conclude that we predict correctly about 60\% of the nodes in the 
       present data situation (see section \ref{sec:results - simulation}).
-    The leave-100-out cross validation even showed that we predict the omitted nodes to be 98.17~\%  
-      percent correct (see section \ref{sec:results - cross validation}). \\
+    The leave-100-out cross-validation even showed that we predict the omitted nodes to be 98.17~\%  
+      percent correct (see section \ref{sec:results - cross-validation}). \\
     This allows for the assumption that the data is grouped and not uniformly distributed and thus 
       smaller subtrees are present in which data are to be found in the simulation with smaller 
       multifurcation and smaller value for unknown nodes. This is also confirmed by our biological 
@@ -1667,7 +1670,7 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Missing internal node modelling - Resiudal table} %\label{sec:Residuals unknown information}
+  \section{Missing internal node modeling - Residual table} %\label{sec:Residuals unknown information}
     \begin{table}[h!]
       \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
@@ -1696,7 +1699,7 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Missing leaf state modelling - Resiudal table}\label{sec:Residuals unknown information}
+  \section{Missing leaf state modeling - Residual table}\label{sec:Residuals unknown information}
     \begin{table}[h!]
       \begin{center}
         \begin{tabular}{ |l|r|r|r| }
@@ -1718,25 +1721,25 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Cross validation prediction - Resiudal table}
+  \section{Cross-validation prediction - Residual table}
     \begin{table}[h]
       \begin{center}
         \begin{tabular}{ |l|r|r|r| }
           \hline
           \bfseries Model / Taxa &\bfseries  Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
           \hline \hline
-          correct predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
+          correctly predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
           \hline
-          correct predicted $\sim$ taxa + depth & 117703 & \cellcolor{green!35}110513 & \cellcolor{green!45}108403 \\% & XXXXX \\
+          correctly predicted $\sim$ taxa + depth & 117703 & \cellcolor{green!35}110513 & \cellcolor{green!45}108403 \\% & XXXXX \\
           \hline
-          correct predicted $\sim$ taxa * depth & 117592 & \cellcolor{green!40}109827 & \cellcolor{green!50}107994 \\% & XXXXX \\
+          correctly predicted $\sim$ taxa * depth & 117592 & \cellcolor{green!40}109827 & \cellcolor{green!50}107994 \\% & XXXXX \\
           \hline
         \end{tabular} 
       \end{center}
-      \caption{Residuals of cross validation prediction \\
+      \caption{Residuals of cross-validation prediction \\
         These models were created with the R function \textit{glm()} and compared with the 
           \textit{anova()} function. This results in the listed residuals.}
-      \label{table:Residuals cross validation} 
+      \label{table:Residuals cross-validation} 
     \end{table}
 
 
