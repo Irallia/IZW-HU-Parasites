@@ -343,7 +343,7 @@
         \end{itemize}
     \end{enumerate}
     The influence of these parameters are tested on our result using our simulation (section 
-      \ref{sec:simulation}).
+      \ref{sec:methods - simulation}).
    
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -563,7 +563,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Simulation}\label{sec:simulation}
+  \section{Simulation}\label{sec:methods - simulation}
     The simulation compares these different of ancestral state reconstruction algorithms with each 
       other. \\
     First different implementations of the Fitch maximum parsimony are compared and then the best of 
@@ -677,13 +677,13 @@
   Next we compared different possible methods. We decided to take a closer look at maximum parsimony 
     algorithms because they are best suited to the problem at hand. The reason for this can be found 
     in section \ref{sec:ancestral state reconstruction}. We tested these on different simulations of 
-    the data and compared their predictive power (section \ref{sec:results of simulation}). \\
+    the data and compared their predictive power (section \ref{sec:results - simulation}). \\
   We used the Sankoff algorithm \cite{Sankoff1975} implemented by Louca et al. \cite{Louca2017}, 
     which performs best, for the actual reconstruction on the real data. \\
 
   We then evaluated the results in two ways. On the one hand, we have examined the results of some 
     subtrees for their credibility with the help of biological background knowledge (subsection 
-    \ref{sec:biological view}). On the other hand, we performed a leave-100-out cross validation
+    \ref{sec:results - biological view}). On the other hand, we performed a leave-100-out cross validation
     (Subsection \ref{sec:results - cross validation}) and predicted approximately 98.17~\% states 
     correct.
 
@@ -909,8 +909,8 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Results of simulation / Influence of different parameters} \label{sec:results of simulation}
-
+  \section{Results of simulation / Influence of different parameters} \label{sec:results - simulation}
+  
     As presented, we compare two methods in our simulation to their prediction accuracy: Fitch and 
       Sankoff. \\
     Figure \ref{fig:influence of unknown data} shows the results of examining various parameters.
@@ -954,13 +954,13 @@
   %---------------------------------------------------------------------------------------------------
   \section{Results of the real data analysis created with Sankoff}
     This section is about evaluating the prediction of real data using the Sankoff method. \\
-    It is divided into two subsections. \ref{sec:biological view}: The analysis of some subtrees using 
+    It is divided into two subsections. \ref{sec:results - biological view}: The analysis of some subtrees using 
       biological background knowledge. \ref{sec:results - cross validation}: Presentation of the results 
       of the leave-100-out cross validation.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Biological view} \label{sec:biological view}
+    \subsection{Biological view} \label{sec:results - biological view}
       To analyze the results, we have selected some phyla (subtrees) to evaluate our results 
         selectively from the biological point of view: Chordata, Nematoda, Platyhelminthes and 
         Apicomplexa. \\
@@ -1166,7 +1166,7 @@
       \end{table}
 
       %---------------------------------------------------------------------------------------------------
-      \subsubsection{Origins and Losses}
+      \subsubsection{Origins and Losses} \label{sec:results - origins and losses}
 
         Weinstein and Kuris have been searching for origins of parasitism in Animalia \cite{Weinstein2016}. 
           They identified 223 parasitic origins: 223 in Metazoa $\supset$ 143 in Arthropoda $\supset$ 87 
@@ -1488,9 +1488,19 @@
   %---------------------------------------------------------------------------------------------------
   \section{Conclusion}
 
-  Die simulation ergab: x \\
-  Der biological view ergab: y \\
-  Die leave-100-out cross validation ergab: z
+    From the simulation, we can conclude that we predict correctly about 60\% of the nodes in the 
+      present data situation (see section \ref{sec:results - simulation}).
+    The leave-100-out cross validation even showed that we predict the omitted nodes to be 98.17~\%  
+      percent correct (see section \ref{sec:results - cross validation}). \\
+    This allows for the assumption that the data is grouped and not uniformly distributed and thus 
+      smaller subtrees are present in which data are to be found in the simulation with smaller 
+      multifurcation and smaller value for unknown nodes. This is also confirmed by our biological 
+      analysis of the Chordata subtree (see subsection \ref{sec:results - biological view}). \\
+    However, this means that the ancestral states' data in the direction of root node are probably 
+      particularly unbelievable. Which makes the localization of Origins direction root node 
+      difficult. The question remains, how much this affects the estimation of the number of origins. 
+      Our comparison with the paper from Weinstein and Kuris \cite{Weinstein2016} (see subsection 
+      \ref{sec:results - origins and losses}), however, leaves us with optimism.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
