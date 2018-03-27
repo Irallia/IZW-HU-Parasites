@@ -104,61 +104,72 @@
 \chapter{Introduction}
   This thesis is about the analysis of ancestral state reconstruction algorithms for non-binary 
     trees, applied to the currently largest phylogenetic synthesis tree of Open Tree of Life (OTL)
-    \cite{Hinchliff2015}, with the application of prediciton of parasitism. \\
+    \cite{Hinchliff2015} to predict parasitism in Eukaryota.
+
+  For about 50 years, people have been working on ancestral state reconstruction, the inference of 
+    evolution that leads to the given data. \\
+  One of the first papers was written by Camin and Sokal, who in 1965 were working on algorithms for 
+    discrete-state data \cite{Camin1965}. Different methods have been developed and the question is 
+    which method is the most suitable for the problem at hand: the ancestral state reconstruction 
+    for a huge non-binary tree with two discrete states.
   
-  For about 50 years, people have been working on ancestral state reconstruction. The first paper 
-    is by Camin and Sokal, who in 1965 were working on algorithms for discrete-state data 
-    \cite{Camin1965}. Different methods have been developed and the question is which method is the 
-    most suitable for the problem at hand: The ancestral state reconstruction for a huge 
-    multifurcated tree with \colorbox{red}{binary/two discrete} states. \\
-  Royer-Carenzi et al. distinguishes two major classes of ancestral state reconstruction methods: \\
+  Royer-Carenzi et al. distinguish two major classes of ancestral state reconstruction methods: \\
   The first is maximum parsimony: explain the current state with the least number of state changes 
     between the child and its ancestor. \\
-  The other class she presents describes modeling the character evolution as a stochastic process and 
-    using the likelihoods to compute the possible ancestral character states. This is generally done 
-    with a continuous time Markov model \cite{RoyerCarenzi2013}.
+  The other class they present describes modeling the character evolution as a stochastic process 
+    and using the likelihoods to compute the possible ancestral character states. This is generally 
+    done with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
+  \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...}
+    
+  Comparing the methods, we find that parsimony are methods in which you can not include information 
+    such as branch length (development time of the species). This is also their main disadvantage 
+    compared to the more complex likelihood based models. Since there are no branch lengths or other 
+    information available for the present relationship tree, and we can thus not take advantage of 
+    the other models. \\
+  The comparison of methods gives us the maximum parsimony method as the simplest and fastest method 
+    that meets all our requirements.
 
-  Parsimony methods are simple methods in which you can not include information such as branch 
-    length (development time of the species). This is also their main point of criticism compared to 
-    the more complex likelihood based models. Since there are no branch lengths or other information 
-    available for the present relationship tree, and we thus can not take advantage of the 
-    other models, we decided in favor for parsimonious.
+  For an ancestral reconstruction on the phylogeny of Eukaryota, we use Open Tree of Life (OTL) 
+    \cite{Hinchliff2015}. \\
+  Phylogeny describes the evolution of species, while the taxonomy is a classification according to 
+    certain criteria in so-called taxa. \\
+  OTL is a comprehensive, dynamic and digitally available tree of life constructed from published 
+    phylogenetic trees along with a backbone of taxonomic data. Besides this, Hinchliff et al. also 
+    offer an OpenTreeOfLife-Taxonomy (OTT) with the help of which we identify the individual nodes. \\
+  It follows that the biggest 'phylogenetic tree' is this synthesis of phylogenetic trees filled 
+    with a taxonomic trees given by OTL.
 
-  We will test the existing maximum parsimony algorithms of Fitch \cite{Fitch1971} and Sankoff 
-    \cite{Sankoff1975} for this task and estimate their predictive power. The present tree structure 
-    of OTL is not binary. A tree is multifurcated if each node has multiple ($n >= 3$) children 
-    \cite{Felsenstein2003}. \\
-  Maximum parsimony methods are developed for phylogenies, which are usually depicted as binary trees.
-    Parsimonious in phylogeny refers to favoring the tree that needs the least evolutionary change 
-    to explain the observed data. In our case, it is about the change of states 'is free-living' or 
-    'is parasitic'. \\
-    % Parsimonious in this context means to minimize the number of transitions between species states 
-    % (free-living or parasitic). 
+  For these large phylogenetic synthesis trees, however, ancestral state reconstruction has so far 
+    only been done for Bacteria and Archaea for binary traits by Goberna and Verdú \cite{Goberna2015}.
+    However, this differs from eukaryotes in the sense that complex traits such as parasitism depend
+    on more than one gene.
+
+  The present tree structure of OTL is not binary but multifurcated, meaning that each node has
+    multiple ($n >= 3$) children \cite{Felsenstein2003}. \\
+  Parsimonious in phylogeny refers to favoring the tree that needs the least evolutionary change to 
+    explain the observed data. Maximum parsimony methods have been developed for phylogenies, which 
+    are usually depicted as binary trees. Therefore, the selected parsimony methods are not directly 
+    applicable, as they were specifically applied to much smaller subtrees, where all splits are 
+    known. \\
+  We will extend and test the existing maximum parsimony algorithms of Fitch \cite{Fitch1971} and 
+    Sankoff \cite{Sankoff1975} for this task and estimate their predictive power. 
+
   The Sankoff method is implemented by Louca et al. for the non-binary case and is available as an R 
     package called \textit{Castor} \cite{Louca2017}. In addition, we have implemented the Fitch 
-    method and adapted it for multifurcated trees. \\% to make it usable and comparable for our current problem.
+    method \cite{Fitch1971} \todo{hier vll die andere quelle nutzen nach der wir uns gerichtet haben?}and adapted it for multifurcated trees. \\% to make it usable and comparable for our current problem.
   This achieves that we can predict ancestral states and unknown states of living species for large 
-    non-binary relatives trees.
+    non-binary trees.
 
-  % For this purpose, various studied methods and their advantages and disadvantages will be compared. \\
-  % These algorithms were developed especially for the binary problem, since one has considered much 
-  %   smaller subtrees, of which one knows all the splits. \\
-  % By developing a whole of an entire tree of life, the problem arises that it is by no means binary. \\
+  To accomplish this task, next to the phylogenetic tree information about the current species' 
+    states is needed. \\
+  For this information we use the interaction database Global Biotic Interactions (GloBI) 
+    \cite{Poelen2014}. The data in GloBI are stored as interactions e.g.  species A parasitize 
+    species B. From this we conclude that species A is parasitic and species B free-living. \\
+  From this data, we could specify $\sim$2.3 million leaf nodes 34,879 as free-living and 25,992 
+    as parasitic. 
 
-  To accomplish this task, a large phylogenetic tree and information about the current species states 
-    is needed. \\
-  The biggest 'phylogenetic tree' is a synthesis of phylogenetic trees filled with a taxonomic trees 
-    given by Open Tree of Life (OTL) \cite{Hinchliff2015}. %This tree is not binary and therefore the 
-    % developed algorithms are not directly applicable. Therefore, an algorithm must be found that can 
-    % work with non-binary trees. \\
-  For the information about the current states of the species we use the interaction database Global 
-    Biotic Interactions (GloBI) \cite{Poelen2014}. The data in GloBI are stored as interactions e.g. 
-    species A parasitize species B. From this we conclude that species A is parasitic and species B 
-    free-living.
-
-  At this point a few words to the term parasitic. There are different definitions. Since we use 
-    GloBI to classify species, we use their definition of parasitism. Again, in GloBi, Ontobee 
-    definitions are used \cite{Xiang2011}.
+  There are many different ways to define parasitism. Since we use GloBI to classify species, we use 
+    their definition of parasitism. Again, in GloBi, Ontobee definitions are used \cite{Xiang2011}. \\
   The interaction \textit{has parasite} is defined as: "An interaction relationship between two 
     organisms living together in more or less intimate association in a relationship in which 
     association is disadvantageous or destructive to one of the organisms."\footnote{
@@ -167,26 +178,27 @@
     }. This definition includes: ecto- and endoparasites, parasitoids, kleptoparasites and pathogenes. \\
 
   The objectives of this work are the following points: (1) Find a suitable ancestral state 
-    reconstruction method. (2) Perform reconstructing on the Eucaryotic synthesis tree of OTL. \\
+    reconstruction method. (2) Accomplish reconstructing on the Eucaryotic synthesis tree of OTL. \\
   The goal of Point 1 is to evaluate the possible methods based on a simulation of our data 
     situation. \\
-  The one by Louca et al. implemented Sankoff algorithm is the best in our comparisons. Therefore, 
-    point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states. 
-    And then perform an evaluation of the results.
+  The Sankoff algorithm implemented by Louca et al. is the best in our comparisons. Therefore, 
+    point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states 
+    with the aid of this algorithm. And then perform an evaluation of the results.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Aims}
-  The aim of this thesis is the application of maximum parsimony algorithms to non-binary 
-    trees and very large data sets. In particular, the example find the 'Origins of Parasitism' 
-    throughout the Eukaryota Tree of Life. \\
-  For these large phylogenetic synthesis trees, however, ancestral state reconstruction has so far 
-    only been done for Bacteria and Archaea for binary traits by Goberna and Verdú \cite{Goberna2015}.
-    However, this differs from eukaryotes in the sense that complex traits such as parasitism depend
-    on more than one gene. \\
-  \todo{Warum ist das relevant? Was könnte man dann tun?}
+  The aim of this thesis is the application of maximum parsimony algorithms to non-binary trees and 
+    very large data sets to predict unknown leaf node states. \\
+  We discuss different ancestral state reconstruction methods and test the most appropriate ones on 
+    our data. Hereby, we want to find out how far it is possible to use the Open Tree of Life (OTL) 
+    to expandavailable information via phylogenetic trait prediction. As a basis for known states, 
+    we use the Global Biotic Interactions (GloBI) database, which cathegorises 34,879 and 25,992 
+    species as free-living and parasites. This data is used to perform an ancestral state 
+    reconstruction and predict states for over $\sim$2.3 million (97.34\%) leaf nodes without state 
+    information.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -242,17 +254,17 @@
         }. OTL also 
         includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}. \\
       \todo{Das steht auf der Website nicht in dem Paper...} \\
-      For phylogenetic data, there are at least five big data collections, namely:
-      \begin{itemize}
-        \item ITIS (Integrated Taxonomic Information System) \cite{ITIS}
-        \item NCBI (National Center for Biotechnology Information) \cite{NCBI1988}
-        \item WORMS (World Register of Marine Species) \cite{WoRMS2018}
-        \item GBIF (Global Biodiversity Information Facility) \cite{GBIF}
-        \item OTT (OpenTreeOfLife-Taxonomy) \cite{Hinchliff2015}
-      \end{itemize}
-      ITIS is only a small set of 100\% confirmed and named species. GBIF is not composed with the help 
-        of phylogeny, the same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small 
-        dataset of mostly marine species. \\
+      % For taxonomic data, there are at least five big data collections, namely:
+      % \begin{itemize}
+      %   \item ITIS (Integrated Taxonomic Information System) \cite{ITIS}
+      %   \item NCBI (National Center for Biotechnology Information) \cite{NCBI1988}
+      %   \item WORMS (World Register of Marine Species) \cite{WoRMS2018}
+      %   \item GBIF (Global Biodiversity Information Facility) \cite{GBIF}
+      %   \item OTT (OpenTreeOfLife-Taxonomy) \cite{Hinchliff2015}
+      % \end{itemize}
+      % ITIS is only a small set of 100\% confirmed and named species. GBIF is not composed with the help 
+      %   of phylogeny, the same is valid for the NCBI taxonomy. The WORMS taxonomy is a way too small 
+      %   dataset of mostly marine species. \\
       Here the taxonomy from OTL is used because it is including most of the known taxonomies and is 
         synthesised by preffering taxonomies that match with available phylogenetic data. Furthermore 
         the team from OTL preferre a maximum number of species \cite{Hinchliff2015}. This is resulting 
@@ -415,7 +427,6 @@
     The other class she presents involves modeling the character evolution as a stochastic process and 
       using the likelihoods to compute the possible ancestral character states. This is generally done 
       with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
-    \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...} \\
 
     One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
       can not take divergece times (branch length) into account. Since the OTL does not include 
@@ -1435,7 +1446,7 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
-\chapter{Appendices}
+\chapter{Appendix}
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Methods overview}
