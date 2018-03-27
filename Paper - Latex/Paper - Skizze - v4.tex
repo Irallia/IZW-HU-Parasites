@@ -49,9 +49,9 @@
 
   Parasitism can be defined as an interaction between species in which one of the interaction 
     partners, the parasite, lives in or on the other, the host. The parasite draws food from its 
-    host and harms it in the process. According to some estimates, above 40\% of all eukaryotes are 
-    parasites. Nevertheless, it is difficult to obtain information whether a particular taxon is a 
-    parasite computationally making it difficult to query large sets of taxa.
+    host and harms it in the process. According to estimates, above 40\% of all eukaryotes are 
+    parasites. Nevertheless, it is computationally difficult to obtain information whether a 
+    particular taxon is a parasite making it difficult to query large sets of taxa.
 
   Here we test in how far it is possible to use the Open Tree of Life (OTL), a synthesis of 
     phylogenetic trees on a backbone taxonomy (resulting in unresolved nodes), to expand available 
@@ -60,10 +60,10 @@
     predict states for over $\sim$2.3 million (97.34\%) leaf nodes without state information.
 
   We estimate the accuracy of our maximum parsimony based predictions using cross-validation and 
-    simulation at roughly 60\% overall, but strongly varying between clades. The cross-validation 
-    resulted in an accuracy of 98.17\% which is explained by the fact that the data are not 
-    uniformly distributed. We describe this variation across taxa as associated with available state 
-    and topology information. We compare our results with several smaller scale studies, which used 
+    simulation at 60-80\% overall, while strongly varying between clades. The cross-validation 
+    results in an accuracy of 98.17\% which is explained by the fact that the data are not uniformly 
+    distributed. We describe this variation across taxa as associated with available state and 
+    topology information. We compare our results with several smaller scale studies, which used 
     manual expert curation and conclude that computationally inferred state changes largely agree in 
     number and placement with those. In clades in which available state information is biased 
     (mostly towards parasites, e.g. in Nematodes) phylogenetic prediction is bound to provide 
@@ -74,6 +74,8 @@
     further incorporation of parasitism as an important trait in species interaction databases and 
     in individual studies on eukaryotes e.g. in the microbiome.
 
+%---------------------------------------------------------------------------------------------------
+
   % This study focuses on the ancestral state reconstruction of parasitism in the tree of life of
   %   Eukaryota. We predict unknown states of species and estimate origins and losses of parasitism. \\
   % The challenge here is the size of the tree and the little information about it. \\
@@ -82,14 +84,14 @@
   % For the 2,535,437 leaf nodes we could not gather much data. From the GloBI database 
   %   \cite{Poelen2014} which we used, we could only collect 25,992 parasitic and 34,879 free-living 
   %   species. It follows that we have $\approx 2.4\%$ state information. \\
-  % So far, especially small scale studies have been carried out or highly manual. In this scale, it 
+  % So far, especially small scale or highly manual studies have been carried out. In this scale, it 
   %   requires different data sources to be interconnected. \\
   % We performed an analysis of existing algorithms and selected a Sankoff maximum parsimony algorithm 
   %   using the R package \textit{Castor} \cite{Louca2017}. \\
-  % Nevertheless, the results are convincing and even though purely computational approach which did 
-  %   not include human experts input, results coincide with prior knowledge. Also regarding the number 
-  %   of events, our estimates coincide with previous results by human experts, e.g. the study by 
-  %   Weinstein and Kuris \cite{Weinstein2016}. \\
+  % Nevertheless, the results are convincing and even though this is a purely computational approach 
+  %   which did not include human experts input, results coincide with prior knowledge. Also regarding 
+  %   the number of events, our estimates coincide with previous results by human experts, e.g. the 
+  %   study by Weinstein and Kuris \cite{Weinstein2016}. \\
 
 \tableofcontents
 \clearpage
