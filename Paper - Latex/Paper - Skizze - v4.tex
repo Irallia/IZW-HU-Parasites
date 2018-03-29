@@ -154,7 +154,7 @@
   % \anmerkungstext{Unter Farris war auch noch der Begriff Wagner trees in gebrauch, als 
   %   Verallgemeinerung der parsimonious trees von Camin und Sokal. (Lydia)} \\
   % \todo{Wagner-parsimony \cite{Swofford1987}} \\
-   For Fitch, the algorithm has been extended from binary to multifurcated trees. For the Sankoff 
+   For Fitch, the algorithm has been extended from binary to non-binary trees. For the Sankoff 
     algorithm, Louca and Doebeli have presented an implementation for non-binary trees published in 
     an R package named \textit{castor} \cite{Louca2017}.
 
@@ -174,7 +174,8 @@
     on more than one gene.
 
   The present tree structure of OTL is not binary but multifurcated, meaning that each node has
-    multiple ($n >= 3$) children \cite{Felsenstein2003}. \\
+    multiple ($n > 2$) children or in other words its degree, number of adjacent nodes, is greater 
+    than 3 \cite{Felsenstein2003}. \\
   Parsimonious in phylogeny refers to favoring the tree that needs the least evolutionary change to 
     explain the observed data. Maximum parsimony methods have been developed for phylogenies, which 
     are usually depicted as binary trees. Therefore, the selected parsimony methods are not directly 
@@ -293,7 +294,7 @@
     Two types of data are needed for an ancestral state reconstruction: a tree and information about 
       the states.
 
-    For the subsequent analyzes on the Eukaryote tree the database of Open Tree of Life (OTL) was used 
+    For the subsequent analyzes on the Eukaryote tree the database of Open Tree of Life (OTL) is used 
       (downloaded on 16.02.2018) \cite{Hinchliff2015}. This database gives a synthesis of phylogenetic 
       trees (currently 819 trees) and a taxonomic tree\footnote{
         \hyperlink{https://tree.opentreeoflife.org/about/synthesis-release/v9.1}
@@ -334,18 +335,18 @@
   \section{Metadata analysis} \label{sec:methods - metadata analysis}
     Based on the input data, generalized linear models are compared with poisson respectively binomial 
       regression according to their residuals. In order to compare models of different complexity, the 
-      BIC (Bayesian Information Criterion) values were calculated in addition to the residuals. \\
+      BIC (Bayesian Information Criterion) values are  calculated in addition to the residuals. \\
     There are two different information criteria: AIC (Akaike Information Criteria) and BIC. \\
     The advantage of the BIC is that the penalty is dependent on the sample size and is therefore 
       advantageous for large samples. \\
-    For all these calculations, the following R functions were used: \textit{glm()}, \textit{anova()} 
+    For all these calculations, the following R functions are  used: \textit{glm()}, \textit{anova()} 
       and \textit{BIC()}.
     % https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
 
-    For each node, depth, min, max and mean height were noted. The node depth was calculated as the
-      distance (number of edges) to the root node. The node height was calculated in three different 
+    For each node, depth, min, max and mean height are  noted. The node depth is calculated as the
+      distance (number of edges) to the root node. The node height is calculated in three different 
       ways: min, max and mean height refers to the (mininmal, maximal, mean) distance to a leaf node. \\
-    The influence in the modeling of these parameters was tested, additively as well as 
+    The influence in the modeling of these parameters is tested, additively as well as 
       multiplicatively to the models.
 
   %---------------------------------------------------------------------------------------------------
@@ -359,7 +360,7 @@
     %---------------------------------------------------------------------------------------------------
     \subsection{Fitch maximum parsimony}
       Based on the work of Cunningham et al. \cite{Cunningham1998} the Fitch method \cite{Fitch1971} 
-        was implemented and extended by us for the multifurcated tree case. To understand the 
+        is implemented and extended by us for the multifurcated tree case. To understand the 
         differences to the multifurcated case, the algorithm for the binary case is briefly explained 
         and referred to the extension.
 
@@ -382,8 +383,8 @@
       Last traversion (direction does not matter): build the final state for every node. It is formed 
         from the sets of previous traversals.
 
-      (The original Fitch algorithm was designed to minimize transitions without predicting actual states 
-        of internal nodes, so it was just the first traversal.) \\
+      (The original Fitch algorithm is designed to minimize transitions without predicting actual states 
+        of internal nodes, so it is just the first traversal.) \\
         \begin{wrapfigure}[20]{r}{0.5\textwidth}
           \centering
           \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
@@ -397,7 +398,7 @@
       The extension to the non-binary case is quite obvious, but holds some opportunities. In this case, 
         more than two children may be present for the first traversal, but the incision or union may 
         also be formed over more than two sets. Also in the second traversing, there may be several 
-        sibling nodes. However, there are several possibilities here that were all tested and compared 
+        sibling nodes. However, there are several possibilities here that are all tested and compared 
         in the simulation. Some of these options are already available in the binary case:
       \begin{itemize}
         \item The parent node has (except for the root node) two state sets, because he came through 
@@ -408,7 +409,7 @@
       The first point already has an effect on the binary case. Figure \ref{fig: binary Fitch} shows 
         both possibilities of the three sets. \\
       Cunningham uses only the first state set of the parent node \cite{Cunningham1998}. \\
-      From these two points four different versions of Fitch were formed:
+      From these two points four different versions of Fitch are formed:
       \begin{enumerate}
         \item Fitch 1: First state set of parent node; intersection/union of siblings first.
         \item Fitch 2: First state set of parent node; intersection/union of siblings together with parent node.
@@ -422,15 +423,15 @@
         \caption{Test of Fitch Versions. \todo{beschriften!!}}
         \label{fig:Fitch versions}
       \end{figure}
-      These four versions were tested in the simulation with 100 trees and 10000 leaf nodes and
+      These four versions are tested in the simulation with 100 trees and 10000 leaf nodes and
         distributions of 70\% FL to 30\% P and 60\% FL to 40\% P. Figure \ref{fig:Fitch versions} shows 
         this over all unknown node percentage. \\
-      % At 90\% unknown nodes and 90\% of multifurcation of the internal nodes, version 1 was 89.26\%, 
-      %   version 2 was 89.26\%, version 3 was 89.35\%, and version 4 was 89.31\% correct. Therefore, 
-      %   only version 3 was used for all further simulations.
-      At 95\% unknown nodes and 95\% of multifurcation of the internal nodes, version 1 was 88.37\%, 
-        version 2 was 88.37\%, version 3 was 88.4\%, and version 4 was 88.39\% correct. Therefore, 
-        only version 3 was used for all further simulations.
+      % At 90\% unknown nodes and 90\% of multifurcation of the internal nodes, version 1 is 89.26\%, 
+      %   version 2 is 89.26\%, version 3 is 89.35\%, and version 4 is 89.31\% correct. Therefore, 
+      %   only version 3 is used for all further simulations.
+      At 95\% unknown nodes and 95\% of multifurcation of the internal nodes, version 1 is 88.37\%, 
+        version 2 is 88.37\%, version 3 is 88.4\%, and version 4 is 88.39\% correct. Therefore, 
+        only version 3 is used for all further simulations.
         
     % Fitch versions:
     % | 88.37 % | 88.37 % | 88.4 % |88.39 % |
@@ -454,7 +455,7 @@
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.95\textwidth]{Figures/Workflow-Simulation.png}
-      \caption{A simulation was performed to compare different maximum parsimony algorithms. \\
+      \caption{A simulation is performed to compare different maximum parsimony algorithms. \\
         The course of the simulation with influence of the metadata analysis from the real data can
           be seen: \\
         (1) A phylogenetic tree is created randomly. (2) Simulate node states for all nodes. (3) 
@@ -466,7 +467,7 @@
     The course of a simulation is shown in Figure \ref{fig:Simulation Workflow}. The individual steps 
       are explained in the following.
 
-    A tree is needed to perform a simulation of ancestral state reconstruction. It had to be decided 
+    A tree is needed to perform a simulation of ancestral state reconstruction. It has to be decided 
       whether to take the real tree or simulate a tree. In this simulation, trees are created randomly, 
       as one can replicate a complete binary phylogentic tree. Thus, there is also the possibility to 
       simulate the multifurcation. \\
@@ -490,7 +491,7 @@
         \label{fig:set node states}
       \end{wrapfigure} 
       states is included. \\
-    Since there was no statement about general transition probabilities, these are all set the same: \\
+    Since there is no statement about general transition probabilities, these are all set the same: \\
     $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$.
 
     For the distributions of states different ratios of parasites (P) to free-livings (FL) are 
@@ -539,16 +540,15 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Real data analysis} \label{sec:methods - real data analysis}
-    \todo{Evaluation section in methods?}
-    \begin{itemize}
-      \item Import tree
-      \item Import interactions
-      \item run castor algorithm / and others?
-      \item interprete results (leave-100-out cross-validation)
-    \end{itemize}
-    We then evaluated the results in two ways. On the one hand, we have examined the results of some 
-      subtrees for their credibility with the help of biological background knowledge. On the other 
-      hand, we performed a leave-100-out cross-validation.
+    For the evaluation of real data results, a leave-100-out cross-validation is performed. For this 
+      purpose 100 randomly distributed 100 states are left out.
+    
+    Analogous to the missing leaf node states, generalized linear models with binomial regression are 
+      compared according to their residuals, based on the "true" / "false" prediction. \\
+    Again, in order to compare models of different complexity, the BIC (Bayesian Information Criterion) 
+      values are calculated in addition to the residuals. \\
+    For all these calculations, the following R functions are used: \textit{glm()}, \textit{anova()} 
+      and \textit{BIC()}.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -556,85 +556,66 @@
   \section{Implementation}
     The complete code is located on GitHub: 
       \hyperlink{github.com/Irallia/IZW-HU-Parasites}{github.com/Irallia/IZW-HU-Parasites}. \\
-    Most of the code was written in Python. The analyzes and the use of the Castor package in R. There 
-      are some shell scripts to execute whole workflows.
+    Most of the code is written in Python, the analyzes and the use of the Castor package in R. Some 
+      shell scripts are used to execute whole workflows.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Results}
-  This work deals with the ancestral state reconstruction of the entire Eukaryota relatives tree. \\
+  This work deals with the ancestral state reconstruction of the entire Eukaryota relatives tree.
 
   For this reconstruction, we first analyzed our data. This is the tree of OTL \cite{Hinchliff2015}
-    and the data for the leaf nodes (free-living or parasite states) from GloBI \cite{Poelen2014} 
-    (section \ref{sec:results - missing information}). \\
-  Next we compared different possible methods. We decided to take a closer look at maximum parsimony 
-    algorithms because they are best suited to the problem at hand. The reason for this can be found 
-    in section \ref{sec:methods - ancestral state reconstruction}. We tested these on different 
-    simulations of the data and compared their predictive power (section 
-    \ref{sec:results - simulation}). \\
-  We used the Sankoff algorithm \cite{Sankoff1975} implemented by Louca et al. \cite{Louca2017}, 
-    which performs best, for the actual reconstruction on the real data. \\
-
-  We then evaluated the results in two ways. On the one hand, we have examined the results of some 
-    subtrees for their credibility with the help of biological background knowledge (subsection 
-    \ref{sec:results - biological view}). On the other hand, we performed a leave-100-out cross-validation
-    (Subsection \ref{sec:results - cross-validation}) and predicted approximately 98.17\% states 
-    correct.
-
+    and the data for the leaf node states (free-living or parasite states) from GloBI 
+    \cite{Poelen2014} (section \ref{sec:results - missing information}), where we have determined 
+    that the entire Eukaryota tree is 89.45\% multifurcated (missing internal nodes) and that we do 
+    not have any state information for 97.34\% nodes. \\
+  In addition, we tested different models for these two paramters and found out that multifurcation 
+    can best be modeled with the taxa 'order' multiplied by the mean height of the knots. Also, the 
+    missing states could be modeled with the taxa 'order' and in this case multiplied by the depth 
+    of the nodes.
   
-%   Otherwise, this chapter is mainly about the actual reconstruction of the states. This means, on 
-%     one hand investigation of origins and losses of the inner nodes and on the other, the prediction 
-%     of unknown states of leaf nodes. \\
-\todo{noch irgendwo einfügen:} \\
-The number of nodes in the tree corresponding to a taxonomic rank was tabulated. \\
-For the classical taxonomic ranks phylum, class, order, family, genus xyz was was found (appendix 5.2).
-% A closer look is taken at some of the features of the synthesis tree on the one hand the 
-% distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this 
-% is \colorbox{red}{not directly relevant} for this study, this section has been moved to the appendix 
-% \ref{sec:otl analysis}.
-   
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Metadata analysis - Missing information} \label{sec:results - missing information}
-    As previously presented in the methods (section \ref{sec:methods - metadata analysis}), we have 
-      two types of missing information: unknown states of leaf nodes and multifurcation. \\
+  Next we compared different possible methods. We decided to take a closer look at maximum parsimony 
+    algorithms because they are fast and best suited to the problem at hand. We tested these on 
+    different simulations of the data and compared their predictive power (section 
+    \ref{sec:results - simulation}). \\
+  We compared them with the result that the Sankoff algorithm performs significantly better than 
+    Fitch. The multifurcation rate has little impact on Sankoff, but Fitch's prediction 
+    significantly breaks down at more than 60\% missing internal nodes. However, the amount of 
+    missing node state information has a linear impact on both, as does the ratio of free-living to 
+    parasitic (the more balanced, the worse is the prediction).
 
-    A tree is multifurcated if there are nodes that have more than two children. In the case of a 
-      phylogenetic tree, the ridge of multifurcation describes the amount of lack of information about 
-      the topology of the tree. A complete phylogenetic tree would be binary, meaning that the number 
-      of leaf nodes equals the number of internal nodes minus one. Since we only work with a 
-      artificially constructed tree (synthesis of several phylogenetic trees), this tree is strongly 
-      multifurcated: It has 241,974 internal nodes for 2,293,463 leaf nodes $\rightarrow$ 98.16 \% 
-      missing nodes. \\
+  As a result, we used the Sankoff algorithm \cite{Sankoff1975} implemented by Louca et al. 
+    \cite{Louca2017}, which performed best, for the actual reconstruction on the real data. \\
+    \todo{... biological view}
+  %  On the one hand, we have examined the results of some 
+    % subtrees for their credibility with the help of biological background knowledge (subsection 
+    % \ref{sec:results - biological view}). On the other hand, we
+  We evaluated these by performing a leave-100-out cross-validation and predicted approximately 
+    98.17\% of the omitted states correct (subsection \ref{sec:results - cross-validation}). \\ 
 
-      \todo{insert:} \\
-      A binary tree with $n$ leaf nodes has $n-1$ internal nodes. The present Eukaryota tree of OTL has 
-      2,293,463 leaf nodes and only 41,974 internal nodes, that is:
-    $$100-\frac{100}{(2293463-1) \times 41974} \approx 98.16 \%$$
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Availability of internal nodes and state information} \label{sec:results - missing information}
+    As previously presented, we have two types of missing information: unknown states of leaf nodes 
+      and multifurcation.
+
+    A tree is multifurcated if there are nodes that have more than two children. A binary tree with 
+      $n$ leaf nodes has $n-1$ internal nodes. The present Eukaryota tree of OTL has 2,293,463 leaf 
+      nodes and only 241,974 internal nodes, that is:
+    $$100-\frac{100}{(2293463-1) \times 241974} \approx 89.45\%$$
       missing internal nodes. This means that there is a lack of information about the underlying 
-      phylogeny. Instead of a binary tree this tree is highly multifurcated. \\
+      phylogeny. Instead of a binary tree this tree is highly multifurcated.
 
-    % \anmerkungstext{Nested models were compared using likelihood ratio tests, models using different 
-    %   predictors were compared according to their deviance and AIC. (Emanuel)} \\
-
-    For the present Eukaryota tree with 2,293,463 leaf nodes, 34,869 free-livings and 25,962 parasites 
-      are found, which are
-      $$100-\frac{100}{2293463 \times (34860+25962)} \approx 97.34 \%$$
-      unknown states of leaf nodes. \\
-    \todo{-----} \\
-
-    We calculated these percentages of missing nodes and also missing state information for some 
-      subtrees and plotted them in table \ref{table:percentage loss information subtrees}. \\
     \begin{table}[h!]
       \begin{center}
         \begin{tabular}{ |l||r|r| }
           \hline
           \bfseries Subtree of & \bfseries Unknown States & \bfseries Multifurcation \\ 
           \hline \hline
-          Eukaryota       & 97.34\%  & 98.16\% \\
+          Eukaryota       & 97.34\%  & 89.45\% \\
           \hline \hline
           Metazoa         & 96.44\%  & 87.93\% \\ \hline
           Fungi           & 98.87\%  & 96.97\% \\ \hline
@@ -651,18 +632,24 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
         \end{tabular}
       \end{center}
       \caption{Examination of subtrees regarding missing information. \\
-        The percentage values show the ratio of missing information of: unknown states (missing state 
+        The percentage values show the proportion of missing information of: unknown states (missing state 
           information of leaf nodes) and multifurcation (missing internal nodes). \\
         The subtrees are from different taxa: domain (Eukaryota), kingdom (Metazoa, Fungi, 
           Chloroplastida), phylum (Apicomplexa, Nematoda, Chordata, Platyhelminthes) and class 
           (Insecta). \\
-        The two by far smallest values were highlighted in green.} 
+        The two by far smallest values are highlighted in green.} 
       \label{table:percentage loss information subtrees} 
     \end{table}
-    
-    We also have for a first overview we collected for each node its number of children (degree $-1$), 
-      and plotted this in two histograms, see figure \ref{fig:childrenOfNodes}. \\
-    \begin{figure}
+
+    For the missing state information the present Eukaryota tree with 2,293,463 leaf nodes, 34,869 
+      free-livings and 25,962 parasites are found. This gives
+      $$100-\frac{100}{2293463 \times (34860+25962)} \approx 97.34\%$$
+      unknown states of leaf nodes.
+
+    We calculated these percentages of missing nodes and also missing state information for some 
+      subtrees and plotted them in table \ref{table:percentage loss information subtrees}.
+
+    \begin{figure}[h!]
       \centering
       \begin{subfigure}[b]{0.59\textwidth}
         \includegraphics[width=0.9\textwidth]{Figures/multifurc.pdf}
@@ -670,38 +657,24 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
       \end{subfigure}
       \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[trim = 0mm 0mm 30mm 0mm, clip, width=0.9\textwidth]{Figures/multifurc_small.pdf}
-        \caption{Histogram with $binwidth = 1$. Higher multifurcation than 30 has been cut off. \\ light blue: binary; \\ dark blue: multifurcation}
+        \caption{Histogram with $binwidth = 1$. Higher multifurcation than 30 has been cut off. \\
+          light blue: binary; \\ dark blue: multifurcation}
       \end{subfigure}
-      \caption{Histograms about the multifurcation of the internal nodes of the synthesis tree. \\
-        For each node, the number of children (degree $-1$) was collected. A node is multifurcated 
-        if it has more than two children, so we deducted two from each number of children. We have 
-        plotted this in two histograms: number of children $-2$ on the x-axis with log scale and the 
-        number of nodes with this amount on the y-axis.}
+      \caption{Histograms showing the multifurcation of the internal nodes of the synthesis tree. \\
+        For each node, the number of children (degree $-1$) is collected. A node is multifurcated 
+        if it has more than two children, so we deducted two from each number of children. The two 
+        histograms show: number of children $-2$ on the x-axis with log scale and the number of nodes 
+        with this amount on the y-axis.}
       \label{fig:childrenOfNodes}
     \end{figure}
-    The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
-      every node (a node with two children is binary). That means it describes the number of nodes 
-      which we have lost from the real (binary) phylogenetic tree. \\
-    It can be recognized that we are very far from a binary tree. \\
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Data artifacts}
-      At this point we also found out that there are nodes with only one child node (55,700 nodes). \\
-      The most of these nodes are next to a leaf node, others are deep in the tree (3,956 with height 
-        $>2$). They are probably a result from the fact that taxonomic information has been incorporated 
-        into a phylogeny. \\
-      \anmerkungstext{probably? Da ist eine Spekulation hier? Kann man das nicht herausfinden? 
-        Spekulieren solltest du am ehesten erst in der Diskussion. (Thilo)} \\
-      Some examples of these nodes are:
-      \begin{itemize}
-        \item Nephroselmidophyceae: (class) \\
-          https://tree.opentreeoflife.org/opentree/argus/ottol@1038762
-        \item Phrynocrinidae: (family) \\
-          https://tree.opentreeoflife.org/opentree/argus/ottol@3647979
-        \item Elaeocarpus sylvestris: \\
-          https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott166969
-      \end{itemize}
+    For a first overview, we collected for each node its number of children (degree $-1$), 
+      and plotted this in two histograms, see figure \ref{fig:childrenOfNodes}.
+
+    The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
+      these nodes (because a node with two children is binary). That means it describes the number of 
+      nodes which we have lost from the real (binary) phylogenetic tree. \\
+    It can be recognized that we are very far from a binary tree.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -770,7 +743,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
           \end{tabular} 
         \end{center}
         \caption{BIC (Bayesian information criterion) values of the multifurcation models. \\
-          These models were created with the R function \textit{glm()} and compared with the 
+          These models are created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC multifurcation} 
       \end{table}
@@ -778,7 +751,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
       Within the every complexity class it can be seen that the mean height gives the best additional factor. \\
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
         the finest model available here is also the best one of these. Lower taxa than orders (e.g. 
-        family) were computationally too expensive to calculate. \\
+        family) are computationally too expensive to calculate. \\
       The model \textit{multifurc $\sim$ order * mean.height} turns out to be the best of our models, 
         whereby it is possible that e.g. \textit{multifurc $\sim$ family * mean.height} is better.
 
@@ -816,7 +789,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
           \end{tabular} 
         \end{center}
         \caption{BIC (Bayesian information criterion) values unknown state information models. \\
-          These models were created with the R function \textit{glm()} and compared with the 
+          These models are created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC unknown information} 
       \end{table}
@@ -867,7 +840,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
       breaks significantly in his prediction from about 70\% unknown leaf nodes or mutifurcation. \\
 
     Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
-      the Sankoff gives a better prediction and was thus used for real data analysis.
+      the Sankoff gives a better prediction and is thus used for real data analysis.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -920,7 +893,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
             \hline
           \end{tabular} 
         \end{center}
-        \caption{Some selected phyla (subtrees), only leaf nodes, were examined for the evolution 
+        \caption{Some selected phyla (subtrees), only leaf nodes, are examined for the evolution 
           of the amount and percentage of given data to predicted data.}
         \label{table:phylum leaf nodes states} 
       \end{table}
@@ -937,7 +910,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
         \centering
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
         \caption{Parasites of Phylum: Chordata. \\
-          All parasite data of the chordata were mapped into a rough taxonomy (phylum, class, order, 
+          All parasite data of the chordata are mapped into a rough taxonomy (phylum, class, order, 
             family) in order to understand their distribution and affiliation. \\
           The internal nodes are the wanted taxa from OTL (with the addition of \# input parasites to 
             $\rightarrow$ \# predicted parasites). \\
@@ -983,7 +956,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
         of this phylum, which includes the Turbellaria. \\
       It should be noted, however, that this classification is outdated, as it has been proven that 
         the Turbellaria are not monophyletic. But we will not go into that here. \\
-      For the Platyhelminthes we had more state information for the leaf nodes compared to the other 
+      For the Platyhelminthes we have more state information for the leaf nodes compared to the other 
         considered subtrees, see Table \ref{table:percentage loss information subtrees}. We start with 
         0.1\% free-livings and predicted 0.77\% as free-living species. \\
 
@@ -993,7 +966,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
         \cite{Blaxter1998}. In a recent article Blaxter identifies 18 origins \cite{Blaxter2015} in 
         Nematoda. \\
       The problem at this point, however, is: Hallan speaks of the fact that only 23,000 species 
-        were described by the Nematoda but is it assumed that one million or more species are in this 
+        are described by the Nematoda but is it assumed that one million or more species are in this 
         phylum.\footnote{J. Hallan, unpublished; 
           \hyperlink{https://insects.tamu.edu/research/collection/hallan/}
           {https://insects.tamu.edu/research/collection/hallan/}
@@ -1032,7 +1005,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
             \hline
           \end{tabular}
         \end{center}
-        \caption{Some selected phyla (subtrees), including internal nodes, were examined for the evolution 
+        \caption{Some selected phyla (subtrees), including internal nodes, are examined for the evolution 
         of the amount and percentage of given data to predicted data.}
         \label{table:Phylum internal nodes}
       \end{table}
@@ -1056,7 +1029,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
             \hline  
           \end{tabular}
         \end{center}
-        \caption{All kingdoms (subtrees), only leaf nodes, were examined for the evolution of the 
+        \caption{All kingdoms (subtrees), only leaf nodes, are examined for the evolution of the 
           amount and percentage of given data to predicted data.}
         \label{table:Kingdom leaf nodes}
       \end{table}
@@ -1080,7 +1053,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
             \hline  
           \end{tabular}
         \end{center}
-        \caption{All kingdoms (subtrees), inkluding internal nodes, were examined for the evolution of the 
+        \caption{All kingdoms (subtrees), inkluding internal nodes, are examined for the evolution of the 
         amount and percentage of given data to predicted data.}
         \label{table:Kingdom internal nodes}
       \end{table}
@@ -1165,13 +1138,13 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
         we randomly left out 100 states 100 times. To make smaller amounts up to leave-one-out had too 
         much computational effort. \todo{warum 15\%?}\\
         
-      Of these 10,000 nodes, 9,238 were unique. From the unique nodes, we predicted approximately 
+      Of these 10,000 nodes, 9,238 are unique. From the unique nodes, we predicted approximately 
         98.17\% correct and thus 1.82\% wrong, with duplicate draws always having the same prediction 
         (data not shown). \\
       
       We have again dealt with the question of how this data is best modeled. The influence of the taxa 
-        (kingdom, phylum, class) and the depth of the leaf nodes was re-modeled and the BICs compared 
-        (table \ref{table:BIC cross-validation}). Lower taxa than classes (e.g. order) were 
+        (kingdom, phylum, class) and the depth of the leaf nodes is re-modeled and the BICs compared 
+        (table \ref{table:BIC cross-validation}). Lower taxa than classes (e.g. order) are 
         computationally too expensive to calculate. \\
       The Residuals are included in the appendix (table \ref{table:Residuals cross-validation}) for the 
         sake of completeness; here too, due to the different complexity, they do not have much meaning 
@@ -1199,7 +1172,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
           \end{tabular} 
         \end{center}
         \caption{BIC (Bayesian information criterion) values of cross-validation prediction models. \\
-          These models were created with the R function \textit{glm()} and compared with the 
+          These models are created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values.}
         \label{table:BIC cross-validation} 
       \end{table}
@@ -1229,8 +1202,8 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
           \end{tabular}
         \end{center}
         \caption{Statistics about the leave-100-out cross-validation \\
-          The distance between original and new states was calculated using the Euclidean metric. This 
-            was summed over all states / all leaf node states and all internal node states. \\
+          The distance between original and new states is calculated using the Euclidean metric. This 
+            is summed over all states / all leaf node states and all internal node states. \\
           The lower half of the table describes the distribution of the 'lost' states between parasites 
             (P) and free-livings (FL).}
         \label{table:statistics cross-validation}
@@ -1241,6 +1214,20 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Discussion}
+
+  \todo{Aus den models kann man auch schließen: highly variable throughout our tree}
+  
+  
+  \todo{noch irgendwo einfügen:} \\
+  The number of nodes in the tree corresponding to a taxonomic rank is tabulated. \\
+  For the classical taxonomic ranks phylum, class, order, family, genus xyz is found (appendix 5.2).
+  % A closer look is taken at some of the features of the synthesis tree on the one hand the 
+  % distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this 
+  % is \colorbox{red}{not directly relevant} for this study, this section has been moved to the appendix 
+  % \ref{sec:otl analysis}.
+
+  
+
   This chapter deals with the question of how trustworthy our result of the ancestral state 
     reconstruction of the Eukaryota tree is. And further on how well our simulation can simulate the 
     real problem and thus make statements about the predictive power of the applied Sankoff algorithm.
@@ -1295,7 +1282,7 @@ For the classical taxonomic ranks phylum, class, order, family, genus xyz was wa
 
     Also, the global database is not infallible. We found out (section \colorbox{red}{x}) that there is some 
       misinformation. \\
-    We were able to report some of these directly to Globi.
+    We are able to report some of these directly to Globi.
 
     We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target species 
       without OTT indentifyers. Since we currently use only OTT indentifyers, we could not use this information. \\
@@ -1333,7 +1320,7 @@ Different parasite types have different transition probabilities. It is very dif
 
 \todo{-----}
 
-    The aim of the simulation was to test the influence of various unknown or unsafe parameters in 
+    The aim of the simulation is to test the influence of various unknown or unsafe parameters in 
       order to test the credibility of the prediction. \\
     Some of these influences could not be tested: Firstly, the distribution of parasites and 
       free-livings in the tree produces various parameters that we could not test all (see subsection 
@@ -1458,7 +1445,7 @@ Different parasite types have different transition probabilities. It is very dif
     \end{figure}
     In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
       be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
-      taxonomic tree is reflected. If the tree were binary, the taxa would have to double. But the 
+      taxonomic tree is reflected. If the tree are binary, the taxa would have to double. But the 
       multipliers for some are much bigger and for others much smaller, which \colorbox{red}{you} can see in in figure 
       \ref{fig:taxaTable2}. \\
       ... (see Table \ref{table:...})
@@ -1587,7 +1574,7 @@ Different parasite types have different transition probabilities. It is very dif
           \end{tabular}
       \end{center}
       \caption{Residuals of multifurcation models \\
-        These models were created with the R function \textit{glm()} and compared with the 
+        These models are created with the R function \textit{glm()} and compared with the 
           \textit{anova()} function. This results in the listed residuals.}
       \label{table:Residuals multifurcation} 
     \end{table}
@@ -1610,7 +1597,7 @@ Different parasite types have different transition probabilities. It is very dif
         \end{tabular}
       \end{center}
       \caption{Residuals of unknown information models \\
-        These models were created with the R function \textit{glm()} and compared with the 
+        These models are created with the R function \textit{glm()} and compared with the 
           \textit{anova()} function. This results in the listed residuals.}
     \end{table}
 
@@ -1632,7 +1619,7 @@ Different parasite types have different transition probabilities. It is very dif
         \end{tabular} 
       \end{center}
       \caption{Residuals of cross-validation prediction \\
-        These models were created with the R function \textit{glm()} and compared with the 
+        These models are created with the R function \textit{glm()} and compared with the 
           \textit{anova()} function. This results in the listed residuals.}
       \label{table:Residuals cross-validation} 
     \end{table}

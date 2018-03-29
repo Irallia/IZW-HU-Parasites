@@ -77,20 +77,23 @@ def main():
     # ------------------------------------------------------------------------
 
     PLOT_NUMBER = 1
-    f, axs = plt.subplots(ROWS, 1, figsize=(4, 10))
-    plt.suptitle('Fitch Versions and Unknown Data', fontsize=12, y=1)
+    f, axs = plt.subplots(2, 2, figsize=(12, 5))
+    # plt.suptitle('Fitch Versions and Unknown Data', fontsize=12, y=1)
+    # filepath = 'data/simulation/30-fitch-unknown_plot.csv'
+    filepath = 'data/simulation/fitch_30-unknown.csv'
+    plt.subplot(2, 2, 1)
+    plot_fitch_versions(filepath, 30)
+    # filepath = 'data/simulation/40-fitch-unknown_plot.csv'
+    filepath = 'data/simulation/fitch_40-unknown.csv'
+    plt.subplot(2, 2, 2)
+    plot_fitch_versions(filepath, 40)
+    # filepath = 'data/simulation/50-fitch-unknown_plot.csv'
+    filepath = 'data/simulation/fitch_50-unknown.csv'
+    plt.subplot(2, 2, 3)
+    plot_fitch_versions(filepath, 50)
 
-    filepath = 'data/simulation/30-fitch-unknown_plot.csv'
-    plot_fitch_versions(filepath)
-    filepath = 'data/simulation/40-fitch-unknown_plot.csv'
-    plot_fitch_versions(filepath)
-    filepath = 'data/simulation/50-fitch-unknown_plot.csv'
-    plot_fitch_versions(filepath)
-
-    plt.tight_layout()
+    # plt.tight_layout()
     plt.show()
-
-    plot_depths()
 
     return
 
@@ -209,12 +212,8 @@ def plot_data_multifurc(percentage_parasites):
     plt.grid()
     return
 
-def plot_fitch_versions(filepath):
-    global PLOT_NUMBER
-    data = genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'y_fitch1', 'y_fitch2', 'y_fitch3', 'y_fitch4'])
-
-    plt.subplot(ROWS, 1, PLOT_NUMBER)
-    PLOT_NUMBER += 2
+def plot_fitch_versions(filepath, percentage_parasites):
+    data = genfromtxt(filepath, delimiter=',', skip_header=1, skip_footer=0, names=['unknown', 'multifurcation','y_fitch1', 'y_fitch2', 'y_fitch3', 'y_fitch4'])
 
     # plt.title(str(percentage_parasites), fontweight='bold')
     plt.plot(data['unknown'], data['y_fitch1'], color='g', linestyle='dashed', 
@@ -227,14 +226,11 @@ def plot_fitch_versions(filepath):
         label='Fitch 4', linewidth=0.5, marker='.', markerfacecolor='black')
     plt.xlabel('percentage unknown', fontsize=9)
     plt.ylabel('correct predicted', fontsize=9)
-    plt.legend(loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
+    title = str(percentage_parasites) + '% P - ' + str(100-percentage_parasites) + '% FL'
+    plt.legend(title=title, loc="lower left", fontsize=9) #, scatterpoints=1, numpoints=2)
     plt.axis([0, 1, 85, 100])
     plt.grid()
 
-    return
-
-def plot_depths():
-    
     return
 
 main()

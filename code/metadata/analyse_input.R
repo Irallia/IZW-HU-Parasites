@@ -208,21 +208,21 @@ print('--------------------------------------------------')
 
 inner.taxa$multifurc <- inner.taxa$nr_children-1
 
-# ggplot(inner.taxa, aes(multifurc)) +
-#     geom_histogram(col="black") +
-#     scale_y_log10() +
-#     labs(x="number of children", y="number of nodes")
-# ggsave("multifurc.pdf")
+ggplot(inner.taxa, aes(multifurc)) +
+    geom_histogram(col="black") +
+    scale_y_log10() +
+    labs(x="number of children -2", y="number of nodes")
+ggsave("multifurc.pdf")
 
-# ggplot(inner.taxa, aes(multifurc)) +
-#     geom_histogram( 
-#         col="black", 
-#         binwidth = 1,
-#         aes(fill=..count..)) +
-#     xlim(0, 30) +
-#     scale_y_log10() +
-#     labs(x="number of children", y="number of nodes")
-# ggsave("multifurc_small.pdf")
+ggplot(inner.taxa, aes(multifurc)) +
+    geom_histogram( 
+        col="black", 
+        binwidth = 1,
+        aes(fill=..count..)) +
+    xlim(0, 30) +
+    scale_y_log10() +
+    labs(x="number of children -2", y="number of nodes")
+ggsave("multifurc_small.pdf")
 
 print('--------------------------------------------------')
 print('-------------------------multifurc data-------------------------')
