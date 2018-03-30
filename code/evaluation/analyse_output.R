@@ -21,10 +21,10 @@ names(heights) <- c("min.height", "max.height", "mean.height")
 
 all.taxa <- cbind(all.taxa, heights)
 
-# print('------------all.taxa$originaltag------------------')
-# table(all.taxa$originaltag)
-# print('------------all.taxa$finaltag------------------')
-# table(all.taxa$finaltag)
+print('------------all.taxa$originaltag------------------')
+table(all.taxa$originaltag)
+print('------------all.taxa$finaltag------------------')
+table(all.taxa$finaltag)
 
 print('--------------------------------------------------')
 
@@ -32,17 +32,13 @@ leaf.taxa <-  all.taxa[all.taxa$nr_children==0, ]
 
 print('--------------------------------------------------')
 
-
-
-
-# print('-------------Are the changed originaltags?--------------')
+# print('-------------Are there changed originaltags?--------------')
 # table(leaf.taxa[leaf.taxa$finaltag+1 != leaf.taxa$originaltag, ]$kingdom)
-
 
 print('-----------Analyse some Phyla about their prediciton-------------')
 print('-----------Metazoa-------------')
 metazoa <- leaf.taxa[leaf.taxa$kingdom=="['ott691846', 'Metazoa']", ]
-# # table(metazoa$phylum, metazoa$originaltag)
+# table(metazoa$phylum, metazoa$originaltag)
 print('--------Leaf nodes:------------')
 # table(droplevels(all.taxa[all.taxa$nr_children==0, ]$phylum))
 print('----------Parasites / Free-livings - original states:---------------')
@@ -70,13 +66,26 @@ print('------------------------')
 print('-----------Apicomplexa-------------')
 apicomplexa <- leaf.taxa[leaf.taxa$phylum=="['ott422673', 'Apicomplexa']", ]
 table(apicomplexa$originaltag)
-table(apicomplexa[apicomplexa$originaltag==1, ]$name)
+# table(apicomplexa[apicomplexa$originaltag==1, ]$name)
 
 print('----------final:--------------')
 table(apicomplexa$finaltag)
 print('------------------------')
-table(apicomplexa[apicomplexa$finaltag==0, ]$name)
+# table(apicomplexa[apicomplexa$finaltag==0, ]$name)
 
+print('-----------Arthropoda-------------')
+arthropoda <- all.taxa[all.taxa$phylum=="['ott632179', 'Arthropoda']", ]
+table(arthropoda$originaltag)
+
+print('----------final:--------------')
+table(arthropoda$finaltag)
+
+print('-----------Insecta-------------')
+insecta <- arthropoda[arthropoda$class=="['ott1062253', 'Insecta']", ]
+table(insecta$originaltag)
+
+print('----------final:--------------')
+table(insecta$finaltag)
 
 
 # print('-------------More about Chordata:-----------')
@@ -115,14 +124,14 @@ table(apicomplexa[apicomplexa$finaltag==0, ]$name)
 # table(Sauria[Sauria$finaltag==1, ]$family)
 # table(Sauria[Sauria$finaltag==1, ]$name)
 
-print('-------------More about platyhelminthes:-----------')
-print('--------Classes with parasites:-------')
-table(droplevels(platyhelminthes[platyhelminthes$originaltag==1, ]$class))
-table(droplevels(platyhelminthes[platyhelminthes$finaltag==0, ]$class))
-Rhabditophora <- platyhelminthes[platyhelminthes$class=="['ott3669734', 'Rhabditophora']", ]
-# and ['ott407243', 'Trematoda']
-print('--------Orders with parasites:-------')
-table(droplevels(Rhabditophora[Rhabditophora$originaltag==1, ]$order))
-table(droplevels(Rhabditophora[Rhabditophora$finaltag==1, ]$order))
+# print('-------------More about platyhelminthes:-----------')
+# print('--------Classes with parasites:-------')
+# table(droplevels(platyhelminthes[platyhelminthes$originaltag==1, ]$class))
+# table(droplevels(platyhelminthes[platyhelminthes$finaltag==0, ]$class))
+# Rhabditophora <- platyhelminthes[platyhelminthes$class=="['ott3669734', 'Rhabditophora']", ]
+# # and ['ott407243', 'Trematoda']
+# print('--------Orders with parasites:-------')
+# table(droplevels(Rhabditophora[Rhabditophora$originaltag==1, ]$order))
+# table(droplevels(Rhabditophora[Rhabditophora$finaltag==1, ]$order))
 
 format(Sys.time(), "%a %b %d %X %Y")

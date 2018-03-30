@@ -56,7 +56,7 @@
   Here we test in how far it is possible to use the Open Tree of Life (OTL), a synthesis of 
     phylogenetic trees on a backbone taxonomy (resulting in unresolved nodes), to expand available 
     information via phylogenetic trait prediction. We use the Global Biotic Interactions (GloBI) 
-    database to categorise 25,992 and 34,879 species as parasites and free-living, respectively and 
+    database to categorise 25,962 and 34,860 species as parasites and free-living, respectively and 
     predict states for over $\sim$2.3 million (97.34\%) leaf nodes without state information.
 
   We estimate the accuracy of our maximum parsimony based predictions using cross-validation and 
@@ -82,7 +82,7 @@
   % Such a large phylogenetic tree does not completely exist and therefore we work with a synthesis 
   %   tree of OTL \cite{Hinchliff2015} which is highly multifurcated. \\
   % For the 2,535,437 leaf nodes we could not gather much data. From the GloBI database 
-  %   \cite{Poelen2014} which we used, we could only collect 25,992 parasitic and 34,879 free-living 
+  %   \cite{Poelen2014} which we used, we could only collect 25,962 parasitic and 34,860 free-living 
   %   species. It follows that we have $\approx 2.4\%$ state information. \\
   % So far, especially small scale or highly manual studies have been carried out. In this scale, it 
   %   requires different data sources to be interconnected. \\
@@ -205,7 +205,7 @@
     including most of the known databases and is still growing actively \cite{Poelen2014}. \\
   The data in GloBI are stored as interactions e.g.  species A parasitize species B. From this we 
     conclude that species A is parasitic and species B free-living. \\
-  From this data, we could specify $\sim$2.3 million leaf nodes 34,879 as free-living and 25,992 
+  From this data, we could specify $\sim$2.3 million leaf nodes 34,860 as free-living and 25,962 
     as parasitic. 
 
   There are many different ways to define parasitism. Since we use GloBI to classify species, we use 
@@ -223,7 +223,7 @@
     situation. \\
   The Sankoff algorithm implemented by Louca et al. is the best in our comparisons. Therefore, 
     point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states 
-    with the aid of this algorithm. And then perform an evaluation of the results.
+    with the aid of this algorithm. And then perform an evaluation of the results. \\
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -235,7 +235,7 @@
   We discuss different ancestral state reconstruction methods and test the most appropriate ones on 
     our data. Hereby, we want to find out how far it is possible to use the Open Tree of Life (OTL) 
     to expandavailable information via phylogenetic trait prediction. As a basis for known states, 
-    we use the Global Biotic Interactions (GloBI) database, which cathegorises 34,879 and 25,992 
+    we use the Global Biotic Interactions (GloBI) database, which cathegorises 34,860 and 25,962 
     species as free-living and parasites. This data is used to perform an ancestral state 
     reconstruction and predict states for over $\sim$2.3 million (97.34\%) leaf nodes without state 
     information.
@@ -335,7 +335,7 @@
   \section{Metadata analysis} \label{sec:methods - metadata analysis}
     Based on the input data, generalized linear models are compared with poisson respectively binomial 
       regression according to their residuals. In order to compare models of different complexity, the 
-      BIC (Bayesian Information Criterion) values are  calculated in addition to the residuals. \\
+      BIC (Bayesian Information Criterion) values are calculated in addition to the residuals. \\
     There are two different information criteria: AIC (Akaike Information Criteria) and BIC. \\
     The advantage of the BIC is that the penalty is dependent on the sample size and is therefore 
       advantageous for large samples. \\
@@ -548,7 +548,7 @@
     Again, in order to compare models of different complexity, the BIC (Bayesian Information Criterion) 
       values are calculated in addition to the residuals. \\
     For all these calculations, the following R functions are used: \textit{glm()}, \textit{anova()} 
-      and \textit{BIC()}.
+      and \textit{BIC()}. \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -678,48 +678,12 @@
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Poisson regression of the multifurcation}
-      For a regression analysis of the multifurcation first set up a simple generalized linear model and 
-        then output the intercept of it:
-      \lstset{language=R}
-      \begin{lstlisting}[gobble=6]
-        kingdom.furc.mod <- glm(multifurc~kingdom, 
-                                    data=inner.taxa,
-                                        family="poisson")
-        # get the intercept:
-        summary(kingdom.furc.mod)
-      \end{lstlisting}
-      Since the multifurcation can also be 0, the intercept describes the expected mean value and thus, 
-        if it is greater than 0, it says that we have a multifurcation: $2.62 > 0$ $\Rightarrow$ there 
-        is a multifurcation. \\
-      We next compared the intercept of the different kingdoms and found that
-        $$1.22 \text{ (Fungi intercept)} > -0.11 \text{ (Metazoa intercept)} > -0.09 \text{ (Chloroplastida intercept)}$$
-        % Coefficients:
-        %                                         Estimate Std. Error z value Pr(>|z|)
-        % (Intercept)                             2.624897   0.003641  721.00   <2e-16
-        % kingdom['ott352914', 'Fungi']           1.224650   0.004054  302.10   <2e-16
-        % kingdom['ott361838', 'Chloroplastida'] -0.090993   0.003960  -22.98   <2e-16
-        % kingdom['ott691846', 'Metazoa']        -0.114873   0.003732  -30.78   <2e-16
-        that means the strength of the multifurcation \colorbox{red}{is the same/has the same size 
-        sorting}. \todo{kann das sein?} \\
-
-      We investigated several models that could describe multifurcation: \\
+    \subsection{Comparison of different models for multifurcation}
+      For the regression analysis of the multifurcation we set up several generalized linear models that 
+        could describe multifurcation. \\
       In doing so, we allowed the different influence of the taxa and the heights and depths of a node 
-        to be included. From this we got 9 times 4 models of different complexity levels (see first row 
-        of table \ref{table:BIC multifurcation}). \\
-      We first compared the models based on their residuals. These give us the error of the model. If 
-        the value is small, our data will be well modeled. These values are meaningful only for the same 
-        complexity, therefore we then calculated the BIC (Bayesian information criterion) values of the 
-        models and used them to evaluate the models. \\
-      % \lstset{language=R}
-      % \begin{lstlisting}[gobble=6]
-      %   anova(kingdom.furc.mod, phylum.furc.mod, class.furc.mod, 
-      %                 order.furc.mod, family.furc.mod, test="LRT")
-      %   BIC(kingdom.furc.mod)
-      %   ...
-      % \end{lstlisting}
-      The deviance table with the residuals can be found in the appendix (table 
-        \ref{table:Residuals multifurcation}). Table \ref{table:BIC multifurcation}. lists the BICs.
+        to be included. From this we got 9 times 4 models of different complexity levels (first row) and 
+        the associated BIC values (table \ref{table:BIC multifurcation}).
 
       \begin{table}[h]
         \begin{center}
@@ -743,37 +707,30 @@
           \end{tabular} 
         \end{center}
         \caption{BIC (Bayesian information criterion) values of the multifurcation models. \\
-          These models are created with the R function \textit{glm()} and compared with the 
-            \textit{BIC()} function. This results in the listed BIC values.}
+          These models are created with the R function \textit{glm()} and compared with the \textit{BIC()} 
+            function. This results in the listed BIC values, presented in a heatmap colorization.}
         \label{table:BIC multifurcation} 
       \end{table}
-      % * Residuals: Fehler - wieviele Werte sind nicht gut modelliert. (umso kleiner umso besser - grün) \\
-      Within the every complexity class it can be seen that the mean height gives the best additional factor. \\
+      Within every complexity class it can be seen that the mean height gives the best additional factor. \\
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
         the finest model available here is also the best one of these. Lower taxa than orders (e.g. 
         family) are computationally too expensive to calculate. \\
       The model \textit{multifurc $\sim$ order * mean.height} turns out to be the best of our models, 
-        whereby it is possible that e.g. \textit{multifurc $\sim$ family * mean.height} is better.
+        whereby it is possible that e.g. \textit{multifurc $\sim$ family * mean.height} is better. \\
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Binomial regression of the unknown state information}
-
-      Next to the problem of the multifurcation of the tree is the less of interaction data we have for 
-        the species. For the ancestral state reconstruction, we need information about the states 
+    \subsection{Comparison of different models for missing state information}
+      Next to the problem of the multifurcation of the tree is the little interaction data thet we have 
+        for the species. For the ancestral state reconstruction, we need information about the states 
         (free-living or parasite) in the leaf nodes. \\
       The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
-        (at 29.01.2018). Out of this data we got 51,337 distinct free-living species and 47,332 
-        distinct parasite species for the whole tree of life. From the Eukaryota we could determine 
-        25,992 and 34,879 species as parasites and free-living. With 2,293,463 leaf nodes we still have 
-        about 97.34\% unknown leaf nodes. In the discussion, section 
-        \ref{sec:discussion - data situation}, we will talk about ways to extend this data. \\
+        (at 29.01.2018). Out of this data we got 51,337 free-living species and 47,332 parasite species 
+        for the whole tree of life. From the Eukaryota we could determine 25,962 and 34,860 species as 
+        parasites and free-living. With 2,293,463 leaf nodes we still have about 97.34\% unknown leaf 
+        nodes.
       
-      We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). 
-        The Residuals are not very meaningful here, since all models have different complexities. % /dimensions
-        For the sake of completeness, the associated deviance tables are located with the residuals in 
-        the appendix \ref{sec:Residuals unknown information}.
-
+      We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). \\ 
       \begin{table}[h!]
         \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
@@ -790,57 +747,59 @@
         \end{center}
         \caption{BIC (Bayesian information criterion) values unknown state information models. \\
           These models are created with the R function \textit{glm()} and compared with the 
-            \textit{BIC()} function. This results in the listed BIC values.}
+            \textit{BIC()} function. This results in the listed BIC values, presented in a heatmap colorization.}
         \label{table:BIC unknown information} 
       \end{table}
+
       It also follows from this table that the most complex model is the best. In general, the BIC 
-        values are smaller than those of the multifurcation models. The modeling here is thus better. \\
-      Again, the calculation of finer models (e.g. order or family) was too expensive. \\
+        values are smaller than those of the multifurcation models. The modeling here is thus better.
+      Again, the calculation of finer models (e.g. family) was too expensive.
 
-      These missing data modeling results can be used to better simulate the data.
+      These missing data modeling results could be used to better simulate the data. \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Results of simulation / Influence of different parameters} \label{sec:results - simulation}
-  
+  \section{Influence of different parameters on the prediction} \label{sec:results - simulation}
     As presented, we compare two methods in our simulation to their prediction accuracy: Fitch and 
-      Sankoff. \\
+      Sankoff.
+
+    First, we tested different distributions of parasites to free-livings including threshold (first 
+      column). It can be observed that the more balanced the percentages of free-livings and parasites, 
+      the worse the prediction of the algorithms (second and third column). \\
+    It can be seen that the predictive power of Sankoff is always greater or equal to the percentage
+      of free-living distribution, and therefore more accurate than guessing. \\
+    On the other hand, we examined the influence of missing internal nodes (ridge of multifurcation) 
+      and missing leaf node information (unknown leaf nodes). \\
+    Both factors have a relatively linear influence on the Sankoff method. Fitch, on the other hand, 
+      breaks significantly in his prediction from about 70\% unknown leaf nodes or mutifurcation. \\
     Figure \ref{fig:influence of unknown data} shows the results of examining various parameters.
+
+    Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
+      the Sankoff gives a better prediction and is thus used for real data analysis.
+
     \begin{figure}[h!]
       \centering
       \includegraphics[trim = 0mm 100mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
     \end{figure}
-    ~ \\ ~ \\ ~ \\
-    \begin{figure}
+    ~ \\
+    \begin{figure}[h!]
       \centering
       \includegraphics[trim = 0mm 0mm 0mm 150mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
       \caption{Influence of unknown data to prediction. \\
         The first column describes the distributions of free-livings and parasites with a given 
-          threshold for the respective simulations to the right. \\
+          threshold for the respective simulations to the right. Note, these distributions are chosen 
+          to form the specified proportions with the threshold, ignoring the number of state changes. \\
         The middle column investigates the influence of the unknown states, the right the influence of
           the strength of the multifurcation. \\
         The y-axes indicate the percentage of correctly predicted states (including known states). On 
           the x-axis the percentage of forgotten states or missing internal nodes. \\
         Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
-        For the middle column we set the strength of the multifurcations to 0.95\% similar to the 
+        For the middle column we set the strength of the multifurcations to 0.95\%, similar to the 
           real data and in the right column the amount of the unknowns to 0.95\% also similar to the 
           real data.}
       \label{fig:influence of unknown data}
     \end{figure}
-    First, we tested different transition probability distributions including threshold (first column). 
-      It can be observed that the more balanced the percentages of free-livings and parasites, the 
-      worse the prediction of the algorithms (second and third column). \\
-    It can be seen that both algortithms are always over 50\% prediction and therefore better than 
-      guessing. Moreover, they are usually close to each other, with Sankoff always makes better 
-      predictions except for equally distributed states as Fitch. \\
-    On the other hand, we examined the influence of missing internal nodes (ridge of multifurcation) 
-      and missing leaf node information (unknown leaf nodes). \\
-    Both factors have a relatively linear influence on the Sankoff method. Fitch, on the other hand, 
-      breaks significantly in his prediction from about 70\% unknown leaf nodes or mutifurcation. \\
-
-    Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
-      the Sankoff gives a better prediction and is thus used for real data analysis.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -861,42 +820,80 @@
       Several factors such as the distribution of existing input data via parasitics and free-livings, 
         faulty input data from GloBI and reinforcement of errors by multifurcation play an important 
         role, which crystallize out in these examples. \\
-      An important factor here is that the credibility of the results. The accuracy of the input data 
+      An important factor here is the credibility of the results. The accuracy of the input data 
         stands and falls with the presence and the correctness of the data of GloBI. Errors of incorrect 
         input data can be amplified by incorrect prediction of unknown species and can be reversed in 
         order to improve the data situation of GloBI. \\
       Since we look at such large trees we can not expect to know all the parasites, so we look at 
         individual positives. This is positive in the sense that the majority have the opposite state.
 
+      \newcommand*\rot{\rotatebox{90}}
+
+      % \tiny	\scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge
       \begin{table}
         \begin{center}
-          \begin{tabular}{ |l|r||r|r||r|r|r|r| }
+          \hspace*{-0.5cm}\begin{tabular}{|>{\scriptsize}c|>{\scriptsize}l|>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r|>{\scriptsize}r| }
             \hline
-            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{4}{c|}{\bfseries final states} \\
-            \bfseries Phylum & \bfseries \# nodes & \bfseries FL & \bfseries P & \bfseries 0 \bfseries (FL) & \bfseries 0.3 &\bfseries  0.5 & \bfseries 1 (P) \\
+            & \bfseries Taxa & \bfseries \#internal & \bfseries \#leaf 
+                & \multicolumn{2}{>{\scriptsize}c||}{\bfseries known states} & \multicolumn{3}{>{\scriptsize}c|}{\bfseries final states}
+                & \bfseries Root & \bfseries \#origins & \bfseries \#losses \\
+            & \bfseries subtree & \multicolumn{2}{>{\scriptsize}c||}{\bfseries nodes} & \bfseries FL & \bfseries P
+                & \bfseries [0, 0.5) & \bfseries 0.5 & \bfseries (0.5, 1]
+                & \bfseries node & \multicolumn{2}{>{\scriptsize}c|}{\bfseries (with rounding)} \\
+            & \bfseries & & & & 
+                & \bfseries FL & & \bfseries P 
+                & state & \bfseries FL $\rightarrow$ P & \bfseries P $\rightarrow$ FL \\
             \hline \hline
-            Chordata & 91785        & 10451 & 18          & 91759 & 0 & 0 & 26 \\
-            &                       & 99.83\% & 0.49\%  & 99.97\% & & & 0.03\% \\ \hline
-            Nematoda & 30127        & 21 & 3289           & 1604 & 142 & 1196 & 27185 \\
-            &                       & 0.63\% & 99.37\%  & 5.32\% & 0.47\% & 3.97\% & 90.23\% \\ \hline
-            Platyhelminthes & 22683 & 7 & 7086            & 175 & & & 22508 \\
-            &                       & 0.1\% & 99.9\%    & 0.77\% & 0 & 0 & 99.23\% \\ \hline
-            Apicomplexa & 1863      & 1 & 255             & 1 & 0 & 0 & 1862 \\
-            &                       & 0.39\% & 99.61\%  & 0.05\% & & & 99.95\% \\
-            % \hline \hline
-            % Phylum & \# nodes & FL & P
-            %   & 0 (FL) & 0.4 & 0.5 & 0.67 & 0.75 & 1 (P) \\
-            % Arthropoda & 1198981 & 18912 & 11141 
-            %   & 1099509 & 1313 & 22478 & 4176 & 1665 & 70223 \\
-            % & & 62.93\% & 37.07\%
-            %   & 91.7\% & 0.11\% & 1.87\% & 0.35\% & 0.14\% & 5.86\% \\
+            \parbox[c][7mm][c]{1mm}{\multirow{2}{*}{\rot{\bfseries Domain~}}}
+            & Eukaryota & 241974 & 2293463      & 34860 & 25962     & 2053212 & 7775 & 474450     & 1 & 462 & 369 \\
+            & & &                               & 57.31\% & 42.69\% & 80.98\% & 0.31\% & 18.71\%  & P & & \\
+            \hline \hline
+            \parbox[c]{1mm}{\multirow{6}{*}{\rot{\bfseries Kingdom}}}
+            & Chloro- & 43486 & 416478          & 3519 & 77         & 410795 & 4182 & 1501        & 0.5 & 97 & 222 \\
+            & plastida & &                      & 97.86\% & 2.14\%  & 98.63\% & 1.00\% & 0.36\%   & & & \\ \cline{2-12}
+            & Fungi & 9534 & 31457              & 577 & 2983        & 38520 & 5723 & 266463       & 0 & 42 & 2 \\
+            & & &                               & 16.21\% & 83.79\% & 12.40\% & 1.84\% & 85.76\%  & FL & & \\ \cline{2-12}
+            & Metazoa & 179944 & 1491012        & 30758 & 22373     & 1329065 & 25535 & 136412    & 0.5 & 321 & 129 \\
+            & & &                               & 57.89\% & 42.11\% & 89.14\% & 1.71\% & 9.15\%   & & & \\
+            \hline \hline
+            \parbox[c]{1mm}{\multirow{10}{*}{\rot{\bfseries Phylum}}}
+            & Apicomplexa & 239 & 1863          & 1 & 255           & 1 & 0 & 1862                & 1 & 0 & 1 \\
+            & & &                               & 0.39\% & 99.61\%  & 0.05\% & 0\% & 99.95\%      & P & & \\ \cline{2-12}
+            & Arthropoda & 120479 & 1198981     & 18912 & 11141     & 1100822 & 22478 & 76064     & 0 & 281 & 108 \\
+            & & &                               & 62.93\% & 37.07\% & 91.78\% & 1.87\% & 6.34\%   & FL & & \\ \cline{2-12}
+            & Chordata & 30761 & 91785          & 10451 & 18        & 91759 & 0 & 26              & 0 & 12 & 1 \\
+            & & &                               & 99.83\% & 0.49\%  & 99.97\% & 0\% & 0.03\%      & FL & & \\ \cline{2-12}
+            & Nematoda & 3437 & 30127           & 21 & 3289         & 1746 & 1196 & 27185         & 1 & 2 & 11 \\
+            & & &                               & 0.63\% & 99.37\%  & 5.79\% & 3.97\% & 90.23\%   & P & & \\ \cline{2-12}
+            & Platyhel- & 4459 & 22683       & 7 & 7086          & 175 & 0 & 22508             & 0 & 0 & 5 \\
+            & minthes & &                          & 0.1\% & 99.9\%    & 0.77\% & 0\% & 99.23\%      & P & & \\
+            \hline \hline 
+            \parbox[c]{1mm}{\multirow{2}{*}{\rot{\bfseries Class~}}}
+            & Insecta & 91256 & 989572          & 17841 & 10734     & 1022747 & 976 & 57105       & 0 & 245 & 77 \\
+            & & &                               & 62.44\% & 37.56\% & 94.63\% & 0.09\% & 5.28\%   & FL & & \\ 
             \hline
           \end{tabular} 
         \end{center}
         \caption{Some selected phyla (subtrees), only leaf nodes, are examined for the evolution 
           of the amount and percentage of given data to predicted data.}
+          % \caption{All kingdoms (subtrees), only leaf nodes, are examined for the evolution of the 
+          % amount and percentage of given data to predicted data.}
+          % \caption{Origins and losses}
         \label{table:phylum leaf nodes states} 
       \end{table}
+
+      \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|l|r|r|r|r|}
+        \hline
+        & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{text}\\
+        \hline
+        \parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{rota}}} & text &&&&\\
+        & text &&&&\\
+        & text &&&&\\
+        \hline
+        \end{tabular}
+        \end{table}
 
       In contrast to the other phyla examined, the phylogeny in the Chordata is more pronounced (less 
         multifurcation) (see Table \ref{table:percentage loss information subtrees}). This results in 
@@ -983,81 +980,6 @@
         Blattknoten \ref{table:Kingdom leaf nodes} bzw interne Knoten \ref{table:Kingdom internal nodes}. Welche 
         nehmen wir? Rest Appendix oder ganz raus?}
 
-      \begin{table}[h!]
-        \begin{center}
-          \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
-            \hline
-            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{6}{c|}{\bfseries final states} \\
-            \bfseries Phylum & \bfseries \# nodes & \bfseries FL & \bfseries P
-              & \bfseries 0 (FL) & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
-            \hline \hline
-            Chordata & 122546 & 10451 & 18 
-              & 122473 & 0 & 0 & 0 & 0 & 73 \\
-            Nematoda & 33564 & 21 & 3289 
-              & 846 & 0 & 1133 & 0 & 0 & 31585 \\
-            Platyhelminthes & 27142 & 7 & 7086 
-              & 1010 & 0 & 175 & 0 & 0 & 25957 \\
-            Apicomplexa & 2102 & 1 & 255 
-              & 1 & 0 & 0 & 0 & 0 & 2101 \\
-            % \hline
-            % Arthropoda & 1319460 & 18912 & 11141 
-            %   & 1207204 & 1313 & 25499 & 4852 & 1957 & 78635 \\
-            \hline
-          \end{tabular}
-        \end{center}
-        \caption{Some selected phyla (subtrees), including internal nodes, are examined for the evolution 
-        of the amount and percentage of given data to predicted data.}
-        \label{table:Phylum internal nodes}
-      \end{table}
-
-      \begin{table}[h!]
-        \begin{center}
-          \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
-            \hline
-            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{8}{c|}{\bfseries final states} \\
-            \bfseries Kingdom & \bfseries \# nodes & \bfseries FL & \bfseries P
-              & \bfseries 0 (FL) & \bfseries 0.25 & \bfseries 0.33 & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
-            \hline \hline
-            none & 75446 & 45 & 529 
-              & 13426 & 220 & 24082 & 0 & 7792 & 5302 & 0 & 24493 \\
-            Fungi & 31457 & 577 & 2983
-              & 38520 & 0 & 0 & 0 & 5723 & 0 & 0 & 266463 \\
-            Chloroplastida & 416478 & 3519 & 77
-              & 410795 & 0 & 0 & 0 & 4182 & 0 & 0 & 1501 \\
-            Metazoa & 1491012 & 30758 & 22373
-              & 1328135 & 0 & 0 & 930 & 25535 & 4423 & 1665 & 130324 \\
-            \hline  
-          \end{tabular}
-        \end{center}
-        \caption{All kingdoms (subtrees), only leaf nodes, are examined for the evolution of the 
-          amount and percentage of given data to predicted data.}
-        \label{table:Kingdom leaf nodes}
-      \end{table}
-
-      \begin{table}[h!]
-        \begin{center}
-          \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
-            \hline
-            & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{8}{c|}{\bfseries final states} \\
-            \bfseries Kingdom & \bfseries \# nodes & \bfseries FL & \bfseries P
-              & \bfseries 0 (FL) & \bfseries 0.25 & \bfseries 0.33 & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
-            \hline \hline
-            none & 84456 & 45 & 529 
-              & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
-            Fungi & 324105 & 577 & 2983
-              & 39088 & 0 & 0 & 0 & 5858 & 0 & 0 & 274803 \\
-            Chloroplastida & 460457 & 3519 & 77
-              & 454211 & 0 & 0 & 0 & 4688 & 0 & 0 & 1558 \\
-            Metazoa & 1670956 & 30758 & 22373
-              & 1485749 & 0 & 0 & 1313 & 29002 & 5102 & 1957 & 147833 \\
-            \hline  
-          \end{tabular}
-        \end{center}
-        \caption{All kingdoms (subtrees), inkluding internal nodes, are examined for the evolution of the 
-        amount and percentage of given data to predicted data.}
-        \label{table:Kingdom internal nodes}
-      \end{table}
-
       %---------------------------------------------------------------------------------------------------
       \subsubsection{Origins and Losses} \label{sec:results - origins and losses}
 
@@ -1074,43 +996,7 @@
         %   rounded to:    0  0      0    0    1      1     1
         % \end{lstlisting}
 
-        \begin{table} [h]
-          \begin{center}
-            \begin{tabular}{ |l|r|r||r|r|r| }
-              \hline
-              \bfseries Domain  & \bfseries \# internal & \bfseries \# leaf & \bfseries Rootnode & \multicolumn{2}{c|}{\bfseries without and with rounding} \\ 
-              \bfseries / Kingdom  & \multicolumn{2}{c||}{\bfseries nodes} & \bfseries state & \bfseries \# origins & \bfseries \# losses \\
-              \bfseries / Phylum / Class & & & & \bfseries (FL -> P) & \bfseries (P -> FL) \\
-              \hline \hline
-              Eukaryota & 241974 & 2293463 & 1.0 & 415 & 363 \\
-              & & & P & 462 & 369 \\
-              \hline \hline
-              Metazoa & 179944 & 1491012 & 0.5 & 294 & 123 \\
-              & & & & 321 & 129 \\ \hline
-              Fungi & 9534 & 314571 & 0.5 & 80 & 222 \\
-              & & & & 97 & 222 \\ \hline
-              Chloroplastida & 43486 & 412434 & 0.0 & 40 & 2 \\
-              & & & FL & 42 & 2 \\
-              \hline \hline            
-              Arthropoda & 120479 & 1198981 & 0.0 & 260 & 102 \\
-              & & & FL & 281 & 108 \\ \hline
-              Apicomplexa & 239 & 1863 & 1.0 & 0 & 1 \\
-              & & & P & 0 & 1 \\ \hline
-              Nematoda & 3437 & 30127 & 1.0 & 0 & 11 \\
-              & & & P & 2 & 11 \\ \hline
-              Chordata & 30761 & 91785 & 0.0 & 12 & 1 \\
-              & & & FL & 12 & 1 \\ \hline
-              Platyhelminthes & 4459 & 22683 & 1.0 & 0 & 5 \\
-              & & & P & 0 & 5 \\
-              \hline \hline            
-              Insecta & 91256 & 989572 & 0.0 & 234 & 77 \\
-              & & & FL & 245 & 77 \\ 
-              \hline  
-            \end{tabular}
-          \end{center}
-          \caption{Origins and losses}
-          \label{table:origins and losses} 
-        \end{table}
+
 
         In Table \ref{table:origins and losses} we can see, that we found some more origins than Weinstein 
           and on top of that some losses. \\
@@ -1146,13 +1032,11 @@
         (kingdom, phylum, class) and the depth of the leaf nodes is re-modeled and the BICs compared 
         (table \ref{table:BIC cross-validation}). Lower taxa than classes (e.g. order) are 
         computationally too expensive to calculate. \\
-      The Residuals are included in the appendix (table \ref{table:Residuals cross-validation}) for the 
-        sake of completeness; here too, due to the different complexity, they do not have much meaning 
-        for the comparison of the models. \\
+
 
       \todo{table for these numbers?}
-      % 100/(25992+34879)*10000 = 16.43
-      % 100/(25992+34879)*9238 = 15.18
+      % 100/(25962+34860)*10000 = 16.44
+      % 100/(25962+34860)*9238 = 15.19
       % 10000 nodes 9238 unique
       % 9060 nodes $\approx 98.17\%$ correctly predicted
       % 169 ($\approx 1.82\%$) wrongly predicted
@@ -1173,7 +1057,7 @@
         \end{center}
         \caption{BIC (Bayesian information criterion) values of cross-validation prediction models. \\
           These models are created with the R function \textit{glm()} and compared with the 
-            \textit{BIC()} function. This results in the listed BIC values.}
+            \textit{BIC()} function. This results in the listed BIC values, presented in a heatmap colorization.}
         \label{table:BIC cross-validation} 
       \end{table}
 
@@ -1266,7 +1150,7 @@
   %---------------------------------------------------------------------------------------------------
   \section{Data situation} \label{sec:discussion - data situation}
     The used eukaryotic synthesis tree from OTL \cite{Hinchliff2015} has 241,974 internal nodes and 
-      293,463 leaf nodes. In addition, we could specify 25,992 parasitic and 34,879 free-living 
+      293,463 leaf nodes. In addition, we could specify 25,962 parasitic and 34,860 free-living 
       species from GloBI \cite{Poelen2014}. \\
     This gives us a high number of missing internal nodes (high multifurcation) and a low number of 
       node states of the leaf nodes. In table \ref{table:percentage loss information subtrees} we have 
@@ -1367,6 +1251,10 @@ Different parasite types have different transition probabilities. It is very dif
         can thus be assumed that the tree is not balanced. \\
       For more precise statements, one would have to take deeper undercurrents, which was not possible 
         in the context of this work.
+
+
+      \todotext{It should be noted that we have optimized the distributions to the proportions and thus the number of state changes will be relatively high. With a smaller number of state changes, the predictive power of both algorithms would be even better.}
+      % transition probability
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1551,78 +1439,57 @@ Different parasite types have different transition probabilities. It is very dif
     \end{table}
 
   %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Missing internal node modeling - Residual table} %\label{sec:Residuals unknown information}
-    \begin{table}[h!]
-      \begin{center}
-          \begin{tabular}{ |l|r|r|r|r| }
-            \hline
-            \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
-            \hline \hline
-            multifurc $\sim$ taxa & 7774454 & \cellcolor{green!10}7435700 & \cellcolor{green!15}7337241 & \cellcolor{green!30}7076068 \\
-            \hline
-            multifurc $\sim$ taxa + depth & 7752303 & \cellcolor{green!10}7431609 & \cellcolor{green!15}7334754 & \cellcolor{green!30}7027578 \\
-            multifurc $\sim$ taxa + max.height & 7730196 & \cellcolor{green!15}7375889 & \cellcolor{green!20}7275856 & \cellcolor{green!30}7005424 \\
-            multifurc $\sim$ taxa + min.height & \cellcolor{green!10}7472500 & \cellcolor{green!20}7233486 & \cellcolor{green!25}7144686 & \cellcolor{green!40}6890703 \\
-            multifurc $\sim$ taxa + mean.height & \cellcolor{green!15}7304402 & \cellcolor{green!25}7128318 & \cellcolor{green!30}7055313 & \cellcolor{green!40}6815271 \\
-            \hline
-            multifurc $\sim$ taxa * depth & 7714881 & \cellcolor{green!15}7335396 & \cellcolor{green!20}7250759 & \cellcolor{green!40}6843004 \\
-            multifurc $\sim$ taxa * max.height & \cellcolor{green!5}7692980 & \cellcolor{green!15}7311241 & \cellcolor{green!25}7187504 & \cellcolor{green!45}6795823 \\
-            multifurc $\sim$ taxa * min.height & \cellcolor{green!10}7442387 & \cellcolor{green!25}7177002 & \cellcolor{green!30}7094933 & \cellcolor{green!45}6795099 \\
-            multifurc $\sim$ taxa * mean.height & \cellcolor{green!20}7247309 & \cellcolor{green!30}7020258 & \cellcolor{green!35}6965794 & \cellcolor{green!50}6665565 \\
-            \hline
-          \end{tabular}
-      \end{center}
-      \caption{Residuals of multifurcation models \\
-        These models are created with the R function \textit{glm()} and compared with the 
-          \textit{anova()} function. This results in the listed residuals.}
-      \label{table:Residuals multifurcation} 
-    \end{table}
+  \section{Results}
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Missing leaf state modeling - Residual table}\label{sec:Residuals unknown information}
     \begin{table}[h!]
       \begin{center}
-        \begin{tabular}{ |l|r|r|r| }
+        \begin{tabular}{ |l|r||r|r||r|r|r|r|r|r| }
           \hline
-          \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class \\
+          & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{6}{c|}{\bfseries final states} \\
+          \bfseries Phylum & \bfseries \# nodes & \bfseries FL & \bfseries P
+            & \bfseries 0 (FL) & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
           \hline \hline
-          multifurc $\sim$ taxa & 545740 & \cellcolor{green!10}499227 & \cellcolor{green!30}482265 \\
-          \hline
-          multifurc $\sim$ taxa + depth & 544789 & \cellcolor{green!10}493017 & \cellcolor{green!50}478998 \\
-          \hline
-          multifurc $\sim$ taxa * depth & 544062 & \cellcolor{green!30}488366 & \cellcolor{green!50}476382 \\
+          Chordata & 122546 & 10451 & 18 
+            & 122473 & 0 & 0 & 0 & 0 & 73 \\
+          Nematoda & 33564 & 21 & 3289 
+            & 846 & 0 & 1133 & 0 & 0 & 31585 \\
+          Platyhelminthes & 27142 & 7 & 7086 
+            & 1010 & 0 & 175 & 0 & 0 & 25957 \\
+          Apicomplexa & 2102 & 1 & 255 
+            & 1 & 0 & 0 & 0 & 0 & 2101 \\
+          % \hline
+          % Arthropoda & 1319460 & 18912 & 11141 
+          %   & 1207204 & 1313 & 25499 & 4852 & 1957 & 78635 \\
           \hline
         \end{tabular}
       \end{center}
-      \caption{Residuals of unknown information models \\
-        These models are created with the R function \textit{glm()} and compared with the 
-          \textit{anova()} function. This results in the listed residuals.}
+      \caption{Some selected phyla (subtrees), including internal nodes, are examined for the evolution 
+      of the amount and percentage of given data to predicted data.}
+      \label{table:Phylum internal nodes}
     \end{table}
 
-  %---------------------------------------------------------------------------------------------------
-  %---------------------------------------------------------------------------------------------------
-  \section{Cross-validation prediction - Residual table}
-    \begin{table}[h]
+    \begin{table}[h!]
       \begin{center}
-        \begin{tabular}{ |l|r|r|r| }
+        \hspace*{-2cm}\begin{tabular}{ |l|r||r|r||r|r|r|r|r|r|r|r| }
           \hline
-          \bfseries Model / Taxa &\bfseries  Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
+          & & \multicolumn{2}{c||}{\bfseries original states} & \multicolumn{8}{c|}{\bfseries final states} \\
+          \bfseries Kingdom & \bfseries \# nodes & \bfseries FL & \bfseries P
+            & \bfseries 0 (FL) & \bfseries 0.25 & \bfseries 0.33 & \bfseries 0.4 & \bfseries 0.5 & \bfseries 0.67 & \bfseries 0.75 & \bfseries 1 (P) \\
           \hline \hline
-          correctly predicted $\sim$ taxa & 117877 & \cellcolor{green!30}111466 & \cellcolor{green!45}108878 \\% & XXXXX \\
-          \hline
-          correctly predicted $\sim$ taxa + depth & 117703 & \cellcolor{green!35}110513 & \cellcolor{green!45}108403 \\% & XXXXX \\
-          \hline
-          correctly predicted $\sim$ taxa * depth & 117592 & \cellcolor{green!40}109827 & \cellcolor{green!50}107994 \\% & XXXXX \\
-          \hline
-        \end{tabular} 
+          none & 84456 & 45 & 529 
+            & 15035 & 243 & 25910 & 0 & 8764 & 6183 & 0 & 28140 \\
+          Fungi & 324105 & 577 & 2983
+            & 39088 & 0 & 0 & 0 & 5858 & 0 & 0 & 274803 \\
+          Chloroplastida & 460457 & 3519 & 77
+            & 454211 & 0 & 0 & 0 & 4688 & 0 & 0 & 1558 \\
+          Metazoa & 1670956 & 30758 & 22373
+            & 1485749 & 0 & 0 & 1313 & 29002 & 5102 & 1957 & 147833 \\
+          \hline  
+        \end{tabular}
       \end{center}
-      \caption{Residuals of cross-validation prediction \\
-        These models are created with the R function \textit{glm()} and compared with the 
-          \textit{anova()} function. This results in the listed residuals.}
-      \label{table:Residuals cross-validation} 
+      \caption{All kingdoms (subtrees), inkluding internal nodes, are examined for the evolution of the 
+      amount and percentage of given data to predicted data.}
+      \label{table:Kingdom internal nodes}
     \end{table}
-
 
 \end{document}

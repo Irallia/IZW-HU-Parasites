@@ -208,21 +208,21 @@ print('--------------------------------------------------')
 
 inner.taxa$multifurc <- inner.taxa$nr_children-1
 
-ggplot(inner.taxa, aes(multifurc)) +
-    geom_histogram(col="black") +
-    scale_y_log10() +
-    labs(x="number of children -2", y="number of nodes")
-ggsave("multifurc.pdf")
+# ggplot(inner.taxa, aes(multifurc)) +
+#     geom_histogram(col="black") +
+#     scale_y_log10() +
+#     labs(x="number of children -2", y="number of nodes")
+# ggsave("multifurc.pdf")
 
-ggplot(inner.taxa, aes(multifurc)) +
-    geom_histogram( 
-        col="black", 
-        binwidth = 1,
-        aes(fill=..count..)) +
-    xlim(0, 30) +
-    scale_y_log10() +
-    labs(x="number of children -2", y="number of nodes")
-ggsave("multifurc_small.pdf")
+# ggplot(inner.taxa, aes(multifurc)) +
+#     geom_histogram( 
+#         col="black", 
+#         binwidth = 1,
+#         aes(fill=..count..)) +
+#     xlim(0, 30) +
+#     scale_y_log10() +
+#     labs(x="number of children -2", y="number of nodes")
+# ggsave("multifurc_small.pdf")
 
 print('--------------------------------------------------')
 print('-------------------------multifurc data-------------------------')
@@ -415,9 +415,10 @@ print('-------------------order * depth / min/max/mean.height-------------------
 #                    family="poisson")
 # print(c('BIC=',  BIC(orderTmaxHeightt.furc.mod)))
 
-# orderTmeanHeight.furc.mod <- glm(multifurc~order*mean.height, data=inner.taxa,
-#                    family="poisson")
+orderTmeanHeight.furc.mod <- glm(multifurc~order*mean.height, data=inner.taxa,
+                   family="poisson")
 # print(c('BIC=',  BIC(orderTmeanHeight.furc.mod)))
+summary(orderTmeanHeight.furc.mod)
 
 # anova(orderTdepth.furc.mod, orderTmaxHeightt.furc.mod, orderTminHeight.furc.mod, orderTmeanHeight.furc.mod, test="LRT")
 
@@ -552,7 +553,8 @@ print('-------------------class + depth / * depth-----------------------')
 # classPdepth.globi.mod <- glm(globi.data~class+depth, data=leaf.taxa, family="binomial")
 # print(c('BIC=',  BIC(classPdepth.globi.mod)))
 
-# classTdepth.globi.mod <- glm(globi.data~class*depth, data=leaf.taxa, family="binomial")
+classTdepth.globi.mod <- glm(globi.data~class*depth, data=leaf.taxa, family="binomial")
+summary(classTdepth.globi.mod)
 # print(c('BIC=',  BIC(classTdepth.globi.mod)))
 
 # anova(classPdepth.globi.mod, classTdepth.globi.mod, test="LRT")
