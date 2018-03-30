@@ -19,80 +19,89 @@ leaf.taxa <-  all.taxa[all.taxa$nr_children==0, ]
 leaf.taxa <- as.data.frame(leaf.taxa)
 table(leaf.taxa$correct_predicted)[order(table(leaf.taxa$correct_predicted))]
 
+leaf.taxa$correct_predicted <- as.integer(leaf.taxa$correct_predicted)
+table(leaf.taxa$correct_predicted)[order(table(leaf.taxa$correct_predicted))]
+
+min(na.omit(leaf.taxa$correct_predicted))
+max(na.omit(leaf.taxa$correct_predicted))
+var(na.omit(leaf.taxa$correct_predicted))
+mean(na.omit(leaf.taxa$correct_predicted))
+
 leaf.taxa$correct_predicted <- !is.na(leaf.taxa$correct_predicted)
+table(leaf.taxa$correct_predicted)[order(table(leaf.taxa$correct_predicted))]
 
-null.correct_predicted.mod <- glm(correct_predicted~1, data=leaf.taxa, family="binomial")
+# null.correct_predicted.mod <- glm(correct_predicted~1, data=leaf.taxa, family="binomial")
 
-print('------------------------kingdom - phylum - class - order--------------------------')
+# print('------------------------kingdom - phylum - class - order--------------------------')
 
-kingdom.correct_predicted.mod <- glm(correct_predicted~kingdom, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(kingdom.correct_predicted.mod)))
-# effect("kingdom", kingdom.correct_predicted.mod)
-# anova(null.correct_predicted.mod, kingdom.correct_predicted.mod)
+# kingdom.correct_predicted.mod <- glm(correct_predicted~kingdom, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(kingdom.correct_predicted.mod)))
+# # effect("kingdom", kingdom.correct_predicted.mod)
+# # anova(null.correct_predicted.mod, kingdom.correct_predicted.mod)
 
-# summary(kingdom.correct_predicted.mod)
+# # summary(kingdom.correct_predicted.mod)
 
-phylum.correct_predicted.mod <- glm(correct_predicted~phylum, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(phylum.correct_predicted.mod)))
-# effect("phylum", phylum.correct_predicted.mod)
+# phylum.correct_predicted.mod <- glm(correct_predicted~phylum, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(phylum.correct_predicted.mod)))
+# # effect("phylum", phylum.correct_predicted.mod)
 
-class.correct_predicted.mod <- glm(correct_predicted~class, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(class.correct_predicted.mod)))
+# class.correct_predicted.mod <- glm(correct_predicted~class, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(class.correct_predicted.mod)))
 
-order.correct_predicted.mod <- glm(correct_predicted~order, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(order.correct_predicted.mod)))
+# order.correct_predicted.mod <- glm(correct_predicted~order, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(order.correct_predicted.mod)))
 
-anova(kingdom.correct_predicted.mod, phylum.correct_predicted.mod, class.correct_predicted.mod, order.correct_predicted.mod, test="LRT")
+# anova(kingdom.correct_predicted.mod, phylum.correct_predicted.mod, class.correct_predicted.mod, order.correct_predicted.mod, test="LRT")
 
-print('-------------------kingdom + depth / * depth-----------------------')
+# print('-------------------kingdom + depth / * depth-----------------------')
 
-kingdomPdepth.correct_predicted.mod <- glm(correct_predicted~kingdom+depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(kingdomPdepth.correct_predicted.mod)))
-# effect("kingdom", kingdomPdepth.correct_predicted.mod)
+# kingdomPdepth.correct_predicted.mod <- glm(correct_predicted~kingdom+depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(kingdomPdepth.correct_predicted.mod)))
+# # effect("kingdom", kingdomPdepth.correct_predicted.mod)
 
-kingdomTdepth.correct_predicted.mod <- glm(correct_predicted~kingdom*depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(kingdomTdepth.correct_predicted.mod)))
-# effect("kingdom", kingdomTdepth.correct_predicted.mod)
+# kingdomTdepth.correct_predicted.mod <- glm(correct_predicted~kingdom*depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(kingdomTdepth.correct_predicted.mod)))
+# # effect("kingdom", kingdomTdepth.correct_predicted.mod)
 
-anova(kingdomPdepth.correct_predicted.mod, kingdomTdepth.correct_predicted.mod, test="LRT")
-
-
-print('-------------------phylum + depth / * depth-----------------------')
-
-phylumPdepth.correct_predicted.mod <- glm(correct_predicted~phylum+depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(phylumPdepth.correct_predicted.mod)))
-# effect("phylum", phylumPdepth.correct_predicted.mod)
-
-phylumTdepth.correct_predicted.mod <- glm(correct_predicted~phylum*depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(phylumTdepth.correct_predicted.mod)))
-# effect("phylum", phylumTdepth.correct_predicted.mod)
-
-anova(phylumPdepth.correct_predicted.mod, phylumTdepth.correct_predicted.mod, test="LRT")
+# anova(kingdomPdepth.correct_predicted.mod, kingdomTdepth.correct_predicted.mod, test="LRT")
 
 
-print('-------------------class + depth / * depth-----------------------')
+# print('-------------------phylum + depth / * depth-----------------------')
 
-classPdepth.correct_predicted.mod <- glm(correct_predicted~class+depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(classPdepth.correct_predicted.mod)))
+# phylumPdepth.correct_predicted.mod <- glm(correct_predicted~phylum+depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(phylumPdepth.correct_predicted.mod)))
+# # effect("phylum", phylumPdepth.correct_predicted.mod)
 
-classTdepth.correct_predicted.mod <- glm(correct_predicted~class*depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(classTdepth.correct_predicted.mod)))
+# phylumTdepth.correct_predicted.mod <- glm(correct_predicted~phylum*depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(phylumTdepth.correct_predicted.mod)))
+# # effect("phylum", phylumTdepth.correct_predicted.mod)
 
-anova(classPdepth.correct_predicted.mod, classTdepth.correct_predicted.mod, test="LRT")
-
-
-print('-------------------order + depth / * depth-----------------------')
-
-orderPdepth.correct_predicted.mod <- glm(correct_predicted~order+depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(orderPdepth.correct_predicted.mod)))
-
-orderTdepth.correct_predicted.mod <- glm(correct_predicted~order*depth, data=leaf.taxa, family="binomial")
-print(c('BIC=',  BIC(orderTdepth.correct_predicted.mod)))
-
-anova(orderPdepth.correct_predicted.mod, orderTdepth.correct_predicted.mod, test="LRT")
+# anova(phylumPdepth.correct_predicted.mod, phylumTdepth.correct_predicted.mod, test="LRT")
 
 
-print('--------------------------------------------------')
+# print('-------------------class + depth / * depth-----------------------')
+
+# classPdepth.correct_predicted.mod <- glm(correct_predicted~class+depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(classPdepth.correct_predicted.mod)))
+
+# classTdepth.correct_predicted.mod <- glm(correct_predicted~class*depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(classTdepth.correct_predicted.mod)))
+
+# anova(classPdepth.correct_predicted.mod, classTdepth.correct_predicted.mod, test="LRT")
+
+
+# print('-------------------order + depth / * depth-----------------------')
+
+# orderPdepth.correct_predicted.mod <- glm(correct_predicted~order+depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(orderPdepth.correct_predicted.mod)))
+
+# orderTdepth.correct_predicted.mod <- glm(correct_predicted~order*depth, data=leaf.taxa, family="binomial")
+# print(c('BIC=',  BIC(orderTdepth.correct_predicted.mod)))
+
+# anova(orderPdepth.correct_predicted.mod, orderTdepth.correct_predicted.mod, test="LRT")
+
+
+# print('--------------------------------------------------')
 
 format(Sys.time(), "%a %b %d %X %Y")
 
