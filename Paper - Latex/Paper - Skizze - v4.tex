@@ -597,12 +597,10 @@
 
   As a result, we used the Sankoff algorithm \cite{Sankoff1975} implemented by Louca et al. 
     \cite{Louca2017}, which performed best, for the actual reconstruction on the real data. \\
-    \todo{... biological view}
-  %  On the one hand, we have examined the results of some 
-    % subtrees for their credibility with the help of biological background knowledge (subsection 
-    % \ref{subsec:results - statistics on predicted states}). On the other hand, we
-  We evaluated these by performing a leave-100-out cross-validation and predicted approximately 
-    98.17\% of the omitted states correct (subsection \ref{sec:results - cross-validation}). \\ 
+  We evaluated these on the one hand by analysing some statisitcs (subsection 
+    \ref{subsec:results - statistics on predicted states}) and on the other hand by performing a 
+    leave-100-out cross-validation. There we predicted approximately 98.17\% of the omitted states 
+    correct (subsection \ref{sec:results - cross-validation}). \\ 
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -739,7 +737,7 @@
         parasites and free-living. With 2,293,463 leaf nodes we still have about 97.34\% unknown leaf 
         nodes.
       
-      We also compared different models in terms of their BICs (Table: \ref{table:BIC unknown information}). \\ 
+      We also compared different models in terms of their BICs (table: \ref{table:BIC unknown information}). \\ 
       \begin{table}[h!]
         \begin{center}
           \begin{tabular}{ |l|r|r|r|r| }
@@ -766,6 +764,8 @@
 
       These missing data modeling results could be used to better simulate the data. \\
 
+\newpage
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -783,9 +783,6 @@
     Both factors have a relatively linear influence on the Sankoff method. Fitch, on the other hand, 
       breaks significantly in his prediction from about 70\% unknown leaf nodes or mutifurcation. \\
     Figure \ref{fig:influence of unknown data} shows the results of examining various parameters.
-
-    Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
-      the Sankoff gives a better prediction and is thus used for real data analysis.
 
     \begin{figure}[h!]
       \centering
@@ -810,15 +807,20 @@
       \label{fig:influence of unknown data}
     \end{figure}
 
+    Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
+      the Sankoff gives a better prediction and is thus used for real data analysis.
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Results of the real data analysis created with Sankoff}
-    This section is about evaluating the prediction of real data using the Sankoff method. It is 
-      divided into two subsections. The analysis of some statistics on the predicted states, 
-      \todo{with the result...} (subsection \ref{subsec:results - statistics on predicted states}) and the presentation 
-      of the leave-100-out cross-validation results (subsection \ref{sec:results - cross-validation}).
-      \todo{This has revealed that ...} \\
+    This section is about evaluating the prediction of real data using the Sankoff method and is 
+      divided into two subsections. \\
+    The analysis of some statistics on the predicted states, with the result that we predict a total 
+      of significantly more free-livings than parasites despite almost 50:50 distributed input states 
+      (subsection \ref{subsec:results - statistics on predicted states}) and the presentation of the 
+      leave-100-out cross-validation results (subsection \ref{sec:results - cross-validation}) This 
+      has revealed that we predicted approximately 98.17\% correct with a small variance.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -898,13 +900,15 @@
           \label{table:results of some selected taxa}
       \end{table}
 
+~ \\
+
       Weinstein and Kuris have been searching for origins of parasitism in Animalia \cite{Weinstein2016}. 
         They identified 223 parasitic origins: 223 in Metazoa $\supset$ 143 in Arthropoda $\supset$ 87 
         in Insecta. \\
-      In Table \ref{table:results of some selected taxa} we can see, that we found some more origins than 
-        Weinstein: 321 in Metazoa $\supset$ 281 in Arthropoda $\supset$ 245 in Insecta and on top of 
-        that some losses: 129 in Metazoa $\supset$ 108 in Arthropoda $\supset$ 77 in Insecta. The 
-        origins and losses calculated by Sankoff are thus closer to the leaves in the tree.
+      In the last columns of the table \ref{table:results of some selected taxa} we can see, that we 
+        found some more origins than Weinstein: 321 in Metazoa $\supset$ 281 in Arthropoda $\supset$ 245 
+        in Insecta and on top of that some losses: 129 in Metazoa $\supset$ 108 in Arthropoda $\supset$ 
+        77 in Insecta. The origins and losses calculated by Sankoff are thus closer to the leaves in the tree.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -954,7 +958,7 @@
       \end{table}
 
       The BIC values this time did not prove that the finest model is the best. Of our calculated models, 
-       \textit{correctly predicted $\sim$ phylum * depth} has the smallest value. \\
+       \textit{correctly predicted $\sim$ phylum * depth} has the smallest value.
 
       We examined the influence of the omitted data on the prediction. On average, about twice as many 
         leaf nodes are predicted differently. %\color{red}The variance is very high. This means that 
@@ -1006,7 +1010,7 @@ Since we look at such large trees we can not expect to know all the parasites, s
 individual positives. They are positive in the sense that the majority have the opposite state.
 
 In contrast to the other phyla examined, the phylogeny in the Chordata is more pronounced (less 
-        multifurcation) (see Table \ref{table:percentage loss information subtrees}). This results in 
+        multifurcation) (see table \ref{table:percentage loss information subtrees}). This results in 
         less variance of errors. What is reflected in the results shown in table 
         \ref{table:results of some selected taxa}. There are 18 parasites as input data and only 8 more are 
         predicted. The Chordata mostly consist of free-living species, so this seems believable. We 
@@ -1064,7 +1068,7 @@ In contrast to the other phyla examined, the phylogeny in the Chordata is more p
       It should be noted, however, that this classification is outdated, as it has been proven that 
         the Turbellaria are not monophyletic. But we will not go into detail here. \\
       For the Platyhelminthes we have more state information for the leaf nodes compared to the other 
-        considered subtrees, see Table \ref{table:percentage loss information subtrees}. We start with 
+        considered subtrees, see table \ref{table:percentage loss information subtrees}. We start with 
         0.1\% free-livings and predicted 0.77\% as free-living species. \\
 
       With the Nematoda it looks more complicated. Large parts of Nematoda are free-living, but we 
@@ -1338,7 +1342,7 @@ Different parasite types have different transition probabilities. It is very dif
       taxonomic tree is reflected. If the tree are binary, the taxa would have to double. But the 
       multipliers for some are much bigger and for others much smaller, which \colorbox{red}{you} can see in in figure 
       \ref{fig:taxaTable2}. \\
-      ... (see Table \ref{table:...})
+      ... (see table \ref{table:...})
     
     \begin{table}[h!]
       \begin{center}
@@ -1396,7 +1400,7 @@ Different parasite types have different transition probabilities. It is very dif
   %---------------------------------------------------------------------------------------------------
   \subsubsection{Distribution of data in the taxa}
     Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
-      zugeteilt (see Table \ref{table:...}). \\
+      zugeteilt (see table \ref{table:...}). \\
 
     \begin{table}[h]
       \begin{center}
