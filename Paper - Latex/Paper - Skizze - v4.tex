@@ -1,5 +1,4 @@
-\input{arbeit-vorlage-praeambel.tex} % Importiere die Einstellungen aus der Präambel
-% hier beginnt der eigentliche Inhalt
+\input{arbeit-vorlage-praeambel.tex}
 
 \author{Lydia Buntrock}
 \title{master thesis}
@@ -10,7 +9,6 @@
 
 
 \begin{document}
-  % Titelseite
   \begin{titlepage}
     \pagestyle{empty}
   	\begin{center}
@@ -49,7 +47,7 @@
 
   Parasitism can be defined as an interaction between species in which one of the interaction 
     partners, the parasite, lives in or on the other, the host. The parasite draws food from its 
-    host and harms it in the process. According to estimates, above 40\% of all eukaryotes are 
+    host and harms it in the process. According to estimates, above 40\% of all Eukaryota are 
     parasites. Nevertheless, it is computationally difficult to obtain information whether a 
     particular taxon is a parasite making it difficult to query large sets of taxa.
 
@@ -70,9 +68,9 @@
     results contradicting conventional wisdom.
 
   This represents, to our knowledge, the first comprehensive computational reconstruction of the 
-    emergence of parasitism in eukaryotes. We argue that such an approach is necessary to allow 
+    emergence of parasitism in Eukaryota. We argue that such an approach is necessary to allow 
     further incorporation of parasitism as an important trait in species interaction databases and 
-    in individual studies on eukaryotes e.g. in the microbiome.
+    in individual studies on Eukaryota e.g. in the microbiome.
 
 %---------------------------------------------------------------------------------------------------
 
@@ -170,7 +168,7 @@
 
   For these large phylogenetic synthesis trees, however, ancestral state reconstruction has so far 
     only been done for Bacteria and Archaea for binary traits by Goberna and Verdú \cite{Goberna2015}.
-    However, this differs from eukaryotes in the sense that complex traits such as parasitism depend
+    However, this differs from Eukaryota in the sense that complex traits such as parasitism depend
     on more than one gene.
 
   The present tree structure of OTL is not binary but multifurcated, meaning that each node has
@@ -218,7 +216,7 @@
     }. This definition includes: ecto- and endoparasites, parasitoids, kleptoparasites and pathogenes. \\
 
   The objectives of this work are the following points: (1) Find a suitable ancestral state 
-    reconstruction method. (2) Accomplish reconstructing on the Eucaryotic synthesis tree of OTL. \\
+    reconstruction method. (2) Accomplish reconstructing on the Eukaryota synthesis tree of OTL. \\
   The goal of Point 1 is to evaluate the possible methods based on a simulation of our data 
     situation. \\
   The Sankoff algorithm implemented by Louca et al. is the best in our comparisons. Therefore, 
@@ -234,8 +232,8 @@
     very large data sets to predict unknown leaf node states. \\
   We discuss different ancestral state reconstruction methods and test the most appropriate ones on 
     our data. Hereby, we want to find out how far it is possible to use the Open Tree of Life (OTL) 
-    to expandavailable information via phylogenetic trait prediction. As a basis for known states, 
-    we use the Global Biotic Interactions (GloBI) database, which cathegorises 34,860 and 25,962 
+    to expand available information via phylogenetic trait prediction. As a basis for known states, 
+    we use the Global Biotic Interactions (GloBI) database, which categorises 34,860 and 25,962 
     species as free-living and parasites. This data is used to perform an ancestral state 
     reconstruction and predict states for over $\sim$2.3 million (97.34\%) leaf nodes without state 
     information.
@@ -277,12 +275,12 @@
     \includegraphics[width=0.6\textwidth]{Figures/Workflow-overview.png}
     \caption{The Workflow of the resulting procedure with the following steps: \\
       (1) Retrieve phylogenentic tree data as input for the tree (OTL) and the state information (GloBI).
-      (2) Get metadata of these for a realisitc simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
+      (2) Get metadata of these for a realistic simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
       (3) Build and run the simulation.
       (4) Evaluation of parameters for the simulation and the ancestral state reconstruction of the real tree.
       (5) Evaluate the accuracy of developed algorithms and choose the best.
       (6) Run the resulting algorithm on the original data.
-      (7) Evalute and interprete the results. %$\rightarrow$ Origins etc...
+      (7) Evaluate and interpret the results. %$\rightarrow$ Origins etc...
     }
     \label{fig:workflow}
   \end{figure}
@@ -302,7 +300,7 @@
       }. OTL also  includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}.
       
     Furthermore the Open Tree Taxonomy (OTT) from OTL is used because it includes most of the known 
-      taxonomies and is synthesised by prefering taxonomies that match with available phylogenetic 
+      taxonomies and is synthesised by preferring taxonomies that match with available phylogenetic 
       data. The team from OTL prefer a maximum number of species \cite{Hinchliff2015}, this results 
       in the synthesis between taxonomy and phylogeny.
 
@@ -325,8 +323,8 @@
       determined, here is species A parasitic and species B free-living. In the case that a parasite 
       conquers (parasitizes) another parasite yields conflicting states for the second species. 
       This is solved by preferring parasitic. \\
-    For each species known identifyers are stored in GloBI. This includes OTT (the taxonomy of OTL). 
-      All species that have stored an OTT indentifyer and have a matching interaction are divided into 
+    For each species known identifiers are stored in GloBI. This includes OTT (the taxonomy of OTL). 
+      All species that have stored an OTT identifier and have a matching interaction are divided into 
       two lists: parasites and free-livings.
 
   %---------------------------------------------------------------------------------------------------
@@ -364,7 +362,7 @@
         differences to the multifurcated case, the algorithm for the binary case is briefly explained 
         and referred to the extension.
 
-      Input: A rooted, binary tree, with state informations in the leaf nodes. Each node is depicted as 
+      Input: A rooted, binary tree, with state information in the leaf nodes. Each node is depicted as 
         a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P). 
         Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
         has only one. Leaf nodes have their state as a set (e.g. \{FL\} or \{P\}, unknown leaf nodes the 
@@ -389,14 +387,14 @@
           \centering
           \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
           \caption{Fitch algorithm for binary trees. \\
-            The unknown leaf node is discribed with both states. Computed internal nodes (exclusive the 
+            The unknown leaf node is described with both states. Computed internal nodes (exclusive the 
             root node) consists of three sets, where the last set is the final one (bold). \\
             From the second internal node (seen from the root node) there are several possibilities to 
             create the second and third set.}
           \label{fig: binary Fitch}
         \end{wrapfigure}
       The extension to the non-binary case is quite obvious, but holds some opportunities. In this case, 
-        more than two children may be present for the first traversal, but the incision or union may 
+        more than two children may be present for the first traversal, but the intersection or union may 
         also be formed over more than two sets. Also in the second traversing, there may be several 
         sibling nodes. However, there are several possibilities here that are all tested and compared 
         in the simulation. Some of these options are already available in the binary case:
@@ -487,7 +485,7 @@
           (1) + (2) Draw random numbers for its children from the free-living distribution (red), the numbers are under the threshold 
           $\rightarrow$ the nodes are again free-living; go on with the children. \\
           (3) The number drawn is above the threshold. $\rightarrow$ The node state changes to parasitic (P: blue). \\
-          (4) Now draw random numbers from the parasite distribution (red) until one number lies unter the threshold. Then change back.}
+          (4) Now draw random numbers from the parasite distribution (red) until one number lies under the threshold. Then change back.}
         \label{fig:set node states}
       \end{wrapfigure} 
       states is included. \\
@@ -513,7 +511,7 @@
     %   is modeled with a beta distribution as in Figure \ref{fig:set node states}. \\
 
     After traversing through the tree, each state is saved in a nodelist associated with the node 
-      indentifyer which is the OTT from OTL.
+      identifier which is the OTT from OTL.
 
     Here begins the simulation of the lack of information, such as the lack of information on topology 
       (multifurcation) and of states of some leaf nodes.
@@ -573,6 +571,41 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Results}
+  In the first part of this work, we were able to provide the proof of concept for the Sankoff 
+    algorithm to perform an ancestral state reconstruction of the present Eukaryota tree. We will 
+    therefore discuss in the following how significant the result of this reconstruction is.
+
+    To do so, we first look at the input data we have: the use of Open Tree of Life for the tree 
+      gives us the greatest approximation to a phylogeny of the Eukaryota. Since such a large 
+      phylogeny has not been completely dissected, this is only a synthesis of phylogenetic trees 
+      with a taxonomy as a backbone. As a result, the tree is far from binary, we found a 
+      multifurcation of 89.45 \%. However, this is highly variable and therefore the reconstruction 
+      is still very good on wide parts of the tree. \\
+    On the other hand, we used the Global Biotic Interactions (GloBI) database to get the state 
+    information for the leaf nodes. However, we were able to extract only 2.66\% of the node 
+    information from GloBI. However, we found out that there are more data in GloBI that could be 
+    taken away with some work.
+    
+    % One last limitation also exists in the data situation itself. We have pointed out in various 
+    %   sections that we have a strong multifurcation and only a few data about leaf node states.
+
+    Next, let's consider the limitations of the simulation that led to the choice of the Sankoff 
+      algorithm. Our own main point of criticism is that we did not simulate the transition 
+      probabilities and estimate an unrealistically high number of transitions (origins and losses). 
+      The Sankoff algorithm is very well scored despite this increased difficulty (more transitions 
+      means more complex predictions) and its proven feasibility.
+
+    Finally, we analyze the validation of our ancestral state reconstruction results. We will do a 
+      selective analysis from a biological perspective and discuss the leave-100-out 
+      cross-validation. \\
+    Above all, the 'biological view' gives a first impression of the credibility of the results. But 
+      it can not make any statistical statements. Here the interested researcher may have to analyze 
+      the subtrees of being relevant to him for himself. \\
+    Of course, cross-validation can be expanded. With more computing power, a leave-1-out 
+      cross-validation could be performed. However, our result on this point is 98.17\% correct. \\
+
+\todo{old:}
+
   This work deals with the ancestral state reconstruction of the entire Eukaryota relatives tree.
 
   For this reconstruction, we first analyzed our data. This is the tree of OTL \cite{Hinchliff2015}
@@ -624,14 +657,14 @@
           \hline \hline
           Eukaryota       & 97.34\%  & 89.45\% \\
           \hline \hline
-          Metazoa         & 96.44\%  & 87.93\% \\ \hline
+          Chloroplastida  & 99.14\%  & 89.46\% \\ \hline
           Fungi           & 98.87\%  & 96.97\% \\ \hline
-          Chloroplastida  & 99.14\%  & 89.46\% \\
-          \hline \hline            
-          % Arthropoda      & 97.49\%  & 89.95\% \\ \hline
+          Metazoa         & 96.44\%  & 87.93\% \\
+          \hline \hline
           Apicomplexa     & 86.26\%  & 87.16\% \\ \hline
-          Nematoda        & 89.01\%  & 88.59\% \\ \hline
+          Arthropoda      & 97.49\%  & 89.95\% \\ \hline
           Chordata        & 88.59\%  & \cellcolor{green!50}66.49\% \\ \hline
+          Nematoda        & 89.01\%  & 88.59\% \\ \hline
           Platyhelminthes & \cellcolor{green!50}68.73\%  & 80.34\% \\
           \hline \hline            
           Insecta         & 97.11\%  & 90.78\% \\
@@ -731,7 +764,7 @@
       Next to the problem of the multifurcation of the tree is the little interaction data thet we have 
         for the species. For the ancestral state reconstruction, we need information about the states 
         (free-living or parasite) in the leaf nodes. \\
-      The eukaryotic synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
+      The Eukaryota synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
         (at 29.01.2018). Out of this data we got 51,337 free-living species and 47,332 parasite species 
         for the whole tree of life. From the Eukaryota we could determine 25,962 and 34,860 species as 
         parasites and free-living. With 2,293,463 leaf nodes we still have about 97.34\% unknown leaf 
@@ -807,7 +840,7 @@
       \label{fig:influence of unknown data}
     \end{figure}
 
-    Since we have a lot of missing data in most subtrees (both internal nodes and state informations), 
+    Since we have a lot of missing data in most subtrees (both internal nodes and state information), 
       the Sankoff gives a better prediction and is thus used for real data analysis.
 
   %---------------------------------------------------------------------------------------------------
@@ -975,17 +1008,17 @@
             \multirow{3}{*}{\bfseries distance} & \bfseries all     & 0 & 3587.70 & 224.96 & 313650.61 & 560.05 \\
             & \bfseries leaf nodes                                  & 0 & 3021.12 & 208.69 & 248103.38 & 498.10 \\
             & \bfseries internal nodes                              & 0 & 566.58 & 16.28 & 4927.95 & 70.20 \\ \hline
-            \multirow{3}{*}{\bfseries lost} & \bfseries all states  & 100 & 100 & 100 & 0 & 0 \\
-            & \bfseries FL states                                   & 44 & 66 & 57.25 & 19.50 & 4.42 \\
-            & \bfseries P states                                    & 34 & 56 & 42.75 & 19.50 & 4.42 \\
-            \hline
+            % \multirow{3}{*}{\bfseries lost} & \bfseries all states  & 100 & 100 & 100 & 0 & 0 \\
+            % & \bfseries FL states                                   & 44 & 66 & 57.25 & 19.50 & 4.42 \\
+            % & \bfseries P states                                    & 34 & 56 & 42.75 & 19.50 & 4.42 \\
+            % \hline
           \end{tabular}
         \end{center}
         \caption{Statistics about the leave-100-out cross-validation \\
           The distance between original and new states is calculated using the Euclidean metric. This 
-            is summed over all states / all leaf node states and all internal node states. \\
-          The lower half of the table describes the distribution of the 'lost' states between parasites 
-            (P) and free-livings (FL).}
+            is summed over all states, all leaf node states and all internal node states.}
+          % The lower half of the table describes the distribution of the 'lost' states between parasites 
+            % (P) and free-livings (FL).}
         \label{table:statistics cross-validation}
       \end{table}
 
@@ -994,130 +1027,6 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Discussion}
-
-To analyze the results, we have selected some phyla (subtrees) to evaluate our results 
-selectively from the biological point of view: Chordata, Nematoda, Platyhelminthes and 
-Apicomplexa. \\
-
-Several factors such as the distribution of existing input data via parasitics and free-livings, 
-faulty input data from GloBI and reinforcement of errors by multifurcation play an important role which becomes evident in these examples. \\
-
-An important factor here is the credibility of the results. The accuracy of the input data 
-stands and falls with the presence and the correctness of the data of GloBI. Errors of incorrect 
-input data can be amplified by incorrect prediction of unknown species and can be reversed in 
-order to improve the data situation of GloBI. \\
-Since we look at such large trees we can not expect to know all the parasites, so we look at 
-individual positives. They are positive in the sense that the majority have the opposite state.
-
-In contrast to the other phyla examined, the phylogeny in the Chordata is more pronounced (less 
-        multifurcation) (see table \ref{table:percentage loss information subtrees}). This results in 
-        less variance of errors. What is reflected in the results shown in table 
-        \ref{table:results of some selected taxa}. There are 18 parasites as input data and only 8 more are 
-        predicted. The Chordata mostly consist of free-living species, so this seems believable. We 
-        started with 99.83\%  species and predict 99.97\% species as free-living (including already 
-        known nodes).
-
-      \begin{figure}
-        \centering
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
-        \caption{Parasites of Phylum: Chordata. \\
-          All parasite data of the chordata are mapped into a rough taxonomy (phylum, class, order, 
-            family) in order to understand their distribution and affiliation. \\
-          The internal nodes are the wanted taxa from OTL (with the addition of \# input parasites to 
-            $\rightarrow$ \# predicted parasites). \\
-          The leaf nodes are the input parasites (green) and the predicted parasites (white $\rightarrow$ 
-            green).}
-        \label{fig:ChordataParasites}
-      \end{figure}
-
-      We mapped the few parasitic species in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
-      Known parasitic birds belong to the order Sauria. Here we know from Rothschild here that are 
-        breeding parasites, like the cuckoo and clepto-parasites as the skuas \cite{Rothschild1957}. We
-        got 6 input parasites from GloBI and there are no predictions: A woodpecker - 
-        \textit{Sphyrapicus varius} and a duck - \textit{Aix sponsa}, a cow bird - \textit{Molothrus ate} 
-        known as broodparasite and some others. \\
-      An example of the amplification of mistakes here are the carp. There is a paper from which GloBI 
-        concludes: Grass carp (\textit{Ctenopharyngodon idella)} has Pathogen common carp 
-        (\textit{Cyprinus carpio})\footnote{
-          \hyperlink{https://www.globalbioticinteractions.org/?interactionType=hasParasite&targetTaxon=Cyprinus\%20carpio}
-          {https://www.globalbioticinteractions.org/?interactionType=hasParasite\&targetTaxon=Cyprinus\%20carpio}
-        }. Since there is hardly any information about free-living, it follows that all siblings are 
-        also predicted to be parasitic. \\
-        % Other birds: Columba livia, Nestor meridionalis, Sphyrapicus varius \\
-        % Snake: Storeria dekayi (probably caused by wrong input data.)
-      % \begin{itemize}
-      %   \item Order Acanthomorphata(3):, one slime fish (family Blenniidae) and two others without family
-      %   \item Order Anura (1): a toad (Family Bufonidae) - there exists some parasitic species in here, 
-      %     they eat fin or pieces of larger fish.
-      %   \item Order Siluriformes (1): a catfish (Family Loricariidae) - there exists some parasitic 
-      %     species in here.
-      % \end{itemize}
-
-      The Apicomplexa are a parasitic phylum. We found only one input organism: Stemonitis fusca as a 
-        free-living species. In GloBI it is listed as being parasitized by Nectria candicans and Nectriopsis 
-        sporangiicola\footnote{
-          \hyperlink{https://www.globalbioticinteractions.org/?interactionType=parasiteOf&targetTaxon=Stemonitis\%20fusca}
-          {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca}
-        }. The algorithm has not predicted new free-livings. \\
-
-      Most species of Platyhelminthes (flatworms) are parasites, although there are also free-living, 
-        predatory feeding species. These are summarized in the Turbellaria, while the parasites are 
-        divided into three other classes \cite{Ax1961}. This also corresponds to our observations. There 
-        is one class (Rhabditophora) that contains all but one single exception of free-living species 
-        of this phylum, which includes the Turbellaria. \\
-      It should be noted, however, that this classification is outdated, as it has been proven that 
-        the Turbellaria are not monophyletic. But we will not go into detail here. \\
-      For the Platyhelminthes we have more state information for the leaf nodes compared to the other 
-        considered subtrees, see table \ref{table:percentage loss information subtrees}. We start with 
-        0.1\% free-livings and predicted 0.77\% as free-living species. \\
-
-      With the Nematoda it looks more complicated. Large parts of Nematoda are free-living, but we 
-        found only 5.32\% of them. Blaxter et al. estimates the order of 25,000 parasites in the 
-        Nematoda \cite{Blaxter2015} and speaks of at least seven independently arosen parasites 
-        \cite{Blaxter1998}. In a recent article Blaxter identifies 18 origins \cite{Blaxter2015} in 
-        Nematoda. \\
-      The problem at this point, however, is: Hallan speaks of the fact that only 23,000 species 
-        are described by the Nematoda but it is assumed that one million or more species are in this 
-        phylum.\footnote{J. Hallan, unpublished; 
-          \hyperlink{https://insects.tamu.edu/research/collection/hallan/}
-          {https://insects.tamu.edu/research/collection/hallan/}
-        }. \todo{Link ist nicht erreichbar!} The parasites have been much more studied and thus we start 
-        with only 0.63\% (table \ref{table:results of some selected taxa}) free-living species. Against such 
-        a shifted data situation, the algorithm is almost powerless to make correct predictions. And yet 
-        the percentage has increased to 5.34\%. \\
-
-      % \anmerkungstext{Das sind schonmal vier große Kontraste, wenn dann noch Zeit bleibt, die 
-      %   schwirigen... Arthropoden, Fungi, Pflanzen... (Emanuel)} \\
-
-      Origins: \\
-      We go back to the same phyla as in the previous section: Chordata, Nematoda, 
-        Platyhelminthes and Apicomplexa. \\
-      Chordata are full of free-living species and so we see only a few origins of parasitism. The root
-      and mostly all species are predicted as free-living. \\
-      In Apicomplexa and the Platyhelminthes also look credible. Our algorithm gives us only one loss of
-        parasitism in Apicomplexa and five in the Platyhelminthes. They are both from the root over
-        mostly all species predicted as parasites. \\
-      Nematoda is again \colorbox{red}{full of problems}. The root node is predicted as a parasite and so we have more 
-        losses of parasitism for the less information of free-living species in this phylum. The rest 
-        is parasitic \\
-      As we have already mentioned Blaxter et al. found at least seven origins of parasitism 
-        \cite{Blaxter1998}. If we assume that the root node of Nematoda is free-living, then some 
-        losses would have to turn around and become Origins. So it could be that we end up with a similar 
-        size as Blaxter.
-
-  \todo{Aus den models kann man auch schließen: highly variable throughout our tree}
-  
-  
-  \todo{noch irgendwo einfügen:} \\
-  The number of nodes in the tree corresponding to a taxonomic rank is tabulated. \\
-  For the classical taxonomic ranks phylum, class, order, family, genus xyz is found (appendix 5.2).
-  % A closer look is taken at some of the features of the synthesis tree on the one hand the 
-  % distribution of the taxa and on the other the distribution of the nodes on the taxa. Since this 
-  % is \colorbox{red}{not directly relevant} for this study, this section has been moved to the appendix 
-  % \ref{sec:otl analysis}.
-
-  
-
   This chapter deals with the question of how trustworthy our result of the ancestral state 
     reconstruction of the Eukaryota tree is. And further on how well our simulation can simulate the 
     real problem and thus make statements about the predictive power of the applied Sankoff algorithm.
@@ -1126,141 +1035,166 @@ In contrast to the other phyla examined, the phylogeny in the Chordata is more p
     for improvement remain. Despite these possibilities for improvement, our reconstruction gives a 
     first good assessment of the whole tree.
 
-  \todo{Why is the study important?} \\
-  \todo{How does this study relate to previous studies?}
-  
-  We evaluated our ancestral state reconstruction and the relational state prediction using three 
-    methods: a simulation, a selective analysis from a biological perspective and a leave-100-out 
-    cross-validation.
-  
-  Each theme has its own limitations. \\
-  There are various expansion options and points of criticism for the simulation, which in 
-    particular revolve around the question of how well we can simulate our real data. We dedicate 
-    this question to the subsection \ref{sec:discussion - simulation}. \\
-  Above all, the 'biological view' gives a first impression of the credibility of the results. But 
-    he can not make any statistical statements. Here the interested researcher may have to analyze 
-    the subtrees of relevant to him for himself. \\
-   Of course, cross-validation can be expanded. With more computing power, a leave-1-out cross 
-    validation could also be performed. However, our result on this point yields a strong result 
-    with 98.17\% correct prediction that this does not seem necessary. \\
-  One last limitation also exists in the data situation itself. We have pointed out in various 
-    sections that we have a strong multifurcation and only a few data about leaf node states. In 
-    figure \ref{fig:influence of unknown data} you can see how the predictive power can improve if 
-    we have more data available. We discuss this point in section 
-    \ref{sec:discussion - data situation}.
+  In the first part of this work, we were able to provide the proof of concept for the Sankoff 
+    algorithm to perform an ancestral state reconstruction of the present Eukaryota tree. In the 
+    following, we will first discuss the data situation and the simulation that led to the selection 
+    of the Sankoff algorithm, and then discuss how significant the result of this reconstruction is.
 
-  % Wieviele Origins haben wir gefunden, was bedeutet diese Zahl? \\
+  We evaluated our ancestral state reconstruction and the relational state prediction using a 
+    leave-100-out cross-validation. In addition, in this chapter, we will take a closer look at some 
+    subtrees and discuss their credibility from a biological perspective.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Data situation} \label{sec:discussion - data situation}
-    The used eukaryotic synthesis tree from OTL \cite{Hinchliff2015} has 241,974 internal nodes and 
+    The used Eukaryota synthesis tree from OTL \cite{Hinchliff2015} has 241,974 internal nodes and 
       293,463 leaf nodes. In addition, we could specify 25,962 parasitic and 34,860 free-living 
       species from GloBI \cite{Poelen2014}. \\
     This gives us a high number of missing internal nodes (high multifurcation) and a low number of 
-      node states of the leaf nodes. In table \ref{table:percentage loss information subtrees} we have 
-      written down this percentage including some subtrees. \\
+      node states of the leaf nodes in the entire tree.
+    We suspect that this lack of information is not equally distributed in both cases. We conclude 
+      this from various observations.
 
-    The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
-      Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
-    Since the analysis of the tree is not part of this work, it should be mentioned here that, 
-      according to recent findings, this is not complete and we lack some taxa in every rank. For 
-      example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
-      \cite{CavalierSmith1981}. \\
-    In \colorbox{red}{section/page} \pageref{subsec:listPhyla} of the appendix is a list of all phyla. \\
+    For one thing, there were a few subtrees of higher ranks whose information share was much higher. 
+      In the Chordata there is only 66.49\% multifurcation and in the Platyhelminthes only 68.73\% 
+      missing state information. \\
+    Furthermore, we know that OTL is a synthesis of 819 phylogenetic trees. This suggests that just 
+      these parts of the tree are very well resolved and the remainder consists only of the rough 
+      taxonomy. \\
+    \todotext{
+    For a review of this underlying taxonomy, we have compiled a list of all taxa and drawn them in 
+      relation to their distribution (see appendix section \ref{sec:otl analysis}).
+    The number of nodes in the tree corresponding to a taxonomic rank is tabulated. \\
+    For the classical taxonomic ranks phylum, class, order, family, genus xyz is found (appendix 
+      \ref{sec:otl analysis}). \\
+    A closer look is taken at some of the features of the synthesis tree on the one hand the 
+      distribution of the taxa and on the other the distribution of the nodes on the taxa. Since 
+      this is \colorbox{red}{not directly relevant} for this study, this section has been moved to 
+      the appendix \ref{sec:otl analysis}.}
 
-    Also, the global database is not infallible. We found out (section \colorbox{red}{x}) that there is some 
-      misinformation. \\
-    We are able to report some of these directly to Globi.
+    % The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
+    %   Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
+    % Since the analysis of the tree is not part of this work, it should be mentioned here that, 
+    %   according to recent findings, this is not complete and we lack some taxa in every rank. For 
+    %   example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
+    %   \cite{CavalierSmith1981}. \\
+    
+    From GloBI we got very little information about leaf node states compared to their number in the 
+      Eukaryota tree. Nevertheless, the prediction of leave-100-out cross-validation was very good. 
+      This also leads to the conclusion that the information is very clustered.
 
-    We found also 57,352 (not distinct!) source species and 809,993 (not distinct!) target species 
-      without OTT indentifyers. Since we currently use only OTT indentifyers, we could not use this information. \\
-    At this point there is thus the possibility to use more of the existing data, if one performs a 
-      matching with the other indentifyers.
+    As a last point, we would like to cite the modeling of the missing information. The fact that this 
+      is getting better, the lower ordered taxa (smaller subtrees) we are looking at, also suggests a 
+      high variability of the data.
+
+    We would like to mention a few other aspects of the GloBI database here. \\
+    Of course, such large data sets are flawed. We found some misinformation and were able to report 
+      some of these directly to GloBI. \\
+    We also found that there is some unused information in GloBI. We therefore found some more source 
+      species and target species without OTT identifiers. Since we currently use only OTT 
+      identifiers, we could not use this information. At this point there is thus the possibility to 
+      use more of the existing data, if one performs a matching with the other identifiers.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Simulation} \label{sec:discussion - simulation}
+    The aim of the simulation is to test the influence of various unknown or uncertain parameters on 
+      some selected algorithms in order to test the credibility of the prediction of these for the 
+      given problem.
 
-\todo{einbauen....}
-  As mentioned above, in an ancestral state reconstruction, transitions are minimized, with 
-  transition probabilities playing a role. \\
-\colorbox{red}{This subsection deals with} these transition probabilities from free-living (hereinafter / as a 
-  formula FL) to parasitic (hereinafter P) and vice versa: $\mathcal{P}(FL \rightarrow P)$, 
-  $\mathcal{P}(P \rightarrow FL)$. \\
-Different parasite types have different transition probabilities. It is very difficult to make a 
-  statement about these probabilities. It is generally assumed in this work that there are 40\% 
-  parasites and 60\% free-livings which is based on the estimates by Windsor \cite{Windsor1998} 
-  and $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$, as a result of the 
-  diversity of parasites and the lack of general determinations for this. These parameters are 
-  debated in subsection \ref{sec:discussion - transition probabilities} of the discussion. \\
+    We assume that different parasite types have different transition probabilities. It is therefore 
+      difficult to establish a common distribution across the Eukaryota tree. \\
+    Based on the estimates of Windsor \cite{Windsor1998}, we have assumed a distribution of 40\% 
+      parasites to 60\% free-livings in this work. As a result of the diversity of parasites and the 
+      lack of generalizations, we have generally stated that 
+      $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$. But it is also reasonable to 
+      assume that in general $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because 
+      a reverse mutation is usually less likely. However, one would have to determine how much this 
+      difference is and thus discuss another parameter.
+    
+    In the simulation, we found that this combination has a significant influence on the predictive 
+      power of the algorithms. \\
+    We have adapted the combination of distributions and threshold to a high probability of achieving 
+      the given proportions on initial attempts. However, this means that we prefer high transition 
+      probabilities for both transitions and thus the simulated trees have a large number of 
+      transitions. It can be assumed that this may not correspond to the real data and thus means a 
+      limitation of our simulation. Further we assume that with less number of state changes, the 
+      predictive power of both algorithms would be even better, thus this limitation is probably not 
+      very restrictive. \\
+    At this point it would be possible to test other distributions with equal threshold values. this 
+      would be more computationally expensive, but would result in fewer transitions.
 
-  However, the used castor package \cite{Louca2017} offers the possibility to enter different 
-  transition probabilities.
+    % With these further simulations you could find out if the issue of distributions plays a big role. 
+    %   Conversely, one could estimate possible distributions based on the data location in the tree. 
+    %   However, this is likely to be very difficult given the poor data. For this reason, we have 
+    %   decided in this work to accept very general values and not to speculate much. \\
 
-  Wieviele Übergänge gab es dabei? Hast du die gleich (ähnlich groß) gehalten?
-  Der Anteil von Parasiten und Freilebenden ist ja nicht gleich der Transition probability. Das sind zwei verschiedene Dinge...auch wenn die Transition probability den Anteil ergibt. 
-  neben dem Anteil der P/FL ist auch die Anzalhl der Übergänge zu berücksichtigen!
-  50/50 kann man in einem Baum mit 1000 nodes mit einem einzigen Übergan erreichen, der die eine Häfte des Baumes ändert.
-  50/50 kann man aber genauso gut mit einem Übergan auf JEDER edge erreichen. Dann würde sich immer ein P mit einem FL knoten abwechselnn....
+    The used castor package \cite{Louca2017} offers the possibility to enter different transition 
+      probabilities, so with information about these probabilities, you might be able to improve the 
+      prediction here.
 
-... für die Diskussion!
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Biological view}
+    To analyze the results, we have selected some phyla (subtrees) to evaluate our results selectively 
+      from the biological point of view: Chordata, Nematoda, Platyhelminthes and Apicomplexa.
 
-\todo{-----}
+    Several factors such as the distribution of existing input data via parasites and free-livings, 
+      faulty input data from GloBI and reinforcement of errors by multifurcation play an important 
+      role which becomes evident in these examples.
 
-    The aim of the simulation is to test the influence of various unknown or unsafe parameters in 
-      order to test the credibility of the prediction. \\
-    Some of these influences could not be tested: Firstly, the distribution of parasites and 
-      free-livings in the tree produces various parameters that we could not test all (see subsection 
-      \ref{sec:discussion - transition probabilities}) and, secondly, we discuss the simulation of a 
-      phylogenetic tree on which the evaluation based on certain parts (see subsection 
-      \ref{sec:discussion - simulate phylogeny}).
+    The accuracy of our results stands and falls with the presence and the correctness of the data of 
+      GloBI. Errors of incorrect input data can be amplified by incorrect prediction of unknown 
+      species and can be reversed in order to improve the data situation of GloBI. \\
+    Since we look at such large trees we can not expect to know all the parasites, so we look at 
+      individual positives. They are positive in the sense that the majority have the opposite state.
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Transition probabilities} \label{sec:discussion - transition probabilities}
-      We assume that different parasite types have different transition probabilities. Establishing a 
-        common distribution across the eukaryotic tree is therefore difficult. \\
-      Based on the estimates of Windsor \cite{Windsor1998}, we have assumed a distribution of 40\% 
-        parasites to 60\% free livings in this work. As a result of the diversity of parasites and the 
-        lack of generalizations, we have generally stated that 
-        $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$. But it is also reasonable to 
-        assume that in general $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because 
-        a reverse mutation is usually less likely. However, one would have to determine how much this 
-        difference is and thus discuss another parameter. \\
-      
-      In the simulation, we tested different beta distributions with different thresholds and found that 
-        this combination has a considerable influence on the predictive power of the algorithms. \\
-      At this point it would be possible to test other distributions with equal threshold values or 
-        different threshold values with equal distributions. \\
-      However, if you choose a strong free-living distribution and balance it with the threshold to 
-        achieve a 40:60 parasite free-living distribution, for example, this could be very 
-        computationally expensive. \\
-      
-      With these further simulations you could find out if the issue of distributions plays a big role. 
-        Conversely, one could estimate possible distributions based on the data location in the tree. 
-        However, this is likely to be very difficult given the poor data. For this reason, we have 
-        decided in this work to accept very general values and not to speculate much. \\
+    In contrast to the other phyla examined, the phylogeny in the Chordata is more pronounced (less 
+      multifurcation). This leads to a lower variance of errors, which is reflected in the results. 
+      There are 18 parasites as input data and only 8 more are predicted. The Chordata mostly consist 
+      of free-living species, so this seems believable. We started with 99.83\%  species and predict 
+      99.97\% species as free-living (including already known nodes). \\
+    For a detailed view we have created and described a tree with all known and predicted parasites 
+      (see appendix \ref{sec:parasites in chordata}).
 
-    %---------------------------------------------------------------------------------------------------
-    %---------------------------------------------------------------------------------------------------
-    \subsection{Simulation of a phylogeny} \label{sec:discussion - simulate phylogeny}
-      In our simulation, we start with the simulation of a phylogeny and then depict our data situation. \\
-      For this first step we use the \textit{randomized()} function of the phylo package from biopython
-        \cite{Cock2009}. The question is how close is such a randomized tree to a phylogeny. \\
-      
-      The problems that can arise are that different species develop at different rates. This means that 
-        there could be sections in the tree with many branches (for example, subtrees of unicellular 
-        species), ie with high depths and opposite sections (of very complex species, for example). It 
-        can thus be assumed that the tree is not balanced. \\
-      For more precise statements, one would have to take deeper undercurrents, which was not possible 
-        in the context of this work.
+    The Apicomplexa are a parasitic phylum. We found only one input organism: \textit{Stemonitis fusca} 
+      as a free-living species. In GloBI it is listed as being parasitized by Nectria candicans and 
+      Nectriopsis sporangiicola\footnote{
+        \hyperlink{https://www.globalbioticinteractions.org/?interactionType=parasiteOf&targetTaxon=Stemonitis\%20fusca}
+        {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca}
+      }. The algorithm has not predicted new free-livings.
 
+    Most species of Platyhelminthes (flatworms) are parasites, although there are also free-living, 
+      predatory feeding species. These are summarized in the Turbellaria, while the parasites are 
+      divided into three other classes \cite{Ax1961}. This also corresponds to our observations. There 
+      is one class (Rhabditophora) that contains all but one single exception of free-living species 
+      of this phylum, which includes the Turbellaria. \\
+    It should be noted, however, that this classification is outdated, as it has been proven that 
+      the Turbellaria are not monophyletic. But we will not go into detail here. \\
+    For the Platyhelminthes we have more state information for the leaf nodes compared to the other 
+      considered subtrees. We start with 0.1\% free-livings and predicted 0.77\% as free-living 
+      species.
 
-      \todotext{It should be noted that we have optimized the distributions to the proportions and thus the number of state changes will be relatively high. With a smaller number of state changes, the predictive power of both algorithms would be even better.}
-      % transition probability
+    With the Nematoda it looks more complicated. Large parts of Nematoda are free-living, but we 
+      found only 5.32\% of them. Blaxter and Koutsovoulos estimate the order of 25,000 parasites in 
+      the Nematoda and and speak of at 18 independently arosen parasites in Nematoda 
+      \cite{Blaxter2015}. \\
+    % The problem at this point, however, is: Hallan speaks of the fact that only 23,000 species are 
+    %   described by the Nematoda but it is assumed that one million or more species are in this 
+    %   phylum.\footnote{J. Hallan, unpublished; 
+    %     \hyperlink{https://insects.tamu.edu/research/collection/hallan/}
+    %     {https://insects.tamu.edu/research/collection/hallan/}
+    %   }. \todo{Link ist nicht erreichbar!} 
+    We assume that the parasites have been much more studied and thus we start with only 0.63\% 
+      free-living species. Against such a shifted data situation, the algorithm is almost powerless to 
+      make correct predictions. And yet the percentage has increased to 5.34\%. \\
+    The root node of the Nematoda is predicted as a parasite and so we got 11 losses of parasitism 
+      and only 2 origins in this phylum. If we assume that the root node of Nematoda is free-living, 
+      then some losses would have to turn around and become Origins. So it could be that we end up 
+      with a similar size as Blaxter and Koutsovoulos \cite{Blaxter2015}.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -1268,18 +1202,19 @@ Different parasite types have different transition probabilities. It is very dif
   \section{Conclusion}
 
     From the simulation, we can conclude that we predict correctly about 60\% of the nodes in the 
-      present data situation (see section \ref{sec:results - simulation}).
-    The leave-100-out cross-validation even showed that we predict the omitted nodes to be 98.17\%  
-      percent correct (see section \ref{sec:results - cross-validation}). \\
+      present data situation. The leave-100-out cross-validation even showed that we predict the 
+      omitted nodes to be 98.17\% percent correct. \\
     This allows for the assumption that the data is grouped and not uniformly distributed and thus 
       smaller subtrees are present in which data are to be found in the simulation with smaller 
-      multifurcation and smaller value for unknown nodes. This is also confirmed by our biological 
-      analysis of the Chordata subtree (see subsection \ref{subsec:results - statistics on predicted states}). \\
+      multifurcation and smaller value for unknown nodes. This is also confirmed by our statistical 
+      and biological analysis of the considered subtrees: Chordata, Nematoda, Platyhelminthes and 
+      Apicomplexa. \\
     However, this means that the ancestral states' data in the direction of root node are probably 
-      particularly unbelievable. Which makes the localization of Origins direction root node 
-      difficult. The question remains, how much this affects the estimation of the number of origins. 
-      Our comparison with the paper from Weinstein and Kuris \cite{Weinstein2016} (see subsection 
-      \ref{subsec:results - statistics on predicted states}), however, leaves us with optimism.
+      particularly unbelievable. This makes the localization of origins in the direction of the root 
+      node difficult. The question remains, how much this affects the estimation of the number of 
+      origins. Our comparison with the paper from Weinstein and Kuris \cite{Weinstein2016} an with
+      Blaxter and Koutsovoulos \cite{Blaxter2015} showed similar numbers of origins in some subtrees, 
+      which leaves us with optimism.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -1306,6 +1241,8 @@ Different parasite types have different transition probabilities. It is very dif
       \label{fig:BigWorkflow}
     \end{figure}
 
+\newpage
+
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{OTL analysis}\label{sec:otl analysis}
@@ -1327,23 +1264,15 @@ Different parasite types have different transition probabilities. It is very dif
       Tracheophyta ebenfalls nicht. \\
 
     %---------------------------------------------------------------------------------------------------
-    \subsubsection{Distribution of Taxa}
-    - In the tree we can distinguish 28 different Taxa with the OTL taxonomic tree. \\
-    - The most of them are hardly represented. The major taxonomic groups are: ... \\
-    - Here \colorbox{red}{you} can see some characteristics of the Multifurcation of the tree. \\
+    \subsection{Distribution of Taxa}
+    In the tree we can distinguish 28 different Taxa with the OTL taxonomic tree.
     \begin{figure}[h!]
       \centering
       \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
       \caption{Distribution of Nodes in Rank-Cathegories}
       \label{fig:taxaTable2}
     \end{figure}
-    In a phylogeny, the taxonomic division of the tree is far too coarse, meaning that there should 
-      be more subtaxa or 'unranked' nodes. But the closer we get to the root, the more the pure
-      taxonomic tree is reflected. If the tree are binary, the taxa would have to double. But the 
-      multipliers for some are much bigger and for others much smaller, which \colorbox{red}{you} can see in in figure 
-      \ref{fig:taxaTable2}. \\
-      ... (see table \ref{table:...})
-    
+
     \begin{table}[h!]
       \begin{center}
         % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
@@ -1398,11 +1327,11 @@ Different parasite types have different transition probabilities. It is very dif
     extended leaf nodes (real leaf nodes)
 
   %---------------------------------------------------------------------------------------------------
-  \subsubsection{Distribution of data in the taxa}
+  \subsection{Distribution of data in the taxa}
     Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
       zugeteilt (see table \ref{table:...}). \\
 
-    \begin{table}[h]
+    \begin{table}[h!]
       \begin{center}
         \begin{tabular}{ |l|r|l|r|r| }
           \hline
@@ -1426,7 +1355,8 @@ Different parasite types have different transition probabilities. It is very dif
           & & Chaetognatha & 360 & 7 \\
           & & Hemichordata & 196 & 5 \\ 
           & & Cycliophora & 11 & 5 \\ 
-          % 1465207-(1170539+106650+80022+27141+24564+14878+11737+10654+8631+3093+1793+1654+1596+1055+633+360+196+11) = 0          \hline
+          % 1465207-(1170539+106650+80022+27141+24564+14878+11737+10654+8631+3093+1793+1654+1596+1055+633+360+196+11) = 0
+          \hline
           Fungi & 254 871 & Ascomycota & 157 045 & 19 \\ 
           & & Basidiomycota & 92 931 & 18 \\
           & & Microsporidia & 1 949 & 6 \\ 
@@ -1443,5 +1373,37 @@ Different parasite types have different transition probabilities. It is very dif
         \label{table:...} 
       \end{center}  
     \end{table}
+
+  %---------------------------------------------------------------------------------------------------
+  %---------------------------------------------------------------------------------------------------
+  \section{Parasites in Chordata} \label{sec:parasites in chordata}
+
+    \begin{figure}
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
+      \caption{Parasites of Phylum: Chordata. \\
+        All parasite data of the chordata are mapped into a rough taxonomy (phylum, class, order, 
+          family) in order to understand their distribution and affiliation. \\
+        The internal nodes are the wanted taxa from OTL (with the addition of \# input parasites to 
+          $\rightarrow$ \# predicted parasites). \\
+        The leaf nodes are the input parasites (green) and the predicted parasites (white $\rightarrow$ 
+          green).}
+      \label{fig:ChordataParasites}
+    \end{figure}
+
+    We mapped the few parasitic species in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
+    Known parasitic birds belong to the order Sauria. Here we know from Rothschild here that are 
+      breeding parasites, like the cuckoo and clepto-parasites as the skuas \cite{Rothschild1957}. We
+      got 6 input parasites from GloBI and there are no predictions: A woodpecker - 
+      \textit{Sphyrapicus varius} and a duck - \textit{Aix sponsa}, a cow bird - \textit{Molothrus ate} 
+      known as broodparasite and some others. \\
+    An example of the amplification of mistakes here are the carp. There is a paper from which GloBI 
+      concludes: Grass carp (\textit{Ctenopharyngodon idella)} has Pathogen common carp 
+      (\textit{Cyprinus carpio})\footnote{
+        \hyperlink{https://www.globalbioticinteractions.org/?interactionType=hasParasite&targetTaxon=Cyprinus\%20carpio}
+        {https://www.globalbioticinteractions.org/?interactionType=hasParasite\&targetTaxon=Cyprinus\%20carpio}
+      }. Since there is hardly any information about free-living, it follows that all siblings are 
+      also predicted to be parasitic.
+
 
 \end{document}
