@@ -59,9 +59,9 @@
 
   We estimate the accuracy of our maximum parsimony based predictions using cross-validation and 
     simulation at 60-80\% overall, while strongly varying between clades. The cross-validation 
-    results in an accuracy of 98.17\% which is explained by the fact that the data are not uniformly 
+    results in an accuracy of 98.17\% which is explained by the fact that the data is not uniformly 
     distributed. We describe this variation across taxa as associated with available state and 
-    topology information. We compare our results with several smaller scale studies, which used 
+    topology information. We compare our results with several smaller scale studies which used 
     manual expert curation and conclude that computationally inferred state changes largely agree in 
     number and placement with those. In clades in which available state information is biased 
     (mostly towards parasites, e.g. in Nematodes) phylogenetic prediction is bound to provide 
@@ -85,7 +85,7 @@
   % So far, especially small scale or highly manual studies have been carried out. In this scale, it 
   %   requires different data sources to be interconnected. \\
   % We performed an analysis of existing algorithms and selected a Sankoff maximum parsimony algorithm 
-  %   using the R package \textit{Castor} \cite{Louca2017}. \\
+  %   using the R package \textit{castor} \cite{Louca2017}. \\
   % Nevertheless, the results are convincing and even though this is a purely computational approach 
   %   which did not include human experts input, results coincide with prior knowledge. Also regarding 
   %   the number of events, our estimates coincide with previous results by human experts, e.g. the 
@@ -105,66 +105,44 @@
     \cite{Hinchliff2015} to predict parasitism in Eukaryota.
 
   For about 50 years, people have been working on ancestral state reconstruction, the inference of 
-    evolution that leads to the given data. \\
-  One of the first papers was written by Camin and Sokal, who in 1965 were working on algorithms for 
-    discrete-state data \cite{Camin1965}. Different methods have been developed and the question is 
-    which method is the most suitable for the problem at hand: the ancestral state reconstruction 
-    for a huge non-binary tree with two discrete states.
-  
+    evolution that leads to the given data. One of the first papers was written by Camin and Sokal, 
+    who were working on algorithms for discrete-state data in 1965 \cite{Camin1965}. Different 
+    methods have been developed and the question is which method is the most suitable for the 
+    problem at hand: the ancestral state reconstruction for a huge non-binary tree with two discrete 
+    states.
 
-% The first methods were only brute force \cite{Camin1965} 
-%   Next came a set of parsimony algorithms such as: Fitch-parsimony \cite{Fitch1971}, 
-%   Wagner-parsimony \cite{Swofford1987} ... \todo{weitere?}. \\
-%   With more and more data, there is now the possibility to use more information to calculate the 
-%   probabilities of the ancestral states. In addition to the states of the leafs, algorithms could 
-%   also use branch lengths. The likelihood based algorithms came more in interest. \\
+  Royer-Carenzi et al. distinguish two major classes of ancestral state reconstruction methods: The
+    first is maximum parsimony: explain the current state with the least number of state changes 
+    between the child and its ancestor. The other class they present describes the modeling of 
+    character evolution as a stochastic process and uses the likelihoods to compute the possible 
+    ancestral character states. This is generally done with a continuous time Markov model 
+    \cite{RoyerCarenzi2013}.
 
-  Royer-Carenzi et al. distinguish two major classes of ancestral state reconstruction methods: \\
-  The first is maximum parsimony: explain the current state with the least number of state changes 
-    between the child and its ancestor. \\
-  The other class they present describes modeling the character evolution as a stochastic process 
-    and using the likelihoods to compute the possible ancestral character states. This is generally 
-    done with a continuous time Markov model \cite{RoyerCarenzi2013}. \\
-  \todo{Pasqualin et al. unterscheiden noch eine weitere Methode: stochastic mapping...}
-    
-  One of the major disadvantages of parsimony methods is that, unlike likelihood approaches, they 
-    can not take divergence times (branch length) into account. Since the OTL does not include 
-    development times of species, this can not be considered here. \\
-  Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
-    predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
-    like irreversibility of transitions for Dollo parsimony. This problem is unimportant to the 
-    present task because in the analysis of the entire Eukaryota tree only generalized models are 
-    meaningful. \\
-  % Comparing the methods, we find that parsimony are methods in which you can not include information 
-  %   such as branch length (development time of the species). This is also their main disadvantage 
-  %   compared to the more complex likelihood based models. Since there are no branch lengths or other 
-  %   information available for the present relationship tree, and we can thus not take advantage of 
-  %   the other models. \\
-  The comparison of methods gives us the maximum parsimony method as the simplest and fastest method 
-    that meets all our requirements.
-  % Parsimony-based methods are used in this work, since they are fast and fully sufficient for the 
-  %   presented use case here, following the principle of the simpler model first. \\
+  One of the major disadvantages of parsimony methods is that, in contrast to likelihood approaches, 
+    they can not take divergence times (branch length) into account. Since the OTL does not include 
+    development times of species, this can not be considered here. Another problem pointed out by 
+    Royer-Carenzi is that parsimony approaches are either based on predefined parameters 
+    (generalized parsimony) or on strong and often controversial assumptions, like irreversibility 
+    of transitions (Dollo parsimony). This problem is unimportant to the present task because in the 
+    analysis of the entire Eukaryota tree only generalized models are meaningful. The comparison of 
+    methods gives us the maximum parsimony method as the simplest and fastest method that meets all 
+    our requirements.
 
   Felsenstein \cite{Felsenstein2003} discusses in his book two parsimony algorithms that generalize 
     previous methods (from Camin and Sokal \cite{Camin1965}, Farris \cite{Farris1970} and others): 
     Fitch parsimony \cite{Fitch1971} and Sankoff parsimony \cite{Sankoff1975}. Therefore, these are 
-    the methods used in this work. \\
-  % \anmerkungstext{Unter Farris war auch noch der Begriff Wagner trees in gebrauch, als 
-  %   Verallgemeinerung der parsimonious trees von Camin und Sokal. (Lydia)} \\
-  % \todo{Wagner-parsimony \cite{Swofford1987}} \\
-   For Fitch, the algorithm has been extended from binary to non-binary trees. For the Sankoff 
-    algorithm, Louca and Doebeli have presented an implementation for non-binary trees published in 
-    an R package named \textit{castor} \cite{Louca2017}.
+    the methods used in this work. For Fitch, the algorithm has been extended from binary to 
+    non-binary trees. For the Sankoff algorithm, Louca and Doebeli have presented an implementation 
+    for non-binary trees published in an R package named \textit{castor} \cite{Louca2017}.
 
   For an ancestral reconstruction on the phylogeny of Eukaryota, we use Open Tree of Life (OTL) 
-    \cite{Hinchliff2015}. \\
-  Phylogeny describes the evolution of species, while the taxonomy is a classification according to 
-    certain criteria in so-called taxa. \\
-  OTL is a comprehensive, dynamic and digitally available tree of life constructed from published 
-    phylogenetic trees along with a backbone of taxonomic data. Besides this, Hinchliff et al. also 
-    offer an OpenTreeOfLife-Taxonomy (OTT) with the help of which we identify the individual nodes. \\
-  It follows that the biggest 'phylogenetic tree' is this synthesis of phylogenetic trees filled 
-    with a taxonomic trees given by OTL.
+    \cite{Hinchliff2015}. Phylogeny describes the evolution of species, while the taxonomy is a 
+    classification according to certain criteria in so-called taxa. OTL is a comprehensive, dynamic 
+    and digitally available tree of life constructed from published phylogenetic trees along with a 
+    backbone of taxonomic data. Besides this, Hinchliff et al. also offer an OpenTreeOfLife-Taxonomy 
+    (OTT) with the help of which we identify the individual nodes. It follows that the biggest 
+    'phylogenetic tree' is this synthesis of phylogenetic trees filled with a taxonomic trees given 
+    by OTL.
 
   For these large phylogenetic synthesis trees, however, ancestral state reconstruction has so far 
     only been done for Bacteria and Archaea for binary traits by Goberna and Verdú \cite{Goberna2015}.
@@ -173,55 +151,46 @@
 
   The present tree structure of OTL is not binary but multifurcated, meaning that each node has
     multiple ($n > 2$) children or in other words its degree, number of adjacent nodes, is greater 
-    than 3 \cite{Felsenstein2003}. \\
-  Parsimonious in phylogeny refers to favoring the tree that needs the least evolutionary change to 
-    explain the observed data. Maximum parsimony methods have been developed for phylogenies, which 
-    are usually depicted as binary trees. Therefore, the selected parsimony methods are not directly 
-    applicable, as they were specifically applied to much smaller subtrees, where all splits are 
-    known. \\
-  We will extend and test the existing maximum parsimony algorithms of Fitch \cite{Fitch1971} and 
-    Sankoff \cite{Sankoff1975} for this task and estimate their predictive power. 
+    than 3 \cite{Felsenstein2003}. Parsimonious in phylogeny refers to favoring the tree that needs 
+    the least evolutionary change to explain the observed data. Maximum parsimony methods have been 
+    developed for phylogenies, which are usually depicted as binary trees. Therefore, the selected 
+    parsimony methods are not directly applicable, as they were specifically applied to much smaller 
+    subtrees, where all splits are known. We will extend and test the existing maximum parsimony 
+    algorithms of Fitch \cite{Fitch1971} and Sankoff \cite{Sankoff1975} for this task and estimate 
+    their predictive power. 
 
-  The Sankoff method is implemented by Louca et al. for the non-binary case and is available as an R 
-    package called \textit{Castor} \cite{Louca2017}. \\
   Note, the original Fitch algorithm has the sole purpose of minimizing the number of transitions 
-    and not reconstructing the ancestral nodes. Felsenstein \cite{Felsenstein2003} describes a 
-    simple extension for the reconstruction. In this work, the algorithm extended to reconstruction 
-    is adapted to multifurcated trees, based on the critical reevaluation of this extension by 
-    Cunningham et al. \cite{Cunningham1998}.  
-  % In addition, we have implemented the Fitch 
-  %   method \cite{Fitch1971} \todo{hier vll die andere quelle nutzen nach der wir uns gerichtet haben?}and adapted it for multifurcated trees. \\% to make it usable and comparable for our current problem.
-  % This achieves that we can predict ancestral states and unknown states of living species for large 
-  %   non-binary trees.
+    and not the reconstruction of the ancestral nodes. Felsenstein \cite{Felsenstein2003} describes 
+    a simple extension for the reconstruction. In this work, the algorithm extended to 
+    reconstruction is adapted to multifurcated trees, based on the critical reevaluation of this 
+    extension by Cunningham et al. \cite{Cunningham1998}.
 
-  To accomplish this task, next to the phylogenetic tree information about the current species' 
-    states is needed. \\
-  Most of the largest interaction databases are offline or outdated. For example: IWDB (Interaction 
+  To accomplish this task, information about the states of the current species is needed in addition 
+    to the phylogenetic tree.  Most of the largest interaction databases (e. g. IWDB (Interaction 
     Web Database) \cite{IWDB2003}, Webs on the Web \cite{WOW2004}, Animal Diversity Web 
-    \cite{Myers2003} and ecoweb \cite{Cohen2010}. \\
-  We use the interaction database Global Biotic Interactions (GloBI) \cite{Poelen2014} because it is 
-    including most of the known databases and is still growing actively \cite{Poelen2014}. \\
-  The data in GloBI are stored as interactions e.g.  species A parasitize species B. From this we 
-    conclude that species A is parasitic and species B free-living. \\
-  From this data, we could specify $\sim$2.3 million leaf nodes 34,860 as free-living and 25,962 
-    as parasitic. 
+    \cite{Myers2003} and ecoweb \cite{Cohen2010}) are offline or outdated. We use the interaction 
+    database Global Biotic Interactions (GloBI) \cite{Poelen2014} because it is including most of 
+    the known databases and is still growing actively \cite{Poelen2014}. The data in GloBI is stored 
+    as interactions e.g. species A parasitizes species B. We conclude that species A is parasitic 
+    and species B free-living. From this data, we could specify $\sim$2.3 million leaf nodes 34,860 
+    as free-living and 25,962 as parasitic. 
 
   There are many different ways to define parasitism. Since we use GloBI to classify species, we use 
-    their definition of parasitism. Again, in GloBi, Ontobee definitions are used \cite{Xiang2011}. \\
-  The interaction \textit{has parasite} is defined as: "An interaction relationship between two 
+    their definition of parasitism. In GloBi, Ontobee definitions are used \cite{Xiang2011}. The 
+    interaction \textit{has parasite} is defined as: "An interaction relationship between two 
     organisms living together in more or less intimate association in a relationship in which 
     association is disadvantageous or destructive to one of the organisms."\footnote{
       \hyperlink{http://www.ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
       {ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO\_000244}; Last checked: 22.03.2018.
     }. This definition includes: ecto- and endoparasites, parasitoids, kleptoparasites and pathogens. \\
 
+
   The objectives of this work are the following points: (1) Find a suitable ancestral state 
-    reconstruction method. (2) Accomplish reconstructing on the Eukaryota synthesis tree of OTL. \\
-  The goal of Point 1 is to evaluate the possible methods based on a simulation of our data 
-    situation. \\
-  The Sankoff algorithm implemented by Louca et al. is the best in our comparisons. Therefore, 
-    point 2 consists of reconstructing the ancestral states and predicting the unknown leaf states 
-    with the aid of this algorithm. And then perform an evaluation of the results. \\
+    reconstruction method. (2) Accomplish reconstruction on the Eukaryota synthesis tree of OTL. The 
+    goal of point 1 is to evaluate the possible methods based on a simulation of our data situation. 
+    The Sankoff algorithm implemented by Louca et al. is the best in our comparisons. Therefore,
+    point 2 consists of reconstructing the ancestral states, predicting the unknown leaf states with 
+    the aid of this algorithm and perform an evaluation of the results.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -435,8 +404,9 @@
     % | 88.37 % | 88.37 % | 88.4 % |88.39 % |
 
     %---------------------------------------------------------------------------------------------------
-    \subsubsection{Sankoff}
-      Maximum parsimony algorithm from Sankoff implemented in the R package castor \cite{Louca2017}.
+    %---------------------------------------------------------------------------------------------------
+    \subsection{Sankoff maximum parsimony}
+      Maximum parsimony algorithm from Sankoff implemented in the R package \textit{castor} \cite{Louca2017}.
         From this the function \textit{$hsp\_max\_parsimony()$} is used with default settings including
         $transition\_costs="all\_equal"$. \\
 
@@ -447,7 +417,7 @@
     The simulation compares these different ancestral state reconstruction algorithms with each 
       other. \\
     First different implementations of the Fitch maximum parsimony are compared and then the best of 
-      them is compared with the implementation of the Sankoff algorithm of the \textit{Castor} package 
+      them is compared with the implementation of the Sankoff algorithm of the \textit{castor} package 
       \cite{Louca2017}.
 
     \begin{figure}[h!]
@@ -563,7 +533,7 @@
   \section{Implementation}
     The complete code is located on GitHub: 
       \hyperlink{github.com/Irallia/IZW-HU-Parasites}{github.com/Irallia/IZW-HU-Parasites}. \\
-    Most of the code is written in Python, the analyzes and the use of the Castor package in R. Some 
+    Most of the code is written in Python, the analyzes and the use of the \textit{castor} package in R. Some 
       shell scripts are used to execute whole workflows.
 
 %---------------------------------------------------------------------------------------------------
@@ -1125,7 +1095,7 @@
     %   However, this is likely to be very difficult given the poor data. For this reason, we have 
     %   decided in this work to accept very general values and not to speculate much. \\
 
-    The used castor package \cite{Louca2017} offers the possibility to enter different transition 
+    The used \textit{castor} package \cite{Louca2017} offers the possibility to enter different transition 
       probabilities, so with information about these probabilities, you might be able to improve the 
       prediction here.
 
