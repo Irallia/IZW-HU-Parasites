@@ -33,7 +33,7 @@ digraph G {
 
 	c0 [label = "known - unknown data"]
 	c1 [label = "extract heights \n and depth"]
-	c2 [label = "extract nr of children \n (multifurcations)"]
+	c2 [label = "extract no of children \n (multifurcations)"]
 	c3 [label = "regressionanalysis"]
 
 	subgraph cluster_3 {
@@ -73,7 +73,7 @@ digraph G {
 	f0 [label = "Biological view"]
 	f1 [label = "Origins and Losses"]
 	f2 [label = "Cross evaluation - leave 100 out"]
-	f3 [label = "Evaluation of the Simulation"]
+	f3 [label = "evaluate the Simulation"]
 
 	a1 -> e0;
 	a1 -> f2;

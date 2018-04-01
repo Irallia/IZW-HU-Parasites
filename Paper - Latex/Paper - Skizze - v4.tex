@@ -197,8 +197,9 @@
 %---------------------------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Aims}
-  The aim of this thesis is the application of maximum parsimony algorithms to non-binary trees and 
-    very large data sets to predict unknown leaf node states. \\
+  The primary objective of this thesis is the application of maximum parsimony algorithms to 
+    non-binary trees and very large data sets to predict unknown leaf node states.
+
   We discuss different ancestral state reconstruction methods and test the most appropriate ones on 
     our data. Hereby, we want to find out how far it is possible to use the Open Tree of Life (OTL) 
     to expand available information via phylogenetic trait prediction. As a basis for known states, 
@@ -207,10 +208,10 @@
     reconstruction and predict states for over $\sim$2.3 million (97.34\%) leaf nodes without state 
     information.
 
-  In order to generate a realistic simulation, influencing parameters are investigated. \\
-  Since the transitions are minimized in an ancestral state reconstruction, this is an important 
-    parameter to consider. On the other hand, the completeness of our input data is an influencing 
-    value. Therefore, two major types are distinguished:
+  In order to generate a realistic simulation, influencing parameters are investigated. Since the 
+    transitions are minimized in an ancestral state reconstruction, this is an important parameter 
+    to consider. On the other hand, the completeness of our input data affects our data enormously.
+    Therefore, two major types are distinguished:
   \begin{enumerate}
     \item Biological parameters (a result of the evolutionary process):
       \begin{itemize}
@@ -229,19 +230,17 @@
 %--------------------------------------------------------------------------------------------------- 
 \chapter{Methods}
   In this thesis, a maximum parsimony algorithm is applied to the Eukaryota tree to obtain an 
-    ancestral state reconstruction of free-living versus parasite states. \\
-  This chapter is divided into the following sections: the description of the data sources 
-    (section \ref{sec:methods - data sources}) used and the analysis of these data as a preparation 
-    for the simulation (section \ref{sec:methods - metadata analysis}). A description of the 
-    analyzed methods for the ancestral state reconstruction (section 
-    \ref{sec:methods - ancestral state reconstruction}) and then an explanation of how they fit the 
-    problem at hand (section \ref{sec:methods - simulation}). And at the end, the real data analysis 
-    with the Sankoff method (section \ref{sec:methods - real data analysis}). \\
-  Figure \ref{fig:workflow} briefly outlines these relationships. A more detailed view of the 
-    workflow can be found in the appendix \ref{fig:BigWorkflow}.
+    ancestral state reconstruction of free-living versus parasite states. This chapter is divided 
+    into the following sections: the description of the used data sources and the analysis of these 
+    data as a preparation for the simulation. A description of the analyzed methods for the 
+    ancestral state reconstruction and then an explanation of how they fit the problem at hand. And 
+    at the end, the real data analysis with the Sankoff method. Figure \ref{fig:workflow} briefly 
+    outlines these relationships. A more detailed view of the workflow can be found in the appendix 
+    \ref{fig:BigWorkflow}.
+
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.6\textwidth]{Figures/Workflow-overview.png}
+    \includegraphics[width=0.49\textwidth]{Figures/Workflow-overview.png}
     \caption{The Workflow of the resulting procedure with the following steps: \\
       (1) Retrieve phylogenentic tree data as input for the tree (OTL) and the state information (GloBI).
       (2) Get metadata of these for a realistic simulation of the maximum parsimony algorithms (Fitch \& Sankoff).
@@ -249,7 +248,7 @@
       (4) Evaluation of parameters for the simulation and the ancestral state reconstruction of the real tree.
       (5) Evaluate the accuracy of developed algorithms and choose the best.
       (6) Run the resulting algorithm on the original data.
-      (7) Evaluate and interpret the results. %$\rightarrow$ Origins etc...
+      (7) Evaluate and interpret the results.
     }
     \label{fig:workflow}
   \end{figure}
@@ -261,25 +260,25 @@
     Two types of data are needed for an ancestral state reconstruction: a tree and information about 
       the states.
 
-    For the subsequent analyzes on the Eukaryote tree the database of Open Tree of Life (OTL) is used 
+    The database of Open Tree of Life (OTL) is used for the subsequent analysis of the Eukaryota tree
       (downloaded on 16.02.2018) \cite{Hinchliff2015}. This database gives a synthesis of phylogenetic 
       trees (currently 819 trees) and a taxonomic tree\footnote{
         \hyperlink{https://tree.opentreeoflife.org/about/synthesis-release/v9.1}
         {https://tree.opentreeoflife.org/about/synthesis-release/v9.1}; Last checked: 22.03.2018.
-      }. OTL also  includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}.
+      }. OTL also includes the large phylogenetic database TreeBASE \cite{Hinchliff2015}.
       
     Furthermore the Open Tree Taxonomy (OTT) from OTL is used because it includes most of the known 
       taxonomies and is synthesised by preferring taxonomies that match with available phylogenetic 
-      data. The team from OTL prefer a maximum number of species \cite{Hinchliff2015}, this results 
-      in the synthesis between taxonomy and phylogeny.
+      data. The team of OTL prefers a maximum number of species \cite{Hinchliff2015}, this results in 
+      the synthesis between taxonomy and phylogeny.
 
-    For the state information the Global Biotic Interactions database (GloBI) is taken 
-      \cite{Poelen2014} (downloaded on 29.01.2018). \\
-    This database consists of entries of the form: species A (source) interacts with B (target). \\
-    A number of interactions have been identified\footnote{\hyperlink{
-      https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java
-      }{https://github.com/jhpoelen/eol-globi-data/.../InteractType.java}; Last checked: 22.03.2018.}
-      , including those indicating whether the species source or target has become a parasite or a 
+    For the state information the Global Biotic Interactions database (GloBI) is being used
+      \cite{Poelen2014} (downloaded on 29.01.2018). This database consists of interactions: species A 
+      (source) interacts with B (target). A number of interactions has been 
+      identified\footnote{\hyperlink{
+        https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/domain/InteractType.java
+        }{https://github.com/jhpoelen/eol-globi-data/blob/master/eol-globi-lib/src/main/java/org/eol/globi/ \\ domain/InteractType.java}; Last checked: 22.03.2018.
+      }, including those indicating whether the species source or target has become a parasite or a 
       free-living species from the biological perspective. They are the following:
     \begin{itemize}
       \item free-living source: preysOn, eats, flowersVisitedBy, hasPathogen, pollinatedBy, 
@@ -288,10 +287,12 @@
       \item parasite source: parasiteOf, pathogenOf
       \item parasite target: hasParasite, hasPathogen
     \end{itemize}
-    Of these interactions, e.g. species A parasitize species B, the state of the species is 
-      determined, here is species A parasitic and species B free-living. In the case that a parasite 
-      conquers (parasitizes) another parasite yields conflicting states for the second species. 
-      This is solved by preferring parasitic. \\
+
+    Of these interactions (e.g. species A parasitizes species B) the state of the species is 
+      determined (species A is parasitic, species B is free-living). In the case that one parasite 
+      conquers another parasite (parasitizes), conflicting conditions arise for the second species.
+      This is solved by preferring the parasitic state.
+
     For each species known identifiers are stored in GloBI. This includes OTT (the taxonomy of OTL). 
       All species that have stored an OTT identifier and have a matching interaction are divided into 
       two lists: parasites and free-livings.
@@ -302,19 +303,21 @@
   \section{Metadata analysis} \label{sec:methods - metadata analysis}
     Based on the input data, generalized linear models are compared with poisson respectively binomial 
       regression according to their residuals. In order to compare models of different complexity, the 
-      BIC (Bayesian Information Criterion) values are calculated in addition to the residuals. \\
-    There are two different information criteria: AIC (Akaike Information Criteria) and BIC. \\
-    The advantage of the BIC is that the penalty is dependent on the sample size and is therefore 
-      advantageous for large samples. \\
+      BIC (Bayesian Information Criterion) values are calculated in addition to the residuals.
+      
+    There are two different information criteria: AIC (Akaike Information Criteria) and BIC. The 
+    advantage of the BIC is that the penalty is dependent on the sample size and is therefore 
+      advantageous for large samples.
+      
     For all these calculations, the following R functions are  used: \textit{glm()}, \textit{anova()} 
       and \textit{BIC()}.
     % https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
 
     For each node, depth, min, max and mean height are  noted. The node depth is calculated as the
       distance (number of edges) to the root node. The node height is calculated in three different 
-      ways: min, max and mean height refers to the (mininmal, maximal, mean) distance to a leaf node. \\
-    The influence in the modeling of these parameters is tested, additively as well as 
-      multiplicatively to the models.
+      ways: min, max and mean height refers to the (mininmal, maximal, mean) distance to a leaf node.
+      The influence in the modeling of these parameters is tested both additively and multiplicatively 
+      on the models.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -329,54 +332,52 @@
       Based on the work of Cunningham et al. \cite{Cunningham1998} the Fitch method \cite{Fitch1971} 
         is implemented and extended by us for the multifurcated tree case. To understand the 
         differences to the multifurcated case, the algorithm for the binary case is briefly explained 
-        and referred to the extension.
-
-      Input: A rooted, binary tree, with state information in the leaf nodes. Each node is depicted as 
-        a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P). 
-        Internal nodes have three sets, which are empty at the beginning, excluding the root node, it 
-        has only one. Leaf nodes have their state as a set (e.g. \{FL\} or \{P\}, unknown leaf nodes the 
-        union of all possible states (\{FL, P\}).
-
-      The algorithm traverses three times through the tree and fills these sets. \\
-      In each step, two sets are considered and their intersection is formed. There are two cases:
-      \begin{enumerate}
-        \item The intersection is not empty and corresponds to the new set.
-        \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
-      \end{enumerate}
-      First traverse from the leaf nodes to the root: each internal node is formed from its child nodes, 
-        where the only information lies at the beginning. \\
-      Second traverse from the root node to the leafs: each internal node is formed from its parent node 
-        and its sibling node. \\
-      Last traversion (direction does not matter): build the final state for every node. It is formed 
-        from the sets of previous traversals.
-
-      (The original Fitch algorithm is designed to minimize transitions without predicting actual states 
-        of internal nodes, so it is just the first traversal.) \\
-        \begin{wrapfigure}[20]{r}{0.5\textwidth}
+        and referred to the extension. \\
+        \begin{wrapfigure}[17]{r}{0.5\textwidth}
           \centering
           \includegraphics[width=0.4\textwidth]{Figures/Fitch1.png}
           \caption{Fitch algorithm for binary trees. \\
-            The unknown leaf node is described with both states. Computed internal nodes (exclusive the 
-            root node) consists of three sets, where the last set is the final one (bold). \\
+            The unknown leaf node is described with both states. Computed internal nodes (except for the 
+            root node) consist of three sets, where the last set is the final one (bold). \\
             From the second internal node (seen from the root node) there are several possibilities to 
             create the second and third set.}
           \label{fig: binary Fitch}
         \end{wrapfigure}
+      Input: A rooted binary tree with state information in the leaf nodes. Each node is depicted as 
+        a set of states. There are only two states in this thesis, free-living (FL) and parasitic (P).
+        Internal nodes have three sets that are empty at the beginning, except for the root node, which
+        has only one. Leaf nodes have their state as a set (e.g. \{FL\} or \{P\}, unknown leaf nodes 
+        have the union of all possible states (\{FL, P\}).
+
+      The algorithm traverses three times through the tree and fills these sets. In each step, two sets 
+        are considered and their intersection is formed. There are two cases:
+      \begin{enumerate}
+        \item The intersection is not empty and corresponds to the new set.
+        \item The intersection is empty. $\rightarrow$ Build the union of these sets as new set.
+      \end{enumerate}
+      The first traversion goes from the leaf nodes to the root: each internal node is formed by its 
+        child nodes, where the only information lies at the beginning. The Second traversion goes from 
+        the root node to the leafs: each internal node is formed from its parent node and its sibling 
+        node. Last traversion (direction does not matter): the final state is builded for every node. It 
+        is formed from the sets of previous traversals.
+
+      (The original Fitch algorithm is designed to minimize transitions without predicting actual states 
+        of internal nodes, so it is just the first traversal.)
+
       The extension to the non-binary case is quite obvious, but holds some opportunities. In this case, 
-        more than two children may be present for the first traversal, but the intersection or union may 
-        also be formed over more than two sets. Also in the second traversing, there may be several 
-        sibling nodes. However, there are several possibilities here that are all tested and compared 
-        in the simulation. Some of these options are already available in the binary case:
+        more than two children may be present for the first traversal, but the intersection or union can 
+        also be formed over more than two sets. There may also be several sibling nodes in the second 
+        traversing. However, there are several possibilities here that are all tested and compared in 
+        the simulation. Some of these options are already available in the binary case:
       \begin{itemize}
-        \item The parent node has (except for the root node) two state sets, because he came through 
+        \item The parent node has two state sets (except for the root node), because it came through 
           the up-traversing previously. Are both sets used or only the first traversing?
-        \item If there are several siblings, is the cut or union made first of these, or is everything 
-          made directly including the parent node.
+        \item If there are several siblings, the cut or union could made first of these, or directly 
+          including the parent node.
       \end{itemize}
       The first point already has an effect on the binary case. Figure \ref{fig: binary Fitch} shows 
-        both possibilities of the three sets. \\
-      Cunningham uses only the first state set of the parent node \cite{Cunningham1998}. \\
-      From these two points four different versions of Fitch are formed:
+        both possibilities of the three sets. Cunningham uses only the first state set of the parent 
+        node \cite{Cunningham1998}. From these two points four different versions of Fitch are formed:
       \begin{enumerate}
         \item Fitch 1: First state set of parent node; intersection/union of siblings first.
         \item Fitch 2: First state set of parent node; intersection/union of siblings together with parent node.
@@ -387,21 +388,23 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[trim = 24mm 0mm 28mm 14mm, clip, width=\textwidth]{Figures/simulation_fitch_evaluation.png}
-        \caption{Test of Fitch Versions. \todo{beschriften!!}}
+        \caption{Test of Fitch Versions. \\
+          Each point corresponds to a simulation of 100 trees with 10000 leaf nodes for each proportion 
+            (30:70 and 40:60) with equally distributed lack of leaf state information (percentage 
+            unknown). The multifurcation probability per node is calculated with: 
+            $\frac{1}{max~height(node)}$.}
         \label{fig:Fitch versions}
       \end{figure}
-      These four versions are tested in the simulation with 100 trees and 10000 leaf nodes and
-        distributions of 70\% FL to 30\% P and 60\% FL to 40\% P. Figure \ref{fig:Fitch versions} shows 
-        this over all unknown node percentage. \\
-      % At 90\% unknown nodes and 90\% of multifurcation of the internal nodes, version 1 is 89.26\%, 
-      %   version 2 is 89.26\%, version 3 is 89.35\%, and version 4 is 89.31\% correct. Therefore, 
-      %   only version 3 is used for all further simulations.
-      At 95\% unknown nodes and 95\% of multifurcation of the internal nodes, version 1 is 88.37\%, 
-        version 2 is 88.37\%, version 3 is 88.4\%, and version 4 is 88.39\% correct. Therefore, 
-        only version 3 is used for all further simulations.
-        
-    % Fitch versions:
-    % | 88.37 % | 88.37 % | 88.4 % |88.39 % |
+      These four versions are tested in the simulation with 100 trees and 10000 leaf nodes and 
+        distributions of 70\% FL to 30\% P and 60\% FL to 40\% P. At 95\% unknown nodes and 95\% of 
+        multifurcation of the internal nodes, version 1 is 88.37\%, version 2 is 88.37\%, version 3 is 
+        88.4\%, and version 4 is 88.39\% correct.
+
+      There was a more visible difference in the calculations with no equally distributed multifurcation. 
+        The probability of forgetting each node was chosen $\frac{1}{max~height(node)}$. Figure 
+        \ref{fig:Fitch versions} shows this for different unknown node percentages.
+
+      Therefore, only version 3 is used for all further simulations.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
@@ -415,10 +418,9 @@
   %---------------------------------------------------------------------------------------------------
   \section{Simulation}\label{sec:methods - simulation}
     The simulation compares these different ancestral state reconstruction algorithms with each 
-      other. \\
-    First different implementations of the Fitch maximum parsimony are compared and then the best of 
-      them is compared with the implementation of the Sankoff algorithm of the \textit{castor} package 
-      \cite{Louca2017}.
+      other. First, different implementations of the Fitch maximum parsimony are collated and then the 
+      best of them is compared with the implementation of the Sankoff algorithm of the \textit{castor} 
+      package \cite{Louca2017}.
 
     \begin{figure}[h!]
       \centering
@@ -426,14 +428,14 @@
       \caption{A simulation is performed to compare different maximum parsimony algorithms. \\
         The course of the simulation with influence of the metadata analysis from the real data can
           be seen: \\
-        (1) A phylogenetic tree is created randomly. (2) Simulate node states for all nodes. (3) 
+        (1) Create a phylogenetic tree randomly. (2) Simulate node states for all nodes. (3) 
           'Forget' internal states and some leaf node states. (4) 'Lose' phylogeny information. (5) 
           Make a nodelist for the algorithm. (6) Run algorithms. (7) Evaluate results. \\
         Points 3 and 4 are influenced by metadata of the real-data analysis.}
       \label{fig:Simulation Workflow}
     \end{figure}
     The course of a simulation is shown in Figure \ref{fig:Simulation Workflow}. The individual steps 
-      are explained in the following.
+      are explained hereinafter.
 
     A tree is needed to perform a simulation of ancestral state reconstruction. It has to be decided 
       whether to take the real tree or simulate a tree. In this simulation, trees are created randomly, 
@@ -442,28 +444,31 @@
     To get a random binary tree, the Phylo package from biopython is used \cite{Cock2009}. They offer 
       a \textit{randomized()} function which returns a BaseTree\footnote{
         \hyperlink{https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
-        {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py}
-      }.
+        {https://github.com/biopython/biopython/blob/master/Bio/Phylo/BaseTree.py};
+        Last checked: 22.03.2018.}.
 
-    The next step is to simulate states for all nodes. \\
-    Here the influence of the biological parameters as transition probabilities and distributions of
+    The next step is to simulate states for all nodes. Here, the influence of the biological  
       \begin{wrapfigure}[21]{r}{0.55\textwidth}
         \centering
         \includegraphics[width=0.55\textwidth]{Figures/40-60_all.jpg}
         \caption{Set node states: Distribution of states (left); traversion through the tree (right). \\
           Start with a free-living root node (FL: red). \\
-          (1) + (2) Draw random numbers for its children from the free-living distribution (red), the numbers are under the threshold 
-          $\rightarrow$ the nodes are again free-living; go on with the children. \\
-          (3) The number drawn is above the threshold. $\rightarrow$ The node state changes to parasitic (P: blue). \\
-          (4) Now draw random numbers from the parasite distribution (red) until one number lies under the threshold. Then change back.}
+          (1) + (2) Draw random numbers for its children from the free-living distribution (red), the 
+            numbers are under the threshold $\rightarrow$ the nodes are again free-living; go on with 
+            the children. \\
+          (3) The number drawn is above the threshold. $\rightarrow$ The node state changes to 
+            parasitic (P: blue). \\
+          (4) Now draw random numbers from the parasite distribution (red) until one number lies under 
+            the threshold. Then change back.}
         \label{fig:set node states}
       \end{wrapfigure} 
-      states is included. \\
+      parameters as transition probabilities and distributions of states is included.
+      
     Since there is no statement about general transition probabilities, these are all set the same: \\
     $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$.
 
-    For the distributions of states different ratios of parasites (P) to free-livings (FL) are 
-      simulated with the help of beta distributions and a given threshold:
+    To these distributions different ratios of parasites (P) to free-livings (FL) are simulated with 
+      the help of beta distributions and a given threshold:
       \begin{itemize}
         \item 50\% P to 50\% FL,
         \item 40\% P to 60\% FL,
@@ -473,9 +478,9 @@
 
     Procedure: The root node is defined as ancestor of all subsequent species and in this case, 
       determined to be free-living. Therefore, the beta distribution for free-living is used at the 
-      beginning. Now traverse from the root to the leaf nodes, always pulling out of the current 
-      distribution until the randomly drawn number is above the threshold and the new node changes 
-      state. Figure \ref{fig:set node states} shows a part of this simulating states and the 
+      beginning. A traversion from the root to the leaf nodes sets the states, always pulling out of 
+      the current distribution until the randomly drawn number is above the threshold and the new node 
+      changes state. Figure \ref{fig:set node states} shows a part of these simulating states and the 
       associated distributions.
     % To ensure that the parameter of the binomial distribution is restricted to the [0,1] interval, it 
     %   is modeled with a beta distribution as in Figure \ref{fig:set node states}. \\
@@ -512,12 +517,13 @@
       cross-validation is performed. For this purpose 100 randomly distributed 100 states are left out.
 
     The statistics are collected over the entire Eukaryota tree and over some subtrees of different 
-      taxa. There are known states besides predicted states, the predicted root node state specified 
-      and origins and losses are counted by parasitism. \\
+      taxa. There are known states listed besides predicted states, the predicted root node state 
+      specified and origins and losses of parasitism are counted.
+
     Since Sankoff predicts probabilities for states, we have rounded them to be able to count 
-      transitions from free-living (0) to parasitic (1) and vice versa. \\
-    In each case, a maximum of one changing transition from parent node to child node is counted for 
-      the origins (FL $\rightarrow$ P) or losses (P $\rightarrow$ FL).
+      transitions from free-living (0) to parasitic (1) and vice versa. In each case, a maximum of one 
+      changing transition from parent node to child node is counted for the origins (FL $\rightarrow$ 
+      P) or losses (P $\rightarrow$ FL).
     
     For the leave-100-out cross-validation, analogous to the missing leaf node states, generalized 
       linear models with binomial regression are compared according to their residuals, based on the 
@@ -533,8 +539,9 @@
   \section{Implementation}
     The complete code is located on GitHub: 
       \hyperlink{github.com/Irallia/IZW-HU-Parasites}{github.com/Irallia/IZW-HU-Parasites}. \\
-    Most of the code is written in Python, the analyzes and the use of the \textit{castor} package in R. Some 
-      shell scripts are used to execute whole workflows.
+
+    Most of the code is written in Python. The analyzes and the use of the \textit{castor} package 
+      are partly implemented in R. Some shell scripts are used to execute whole workflows.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
@@ -545,7 +552,7 @@
     algorithm to perform an ancestral state reconstruction of the present Eukaryota tree. We will 
     therefore discuss in the following how significant the result of this reconstruction is.
 
-    To do so, we first look at the input data we have: the use of Open Tree of Life for the tree 
+    To do so, we first look at the input data we have: the use of Open Tree of Life (OTL) for the tree 
       gives us the greatest approximation to a phylogeny of the Eukaryota. Since such a large 
       phylogeny has not been completely dissected, this is only a synthesis of phylogenetic trees 
       with a taxonomy as a backbone. As a result, the tree is far from binary, we found a 
@@ -1128,7 +1135,8 @@
       as a free-living species. In GloBI it is listed as being parasitized by Nectria candicans and 
       Nectriopsis sporangiicola\footnote{
         \hyperlink{https://www.globalbioticinteractions.org/?interactionType=parasiteOf&targetTaxon=Stemonitis\%20fusca}
-        {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca}
+        {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca};
+        Last checked: 22.03.2018.
       }. The algorithm has not predicted new free-livings.
 
     Most species of Platyhelminthes (flatworms) are parasites, although there are also free-living, 
@@ -1304,7 +1312,8 @@
       concludes: Grass carp (\textit{Ctenopharyngodon idella)} has Pathogen common carp 
       (\textit{Cyprinus carpio})\footnote{
         \hyperlink{https://www.globalbioticinteractions.org/?interactionType=hasParasite&targetTaxon=Cyprinus\%20carpio}
-        {https://www.globalbioticinteractions.org/?interactionType=hasParasite\&targetTaxon=Cyprinus\%20carpio}
+        {https://www.globalbioticinteractions.org/?interactionType=hasParasite\&targetTaxon=Cyprinus\%20carpio};
+        Last checked: 22.03.2018.
       }. Since there is hardly any information about free-living, it follows that all siblings are 
       also predicted to be parasitic.
 

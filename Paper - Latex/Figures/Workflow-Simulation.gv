@@ -11,7 +11,7 @@ digraph G {
 	}
 
 	c0 [label = "known - unknown data"]
-	c2 [label = "extract nr of children \n (multifurcations)"]
+	c2 [label = "extract no of children \n (multifurcations)"]
 
 	subgraph cluster_3 {
 		label = "Simulation";
@@ -34,7 +34,7 @@ digraph G {
 		f3;
 	}
 
-	f3 [label = "Evaluation of the Simulation"]
+	f3 [label = "evaluate the Simulation"]
 
 	c0 -> d2;
 	c2 -> d3;
