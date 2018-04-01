@@ -30,7 +30,7 @@
     	Lydia Buntrock \\
       E-Mail: info@irallia.de \\
      	\vspace{3cm}
-      \textbf{Supervisor:} \\
+      \textbf{Supervisors:} \\
       Prof. Dr. Bernhard Y. Renard \\
       \& \\
       Prof. Dr. rer. nat. Emanuel Heitlinger \\      
@@ -132,7 +132,7 @@
     development times of species, this can not be considered here. \\
   Another problem pointed out by Royer-Carenzi is that parsimony approaches are either based on 
     predefined parameters (generalized parsimony) or on strong and often controversial assumptions, 
-    like irreversibility of transitions for dollo parsimony. This problem is unimportant to the 
+    like irreversibility of transitions for Dollo parsimony. This problem is unimportant to the 
     present task because in the analysis of the entire Eukaryota tree only generalized models are 
     meaningful. \\
   % Comparing the methods, we find that parsimony are methods in which you can not include information 
@@ -213,7 +213,7 @@
     association is disadvantageous or destructive to one of the organisms."\footnote{
       \hyperlink{http://www.ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO_0002445}
       {ontobee.org/ontology/RO?iri=http://purl.obolibrary.org/obo/RO\_000244}; Last checked: 22.03.2018.
-    }. This definition includes: ecto- and endoparasites, parasitoids, kleptoparasites and pathogenes. \\
+    }. This definition includes: ecto- and endoparasites, parasitoids, kleptoparasites and pathogens. \\
 
   The objectives of this work are the following points: (1) Find a suitable ancestral state 
     reconstruction method. (2) Accomplish reconstructing on the Eukaryota synthesis tree of OTL. \\
@@ -613,7 +613,7 @@
     \cite{Poelen2014} (section \ref{sec:results - missing information}), where we have determined 
     that the entire Eukaryota tree is 89.45\% multifurcated (missing internal nodes) and that we do 
     not have any state information for 97.34\% nodes. \\
-  In addition, we tested different models for these two paramters and found out that multifurcation 
+  In addition, we tested different models for these two parameters and found out that multifurcation 
     can best be modeled with the taxa 'order' multiplied by the mean height of the knots. Also, the 
     missing states could be modeled with the taxa 'order' and in this case multiplied by the depth 
     of the nodes.
@@ -630,7 +630,7 @@
 
   As a result, we used the Sankoff algorithm \cite{Sankoff1975} implemented by Louca et al. 
     \cite{Louca2017}, which performed best, for the actual reconstruction on the real data. \\
-  We evaluated these on the one hand by analysing some statisitcs (subsection 
+  We evaluated these on the one hand by analysing some statistics (subsection 
     \ref{subsec:results - statistics on predicted states}) and on the other hand by performing a 
     leave-100-out cross-validation. There we predicted approximately 98.17\% of the omitted states 
     correct (subsection \ref{sec:results - cross-validation}). \\ 
@@ -731,18 +731,18 @@
             \hline
             \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
-            multifurc $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
-            multifurc $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
+            multifurcation $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
+            multifurcation $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
             \hline
-            multifurc $\sim$ taxa + depth & 8273318 & \cellcolor{green!15}7934322 & \cellcolor{green!20}7839364 & \cellcolor{green!35}7539999 \\
-            multifurc $\sim$ taxa + max.height & \cellcolor{green!15}7993515 & \cellcolor{green!25}7749121 & \cellcolor{green!30}7661817 & \cellcolor{green!40}7416211 \\
-            multifurc $\sim$ taxa + min.height & 8251211 & \cellcolor{green!20}7875521  & \cellcolor{green!25}7778327 & \cellcolor{green!35}7516883 \\
-            multifurc $\sim$ taxa + mean.height & \cellcolor{green!20}7825417 & \cellcolor{green!30}7644249 & \cellcolor{green!35}7572474 & \cellcolor{green!45}7340741 \\
+            multifurcation $\sim$ taxa + depth & 8273318 & \cellcolor{green!15}7934322 & \cellcolor{green!20}7839364 & \cellcolor{green!35}7539999 \\
+            multifurcation $\sim$ taxa + max.height & \cellcolor{green!15}7993515 & \cellcolor{green!25}7749121 & \cellcolor{green!30}7661817 & \cellcolor{green!40}7416211 \\
+            multifurcation $\sim$ taxa + min.height & 8251211 & \cellcolor{green!20}7875521  & \cellcolor{green!25}7778327 & \cellcolor{green!35}7516883 \\
+            multifurcation $\sim$ taxa + mean.height & \cellcolor{green!20}7825417 & \cellcolor{green!30}7644249 & \cellcolor{green!35}7572474 & \cellcolor{green!45}7340741 \\
             \hline
-            multifurc $\sim$ taxa * depth & 8235932 & \cellcolor{green!20}7836755 & \cellcolor{green!25}7757688 & \cellcolor{green!45}7383808 \\
-            multifurc $\sim$ taxa * max.height & \cellcolor{green!15}7963438 & \cellcolor{green!30}7693555 & \cellcolor{green!30}7614820 & \cellcolor{green!45}7335338 \\
-            multifurc $\sim$ taxa * min.height & 8214030 & \cellcolor{green!20}7808940 & \cellcolor{green!30}7690618 & \cellcolor{green!45}7336627\\
-            multifurc $\sim$ taxa * mean.height & \cellcolor{green!25}7768360 & \cellcolor{green!35}7536296 & \cellcolor{green!50}7484953 & \cellcolor{green!50}7206369 \\
+            multifurcation $\sim$ taxa * depth & 8235932 & \cellcolor{green!20}7836755 & \cellcolor{green!25}7757688 & \cellcolor{green!45}7383808 \\
+            multifurcation $\sim$ taxa * max.height & \cellcolor{green!15}7963438 & \cellcolor{green!30}7693555 & \cellcolor{green!30}7614820 & \cellcolor{green!45}7335338 \\
+            multifurcation $\sim$ taxa * min.height & 8214030 & \cellcolor{green!20}7808940 & \cellcolor{green!30}7690618 & \cellcolor{green!45}7336627\\
+            multifurcation $\sim$ taxa * mean.height & \cellcolor{green!25}7768360 & \cellcolor{green!35}7536296 & \cellcolor{green!50}7484953 & \cellcolor{green!50}7206369 \\
             \hline
           \end{tabular} 
         \end{center}
@@ -755,13 +755,13 @@
       Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
         the finest model available here is also the best one of these. Lower taxa than orders (e.g. 
         family) are computationally too expensive to calculate. \\
-      The model \textit{multifurc $\sim$ order * mean.height} turns out to be the best of our models, 
-        whereby it is possible that e.g. \textit{multifurc $\sim$ family * mean.height} is better. \\
+      The model \textit{multifurcation $\sim$ order * mean.height} turns out to be the best of our models, 
+        whereby it is possible that e.g. \textit{multifurcation $\sim$ family * mean.height} is better. \\
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Comparison of different models for missing state information}
-      Next to the problem of the multifurcation of the tree is the little interaction data thet we have 
+      Next to the problem of the multifurcation of the tree is the little interaction data that we have 
         for the species. For the ancestral state reconstruction, we need information about the states 
         (free-living or parasite) in the leaf nodes. \\
       The Eukaryota synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
@@ -777,11 +777,11 @@
             \hline
             \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
-            multifurc $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & \cellcolor{green!45}484681 \\
+            multifurcation $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & \cellcolor{green!45}484681 \\
             \hline
-            multifurc $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
+            multifurcation $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
             \hline
-            multifurc $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!45}481494 & \cellcolor{green!50}478188 \\
+            multifurcation $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!45}481494 & \cellcolor{green!50}478188 \\
             \hline
           \end{tabular} 
         \end{center}
@@ -868,7 +868,7 @@
       In table \ref{table:results of some selected taxa} we compare different subtrees of different taxa 
         on these prediction results.
       
-      Similar to the Eukaryota it is with the Metazoa subtree, which accounts for most of the Eukayota 
+      Similar to the Eukaryota it is with the Metazoa subtree, which accounts for most of the Eukaryota 
         (179,944 internal and 1,491,012 leaf nodes). However, here the root node is no longer calculated 
         as parasitic but still as indefinable. \\
       Strongly parasitic subtrees are for example the Apicomplexa, the Nematoda and the Platyhelminthes. 
@@ -880,7 +880,9 @@
       % \tiny	\scriptsize \footnotesize \small \normalsize \large \Large \LARGE \huge \Huge
       \begin{table}
         \begin{center}
-          \hspace*{-0.5cm}\begin{tabular}{|>{\scriptsize}c|>{\scriptsize}l|>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r|>{\scriptsize}r| }
+          \hspace*{-0.5cm}\begin{tabular}
+              {|>{\scriptsize}c|>{\scriptsize}l|>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r||
+                >{\scriptsize}r|>{\scriptsize}r|>{\scriptsize}r||>{\scriptsize}r|>{\scriptsize}r|>{\scriptsize}r| }
             \hline
             \multirow{3}{*}{\rot{\bfseries $\leftarrow$ Taxa}}
             & & \multicolumn{2}{>{\scriptsize}c||}{\bfseries number of}
@@ -1061,17 +1063,9 @@
       missing state information. \\
     Furthermore, we know that OTL is a synthesis of 819 phylogenetic trees. This suggests that just 
       these parts of the tree are very well resolved and the remainder consists only of the rough 
-      taxonomy. \\
-    \todotext{
-    For a review of this underlying taxonomy, we have compiled a list of all taxa and drawn them in 
-      relation to their distribution (see appendix section \ref{sec:otl analysis}).
-    The number of nodes in the tree corresponding to a taxonomic rank is tabulated. \\
-    For the classical taxonomic ranks phylum, class, order, family, genus xyz is found (appendix 
-      \ref{sec:otl analysis}). \\
-    A closer look is taken at some of the features of the synthesis tree on the one hand the 
-      distribution of the taxa and on the other the distribution of the nodes on the taxa. Since 
-      this is \colorbox{red}{not directly relevant} for this study, this section has been moved to 
-      the appendix \ref{sec:otl analysis}.}
+      taxonomy. For a review of this underlying taxonomy, we have compiled a list of all taxa and 
+      plottet them in relation to their distribution (see appendix section \ref{sec:otl analysis}). 
+      There the number of nodes in the tree corresponding to a taxonomic rank is tabulated.
 
     % The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
     %   Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
@@ -1241,8 +1235,6 @@
       \label{fig:BigWorkflow}
     \end{figure}
 
-\newpage
-
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{OTL analysis}\label{sec:otl analysis}
@@ -1265,132 +1257,73 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Distribution of Taxa}
-    In the tree we can distinguish 28 different Taxa with the OTL taxonomic tree.
+      In the tree we can distinguish 28 different Taxa in the OTL taxonomic tree. We have all Taxa 
+        sorted by rank into a table and counted their occurrences as internal nodes and leaf nodes
+        (see table \ref{table:taxa}) and plotted them as a diagram (see figure \ref{fig:taxa}).
     \begin{figure}[h!]
       \centering
-      \includegraphics[width=0.9\textwidth]{Figures/TaxaTable2.JPG}
+      \includegraphics[width=\textwidth]{Figures/TaxaTable2.JPG}
       \caption{Distribution of Nodes in Rank-Cathegories}
-      \label{fig:taxaTable2}
+      \label{fig:taxa}
     \end{figure}
 
     \begin{table}[h!]
       \begin{center}
         % \begin{tabular}{ |>{\rowmac}l|>{\rowmac}r|<{\clearrow} }
-        \begin{tabular}{ |l|r||r|r|r| }
+        \begin{tabular}{ |l|r||r|r| }
           \hline
-          \bfseries Taxa & \bfseries Number of Nodes & \bfseries Internal Nodes & \bfseries Leaf Nodes & \bfseries Terminal Leaf Nodes \\
+          \bfseries Taxa & \bfseries Number of Nodes & \bfseries Internal Nodes & \bfseries Leaf Nodes \\
           \hline \hline
-          \setrow{\bfseries}domain & 1 & 1 & &  \\ \hline
-          \setrow{\bfseries}kingdom & 3 & 3 & &  \\
-          subkingdom & 2 & 2 & & \\
-          infrakingdom & 5 & 5 & & \\
-          superphylum & 2 & 2 & & \\ \hline
-          \setrow{\bfseries}phylum & 57 & 54 & 3 & \\
-          subphylum & 22 & 20 & 2 & \\
-          infraphylum & 2 & 2 & & \\
-          superclass & 8 & 8 & & \\ \hline
-          \setrow{\bfseries}class & 209 & 175 & 34 & \\
-          subclass & 120 & 106 & 14 & \\
-          infraclass & 14 & 11 & 3 & \\
-          superorder & 40 & 37 & 3 & \\ \hline
-          \setrow{\bfseries}order & 1014 & 772 & 242 & \\
-          suborder & 285 & 222 & 63 & \\
-          infraorder & 95 & 78 & 17 & \\
-          parvorder & 14 & 12 & 2 & \\
-          superfamily & 829 & 626 & 203 & \\ \hline
-          \setrow{\bfseries}family & 8449 & 6143 & 2306 & \\
-          subfamily & 3090 & 2250 & 840 & \\
-          supertribe & 1 & 0 & 1 & \\
-          tribe & 1764 & 1285 & 479 & \\
-          subtribe & 435 & 359 & 77 & \\ \hline
-          \setrow{\bfseries}genus & 164656 & 105452 & 59204 & \\
-          subgenus & 1266 & 869 & 397 & \\
-          section & 3 & 2 & 1 & \\
-          subsection & 1 & 1 & 0 & \\
-          species group & 365 & 288 & 77 & \\
-          species subgroup & 123 & 100 & 23 & \\ \hline
-          \setrow{\bfseries}species & 2247251 & 7423 & 2239828 & 2228993 \\
-          subspecies & 22437 & 75 & 22362 & 22239 \\
-          variety & 1755 & 7 & 1748 & 1726 \\
-          varietas & 5970 & 19 & 5951 & 5909 \\
-          forma & 1181 & & 1181 & 1181 \\
+          \setrow{\bfseries}domain & 1        & 1 & - \\ \hline
+          \setrow{\bfseries}kingdom & 3       & 3 & - \\
+          subkingdom & 2                      & 2 & - \\
+          infrakingdom & 5                    & 5 & - \\
+          superphylum & 2                     & 2 & - \\ \hline
+          \setrow{\bfseries}phylum & 57       & 57 & - \\
+          subphylum & 22                      & 22 & - \\
+          infraphylum & 2                     & 2 & - \\
+          superclass & 8                      & 8 & - \\ \hline
+          \setrow{\bfseries}class & 209       & 209 & - \\
+          subclass & 120                      & 120 & - \\
+          infraclass & 14                     & 14 & - \\
+          superorder & 40                     & 40 & - \\ \hline
+          \setrow{\bfseries}order & 1013      & 1013 & - \\
+          suborder & 285                      & 285 & - \\
+          infraorder & 95                     & 95 & - \\
+          parvorder & 14                      & 14 & - \\
+          superfamily & 829                   & 829 & - \\ \hline
+          \setrow{\bfseries}family & 8442     & 8442 & - \\
+          subfamily & 3090                    & 3090 & - \\
+          supertribe & 1                      & 1 & - \\
+          tribe & 1764                        & 1764 & - \\
+          subtribe & 435                      & 435 & - \\ \hline
+          \setrow{\bfseries}genus & 164592    & 164592 & - \\
+          subgenus & 1266                     & 1266 & - \\
+          section & 3                         & 3 & - \\
+          subsection & 1                      & 1 & - \\
+          species group & 308                 & 308 & - \\
+          species subgroup & 108              & 108 & - \\ \hline
+          \setrow{\bfseries}species & 2243241 & 18197 & 2225044 \\
+          subspecies & 22378                  & 196 & 22182 \\
+          variety & 1755                      & 29 & 1726 \\
+          varietas & 5935                     & 61 & 5874 \\
+          forma & 1179                        & & 1179 \\
           \hline \hline
-          no rank & 954 & 719 & 235 & 7 \\
-          no rank - terminal & 37452 & & 37452 & 37452 \\
-          (no entry) & 40099 & 40099 & & \\
+          no rank & 951                       & 944 & 7 \\
+          no rank - terminal & 37451          & - & 37451 \\
+          (no entry) & 39816                  & 39816 & - \\
           \hline  
         \end{tabular}
-        \caption{\todo{...}}
-        \label{table:...} 
+        \caption{Distribution of Nodes in Rank-Cathegories}
+        \label{table:taxa} 
       \end{center}  
     \end{table}
-    extended leaf nodes (real leaf nodes)
 
-  %---------------------------------------------------------------------------------------------------
-  \subsection{Distribution of data in the taxa}
-    Mithilfe des taxonomischen Baums von OTL haben wir die Knoten ihren Kingdoms, Phyla und Classes 
-      zugeteilt (see table \ref{table:...}). \\
-
-    \begin{table}[h!]
-      \begin{center}
-        \begin{tabular}{ |l|r|l|r|r| }
-          \hline
-          \bfseries Kingdom (3) & \bfseries Number of Nodes & \bfseries Phylum (25) & \bfseries Number of Nodes & \bfseries max max height \\
-          \hline \hline
-          Metazoa & 1 465 207 & Arthropoda & 1 170 539 & 54 \\
-          & & Chordata & 106 650 & 74 \\
-          & & Mollusca & 80 022 & 22 \\
-          & & Platyhelminthes & 27 141 & 9 \\
-          & & Nematoda & 24 564 & 23 \\
-          & & Cnidaria & 14 878 & 36 \\
-          & & Porifera & 11 737 & 26 \\
-          & & Echinodermata & 10 654 & 14 \\
-          & & Bryozoa & 8 631 & 11 \\
-          & & Rotifera & 3 093 & 7 \\
-          & & Nemertea & 1 793 & 7 \\
-          & & Tardigrada & 1 654 & 7 \\
-          & & Acanthocephala & 1 596 & 6 \\
-          & & Brachiopoda & 1 055 & 9 \\
-          & & Nematomorpha & 633 & 7 \\
-          & & Chaetognatha & 360 & 7 \\
-          & & Hemichordata & 196 & 5 \\ 
-          & & Cycliophora & 11 & 5 \\ 
-          % 1465207-(1170539+106650+80022+27141+24564+14878+11737+10654+8631+3093+1793+1654+1596+1055+633+360+196+11) = 0
-          \hline
-          Fungi & 254 871 & Ascomycota & 157 045 & 19 \\ 
-          & & Basidiomycota & 92 931 & 18 \\
-          & & Microsporidia & 1 949 & 6 \\ 
-          & & Glomeromycota & 1 490 & 6 \\
-          & & Chytridiomycota & 1 456 & 6 \\
-          % 254871-157045-92931-1949-1490-1456 = 0
-          \hline
-          Chloroplastida & 121 239 & Streptophyta & 120 731 & 49 \\
-          & & Chlorophyta & 508 & 6 \\
-          % 121239-120731-508 = 0
-          \hline  
-        \end{tabular}
-        \caption{\todo{...}}
-        \label{table:...} 
-      \end{center}  
-    \end{table}
+\newpage
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Parasites in Chordata} \label{sec:parasites in chordata}
-
-    \begin{figure}
-      \centering
-      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
-      \caption{Parasites of Phylum: Chordata. \\
-        All parasite data of the chordata are mapped into a rough taxonomy (phylum, class, order, 
-          family) in order to understand their distribution and affiliation. \\
-        The internal nodes are the wanted taxa from OTL (with the addition of \# input parasites to 
-          $\rightarrow$ \# predicted parasites). \\
-        The leaf nodes are the input parasites (green) and the predicted parasites (white $\rightarrow$ 
-          green).}
-      \label{fig:ChordataParasites}
-    \end{figure}
-
     We mapped the few parasitic species in a rough taxonomy (see Figure \ref{fig:ChordataParasites}): \\
     Known parasitic birds belong to the order Sauria. Here we know from Rothschild here that are 
       breeding parasites, like the cuckoo and clepto-parasites as the skuas \cite{Rothschild1957}. We
@@ -1405,5 +1338,17 @@
       }. Since there is hardly any information about free-living, it follows that all siblings are 
       also predicted to be parasitic.
 
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=0.85\textwidth]{Figures/ChordataParasites.png}
+      \caption{Parasites of Phylum: Chordata. \\
+        All parasite data of the chordata are mapped into a rough taxonomy (phylum, class, order, 
+          family) in order to understand their distribution and affiliation. \\
+        The internal nodes are the wanted taxa from OTL (with the addition of \# input parasites to 
+          $\rightarrow$ \# predicted parasites). \\
+        The leaf nodes are the input parasites (green) and the predicted parasites (white $\rightarrow$ 
+          green).}
+      \label{fig:ChordataParasites}
+    \end{figure}
 
 \end{document}

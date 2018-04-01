@@ -33,24 +33,22 @@ all.taxa <- cbind(all.taxa, heights)
 ## [Min. 1st Qu.  Median    Mean 3rd Qu.    Max. ] over all phyla - max height
 # tapply(all.taxa$max.height, all.taxa$phylum, summary)
 
-### all nodes sorted by rank
-# table(all.taxa$rank)[order(table(all.taxa$rank))]
+## all nodes sorted by rank
+table(all.taxa$rank)[order(table(all.taxa$rank))]
 
 print('--------------------------------------------------')
 
 leaf.taxa <-  all.taxa[all.taxa$nr_children==0, ]
+all.inner.taxa <- all.taxa[all.taxa$nr_children>0, ]
 inner.taxa <- all.taxa[all.taxa$nr_children>1, ]
-extendedInner.taxa <- all.taxa[all.taxa$nr_children>0, ]
 
 print('----------------------- leaf.taxa$rank ---------------------------')
 leaf.taxa <- as.data.frame(leaf.taxa)
-# table(leaf.taxa$rank)[order(table(leaf.taxa$rank))]
-print('----------------------- inner.taxa$rank ---------------------------')
-inner.taxa <- as.data.frame(inner.taxa)
-# table(inner.taxa$rank)[order(table(inner.taxa$rank))]
-print('----------------------- extendedInner.taxa$rank ---------------------------')
-extendedInner.taxa <- as.data.frame(extendedInner.taxa)
-# table(extendedLeaf.taxa$rank)[order(table(extendedLeaf.taxa$rank))]
+table(leaf.taxa$rank)[order(table(leaf.taxa$rank))]
+print('----------------------- all.inner.taxa$rank ---------------------------')
+all.inner.taxa <- as.data.frame(all.inner.taxa)
+table(all.inner.taxa$rank)[order(table(all.inner.taxa$rank))]
+
 print('--------------------------------------------------')
 print('--------------------------------------------------')
 print('----------------------- data of subtrees ---------------------------')
