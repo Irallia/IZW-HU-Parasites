@@ -705,7 +705,7 @@
         (free-living or parasite) of the leaf nodes.
         
       The Eukaryota synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
-        (at 29.01.2018). Out of this data we recieved 51,337 free-living species and 47,332 parasite 
+        (at 29.01.2018). Out of this data we received 51,337 free-living species and 47,332 parasite 
         species for the whole tree of life. For the Eukaryota we could determine 25,962 and 34,860 
         species as parasites and free-living. With 2,293,463 leaf nodes we still have about 97.34\% 
         unknown leaf nodes.
@@ -968,18 +968,20 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Discussion}
-  This chapter deals with the question of how trustworthy our result of the ancestral state 
-    reconstruction of the Eukaryota tree is. And further on how well our simulation can simulate the 
-    real problem and thus make statements about the predictive power of the applied Sankoff algorithm.
+  This chapter is about how trustworthy our result of the ancestral state reconstruction of the 
+    Eukaryota tree is and how good our simulation is in order to make statements about the predictive 
+    power of the applied Sankoff algorithm.
 
-  We have pursued this question in various investigations and yet, of course, further possibilities 
-    for improvement remain. Despite these possibilities for improvement, our reconstruction gives a 
-    first good assessment of the whole tree.
+  We pursued this question in various investigations and yet, of course, further possibilities for 
+    improvement remain. Despite these improvement opportunities, our reconstruction gives a first 
+    good assessment of the whole tree.
 
   In the first part of this work, we were able to provide the proof of concept for the Sankoff 
-    algorithm to perform an ancestral state reconstruction of the present Eukaryota tree. In the 
-    following, we will first discuss the data situation and the simulation that led to the selection 
-    of the Sankoff algorithm, and then discuss how significant the result of this reconstruction is.
+    algorithm to perform an ancestral state reconstruction of the present Eukaryota tree. Hereinafter, 
+    
+    we will first discuss the data situation and the simulation that led to the selection of the 
+    Sankoff algorithm, followed by a discussion about the significance of the result of this 
+    reconstruction.
 
   We evaluated our ancestral state reconstruction and the relational state prediction using a 
     leave-100-out cross-validation. In addition, in this chapter, we will take a closer look at some 
@@ -988,23 +990,24 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Data situation} \label{sec:discussion - data situation}
+  \section{Data situation}
     The used Eukaryota synthesis tree from OTL \cite{Hinchliff2015} has 241,974 internal nodes and 
       293,463 leaf nodes. In addition, we could specify 25,962 parasitic and 34,860 free-living 
       species from GloBI \cite{Poelen2014}. \\
     This gives us a high number of missing internal nodes (high multifurcation) and a low number of 
-      node states of the leaf nodes in the entire tree.
+      states of the leaf nodes in the entire tree.
     We suspect that this lack of information is not equally distributed in both cases. We conclude 
-      this from various observations.
+      this from various observations:
 
-    For one thing, there were a few subtrees of higher ranks whose information share was much higher. 
-      In the Chordata there is only 66.49\% multifurcation and in the Platyhelminthes only 68.73\% 
-      missing state information. \\
+    For one, there were a few subtrees of higher ranks whose information share was much greater. In 
+      the Chordata there is only 66.49\% multifurcation and in the Platyhelminthes only 68.73\% 
+      missing state information.
+
     Furthermore, we know that OTL is a synthesis of 819 phylogenetic trees. This suggests that just 
       these parts of the tree are very well resolved and the remainder consists only of the rough 
       taxonomy. For a review of this underlying taxonomy, we have compiled a list of all taxa and 
-      plottet them in relation to their distribution (see appendix section \ref{sec:appendix - otl analysis}). 
-      There the number of nodes in the tree corresponding to a taxonomic rank is tabulated.
+      plotted them in relation to their distribution (see appendix section \ref{sec:appendix - otl analysis}). 
+      In this list, the number of nodes in the tree corresponding to a taxonomic rank is tabulated.
 
     % The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
     %   Metazoa, Fungi, 53 phyla, 195 classes and 924 orders. \\
@@ -1013,19 +1016,18 @@
     %   example, Cavalier-Smith says that one distinguishes between seven and nine kingdoms 
     %   \cite{CavalierSmith1981}. \\
     
-    From GloBI we got very little information about leaf node states compared to their number in the 
-      Eukaryota tree. Nevertheless, the prediction of leave-100-out cross-validation was very good. 
-      This also leads to the conclusion that the information is very clustered.
+    From GloBI we received very little information about leaf node states compared to their quantity 
+      in the Eukaryota tree. Nevertheless, the prediction of the leave-100-out cross-validation was 
+      very good. This also leads to the conclusion that the information is very clustered.
 
     As a last point, we would like to cite the modeling of the missing information. The fact that this 
-      is getting better, the lower ordered taxa (smaller subtrees) we are looking at, also suggests a 
-      high variability of the data.
+      gets better, the lower the taxa (smaller subtrees) we are looking at, also indicates a high 
+      variability of the data.
 
-    We would like to mention a few other aspects of the GloBI database here. \\
-    Of course, such large data sets are flawed. We found some misinformation and were able to report 
-      some of these directly to GloBI. \\
-    We also found that there is some unused information in GloBI. We therefore found some more source 
-      species and target species without OTT identifiers. Since we currently use only OTT 
+    We would like to mention a few other aspects of the GloBI database here. Of course, such large 
+      data sets are flawed. We found some misinformation and were able to report some of these 
+      directly to GloBI. We also noticed that there is some unused information in GloBI. We found some 
+      source species and target species without OTT identifiers. Since we currently use only OTT 
       identifiers, we could not use this information. At this point there is thus the possibility to 
       use more of the existing data, if one performs a matching with the other identifiers.
 
@@ -1038,63 +1040,61 @@
       given problem.
 
     We assume that different parasite types have different transition probabilities. It is therefore 
-      difficult to establish a common distribution across the Eukaryota tree. \\
-    Based on the estimates of Windsor \cite{Windsor1998}, we have assumed a distribution of 40\% 
-      parasites to 60\% free-livings in this work. As a result of the diversity of parasites and the 
-      lack of generalizations, we have generally stated that 
+      difficult to establish a common distribution across the Eukaryota tree. Based on the estimates 
+      of Windsor \cite{Windsor1998}, we have assumed a distribution of 40\% parasites to 60\% 
+      free-livings in this study. As a result of the diversity of parasites and the lack of 
+      generalizations, we have stated that 
       $\mathcal{P}(FL \rightarrow P) = \mathcal{P}(P \rightarrow FL)$. But it is also reasonable to 
       assume that in general $\mathcal{P}(FL \rightarrow P) > \mathcal{P}(P \rightarrow FL)$, because 
       a reverse mutation is usually less likely. However, one would have to determine how much this 
       difference is and thus discuss another parameter.
     
     In the simulation, we found that this combination has a significant influence on the predictive 
-      power of the algorithms. \\
-    We have adapted the combination of distributions and threshold to a high probability of achieving 
-      the given proportions on initial attempts. However, this means that we prefer high transition 
-      probabilities for both transitions and thus the simulated trees have a large number of 
-      transitions. It can be assumed that this may not correspond to the real data and thus means a 
-      limitation of our simulation. Further we assume that with less number of state changes, the 
-      predictive power of both algorithms would be even better, thus this limitation is probably not 
-      very restrictive. \\
-    At this point it would be possible to test other distributions with equal threshold values. this 
-      would be more computationally expensive, but would result in fewer transitions.
+      power of the algorithms. We have adapted the combination of distributions and threshold to a 
+      high probability of achieving the given proportions on initial attempts. However, this means 
+      that we prefer high transition probabilities for both transitions and thus the simulated trees 
+      have a large number of transitions. It can be assumed that this may not correspond to the real 
+      data and thus means a limitation of our simulation. Furthermore we assume that with a lower 
+      number of state changes, the predictive power of both algorithms would be even better, thus this 
+      limitation is probably not very restrictive. At this point it would be possible to test other 
+      distributions with equal threshold values. This would be more computationally expensive, but 
+      would result in fewer transitions.
 
     % With these further simulations you could find out if the issue of distributions plays a big role. 
     %   Conversely, one could estimate possible distributions based on the data location in the tree. 
     %   However, this is likely to be very difficult given the poor data. For this reason, we have 
     %   decided in this work to accept very general values and not to speculate much. \\
 
-    The used \textit{castor} package \cite{Louca2017} offers the possibility to enter different transition 
-      probabilities, so with information about these probabilities, you might be able to improve the 
-      prediction here.
+    The used \textit{castor} package \cite{Louca2017} offers the possibility to enter different 
+      transition probabilities, so with information about these probabilities, one might be able to 
+      improve the prediction here.
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Biological view}
-    To analyze the results, we have selected some phyla (subtrees) to evaluate our results selectively 
-      from the biological point of view: Chordata, Nematoda, Platyhelminthes and Apicomplexa.
-
-    Several factors such as the distribution of existing input data via parasites and free-livings, 
-      faulty input data from GloBI and reinforcement of errors by multifurcation play an important 
-      role which becomes evident in these examples.
+    We have selected some phyla (subtrees) to evaluate our results selectively 
+      from the biological point of view: Chordata, Nematoda, Platyhelminthes and Apicomplexa. Various 
+      factors such as the distribution of existing input data about parasites and free-livings, 
+      erroneous input data from GloBI, and the amplification of these errors due to multifurcation 
+      play an important role, which becomes clear in these examples.
 
     The accuracy of our results stands and falls with the presence and the correctness of the data of 
-      GloBI. Errors of incorrect input data can be amplified by incorrect prediction of unknown 
-      species and can be reversed in order to improve the data situation of GloBI. \\
-    Since we look at such large trees we can not expect to know all the parasites, so we look at 
-      individual positives. They are positive in the sense that the majority have the opposite state.
+      GloBI. Errors that result from incorrect data can be amplified by incorrect prediction of unknown 
+      species and can be reversed in order to improve the data situation of GloBI. Since we look at 
+      such large trees we can not expect to know all the parasites, so we look at individual positives. 
+      They are positive in the sense that the majority have the opposite state.
 
     In contrast to the other phyla examined, the phylogeny in the Chordata is more pronounced (less 
       multifurcation). This leads to a lower variance of errors, which is reflected in the results. 
       There are 18 parasites as input data and only 8 more are predicted. The Chordata mostly consist 
-      of free-living species, so this seems believable. We started with 99.83\%  species and predict 
-      99.97\% species as free-living (including already known nodes). \\
-    For a detailed view we have created and described a tree with all known and predicted parasites 
-      (see appendix \ref{sec:parasites in chordata}).
+      of free-living species, so this seems credible. We started with 99.83\%  species and predicted
+      99.97\% species as free-living (including already known nodes). For a detailed view we created 
+      and described a tree with all known and predicted parasites (see appendix 
+      \ref{sec:parasites in chordata}).
 
     The Apicomplexa are a parasitic phylum. We found only one input organism: \textit{Stemonitis fusca} 
-      as a free-living species. In GloBI it is listed as being parasitized by Nectria candicans and 
+      is a free-living species. It is listed in GloBI as being parasitized by Nectria candicans and 
       Nectriopsis sporangiicola\footnote{
         \hyperlink{https://www.globalbioticinteractions.org/?interactionType=parasiteOf&targetTaxon=Stemonitis\%20fusca}
         {https://www.globalbioticinteractions.org/?interactionType=parasiteOf\&targetTaxon=Stemonitis\%20fusca};
@@ -1105,27 +1105,18 @@
       predatory feeding species. These are summarized in the Turbellaria, while the parasites are 
       divided into three other classes \cite{Ax1961}. This also corresponds to our observations. There 
       is one class (Rhabditophora) that contains all but one single exception of free-living species 
-      of this phylum, which includes the Turbellaria. \\
-    It should be noted, however, that this classification is outdated, as it has been proven that 
-      the Turbellaria are not monophyletic. But we will not go into detail here. \\
-    For the Platyhelminthes we have more state information for the leaf nodes compared to the other 
-      considered subtrees. We start with 0.1\% free-livings and predicted 0.77\% as free-living 
-      species.
+      of this phylum, which includes the Turbellaria. For the Platyhelminthes we have proportionally 
+      more state information for the leaf nodes compared to the other considered subtrees. We start 
+      with 0.1\% free-livings and predicted 0.77\% as free-living species.
 
-    With the Nematoda it looks more complicated. Large parts of Nematoda are free-living, but we 
-      found only 5.32\% of them. Blaxter and Koutsovoulos estimate the order of 25,000 parasites in 
-      the Nematoda and and speak of at 18 independently arosen parasites in Nematoda 
-      \cite{Blaxter2015}. \\
-    % The problem at this point, however, is: Hallan speaks of the fact that only 23,000 species are 
-    %   described by the Nematoda but it is assumed that one million or more species are in this 
-    %   phylum.\footnote{J. Hallan, unpublished; 
-    %     \hyperlink{https://insects.tamu.edu/research/collection/hallan/}
-    %     {https://insects.tamu.edu/research/collection/hallan/}
-    %   }. \todo{Link ist nicht erreichbar!} 
-    We assume that the parasites have been much more studied and thus we start with only 0.63\% 
-      free-living species. Against such a shifted data situation, the algorithm is almost powerless to 
-      make correct predictions. And yet the percentage has increased to 5.34\%. \\
-    The root node of the Nematoda is predicted as a parasite and so we got 11 losses of parasitism 
+    The Nematoda are more complicated. Large parts of Nematoda are free-living, but we found only 
+      5.32\% of them. Blaxter and Koutsovoulos estimate the order of 25,000 parasites in the Nematoda 
+      and speak of 18 independently arosen parasites in Nematoda \cite{Blaxter2015}. We assume that 
+      the parasites have been much more studied and thus we start with only 0.63\% free-living species. 
+      Against such a shifted data situation, the algorithm is almost powerless to make correct 
+      predictions. And yet the percentage has increased to 5.34\%.
+
+    The root node of the Nematoda is predicted as a parasite and so we received 11 losses of parasitism 
       and only 2 origins in this phylum. If we assume that the root node of Nematoda is free-living, 
       then some losses would have to turn around and become Origins. So it could be that we end up 
       with a similar size as Blaxter and Koutsovoulos \cite{Blaxter2015}.
@@ -1135,20 +1126,22 @@
   %---------------------------------------------------------------------------------------------------
   \section{Conclusion}
 
-    From the simulation, we can conclude that we predict correctly about 60\% of the nodes in the 
-      present data situation. The leave-100-out cross-validation even showed that we predict the 
-      omitted nodes to be 98.17\% percent correct. \\
+    From the simulation, we can conclude that we predict about 60\% of the nodes in the present data 
+      situation correctly. The leave-100-out cross-validation even showed that we predict the omitted 
+      nodes to be 98.17\% percent correct.
+
     This allows for the assumption that the data is grouped and not uniformly distributed and thus 
       smaller subtrees are present in which data are to be found in the simulation with smaller 
       multifurcation and smaller value for unknown nodes. This is also confirmed by our statistical 
       and biological analysis of the considered subtrees: Chordata, Nematoda, Platyhelminthes and 
-      Apicomplexa. \\
-    However, this means that the ancestral states' data in the direction of root node are probably 
-      particularly unbelievable. This makes the localization of origins in the direction of the root 
-      node difficult. The question remains, how much this affects the estimation of the number of 
-      origins. Our comparison with the paper from Weinstein and Kuris \cite{Weinstein2016} an with
-      Blaxter and Koutsovoulos \cite{Blaxter2015} showed similar numbers of origins in some subtrees, 
-      which leaves us with optimism.
+      Apicomplexa.
+
+    However, it follows that the ancestral states' data in the direction of root node are probably 
+      particularly unreliable. This makes the localization of origins in direction of the root node 
+      difficult. The question remains, how much this affects the estimation of the number of origins. 
+      Our comparison with the paper from Weinstein and Kuris \cite{Weinstein2016} an with Blaxter and 
+      Koutsovoulos \cite{Blaxter2015} showed similar numbers of origins in some subtrees, which 
+      leaves us with optimism.
 
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
