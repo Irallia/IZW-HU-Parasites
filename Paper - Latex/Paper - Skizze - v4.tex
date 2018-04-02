@@ -256,7 +256,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Data sources} \label{sec:methods - data sources}
+  \section{Data sources}
     Two types of data are needed for an ancestral state reconstruction: a tree and information about 
       the states.
 
@@ -300,7 +300,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Metadata analysis} \label{sec:methods - metadata analysis}
+  \section{Metadata analysis}
     Based on the input data, generalized linear models are compared with poisson respectively binomial 
       regression according to their residuals. In order to compare models of different complexity, the 
       BIC (Bayesian Information Criterion) values are calculated in addition to the residuals.
@@ -322,7 +322,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Ancestral state reconstruction methods} \label{sec:methods - ancestral state reconstruction}
+  \section{Ancestral state reconstruction methods}
     The methods used to reconstruct the ancestral states are Fitch parsimony \cite{Fitch1971} and 
       Sankoff parsimony \cite{Sankoff1975}, which are explained in the following subsections.
 
@@ -416,7 +416,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Simulation}\label{sec:methods - simulation}
+  \section{Simulation}
     The simulation compares these different ancestral state reconstruction algorithms with each 
       other. First, different implementations of the Fitch maximum parsimony are collated and then the 
       best of them is compared with the implementation of the Sankoff algorithm of the \textit{castor} 
@@ -512,7 +512,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Real data analysis} \label{sec:methods - real data analysis}
+  \section{Real data analysis}
     For the evaluation of real data results, some statistics are collected and a leave-100-out 
       cross-validation is performed. For this purpose 100 randomly distributed 100 states are left out.
 
@@ -578,7 +578,7 @@
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Availability of internal nodes and state information} \label{sec:results - missing information}
+  \section{Availability of internal nodes and state information}
     As previously presented, we have two types of missing information: unknown states of leaf nodes 
       and multifurcation.
 
@@ -737,31 +737,30 @@
 
       These missing data modeling results could be used to improve the simulated data. \\
 
-\newpage
-
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{Influence of different parameters on the prediction} \label{sec:results - simulation}
+  \section{Influence of different parameters on the prediction}
     As presented, we compare two methods in our simulation to their prediction accuracy: Fitch and 
       Sankoff.
 
     First, we tested different distributions of parasites to free-livings including threshold (first 
-      column). It can be observed that the more balanced the percentages of free-livings and parasites, 
-      the worse the prediction of the algorithms (second and third column). \\
-    It can be seen that the predictive power of Sankoff is always greater or equal to the percentage
-      of free-living distribution, and therefore more accurate than guessing. \\
+      column).We observe: the more balanced the percentages of free-livings and parasites, the worse 
+      the prediction of the algorithms (second and third column). It can be seen that the predictive 
+      power of Sankoff is always greater or equal to the percentage of free-living distribution, and 
+      therefore more accurate than guessing.
+
     On the other hand, we examined the influence of missing internal nodes (ridge of multifurcation) 
-      and missing leaf node information (unknown leaf nodes). \\
-    Both factors have a relatively linear influence on the Sankoff method. Fitch, on the other hand, 
-      breaks significantly in his prediction from about 70\% unknown leaf nodes or mutifurcation. \\
+      and missing leaf node information (unknown leaf nodes). Both factors have a relatively linear 
+      influence on the Sankoff method. Fitch, on the other hand, breaks significantly in his 
+      prediction from about 70\% unknown leaf nodes or mutifurcation.
+
     Figure \ref{fig:influence of unknown data} shows the results of examining various parameters.
 
     \begin{figure}[h!]
       \centering
-      \includegraphics[trim = 0mm 100mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
+      \includegraphics[trim = 0mm 108mm 0mm 0mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
     \end{figure}
-    ~ \\
     \begin{figure}[h!]
       \centering
       \includegraphics[trim = 0mm 0mm 0mm 150mm, clip, width=\textwidth]{Figures/simulation_evaluation_1.png}
@@ -771,49 +770,49 @@
           to form the specified proportions with the threshold, ignoring the number of state changes. \\
         The middle column investigates the influence of the unknown states, the right the influence of
           the strength of the multifurcation. \\
-        The y-axes indicate the percentage of correctly predicted states (including known states). On 
-          the x-axis the percentage of forgotten states or missing internal nodes. \\
-        Each point corresponds to the average of one hundred simulations, each with 10,000 leaf nodes. \\
+        The y-axes indicate the percentage of correctly predicted states (including known states). The 
+          x-axis describes the percentage of forgotten states or missing internal nodes. \\
+        Each point corresponds to the average of 100 simulations, each with 10,000 leaf nodes. \\
         For the middle column we set the strength of the multifurcations to 0.95\%, similar to the 
-          real data and in the right column the amount of the unknowns to 0.95\% also similar to the 
+          real data and in the right column the amount of the unknowns to 0.95\%, also similar to the 
           real data.}
       \label{fig:influence of unknown data}
     \end{figure}
 
     Since we have a lot of missing data in most subtrees (both internal nodes and state information), 
-      the Sankoff gives a better prediction and is thus used for real data analysis.
+      the Sankoff gives a better prediction and is thus used for the real data analysis. \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
   \section{Results of the real data analysis created with Sankoff}
     This section is about evaluating the prediction of real data using the Sankoff method and is 
-      divided into two subsections. \\
-    The analysis of some statistics on the predicted states, with the result that we predict a total 
-      of significantly more free-livings than parasites despite almost 50:50 distributed input states 
-      (subsection \ref{subsec:results - statistics on predicted states}) and the presentation of the 
-      leave-100-out cross-validation results (subsection \ref{sec:results - cross-validation}) This 
-      has revealed that we predicted approximately 98.17\% correct with a small variance.
+      divided into two subsections.
+
+    First comes the analysis of some statistics on the predicted states, with the result that we 
+      predict a total of significantly more free-livings than parasites despite almost 50:50 
+      distributed input states, and second, we present the leave-100-out cross-validation results. This 
+      revealed that we predicted approximately 98.17\% correct with a small variance.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Statistics on predicted states} \label{subsec:results - statistics on predicted states}
+    \subsection{Statistics on predicted states}
       In the entire Eukaryota tree we start with 57.31\% free-living species and 42.69\% parasites. The 
         prediction yields 80.98\% free-livings 0.31\% undefinable and 18.71\% parasites. In addition, 
         there are 462 origins of parasitism and 369 losses distributed throughout the tree, with the 
-        root node predicted to be parasitic. \\
-      We have predicted significantly more free-livings than parasites, but parasitism has prevailed to 
-        the root node.
+        root node predicted to be parasitic. We have predicted significantly more free-livings than 
+        parasites, but parasitism has prevailed to the root node.
       
       In table \ref{table:results of some selected taxa} we compare different subtrees of different taxa 
         on these prediction results.
       
       Similar to the Eukaryota it is with the Metazoa subtree, which accounts for most of the Eukaryota 
-        (179,944 internal and 1,491,012 leaf nodes). However, here the root node is no longer calculated 
-        as parasitic but still as indefinable. \\
-      Strongly parasitic subtrees are for example the Apicomplexa, the Nematoda and the Platyhelminthes. 
+        (179,944 internal and 1,491,012 leaf nodes). However, the root node here is no longer calculated 
+        as parasitic but still as indefinable.
+
+      Strongly parasitic subtrees are, for example, the Apicomplexa, the Nematoda and the Platyhelminthes. 
         For all three, the prediction is at a similar proportion between input values of the states and 
-        predicted states, e.g. In the Apicomplexa with 99.61\% known parasitic states, 99.95\% parasites 
+        predicted states. In the Apicomplexa with 99.61\% known parasitic states, 99.95\% parasites 
         were predicted. The same applies to the chordata, only that these mainly consist of free-living 
         species.
       
@@ -879,30 +878,30 @@
 
       Weinstein and Kuris have been searching for origins of parasitism in Animalia \cite{Weinstein2016}. 
         They identified 223 parasitic origins: 223 in Metazoa $\supset$ 143 in Arthropoda $\supset$ 87 
-        in Insecta. \\
-      In the last columns of the table \ref{table:results of some selected taxa} we can see, that we 
-        found some more origins than Weinstein: 321 in Metazoa $\supset$ 281 in Arthropoda $\supset$ 245 
-        in Insecta and on top of that some losses: 129 in Metazoa $\supset$ 108 in Arthropoda $\supset$ 
-        77 in Insecta. The origins and losses calculated by Sankoff are thus closer to the leaves in the tree.
+        in Insecta. In the last columns of the table \ref{table:results of some selected taxa} we see 
+        that we found more origins than Weinstein: 321 in Metazoa $\supset$ 281 in Arthropoda $\supset$ 
+        245 in Insecta and on top of that some losses: 129 in Metazoa $\supset$ 108 in Arthropoda 
+        $\supset$ 77 in Insecta. The origins and losses calculated by Sankoff are thus closer to the 
+        leaves in the tree.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
-    \subsection{Leave-100-out cross-validation} \label{sec:results - cross-validation}
-      For a further validation of our results, we carried out a leave-100-out cross-validation. \\
-      In order to achieve about 15\% of the 60,871 input node states with a validation, 
-        we randomly left out 100 states 100 times.Omit smaller amounts of states up to leave-one-out had 
-        too much computational effort.
+    \subsection{Leave-100-out cross-validation}
+      For a further validation of our results, we carried out a leave-100-out cross-validation. In order 
+        to achieve about 15\% of the 60,871 input node states with a validation, we randomly left out 
+        100 states 100 times. Omitting smaller amounts of states up to leave-one-out had too much 
+        computational effort.
         
       Of these 10,000 nodes, 9,238 are unique. From the unique nodes, we predicted approximately 
         98.17\% correct and thus 1.82\% wrong, with duplicate draws always having the same prediction. 
         The associated variance is 0.017, which means that no large amounts of input states have to be 
         omitted.
       
-        We have again considered how this data can best be modeled to compare whether there is a lot 
+      We have again considered how this data can best be modeled to compare whether there is a lot 
         of variability in the taxa and whether the depth is an influencing factor over our prediction. 
-        So, the influence of the taxa (kingdom, phylum, class) and the depth of the leaf nodes is 
-        re-modeled and the BICs compared (table \ref{table:BIC cross-validation}). Lower order taxa than 
-        classes (e.g. order) are computationally too expensive to calculate.
+        The influence of the taxa (kingdom, phylum, class) and the depth of the leaf nodes is remodeled 
+        and the BICs compared (table \ref{table:BIC cross-validation}). Lower order taxa than classes 
+        (e.g. order) are computationally too expensive to calculate.
 
       % \todo{table for these numbers?}
       % 100/(25962+34860)*10000 = 16.44
@@ -1004,7 +1003,7 @@
     Furthermore, we know that OTL is a synthesis of 819 phylogenetic trees. This suggests that just 
       these parts of the tree are very well resolved and the remainder consists only of the rough 
       taxonomy. For a review of this underlying taxonomy, we have compiled a list of all taxa and 
-      plottet them in relation to their distribution (see appendix section \ref{sec:otl analysis}). 
+      plottet them in relation to their distribution (see appendix section \ref{sec:appendix - otl analysis}). 
       There the number of nodes in the tree corresponding to a taxonomic rank is tabulated.
 
     % The investigation of the taxonomy revealed that the OTL tree has three kingdoms: Chloroplastida, 
@@ -1178,7 +1177,7 @@
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
-  \section{OTL analysis}\label{sec:otl analysis}
+  \section{OTL analysis}\label{sec:appendix - otl analysis}
 
     %---------------------------------------------------------------------------------------------------
     \subsection{List of all phyla}\label{subsec:listPhyla}
