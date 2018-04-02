@@ -548,69 +548,32 @@
 %---------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------
 \chapter{Results}
-  In the first part of this work, we were able to provide the proof of concept for the Sankoff 
+  In the first part of this study, we were able to provide the proof of concept for the Sankoff 
     algorithm to perform an ancestral state reconstruction of the present Eukaryota tree. We will 
-    therefore discuss in the following how significant the result of this reconstruction is.
+    therefore discuss hereinafter how significant the result of this reconstruction is.
 
-    To do so, we first look at the input data we have: the use of Open Tree of Life (OTL) for the tree 
-      gives us the greatest approximation to a phylogeny of the Eukaryota. Since such a large 
-      phylogeny has not been completely dissected, this is only a synthesis of phylogenetic trees 
-      with a taxonomy as a backbone. As a result, the tree is far from binary, we found a 
-      multifurcation of 89.45 \%. However, this is highly variable and therefore the reconstruction 
-      is still very good on wide parts of the tree. \\
-    On the other hand, we used the Global Biotic Interactions (GloBI) database to get the state 
+  For this reconstruction, we first analyzed our input data. The use of Open Tree of Life (OTL) for
+    the tree gives us the greatest approximation to a phylogeny of the Eukaryota. Since such a large
+    phylogeny has not been completely dissected, this is only a synthesis of phylogenetic trees with
+    a taxonomy as a backbone. Therefore, the tree is far from binary, resulting in a multifurcation 
+    of 89.45 \%. However, this is highly variable and therefore the reconstruction is still very 
+    good on wide parts of the tree.
+
+  On the other hand, we used the Global Biotic Interactions (GloBI) database to get the state 
     information for the leaf nodes. However, we were able to extract only 2.66\% of the node 
     information from GloBI. However, we found out that there are more data in GloBI that could be 
     taken away with some work.
-    
-    % One last limitation also exists in the data situation itself. We have pointed out in various 
-    %   sections that we have a strong multifurcation and only a few data about leaf node states.
-
-    Next, let's consider the limitations of the simulation that led to the choice of the Sankoff 
-      algorithm. Our own main point of criticism is that we did not simulate the transition 
-      probabilities and estimate an unrealistically high number of transitions (origins and losses). 
-      The Sankoff algorithm is very well scored despite this increased difficulty (more transitions 
-      means more complex predictions) and its proven feasibility.
-
-    Finally, we analyze the validation of our ancestral state reconstruction results. We will do a 
-      selective analysis from a biological perspective and discuss the leave-100-out 
-      cross-validation. \\
-    Above all, the 'biological view' gives a first impression of the credibility of the results. But 
-      it can not make any statistical statements. Here the interested researcher may have to analyze 
-      the subtrees of being relevant to him for himself. \\
-    Of course, cross-validation can be expanded. With more computing power, a leave-1-out 
-      cross-validation could be performed. However, our result on this point is 98.17\% correct. \\
-
-\todo{old:}
-
-  This work deals with the ancestral state reconstruction of the entire Eukaryota relatives tree.
-
-  For this reconstruction, we first analyzed our data. This is the tree of OTL \cite{Hinchliff2015}
-    and the data for the leaf node states (free-living or parasite states) from GloBI 
-    \cite{Poelen2014} (section \ref{sec:results - missing information}), where we have determined 
-    that the entire Eukaryota tree is 89.45\% multifurcated (missing internal nodes) and that we do 
-    not have any state information for 97.34\% nodes. \\
-  In addition, we tested different models for these two parameters and found out that multifurcation 
-    can best be modeled with the taxa 'order' multiplied by the mean height of the knots. Also, the 
-    missing states could be modeled with the taxa 'order' and in this case multiplied by the depth 
-    of the nodes.
   
-  Next we compared different possible methods. We decided to take a closer look at maximum parsimony 
-    algorithms because they are fast and best suited to the problem at hand. We tested these on 
-    different simulations of the data and compared their predictive power (section 
-    \ref{sec:results - simulation}). \\
-  We compared them with the result that the Sankoff algorithm performs significantly better than 
-    Fitch. The multifurcation rate has little impact on Sankoff, but Fitch's prediction 
-    significantly breaks down at more than 60\% missing internal nodes. However, the amount of 
-    missing node state information has a linear impact on both, as does the ratio of free-living to 
-    parasitic (the more balanced, the worse is the prediction).
+  Next, we consider the limitations of the simulation that led to the choice of the Sankoff 
+    algorithm. Our main criticism is that we did not simulate the transition probabilities and 
+    estimate an unrealistically high number of transitions (origins and losses). The Sankoff 
+    algorithm is very well scored despite this increased difficulty (more transitions means more 
+    complex predictions) and its proven feasibility.
 
-  As a result, we used the Sankoff algorithm \cite{Sankoff1975} implemented by Louca et al. 
-    \cite{Louca2017}, which performed best, for the actual reconstruction on the real data. \\
-  We evaluated these on the one hand by analysing some statistics (subsection 
-    \ref{subsec:results - statistics on predicted states}) and on the other hand by performing a 
-    leave-100-out cross-validation. There we predicted approximately 98.17\% of the omitted states 
-    correct (subsection \ref{sec:results - cross-validation}). \\ 
+  Finally, we analyze the validation of our ancestral state reconstruction results. We will do a 
+    statistical analysis from the tree and some selected subtrees and consider the leave-100-out 
+    cross-validation. Of these omitted nodes, we predict 98.17\% correctly. \\
+    % Here, interested researchers may have to analyze the subtrees that are relevant to them. \\
 
   %---------------------------------------------------------------------------------------------------
   %---------------------------------------------------------------------------------------------------
@@ -624,8 +587,7 @@
       nodes and only 241,974 internal nodes, that is:
     $$100-\frac{100}{(2293463-1) \times 241974} \approx 89.45\%$$
       missing internal nodes. This means that there is a lack of information about the underlying 
-      phylogeny. Instead of a binary tree this tree is highly multifurcated.
-
+      phylogeny. Instead of being binary, this tree is highly multifurcated. \\
     \begin{table}[h!]
       \begin{center}
         \begin{tabular}{ |l||r|r| }
@@ -640,31 +602,31 @@
           \hline \hline
           Apicomplexa     & 86.26\%  & 87.16\% \\ \hline
           Arthropoda      & 97.49\%  & 89.95\% \\ \hline
-          Chordata        & 88.59\%  & \cellcolor{green!50}66.49\% \\ \hline
+          Chordata        & 88.59\%  & {\cellcolor{green!50}}66.49\% \\ \hline
           Nematoda        & 89.01\%  & 88.59\% \\ \hline
-          Platyhelminthes & \cellcolor{green!50}68.73\%  & 80.34\% \\
+          Platyhelminthes & {\cellcolor{green!50}}68.73\%  & 80.34\% \\
           \hline \hline            
           Insecta         & 97.11\%  & 90.78\% \\
           \hline  
         \end{tabular}
       \end{center}
       \caption{Examination of subtrees regarding missing information. \\
-        The percentage values show the proportion of missing information of: unknown states (missing state 
-          information of leaf nodes) and multifurcation (missing internal nodes). \\
+        The percentage values show the proportion of missing information of: unknown states (missing 
+          state information of leaf nodes) and multifurcation (missing internal nodes). \\
         The subtrees are from different taxa: domain (Eukaryota), kingdom (Metazoa, Fungi, 
           Chloroplastida), phylum (Apicomplexa, Nematoda, Chordata, Platyhelminthes) and class 
           (Insecta). \\
         The two by far smallest values are highlighted in green.} 
       \label{table:percentage loss information subtrees} 
-    \end{table}
+    \end{table} \\
 
-    For the missing state information the present Eukaryota tree with 2,293,463 leaf nodes, 34,869 
-      free-livings and 25,962 parasites are found. This gives
+    For the present Eukaryota tree with 2,293,463 leaf nodes, 34,869 free-livings and 25,962 parasites 
+      are found. This gives
       $$100-\frac{100}{2293463 \times (34860+25962)} \approx 97.34\%$$
       unknown states of leaf nodes.
 
-    We calculated these percentages of missing nodes and also missing state information for some 
-      subtrees and plotted them in table \ref{table:percentage loss information subtrees}.
+    We calculated these percentages of missing internal nodes and of missing state information for 
+      some subtrees and plotted them in table \ref{table:percentage loss information subtrees}.
 
     \begin{figure}[h!]
       \centering
@@ -678,26 +640,25 @@
           light blue: binary; \\ dark blue: multifurcation}
       \end{subfigure}
       \caption{Histograms showing the multifurcation of the internal nodes of the synthesis tree. \\
-        For each node, the number of children (degree $-1$) is collected. A node is multifurcated 
-        if it has more than two children, so we deducted two from each number of children. The two 
-        histograms show: number of children $-2$ on the x-axis with log scale and the number of nodes 
-        with this amount on the y-axis.}
+        For each node, the number of children (degree $-1$) is collected. A node is multifurcated if it
+        has more than two children, so we deducted two from each number of children. The two histograms 
+        show the number of children $-2$ on the x-axis with log scale and the number of nodes with this 
+        amount on the y-axis.}
       \label{fig:childrenOfNodes}
     \end{figure}
 
-    For a first overview, we collected for each node its number of children (degree $-1$), 
-      and plotted this in two histograms, see figure \ref{fig:childrenOfNodes}.
-
-    The multifurcation affects only the internal nodes. We collected the number of children $-2$ of 
-      these nodes (because a node with two children is binary). That means it describes the number of 
-      nodes which we have lost from the real (binary) phylogenetic tree. \\
-    It can be recognized that we are very far from a binary tree.
+    The multifurcation affects only the internal nodes. We collected the number of children (degree $-1$) 
+      of these nodes and than subtract two of each value (because a node with two children is binary). 
+      That means this value describes the number of nodes which we have lost from the real (binary) 
+      phylogenetic tree. We plotted this in two histograms, see figure \ref{fig:childrenOfNodes}. It can 
+      be recognized that we are very far from a binary tree.
 
     %---------------------------------------------------------------------------------------------------
     %---------------------------------------------------------------------------------------------------
     \subsection{Comparison of different models for multifurcation}
       For the regression analysis of the multifurcation we set up several generalized linear models that 
-        could describe multifurcation. \\
+        could describe multifurcation.
+
       In doing so, we allowed the different influence of the taxa and the heights and depths of a node 
         to be included. From this we got 9 times 4 models of different complexity levels (first row) and 
         the associated BIC values (table \ref{table:BIC multifurcation}).
@@ -708,30 +669,31 @@
             \hline
             \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
-            multifurcation $\sim$ taxa & 8273333 & \cellcolor{green!15}7937828 & \cellcolor{green!20}7842157 & \cellcolor{green!30}7644249 \\
-            multifurcation $\sim$ taxa & 8257680 & \cellcolor{green!15}7922207 & \cellcolor{green!20}7826490 & \cellcolor{green!35}7574154 \\
+            multifurcation $\sim$ taxa & 8273333 & {\cellcolor{green!15}}7937828 & {\cellcolor{green!20}}7842157 & {\cellcolor{green!30}}7644249 \\
+            multifurcation $\sim$ taxa & 8257680 & {\cellcolor{green!15}}7922207 & {\cellcolor{green!20}}7826490 & {\cellcolor{green!35}}7574154 \\
             \hline
-            multifurcation $\sim$ taxa + depth & 8273318 & \cellcolor{green!15}7934322 & \cellcolor{green!20}7839364 & \cellcolor{green!35}7539999 \\
-            multifurcation $\sim$ taxa + max.height & \cellcolor{green!15}7993515 & \cellcolor{green!25}7749121 & \cellcolor{green!30}7661817 & \cellcolor{green!40}7416211 \\
-            multifurcation $\sim$ taxa + min.height & 8251211 & \cellcolor{green!20}7875521  & \cellcolor{green!25}7778327 & \cellcolor{green!35}7516883 \\
-            multifurcation $\sim$ taxa + mean.height & \cellcolor{green!20}7825417 & \cellcolor{green!30}7644249 & \cellcolor{green!35}7572474 & \cellcolor{green!45}7340741 \\
+            multifurcation $\sim$ taxa + depth & 8273318 & {\cellcolor{green!15}}7934322 & {\cellcolor{green!20}}7839364 & {\cellcolor{green!35}}7539999 \\
+            multifurcation $\sim$ taxa + max.height & {\cellcolor{green!15}}7993515 & {\cellcolor{green!25}}7749121 & {\cellcolor{green!30}}7661817 & {\cellcolor{green!40}}7416211 \\
+            multifurcation $\sim$ taxa + min.height & 8251211 & {\cellcolor{green!20}}7875521  & {\cellcolor{green!25}}7778327 & {\cellcolor{green!35}}7516883 \\
+            multifurcation $\sim$ taxa + mean.height & {\cellcolor{green!20}}7825417 & {\cellcolor{green!30}}7644249 & {\cellcolor{green!35}}7572474 & {\cellcolor{green!45}}7340741 \\
             \hline
-            multifurcation $\sim$ taxa * depth & 8235932 & \cellcolor{green!20}7836755 & \cellcolor{green!25}7757688 & \cellcolor{green!45}7383808 \\
-            multifurcation $\sim$ taxa * max.height & \cellcolor{green!15}7963438 & \cellcolor{green!30}7693555 & \cellcolor{green!30}7614820 & \cellcolor{green!45}7335338 \\
-            multifurcation $\sim$ taxa * min.height & 8214030 & \cellcolor{green!20}7808940 & \cellcolor{green!30}7690618 & \cellcolor{green!45}7336627\\
-            multifurcation $\sim$ taxa * mean.height & \cellcolor{green!25}7768360 & \cellcolor{green!35}7536296 & \cellcolor{green!50}7484953 & \cellcolor{green!50}7206369 \\
+            multifurcation $\sim$ taxa * depth & 8235932 & {\cellcolor{green!20}}7836755 & {\cellcolor{green!25}}7757688 & {\cellcolor{green!45}}7383808 \\
+            multifurcation $\sim$ taxa * max.height & {\cellcolor{green!15}}7963438 & {\cellcolor{green!30}}7693555 & {\cellcolor{green!30}}7614820 & {\cellcolor{green!45}}7335338 \\
+            multifurcation $\sim$ taxa * min.height & 8214030 & {\cellcolor{green!20}}7808940 & {\cellcolor{green!30}}7690618 & {\cellcolor{green!45}}7336627\\
+            multifurcation $\sim$ taxa * mean.height & {\cellcolor{green!25}}7768360 & {\cellcolor{green!35}}7536296 & {\cellcolor{green!50}}7484953 & {\cellcolor{green!50}}7206369 \\
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC (Bayesian information criterion) values of the multifurcation models. \\
+        \caption{BIC values of the multifurcation models. \\
           These models are created with the R function \textit{glm()} and compared with the \textit{BIC()} 
-            function. This results in the listed BIC values, presented in a heatmap colorization.}
+            function. These results are the listed BIC values, presented in a heatmap colorization.}
         \label{table:BIC multifurcation} 
       \end{table}
-      Within every complexity class it can be seen that the mean height gives the best additional factor. \\
-      Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
-        the finest model available here is also the best one of these. Lower taxa than orders (e.g. 
-        family) are computationally too expensive to calculate. \\
+      Within every complexity class it can be seen that the mean height gives the best additional factor.
+        Despite higher complexity, the BIC values are getting smaller from model to model, meaning that 
+        the finest model available here is also the best one of these. Lower order taxa e.g. family are 
+        computationally too expensive to calculate.
+
       The model \textit{multifurcation $\sim$ order * mean.height} turns out to be the best of our models, 
         whereby it is possible that e.g. \textit{multifurcation $\sim$ family * mean.height} is better. \\
 
@@ -740,12 +702,13 @@
     \subsection{Comparison of different models for missing state information}
       Next to the problem of the multifurcation of the tree is the little interaction data that we have 
         for the species. For the ancestral state reconstruction, we need information about the states 
-        (free-living or parasite) in the leaf nodes. \\
+        (free-living or parasite) of the leaf nodes.
+        
       The Eukaryota synthesis tree has 293,463 leaf nodes. The GloBI database has 5,346,414 interactions 
-        (at 29.01.2018). Out of this data we got 51,337 free-living species and 47,332 parasite species 
-        for the whole tree of life. From the Eukaryota we could determine 25,962 and 34,860 species as 
-        parasites and free-living. With 2,293,463 leaf nodes we still have about 97.34\% unknown leaf 
-        nodes.
+        (at 29.01.2018). Out of this data we recieved 51,337 free-living species and 47,332 parasite 
+        species for the whole tree of life. For the Eukaryota we could determine 25,962 and 34,860 
+        species as parasites and free-living. With 2,293,463 leaf nodes we still have about 97.34\% 
+        unknown leaf nodes.
       
       We also compared different models in terms of their BICs (table: \ref{table:BIC unknown information}). \\ 
       \begin{table}[h!]
@@ -754,15 +717,15 @@
             \hline
             \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class & \bfseries Order \\
             \hline \hline
-            multifurcation $\sim$ taxa & \cellcolor{green!15}545799 & \cellcolor{green!35}500004 & \cellcolor{green!45}485121 & \cellcolor{green!45}484681 \\
+            multifurcation $\sim$ taxa & {\cellcolor{green!15}}545799 & {\cellcolor{green!35}}500004 & {\cellcolor{green!45}}485121 & {\cellcolor{green!45}}484681 \\
             \hline
-            multifurcation $\sim$ taxa + depth & \cellcolor{green!15}544862 & \cellcolor{green!40}493808 & \cellcolor{green!45}481869 & \cellcolor{green!50}478851 \\
+            multifurcation $\sim$ taxa + depth & {\cellcolor{green!15}}544862 & {\cellcolor{green!40}}493808 & {\cellcolor{green!45}}481869 & {\cellcolor{green!50}}478851 \\
             \hline
-            multifurcation $\sim$ taxa * depth & \cellcolor{green!15}544179 & \cellcolor{green!45}489845 & \cellcolor{green!45}481494 & \cellcolor{green!50}478188 \\
+            multifurcation $\sim$ taxa * depth & {\cellcolor{green!15}}544179 & {\cellcolor{green!45}}489845 & {\cellcolor{green!45}}481494 & {\cellcolor{green!50}}478188 \\
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC (Bayesian information criterion) values unknown state information models. \\
+        \caption{BIC values unknown state information models. \\
           These models are created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values, presented in a heatmap colorization.}
         \label{table:BIC unknown information} 
@@ -770,9 +733,9 @@
 
       It also follows from this table that the most complex model is the best. In general, the BIC 
         values are smaller than those of the multifurcation models. The modeling here is thus better.
-      Again, the calculation of finer models (e.g. family) was too expensive.
+        Again, the calculation of finer models (e.g. family) was too expensive.
 
-      These missing data modeling results could be used to better simulate the data. \\
+      These missing data modeling results could be used to improve the simulated data. \\
 
 \newpage
 
@@ -938,7 +901,7 @@
         We have again considered how this data can best be modeled to compare whether there is a lot 
         of variability in the taxa and whether the depth is an influencing factor over our prediction. 
         So, the influence of the taxa (kingdom, phylum, class) and the depth of the leaf nodes is 
-        re-modeled and the BICs compared (table \ref{table:BIC cross-validation}). Lower taxa than 
+        re-modeled and the BICs compared (table \ref{table:BIC cross-validation}). Lower order taxa than 
         classes (e.g. order) are computationally too expensive to calculate.
 
       % \todo{table for these numbers?}
@@ -955,15 +918,15 @@
             \hline
             \bfseries Model / Taxa & \bfseries Kingdom & \bfseries Phylum & \bfseries Class \\% & Order \\
             \hline \hline
-            correctly predicted $\sim$ taxa & 117936 & \cellcolor{green!40}112242 & \cellcolor{green!50}111733 \\% & XXXXX \\
+            correctly predicted $\sim$ taxa & 117936 & {\cellcolor{green!40}}112242 & {\cellcolor{green!50}}111733 \\% & XXXXX \\
             \hline
-            correctly predicted $\sim$ taxa + depth & 117776 & \cellcolor{green!50}111304 & \cellcolor{green!50}111273 \\% & XXXXX \\
+            correctly predicted $\sim$ taxa + depth & 117776 & {\cellcolor{green!50}}111304 & {\cellcolor{green!50}}111273 \\% & XXXXX \\
             \hline
-            correctly predicted $\sim$ taxa * depth & 117709 & \cellcolor{green!50}111262 & \cellcolor{green!30}113135 \\% & XXXXX \\
+            correctly predicted $\sim$ taxa * depth & 117709 & {\cellcolor{green!50}}111262 & {\cellcolor{green!30}}113135 \\% & XXXXX \\
             \hline
           \end{tabular} 
         \end{center}
-        \caption{BIC (Bayesian information criterion) values of cross-validation prediction models. \\
+        \caption{BIC values of cross-validation prediction models. \\
           These models are created with the R function \textit{glm()} and compared with the 
             \textit{BIC()} function. This results in the listed BIC values, presented in a heatmap colorization.}
         \label{table:BIC cross-validation} 
@@ -1235,7 +1198,7 @@
 
     %---------------------------------------------------------------------------------------------------
     \subsection{Distribution of Taxa}
-      In the tree we can distinguish 28 different Taxa in the OTL taxonomic tree. We have all Taxa 
+      In the tree we can distinguish 28 different taxa in the OTL taxonomic tree. We have all taxa 
         sorted by rank into a table and counted their occurrences as internal nodes and leaf nodes
         (see table \ref{table:taxa}) and plotted them as a diagram (see figure \ref{fig:taxa}).
     \begin{figure}[h!]
